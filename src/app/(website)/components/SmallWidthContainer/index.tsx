@@ -8,14 +8,14 @@ const SmallWidthContainer: FC<ISmallContainerType> = ({
   style,
 }) => {
   return (
-    <div
+    <section
       className={cn(
         `m-auto max-w-[1340px] scale-[0.8] py-6 xl:scale-[0.85] xl:py-10 2xl:scale-100 2xl:py-16 3xl:py-24 ${className} `
       )}
       style={typeof style === 'string' ? undefined : style}
     >
       {children}
-    </div>
+    </section>
   );
 };
 

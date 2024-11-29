@@ -17,6 +17,7 @@ export const lexendDeca = Lexend_Deca({
 export const nunito = Nunito_Sans({
   subsets: ['latin'],
   variable: '--font-nunito',
+  fallback: ['Nunito', 'Arial', 'sans-serif'],
 });
 
 export const dm = DM_Serif_Display({
