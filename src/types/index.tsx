@@ -159,3 +159,14 @@ export interface FlightingCardProps {
   best?: boolean;
   quickest?: boolean;
 }
+
+export interface ProductFormField {
+  name: string;
+  label: string;
+  type: 'text' | 'number' | 'textarea' | 'checkbox' | 'select' | 'radio';
+  required: boolean;
+}
+
+export interface ProductFormData {
+  [key: string]: string | number;
+}

@@ -1,7 +1,25 @@
 import { cn } from '@core/utils/class-names';
+import { ProductForm as PForm } from '@shared/ecommerce/product/product-form';
 import SmallWidthContainer from '@/app/(website)/components/SmallWidthContainer';
 import OrderSummery from '@/shared/ecommerce/checkout/order-summery';
-const ProductForm = () => {
+
+interface ProductFormProps {
+  params: { slug: string };
+}
+
+const ProductForm = async ({ params }: ProductFormProps) => {
+  const { slug } = params;
+
+  const productRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URI}/product/read-product?query=${slug}`
+  );
+  const product = await productRes.json();
+
+  const formRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URI}/product/form/read-form?formId=${product?.data?.formId}`
+  );
+  const form = await formRes.json();
+
   return (
     <>
       <div className="flex h-[60px] justify-end bg-[#F1F8FF]">
@@ -14,11 +32,10 @@ const ProductForm = () => {
       >
         <div className="items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
           <div className="gap-4 @container @5xl:col-span-8 @5xl:pb-12 @5xl:pe-7 @6xl:col-span-7 @7xl:pe-12">
-            Form
+            <PForm form={form} product={product?.data}/>
           </div>
-      
-            <OrderSummery />
-      
+
+          <OrderSummery />
         </div>
       </SmallWidthContainer>
     </>

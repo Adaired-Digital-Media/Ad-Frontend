@@ -35,7 +35,7 @@ export default function OrderSummery({
         className
       )}
     >
-      <div className="rounded-lg border border-muted p-4 @xs:p-6 @5xl:rounded-none @5xl:border-none @5xl:px-0">
+      <div className="rounded-lg border border-muted  @5xl:rounded-none @5xl:border-none @5xl:px-0">
         <div className="flex items-center justify-between rounded-tl-[15px] rounded-tr-[15px] bg-[#EBF5FF] p-5">
           <Title as="h3" className="font-poppins text-[22px] font-semibold">
             Cart ({items.length} {items.length > 1 ? 'Items' : 'Items'} In Cart)
