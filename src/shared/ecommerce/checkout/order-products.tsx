@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@core/utils/class-names';
 import { generateSlug } from '@core/utils/generate-slug';
 import { toCurrency } from '@core/utils/to-currency';
@@ -13,17 +15,17 @@ export default function OrderProducts({
   className,
   showControls,
   itemClassName,
-  clearItemFromCart,
+  // clearItemFromCart,
   addItemToCart,
-  removeItemFromCart,
+  // removeItemFromCart,
 }: {
   items: CartItem[];
   className?: string;
   showControls?: boolean;
   itemClassName?: string;
-  clearItemFromCart: (itemId: string) => void;
+  // clearItemFromCart: (itemId: string) => void;
   addItemToCart: (item: CartItem, quantity: number) => void;
-  removeItemFromCart: (id: number) => void;
+  // removeItemFromCart: (id: number) => void;
 }) {
   if (!items.length) {
     return (

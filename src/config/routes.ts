@@ -264,9 +264,8 @@ export const routes = {
   eCommerce: {
     dashboard: '/ecommerce',
     products: '/ecommerce/#products',
-    createProduct: '/ecommerce/products/create',
-    productDetails: (slug: string) => `/ecommerce/products/details/${slug}`,
     productForm: (slug: string) => `/ecommerce/products/form/${slug}`,
+    productDetails: (slug: string) => `/ecommerce/products/details/${slug}`,
     ediProduct: (slug: string) => `/ecommerce/products/${slug}/edit`,
     categories: '/ecommerce/categories',
     createCategory: '/ecommerce/categories/create',

@@ -1,14 +1,33 @@
 'use client';
 
-import { FormProvider, useForm } from 'react-hook-form';
+import {
+  FormProvider,
+  SubmitHandler,
+  useForm,
+  FieldValues,
+} from 'react-hook-form';
 import { Input, Title, Button, Textarea } from 'rizzui';
 import { cn } from '@core/utils/class-names';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useEffect, useCallback, useState } from 'react';
+import { generateCartProduct } from '@/store/quick-cart/generate-cart-product';
+import { Product } from '@/types';
+import { useCart } from '@/store/quick-cart/cart.context';
+
 
 // Utility function to generate Zod schema
-const generateFormSchema = (fields: any[]) => {
+const generateFormSchema = (
+  fields: {
+    name: string;
+    label: string;
+    placeholder: string;
+    type: string;
+    required: boolean;
+    options: any[];
+  }[]
+) => {
   const schema: Record<string, z.ZodTypeAny> = {};
 
   fields.forEach((field) => {
@@ -20,7 +39,12 @@ const generateFormSchema = (fields: any[]) => {
           .number({
             invalid_type_error: `${field.label} must be a number`,
           })
-          .min(1, `${field.label} is required`);
+          .min(
+            field.name === 'quantity' ? 1 : 100,
+            field.name === 'quantity'
+              ? `${field.label} must be at least 1`
+              : `Minimum purchase is 100 words for this product.`
+          );
         break;
 
       case 'textarea':
@@ -72,23 +96,115 @@ interface DynamicFormProps {
 
 interface ProductFormProps {
   form: DynamicFormProps;
-  product: any;
+  product: Product;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  session: any;
 }
 
-export const ProductForm: React.FC<ProductFormProps> = ({ form, product }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({
+  form,
+  product,
+  session,
+}) => {
+  const { addItemToCart } = useCart();
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
   // Generate schema based on form fields
   const formSchema = generateFormSchema(form?.form?.fields);
 
-  const methods = useForm({
+  const methods = useForm<FieldValues>({
     mode: 'onChange',
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      wordCount: '100',
+      quantity: '1',
+      additionalInfo: '',
+    },
   });
 
-  const { handleSubmit, register, formState } = methods;
+  const { handleSubmit, register, formState, watch } = methods;
   const { errors } = formState;
 
-  const onSubmit = (data: any) => {
-    console.log('Form Submitted', data);
+  // Watch form values for word count and quantity
+  const watchedFields = watch();
+
+  // // Use useCallback to memoize the calculateTotalPrice function
+  // const calculateTotalPrice = useCallback(() => {
+  //   if (product.pricingType === 'perWord') {
+  //     const words = parseInt(watchedFields?.wordCount || '0');
+  //     const quantity = parseInt(watchedFields?.quantity || '1');
+  //     const pricePerUnit = product.pricePerUnit;
+  //     const totalWords = Math.ceil(words / 100);
+  //     return totalWords * pricePerUnit * quantity;
+  //   } else if (product.pricingType === 'perReview') {
+  //     const quantity = parseInt(watchedFields?.quantity || '1');
+  //     return product.pricePerUnit * quantity;
+  //   }
+  //   return 0;
+  // }, [watchedFields, product]);
+
+  const calculateTotalPrice = useCallback(() => {
+    if (product.pricingType === 'perWord') {
+      const words = parseInt(watchedFields?.wordCount || '0');
+      const quantity = parseInt(watchedFields?.quantity || '1');
+      const pricePerUnit = product.pricePerUnit;
+
+      // Calculate the price based on the exact word count
+      let totalPrice = (words / 100) * pricePerUnit * quantity;
+
+      // Round to 2 decimal places
+      totalPrice = Math.round(totalPrice * 100) / 100;
+      return totalPrice;
+    } else if (product.pricingType === 'perReview') {
+      const quantity = parseInt(watchedFields?.quantity || '1');
+      let totalPrice = product.pricePerUnit * quantity;
+
+      // Round to 2 decimal places
+      totalPrice = Math.round(totalPrice * 100) / 100;
+      return totalPrice;
+    }
+    return 0;
+  }, [watchedFields, product]);
+
+  // Update the price when form values change
+  useEffect(() => {
+    const price = calculateTotalPrice();
+    setTotalPrice(price);
+  }, [watchedFields, calculateTotalPrice]);
+
+  const addToCart = async (data: FieldValues) => {
+    // Calculate the total price of the product
+    const price = calculateTotalPrice();
+
+    const cartItem = generateCartProduct({
+      product,
+      data,
+      price,
+    });
+
+    addItemToCart(cartItem);
+
+    // Check if the user is logged in or not
+    const authToken = session?.user?.accessToken;
+
+    if (authToken) {
+      // If no token, store the cart data in localStorage
+      const existingCart = JSON.parse(
+        localStorage.getItem('cart') || '{"cartItems": []}'
+      );
+      existingCart.cartItems.push(cartItem);
+      localStorage.setItem('cart', JSON.stringify(existingCart));
+    } else {
+      // If token exists, send the cart data to the backend API
+      try {
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    addToCart(data);
   };
 
   return (
@@ -128,7 +244,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ form, product }) => {
                   src={'https://picsum.photos/30'}
                   width="50"
                   height="50"
-                  alt={product.title}
+                  alt={product.name}
                   className={cn(`rounded-full bg-[#FAFAFA] p-2`)}
                 />
                 <Title
@@ -151,7 +267,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ form, product }) => {
                       `font-nunito text-[22px] font-bold text-[#18AA15]`
                     )}
                   >
-                    $ {product.price} 
+                    $ {totalPrice}
                   </span>
                 </Title>
               </div>
@@ -175,7 +291,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({ form, product }) => {
                     {field.type === 'textarea' ? (
                       <Textarea
                         placeholder={field.placeholder}
-                        {...register(field.name)}
+                        {...register(
+                          field.name as
+                            | 'wordCount'
+                            | 'quantity'
+                            | 'additionalInfo'
+                        )}
                         className={cn(`w-full border-none`)}
                         textareaClassName={cn(`bg-[#FAFAFA]`)}
                         variant="flat"
@@ -198,17 +319,32 @@ export const ProductForm: React.FC<ProductFormProps> = ({ form, product }) => {
                             | undefined
                         }
                         placeholder={field.placeholder}
-                        {...register(field.name, {
-                          valueAsNumber: field.type === 'number',
-                        })}
+                        {...register(
+                          field.name as
+                            | 'wordCount'
+                            | 'quantity'
+                            | 'additionalInfo',
+                          {
+                            valueAsNumber: field.type === 'number',
+                          }
+                        )}
                         className={cn(`w-full`)}
                         variant="flat"
                         inputClassName={cn(`bg-[#FAFAFA]`)}
                       />
                     )}
-                    {errors[field.name] && (
+                    {errors[
+                      field.name as 'wordCount' | 'quantity' | 'additionalInfo'
+                    ] && (
                       <p className="mt-1 text-sm text-red-500">
-                        {String(errors[field.name]?.message)}
+                        {String(
+                          errors[
+                            field.name as
+                              | 'wordCount'
+                              | 'quantity'
+                              | 'additionalInfo'
+                          ]?.message
+                        )}
                       </p>
                     )}
                   </div>
@@ -229,7 +365,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({ form, product }) => {
                   {field.type === 'textarea' ? (
                     <Textarea
                       placeholder={field.placeholder}
-                      {...register(field.name)}
+                      {...register(
+                        field.name as
+                          | 'wordCount'
+                          | 'quantity'
+                          | 'additionalInfo'
+                      )}
                       className={cn(`w-full border-none`)}
                       textareaClassName={cn(`bg-[#FAFAFA]`)}
                       variant="flat"
@@ -252,17 +393,32 @@ export const ProductForm: React.FC<ProductFormProps> = ({ form, product }) => {
                           | undefined
                       }
                       placeholder={field.label}
-                      {...register(field.name, {
-                        valueAsNumber: field.type === 'number',
-                      })}
+                      {...register(
+                        field.name as
+                          | 'wordCount'
+                          | 'quantity'
+                          | 'additionalInfo',
+                        {
+                          valueAsNumber: field.type === 'number',
+                        }
+                      )}
                       className={cn(`w-full`)}
                       variant="flat"
                       inputClassName={cn(`bg-[#FAFAFA]`)}
                     />
                   )}
-                  {errors[field.name] && (
+                  {errors[
+                    field.name as 'wordCount' | 'quantity' | 'additionalInfo'
+                  ] && (
                     <p className="mt-1 text-sm text-red-500">
-                      {String(errors[field.name]?.message)}
+                      {String(
+                        errors[
+                          field.name as
+                            | 'wordCount'
+                            | 'quantity'
+                            | 'additionalInfo'
+                        ]?.message
+                      )}
                     </p>
                   )}
                 </div>

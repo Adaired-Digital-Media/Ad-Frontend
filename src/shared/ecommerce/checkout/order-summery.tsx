@@ -1,12 +1,10 @@
 'use client';
-
-import { cn } from '@/@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { Button, Title } from 'rizzui';
 import OrderProducts from './order-products';
 import { routes } from '@/config/routes';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import usePrice from '@core/hooks/use-price';
 import { useCart } from '@/store/quick-cart/cart.context';
 
 export default function OrderSummery({
@@ -17,16 +15,7 @@ export default function OrderSummery({
   isLoading?: boolean;
 }) {
   const params = useParams();
-  const { items, total, addItemToCart, removeItemFromCart, clearItemFromCart } =
-    useCart();
-  const { price: subtotal } = usePrice(
-    items && {
-      amount: total,
-    }
-  );
-  const { price: totalPrice } = usePrice({
-    amount: total,
-  });
+  const { cartItems, addItemToCart } = useCart();
 
   return (
     <div
@@ -35,10 +24,11 @@ export default function OrderSummery({
         className
       )}
     >
-      <div className="rounded-lg border border-muted  @5xl:rounded-none @5xl:border-none @5xl:px-0">
+      <div className="rounded-lg border border-muted @5xl:rounded-none @5xl:border-none @5xl:px-0">
         <div className="flex items-center justify-between rounded-tl-[15px] rounded-tr-[15px] bg-[#EBF5FF] p-5">
           <Title as="h3" className="font-poppins text-[22px] font-semibold">
-            Cart ({items.length} {items.length > 1 ? 'Items' : 'Items'} In Cart)
+            Cart ({cartItems?.length}{' '}
+            {cartItems?.length > 1 ? 'Items' : 'Items'} In Cart)
           </Title>
 
           <Link href={routes.eCommerce.cart}>
@@ -54,13 +44,13 @@ export default function OrderSummery({
         <div className="rounded-bl-[15px] rounded-br-[15px] border border-t-0 p-5">
           <OrderProducts
             addItemToCart={addItemToCart}
-            removeItemFromCart={removeItemFromCart}
-            clearItemFromCart={clearItemFromCart}
-            items={items}
+            // removeItemFromCart={removeItemFromCart}
+            // clearItemFromCart={clearItemFromCart}
+            items={cartItems}
             className="mb-5 border-b border-muted pb-5"
           />
 
-          {items.length ? (
+          {cartItems.length ? (
             <Button
               type="submit"
               isLoading={isLoading}

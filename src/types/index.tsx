@@ -4,29 +4,38 @@ import { CouponType } from '@core/config/enums';
 export type HeaderItems = (typeof routes.websiteNav)[number];
 
 export type CartItem = {
+  productId: string;
+  wordCount?: number;
+  quantity: number;
+  pricePerUnit: number;
+  totalPrice: number;
+  productType: string;
+};
+
+export type Product = {
   _id: string;
   featuredImage: string;
   name: string;
   description: string;
-  userId: string;
-  formId: string;
   category: string;
   subCategory: string;
   minimumQuantity?: number;
   slug: string;
-  price: number;
-  quantity: number;
+  pricePerUnit: number;
   pricingType: string;
   stock: number;
   images: string[];
   tags?: string[];
   priority?: number;
   keywords?: string[];
+  formId?: string;
   metaTitle?: string;
   metaDescription?: string;
   canonicalLink?: string;
   status: string;
   isFeatured: boolean;
+  createBy?: string;
+  updateBy?: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -88,17 +97,6 @@ export type ProductColor = {
   code?: string;
 };
 
-export type Product = {
-  id: number;
-  slug?: string;
-  title: string;
-  description?: string;
-  price: number;
-  sale_price?: number;
-  thumbnail: string;
-  colors?: ProductColor[];
-  sizes?: number[];
-};
 
 export type PosProduct = {
   id: number;

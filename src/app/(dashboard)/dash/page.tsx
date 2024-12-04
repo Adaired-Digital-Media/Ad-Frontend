@@ -7,6 +7,7 @@ export default async function DashboardPage() {
 
   return (
     <div>
+      <p>{session.user.accessToken}</p>
       <h1>1.{session?.user._id}</h1>
       <h2>2.{session?.user.name}</h2>
       <h3>3.{session?.user.userName}</h3>

@@ -174,7 +174,7 @@ const StandOutSection = () => {
 };
 const ProductSection = async () => {
   const categoryData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URI}/product/category/read-category/content-writing?children=true&childrenProducts=true&products=true`
+    `${process.env.NEXT_PUBLIC_API_URI}/product/category/read-category?identifier=content-writing&children=true&childrenProducts=true&products=true`
   );
   const categories: ProductCategory[] = categoryData.data.data.children || [];
   const tabs = categories.map((category: ProductCategory) => ({
