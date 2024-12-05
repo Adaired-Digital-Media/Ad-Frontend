@@ -183,7 +183,6 @@ const ProductSection = async () => {
     content: (
       <div
         className={cn(`grid grid-cols-4 gap-x-[62px] gap-y-[41px]`)}
-        id="products"
       >
         {' '}
         {Array.isArray(category.products) && category.products.length > 0 ? (
@@ -215,7 +214,7 @@ const ProductSection = async () => {
     ),
   }));
   return (
-    <section className={cn(`bg-[#F6FBFF]`)}>
+    <section className={cn(`bg-[#F6FBFF]`)} id="products">
       {' '}
       <SmallContainer>
         {' '}

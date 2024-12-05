@@ -15,7 +15,7 @@ export default function OrderSummery({
   isLoading?: boolean;
 }) {
   const params = useParams();
-  const { cartItems, addItemToCart } = useCart();
+  const { cartItems } = useCart();
 
   return (
     <div
@@ -27,8 +27,8 @@ export default function OrderSummery({
       <div className="rounded-lg border border-muted @5xl:rounded-none @5xl:border-none @5xl:px-0">
         <div className="flex items-center justify-between rounded-tl-[15px] rounded-tr-[15px] bg-[#EBF5FF] p-5">
           <Title as="h3" className="font-poppins text-[22px] font-semibold">
-            Cart ({cartItems?.length}{' '}
-            {cartItems?.length > 1 ? 'Items' : 'Items'} In Cart)
+            Cart ({cartItems?.length} {cartItems?.length > 1 ? 'Items' : 'Item'}{' '}
+            In Cart)
           </Title>
 
           <Link href={routes.eCommerce.cart}>
@@ -41,23 +41,21 @@ export default function OrderSummery({
             </Button>
           </Link>
         </div>
-        <div className="rounded-bl-[15px] rounded-br-[15px] border border-t-0 p-5">
-          <OrderProducts
-            addItemToCart={addItemToCart}
-            // removeItemFromCart={removeItemFromCart}
-            // clearItemFromCart={clearItemFromCart}
-            items={cartItems}
-            className="mb-5 border-b border-muted pb-5"
-          />
+        <div className="flex min-h-[270px] flex-col rounded-bl-[15px] rounded-br-[15px] border border-t-0 p-5">
+          <div className="flex-1">
+            <OrderProducts items={cartItems} />
+          </div>
 
           {cartItems.length > 0 ? (
-            <Button
-              type="submit"
-              isLoading={isLoading}
-              className="mt-3 w-full text-base @md:h-12"
-            >
-              {params?.id ? 'Update Order' : 'Place Order'}
-            </Button>
+            <Link href={routes?.eCommerce?.cart}>
+              <Button
+                type="submit"
+                isLoading={isLoading}
+                className="mt-3 w-full text-base @md:h-12"
+              >
+                {'View Cart'}
+              </Button>
+            </Link>
           ) : (
             <Link href={routes.eCommerce.shop}>
               <Button

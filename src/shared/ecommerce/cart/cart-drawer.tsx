@@ -2,19 +2,26 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import FloatingCartButton from '@/shared/floating-cart-button';
 import CartDrawerView from './cart-drawer-view';
 import { useParams, usePathname } from 'next/navigation';
 import { routes } from '@/config/routes';
+import { useCart } from '@/store/quick-cart/cart.context';
 
 const Drawer = dynamic(() => import('rizzui').then((module) => module.Drawer), {
   ssr: false,
 });
+const FloatingCartButton = dynamic(
+  () => import('@/shared/floating-cart-button'),
+  {
+    ssr: false,
+  }
+);
 
 export default function CartDrawer() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const pathname = usePathname();
   const params = useParams();
+  const { cartItems } = useCart();
 
   // list of included pages
   const includedPaths: string[] = [
@@ -25,21 +32,12 @@ export default function CartDrawer() {
   //   const isPathIncluded = includedPaths.some((path) => pathname === path);
   const isPathIncluded = includedPaths.some((path) => pathname !== path);
 
-  //   const {
-  //     // totalItems,
-  //     items,
-  //     removeItemFromCart,
-  //     clearItemFromCart,
-  //     total,
-  //     addItemToCart,
-  //   } = useCart();
   return (
     <>
       {isPathIncluded ? (
         <FloatingCartButton
           onClick={() => setOpenDrawer(true)}
           className="top-1/2 -translate-y-1/2 bg-primary dark:bg-primary"
-          //   totalItems={totalItems}
         />
       ) : null}
       <Drawer
@@ -49,23 +47,14 @@ export default function CartDrawer() {
         containerClassName="dark:bg-gray-100"
         className="z-[9999]"
       >
-        {/* <CartDrawerView
+        <CartDrawerView
           setOpenDrawer={setOpenDrawer}
-          clearItemFromCart={clearItemFromCart}
-          removeItemFromCart={removeItemFromCart}
-          addItemToCart={addItemToCart}
-          items={items}
-          total={total}
-        /> */}
-                <CartDrawerView
-          setOpenDrawer={setOpenDrawer}
-          clearItemFromCart={()=>{}}
-          removeItemFromCart={()=>{}}
-          addItemToCart={()=>{}}
-          items={[]}
+          // clearItemFromCart={() => {}}
+          // removeItemFromCart={() => {}}
+          // addItemToCart={() => {}}
+          items={cartItems}
           total={50}
         />
-        hello world
       </Drawer>
     </>
   );

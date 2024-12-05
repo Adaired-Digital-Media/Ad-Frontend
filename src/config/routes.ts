@@ -264,6 +264,8 @@ export const routes = {
   eCommerce: {
     dashboard: '/ecommerce',
     products: '/ecommerce/#products',
+    shop: '/ecommerce/#products',
+    cart: '/ecommerce/cart',
     productForm: (slug: string) => `/ecommerce/products/form/${slug}`,
     productDetails: (slug: string) => `/ecommerce/products/details/${slug}`,
     ediProduct: (slug: string) => `/ecommerce/products/${slug}/edit`,
@@ -275,8 +277,6 @@ export const routes = {
     orderDetails: (id: string) => `/ecommerce/orders/${id}`,
     editOrder: (id: string) => `/ecommerce/orders/${id}/edit`,
     reviews: '/ecommerce/reviews',
-    shop: '/ecommerce/shop',
-    cart: '/ecommerce/cart',
     checkout: '/ecommerce/checkout',
     trackingId: (id: string) => `/ecommerce/tracking/${id}`,
   },

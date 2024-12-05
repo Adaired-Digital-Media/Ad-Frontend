@@ -12,8 +12,13 @@ export function generateCartProduct({
 }) {
   return {
     productId: product._id,
+    productName: product.name,
     wordCount: parseInt(data.wordCount || '100'),
     quantity: parseInt(data.quantity || '1'),
+    additionalInfo: data.additionalInfo || '',
+    name: data.name || '',
+    email: data.email || '',
+    phone: data.phone || '',
     pricePerUnit: product.pricePerUnit,
     totalPrice: price,
     productType: data.productType || 'OneTime',

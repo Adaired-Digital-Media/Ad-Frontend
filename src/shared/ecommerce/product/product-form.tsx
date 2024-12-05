@@ -16,7 +16,6 @@ import { generateCartProduct } from '@/store/quick-cart/generate-cart-product';
 import { Product } from '@/types';
 import { useCart } from '@/store/quick-cart/cart.context';
 
-
 // Utility function to generate Zod schema
 const generateFormSchema = (
   fields: {
@@ -106,7 +105,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   product,
   session,
 }) => {
-  const { addItemToCart } = useCart();
+  const { isLoading, addItemToCart } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   // Generate schema based on form fields
@@ -116,6 +115,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     mode: 'onChange',
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: session?.user?.name,
+      email: session?.user?.email,
+      phone: session?.user?.contact,
       wordCount: '100',
       quantity: '1',
       additionalInfo: '',
@@ -183,24 +185,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     });
 
     addItemToCart(cartItem);
-
-    // Check if the user is logged in or not
-    const authToken = session?.user?.accessToken;
-
-    if (authToken) {
-      // If no token, store the cart data in localStorage
-      const existingCart = JSON.parse(
-        localStorage.getItem('cart') || '{"cartItems": []}'
-      );
-      existingCart.cartItems.push(cartItem);
-      localStorage.setItem('cart', JSON.stringify(existingCart));
-    } else {
-      // If token exists, send the cart data to the backend API
-      try {
-      } catch (error) {
-        console.error(error);
-      }
-    }
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -242,8 +226,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               <div className={cn(`flex items-center gap-6`)}>
                 <Image
                   src={'https://picsum.photos/30'}
-                  width="50"
-                  height="50"
+                  width="60"
+                  height="60"
                   alt={product.name}
                   className={cn(`rounded-full bg-[#FAFAFA] p-2`)}
                 />
@@ -275,6 +259,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
             {/* Dynamic Form Fields */}
             <div className="mt-5 space-y-6">
+              {/* First pair of fields */}
               <div className="flex gap-4">
                 {form?.form?.fields.slice(0, 2).map((field) => (
                   <div key={field.name} className="flex-1">
@@ -321,6 +306,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         placeholder={field.placeholder}
                         {...register(
                           field.name as
+                            | 'name'
+                            | 'email'
+                            | 'phone'
                             | 'wordCount'
                             | 'quantity'
                             | 'additionalInfo',
@@ -340,6 +328,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         {String(
                           errors[
                             field.name as
+                              | 'name'
+                              | 'email'
+                              | 'phone'
                               | 'wordCount'
                               | 'quantity'
                               | 'additionalInfo'
@@ -351,8 +342,94 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 ))}
               </div>
 
-              {/* Render remaining inputs */}
-              {form?.form?.fields.slice(2).map((field) => (
+              {/* Second pair of fields */}
+              <div className="flex gap-4">
+                {form?.form?.fields.slice(2, 4).map((field) => (
+                  <div key={field.name} className="flex-1">
+                    <Title
+                      className={cn(
+                        `mb-2 block font-poppins text-[16px] font-semibold text-[#515151]`
+                      )}
+                    >
+                      {field.label}
+                      {field.required && (
+                        <span className="text-red-500"> *</span>
+                      )}
+                    </Title>
+                    {field.type === 'textarea' ? (
+                      <Textarea
+                        placeholder={field.placeholder}
+                        {...register(
+                          field.name as
+                            | 'name'
+                            | 'email'
+                            | 'phone'
+                            | 'wordCount'
+                            | 'quantity'
+                            | 'additionalInfo'
+                        )}
+                        className={cn(`w-full border-none`)}
+                        textareaClassName={cn(`bg-[#FAFAFA]`)}
+                        variant="flat"
+                      />
+                    ) : (
+                      <Input
+                        type={
+                          field.type as
+                            | 'number'
+                            | 'search'
+                            | 'text'
+                            | 'time'
+                            | 'tel'
+                            | 'url'
+                            | 'email'
+                            | 'date'
+                            | 'week'
+                            | 'month'
+                            | 'datetime-local'
+                            | undefined
+                        }
+                        placeholder={field.placeholder}
+                        {...register(
+                          field.name as
+                            | 'name'
+                            | 'email'
+                            | 'phone'
+                            | 'wordCount'
+                            | 'quantity'
+                            | 'additionalInfo',
+                          {
+                            valueAsNumber: field.type === 'number',
+                          }
+                        )}
+                        className={cn(`w-full`)}
+                        variant="flat"
+                        inputClassName={cn(`bg-[#FAFAFA]`)}
+                      />
+                    )}
+                    {errors[
+                      field.name as 'wordCount' | 'quantity' | 'additionalInfo'
+                    ] && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {String(
+                          errors[
+                            field.name as
+                              | 'name'
+                              | 'email'
+                              | 'phone'
+                              | 'wordCount'
+                              | 'quantity'
+                              | 'additionalInfo'
+                          ]?.message
+                        )}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Remaining fields in individual rows */}
+              {form?.form?.fields.slice(4).map((field) => (
                 <div key={field.name}>
                   <Title
                     className={cn(
@@ -367,6 +444,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       placeholder={field.placeholder}
                       {...register(
                         field.name as
+                          | 'name'
+                          | 'email'
+                          | 'phone'
                           | 'wordCount'
                           | 'quantity'
                           | 'additionalInfo'
@@ -392,9 +472,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                           | 'datetime-local'
                           | undefined
                       }
-                      placeholder={field.label}
+                      placeholder={field.placeholder}
                       {...register(
                         field.name as
+                          | 'name'
+                          | 'email'
+                          | 'phone'
                           | 'wordCount'
                           | 'quantity'
                           | 'additionalInfo',
@@ -408,12 +491,21 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     />
                   )}
                   {errors[
-                    field.name as 'wordCount' | 'quantity' | 'additionalInfo'
+                    field.name as
+                      | 'name'
+                      | 'email'
+                      | 'phone'
+                      | 'wordCount'
+                      | 'quantity'
+                      | 'additionalInfo'
                   ] && (
                     <p className="mt-1 text-sm text-red-500">
                       {String(
                         errors[
                           field.name as
+                            | 'name'
+                            | 'email'
+                            | 'phone'
                             | 'wordCount'
                             | 'quantity'
                             | 'additionalInfo'
@@ -425,7 +517,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               ))}
 
               <div className={cn(`flex items-center justify-between`)}>
-                <Button type="submit">Add To Cart</Button>
+                <Button type="submit" isLoading={isLoading}>
+                  Add To Cart
+                </Button>
                 <Button type="submit">Instant Payment</Button>
               </div>
             </div>

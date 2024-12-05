@@ -38,6 +38,7 @@
     "react-phone-input-2": "^2.15.1",
     "react-use": "^17.5.1",
     "rizzui": "^0.8.7",
+    "simplebar-react": "^3.2.6",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"

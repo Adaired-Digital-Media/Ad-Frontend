@@ -5,8 +5,13 @@ export type HeaderItems = (typeof routes.websiteNav)[number];
 
 export type CartItem = {
   productId: string;
+  productName: string;
   wordCount?: number;
   quantity: number;
+  additionalInfo?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
   pricePerUnit: number;
   totalPrice: number;
   productType: string;
@@ -96,7 +101,6 @@ export type ProductColor = {
   name?: string;
   code?: string;
 };
-
 
 export type PosProduct = {
   id: number;
