@@ -1,8 +1,6 @@
 'use client';
 
 import { cn } from '@core/utils/class-names';
-import { generateSlug } from '@core/utils/generate-slug';
-import { toCurrency } from '@core/utils/to-currency';
 import { routes } from '@/config/routes';
 import Image from 'next/image';
 import Link from 'next/link';

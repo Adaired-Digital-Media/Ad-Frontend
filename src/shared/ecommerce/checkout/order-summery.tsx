@@ -50,7 +50,7 @@ export default function OrderSummery({
             className="mb-5 border-b border-muted pb-5"
           />
 
-          {cartItems.length ? (
+          {cartItems.length > 0 ? (
             <Button
               type="submit"
               isLoading={isLoading}
