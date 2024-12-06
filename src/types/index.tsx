@@ -4,6 +4,7 @@ import { CouponType } from '@core/config/enums';
 export type HeaderItems = (typeof routes.websiteNav)[number];
 
 export type CartItem = {
+  _id?: string;
   productId: string;
   productName: string;
   wordCount?: number;

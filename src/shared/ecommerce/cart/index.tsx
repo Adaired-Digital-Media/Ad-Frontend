@@ -9,11 +9,45 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Empty, EmptyProductBoxIcon, Title, Text, Input, Button } from 'rizzui';
-import CartProduct from './cart-product';
+import { ProductSkeleton } from '@/app/(website)/components/Skeletons/ProductSkeleton';
+import { toCurrency } from '@/@core/utils/to-currency';
+
+import dynamic from 'next/dynamic';
+
+const CartProduct = dynamic(() => import('./cart-product'), {
+  loading: () => <ProductSkeleton />,
+  ssr: false,
+});
 
 type FormValues = {
   couponCode: string;
 };
+
+export default function CartPageWrapper() {
+  const { cartItems } = useCart();
+
+  return (
+    <SmallWidthContainer className="@container">
+      <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
+        <div className="@5xl:col-span-8 @6xl:col-span-7">
+          {cartItems.length ? (
+            cartItems.map((item, idx) => (
+              <CartProduct key={idx} product={item}  />
+            ))
+          ) : (
+            <Empty
+              image={<EmptyProductBoxIcon />}
+              text="No Product in the Cart"
+            />
+          )}
+        </div>
+        <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
+          <CartCalculations />
+        </div>
+      </div>
+    </SmallWidthContainer>
+  );
+}
 
 function CheckCoupon() {
   const [reset, setReset] = useState({});
@@ -61,6 +95,9 @@ function CheckCoupon() {
 function CartCalculations() {
   const router = useRouter();
   const { cartItems } = useCart();
+
+  // Calculate total price dynamically
+  const total = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
     <div>
       <Title
@@ -75,15 +112,21 @@ function CartCalculations() {
             key={item?.productId}
             className="flex items-center justify-between"
           >
-            <Title as="h3">{item?.productName}</Title>
-            <div className="text-right">${item?.totalPrice}</div>
+            <Title as="h3" className="mb-1 text-base font-semibold">
+              <Link href={routes.eCommerce.productDetails(item.productId)}>
+                {item?.productName}
+              </Link>
+            </Title>
+            <div className="text-right">{toCurrency(item?.totalPrice)}</div>
           </div>
         ))}
 
-        <CheckCoupon />
+        {/* <CheckCoupon /> */}
         <div className="mt-3 flex items-center justify-between border-t border-muted py-4 font-semibold text-gray-1000">
           Total
-          <span className="font-medium text-gray-1000">{5000}</span>
+          <span className="font-medium text-gray-1000">
+            {toCurrency(total)}
+          </span>
         </div>
         <Link href={routes.eCommerce.checkout}>
           <Button
@@ -97,32 +140,5 @@ function CartCalculations() {
         </Link>
       </div>
     </div>
-  );
-}
-
-export default function CartPageWrapper() {
-  const { cartItems } = useCart();
-
-  return (
-    <SmallWidthContainer className="@container">
-      <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
-        <div className="@5xl:col-span-8 @6xl:col-span-7">
-          {cartItems.length ? (
-            cartItems.map((item) => <CartProduct key={item?.productId} product={item} />)
-            // cartItems.map((item) => (
-            //   <h1 key={item?.productId}>{item.productName}</h1>
-            // ))
-          ) : (
-            <Empty
-              image={<EmptyProductBoxIcon />}
-              text="No Product in the Cart"
-            />
-          )}
-        </div>
-        <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
-          <CartCalculations />
-        </div>
-      </div>
-    </SmallWidthContainer>
   );
 }

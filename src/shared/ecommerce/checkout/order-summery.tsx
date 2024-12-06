@@ -1,4 +1,5 @@
 'use client';
+
 import { cn } from '@core/utils/class-names';
 import { Button, Title } from 'rizzui';
 import OrderProducts from './order-products';
@@ -43,7 +44,7 @@ export default function OrderSummery({
         </div>
         <div className="flex min-h-[270px] flex-col rounded-bl-[15px] rounded-br-[15px] border border-t-0 p-5">
           <div className="flex-1">
-            <OrderProducts items={cartItems} />
+            <OrderProducts items={cartItems} className="h-auto" />
           </div>
 
           {cartItems.length > 0 ? (

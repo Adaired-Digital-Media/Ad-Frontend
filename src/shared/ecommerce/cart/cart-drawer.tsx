@@ -53,7 +53,6 @@ export default function CartDrawer() {
           // removeItemFromCart={() => {}}
           // addItemToCart={() => {}}
           items={cartItems}
-          total={50}
         />
       </Drawer>
     </>
