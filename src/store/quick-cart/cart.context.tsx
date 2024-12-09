@@ -53,7 +53,7 @@ export function CartProvider({
     (savedCart ? JSON.parse(savedCart) : initialState) as State
   );
 
-  const [pendingItems, setPendingItems] = useState<Item[]>([]); // Track unsynced items
+  const [pendingItems, setPendingItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const addItemToCart = (item: Item) => {
@@ -103,7 +103,7 @@ export function CartProvider({
               response.statusText
             );
           } else {
-            setPendingItems([]); // Clear pendingItems on success
+            setPendingItems([]);
           }
         }
       } catch (error) {
@@ -116,9 +116,25 @@ export function CartProvider({
   );
 
   useEffect(() => {
-    saveCart(JSON.stringify(state)); // Save cart in localStorage
+    // If the user is logged in, send cart to the backend
+    if (session) {
+      const savedCartFromStorage = JSON.parse(savedCart || '{}');
+      if (
+        savedCartFromStorage &&
+        Object.keys(savedCartFromStorage).length > 0
+      ) {
+        sendCartToBackend(savedCartFromStorage.cartItems);
+        saveCart(JSON.stringify(initialState)); // Optionally clear cart after sending
+      }
+    }
+
+    // Only save cart to localStorage if user is not logged in
+    if (!session) {
+      saveCart(JSON.stringify(state)); // Save cart in localStorage
+    }
+
     sendCartToBackend(pendingItems); // Sync only pending items
-  }, [state, saveCart, sendCartToBackend, pendingItems]);
+  }, [state, saveCart, sendCartToBackend, pendingItems, session, savedCart]);
 
   const value = useMemo(
     () => ({
