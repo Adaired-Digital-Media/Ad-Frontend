@@ -6,9 +6,10 @@ import {
   useForm,
   FieldValues,
 } from 'react-hook-form';
-import { Input, Title, Button, Textarea } from 'rizzui';
+import { Input, Title, Textarea } from 'rizzui';
 import { cn } from '@core/utils/class-names';
 import * as z from 'zod';
+import Button from '@web-components/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useEffect, useCallback, useState } from 'react';
@@ -209,7 +210,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             >
               Shopping Cart
             </Title>
-            <Button type="button">Continue Shopping</Button>
+            <Button
+              title="Continue Shopping"
+              className="bg-white"
+              svgInnerClassName="text-[#F89520]"
+              svgClassName=" bg-black"
+              type="button"
+              navigateTo="/ecommerce/#products"
+            />
           </div>
 
           {/* Product Details */}
@@ -516,11 +524,22 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </div>
               ))}
 
-              <div className={cn(`flex items-center justify-between`)}>
-                <Button type="submit" isLoading={isLoading}>
-                  Add To Cart
-                </Button>
-                <Button type="submit">Instant Payment</Button>
+              <div className={cn(`flex items-center justify-between gap-10`)}>
+                <Button
+                  title="Add To Cart"
+                  className="flex w-full justify-center bg-[#1B5A96]"
+                  svgInnerClassName="!text-[#1B5A96]"
+                  svgClassName="bg-white"
+                  textClassName="text-white"
+                  type="submit"
+                />
+                <Button
+                  title="Instant Payment"
+                  className="flex w-full justify-center bg-white"
+                  svgInnerClassName="text-white"
+                  svgClassName="bg-[#1B5A96]"
+                  type="submit"
+                />
               </div>
             </div>
           </div>

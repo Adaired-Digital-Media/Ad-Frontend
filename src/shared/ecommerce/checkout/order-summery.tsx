@@ -1,7 +1,8 @@
 'use client';
 
 import { cn } from '@core/utils/class-names';
-import { Button, Title } from 'rizzui';
+import { Button as RizzBtn, Title } from 'rizzui';
+import Button from '@web-components/Button';
 import OrderProducts from './order-products';
 import { routes } from '@/config/routes';
 import { useParams } from 'next/navigation';
@@ -32,15 +33,6 @@ export default function OrderSummery({
             In Cart)
           </Title>
 
-          <Link href={routes.eCommerce.cart}>
-            <Button
-              as="span"
-              variant="text"
-              className="h-auto w-auto p-0 text-primary underline hover:text-gray-1000"
-            >
-              Edit Cart
-            </Button>
-          </Link>
         </div>
         <div className="flex min-h-[270px] flex-col rounded-bl-[15px] rounded-br-[15px] border border-t-0 p-5">
           <div className="flex-1">
@@ -48,22 +40,33 @@ export default function OrderSummery({
           </div>
 
           {cartItems.length > 0 ? (
-            <Link href={routes?.eCommerce?.cart}>
-              <Button
-                type="submit"
-                isLoading={isLoading}
-                className="mt-3 w-full text-base @md:h-12"
-              >
-                {'View Cart'}
-              </Button>
-            </Link>
+            // <Link href={routes?.eCommerce?.cart}>
+            //   <Button
+            //     type="submit"
+            //     isLoading={isLoading}
+            //     className="mt-3 w-full text-base @md:h-12"
+            //   >
+            //     {'View Cart'}
+            //   </Button>
+            // </Link>
+            <Button
+              title={'View Cart'}
+              className="flex w-full justify-center bg-black"
+              textClassName="text-white"
+              svgInnerClassName="!text-black"
+              svgClassName="bg-white"
+              type="button"
+            />
           ) : (
-            <Link href={routes.eCommerce.shop}>
-              <Button
-                as="span"
-                className="mt-3 w-full text-base @md:h-12"
-              >{`Back to Store`}</Button>
-            </Link>
+            <Button
+              title="Back to Store"
+              className="flex w-full justify-center bg-black"
+              textClassName="text-white"
+              svgInnerClassName="!text-black"
+              svgClassName="bg-white"
+              type="button"
+              navigateTo={routes?.eCommerce?.cart}
+            />
           )}
         </div>
       </div>

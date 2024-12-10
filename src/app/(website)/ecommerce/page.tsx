@@ -20,6 +20,7 @@ import {
   SurferSEOSectionDetails,
   ProductSectionDetails,
 } from '@core/data/website/Landingpage';
+import { FAQSection } from '@web-components/eComFaqSection';
 const Landing = () => {
   return (
     <>
@@ -29,6 +30,7 @@ const Landing = () => {
       <ApproachSection />
       <SurferSEOSection />
       <ContactUsSection />
+      <FAQSection />
     </>
   );
 };
@@ -181,9 +183,7 @@ const ProductSection = async () => {
     title: category.name,
     value: category.slug,
     content: (
-      <div
-        className={cn(`grid grid-cols-4 gap-x-[62px] gap-y-[41px]`)}
-      >
+      <div className={cn(`grid grid-cols-4 gap-x-[62px] gap-y-[41px]`)}>
         {' '}
         {Array.isArray(category.products) && category.products.length > 0 ? (
           category.products.map((product) =>

@@ -4,6 +4,7 @@ import {
   IHeroSection,
   IStandOutSection,
   ISurferSEOSection,
+  IFAQSection,
 } from '../../types/LandingpageTypes';
 
 export const HeroSectionDetails: IHeroSection = {
@@ -318,5 +319,33 @@ export const BHWServices: IBHWServices[] = [
       },
     ],
     status: 'active',
+  },
+];
+
+export const FAQSectionDetails: IFAQSection[] = [
+  {
+    title: 'What is your policy on revisions and feedback?',
+    content:
+      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+  },
+  {
+    title: 'What are your payment terms and accepted methods?',
+    content:
+      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+  },
+  {
+    title: 'What if we need content outside your normal TAT?',
+    content:
+      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+  },
+  {
+    title: 'How can I cancel or pause my content order?',
+    content:
+      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+  },
+  {
+    title: 'Is there a minimum order requirement for content?',
+    content:
+      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
   },
 ];

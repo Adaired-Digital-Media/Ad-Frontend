@@ -54,7 +54,7 @@ export interface ProductCategory {
   description: string;
   parentCategory: string | null;
   children: ProductCategory[] | string[];
-  products: CartItem[] | string[];
+  products: Product[] | string[];
   slug: string;
   image: string;
   metaTitle: string;
