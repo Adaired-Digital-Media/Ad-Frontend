@@ -42,9 +42,7 @@ const HeroSection = () => {
         `flex items-end justify-center overflow-hidden bg-[#FFF9F1]`
       )}
     >
-      {' '}
       <SmallContainer className="relative z-[2] grid !py-0 3xl:pb-0 3xl:pt-14">
-        {' '}
         <div
           className={cn(
             `absolute bottom-1/2 left-[calc(100%-280px)] h-[calc(100%+145px)] w-full translate-y-1/2 rounded-tl-[250px] bg-[#FFDCB2] xl:h-[calc(100%+105px)] 2xl:h-full`
@@ -56,70 +54,58 @@ const HeroSection = () => {
           )}
         ></div>
         <TwoColumnGrid className={cn(`relative z-[2] m-0 place-items-center`)}>
-          {' '}
           <div className={cn(`xl:py-28`)}>
-            {' '}
             <h1
               className={cn(
                 `font-poppins font-bold text-black lg:text-[38px] lg:leading-[52px] xl:text-[42px] xl:leading-[58px]`
               )}
             >
-              {' '}
-              {HeroSectionDetails.title}{' '}
-            </h1>{' '}
+              {HeroSectionDetails.title}
+            </h1>
             <p className={cn(`pt-[15px] text-base`)}>
-              {' '}
-              {HeroSectionDetails.description}{' '}
-            </p>{' '}
+              {HeroSectionDetails.description}
+            </p>
             <div className={cn(`flex items-center space-x-10 pt-10`)}>
-              {' '}
               <Link href={HeroSectionDetails.buttonLink || ''}>
-                {' '}
                 <Button
                   className={cn(
                     `rounded-full bg-[#424242] px-6 py-6 font-poppins text-lg font-medium text-white`
                   )}
                 >
-                  {' '}
-                  {HeroSectionDetails.buttonText}{' '}
-                </Button>{' '}
-              </Link>{' '}
+                  {HeroSectionDetails.buttonText}
+                </Button>
+              </Link>
               <Link
                 href={`tel:${HeroSectionDetails.phoneNumber}`}
                 className={cn(`flex items-center justify-start space-x-2`)}
               >
-                {' '}
                 <div
                   className={cn(
                     `flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#F39019] p-3`
                   )}
                 >
-                  {' '}
                   <Icon
                     icon="mage:phone-call-fill"
                     color="#fff"
                     className={cn(`h-6 w-6`)}
-                  />{' '}
-                </div>{' '}
+                  />
+                </div>
                 <p className={cn(`font-poppins text-base font-light`)}>
-                  {' '}
-                  Call Us <br />{' '}
+                  Call Us <br />
                   <span
                     className={cn(`font-poppins font-semibold text-[#000000]`)}
                   >
-                    {' '}
-                    {HeroSectionDetails.phoneNumber}{' '}
-                  </span>{' '}
-                </p>{' '}
-              </Link>{' '}
-            </div>{' '}
-          </div>{' '}
+                    {HeroSectionDetails.phoneNumber}
+                  </span>
+                </p>
+              </Link>
+            </div>
+          </div>
           <div
             className={cn(
               `lg:scale-[1.3] lg:pt-16 xl:scale-[1.2] xl:pt-10 2xl:scale-100 3xl:-mr-20 4xl:-mr-32`
             )}
           >
-            {' '}
             <Image
               src={HeroSectionDetails.imageUrl || ''}
               alt="Hero Image"
@@ -129,17 +115,16 @@ const HeroSection = () => {
               priority
               className={cn(`object-contain`)}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />{' '}
-          </div>{' '}
-        </TwoColumnGrid>{' '}
-      </SmallContainer>{' '}
+            />
+          </div>
+        </TwoColumnGrid>
+      </SmallContainer>
     </div>
   );
 };
 const StandOutSection = () => {
   return (
     <SmallContainer>
-      {' '}
       <TwoColumnGrid>
         {' '}
         <div className={cn(`h-full w-full rounded-2xl bg-[#EDEDED]`)} />{' '}

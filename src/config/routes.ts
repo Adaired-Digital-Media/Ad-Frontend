@@ -267,7 +267,7 @@ export const routes = {
     shop: '/ecommerce/#products',
     cart: '/ecommerce/cart',
     productForm: (slug: string) => `/ecommerce/products/form/${slug}`,
-    productDetails: (slug: string) => `/ecommerce/products/details/${slug}`,
+    // productDetails: (slug: string) => `/ecommerce/products/details/${slug}`,
     ediProduct: (slug: string) => `/ecommerce/products/${slug}/edit`,
     categories: '/ecommerce/categories',
     createCategory: '/ecommerce/categories/create',

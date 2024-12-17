@@ -1,13 +1,12 @@
 'use client';
 
 import { cn } from '@core/utils/class-names';
-import { Button as RizzBtn, Title } from 'rizzui';
+import { Title } from 'rizzui';
 import Button from '@web-components/Button';
 import OrderProducts from './order-products';
 import { routes } from '@/config/routes';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
 import { useCart } from '@/store/quick-cart/cart.context';
+// import { useParams } from 'next/navigation';
 
 export default function OrderSummery({
   isLoading,
@@ -16,7 +15,7 @@ export default function OrderSummery({
   className?: string;
   isLoading?: boolean;
 }) {
-  const params = useParams();
+  // const params = useParams();
   const { cartItems } = useCart();
 
   return (
@@ -32,7 +31,6 @@ export default function OrderSummery({
             Cart ({cartItems?.length} {cartItems?.length > 1 ? 'Items' : 'Item'}{' '}
             In Cart)
           </Title>
-
         </div>
         <div className="flex min-h-[270px] flex-col rounded-bl-[15px] rounded-br-[15px] border border-t-0 p-5">
           <div className="flex-1">
@@ -40,15 +38,6 @@ export default function OrderSummery({
           </div>
 
           {cartItems.length > 0 ? (
-            // <Link href={routes?.eCommerce?.cart}>
-            //   <Button
-            //     type="submit"
-            //     isLoading={isLoading}
-            //     className="mt-3 w-full text-base @md:h-12"
-            //   >
-            //     {'View Cart'}
-            //   </Button>
-            // </Link>
             <Button
               title={'View Cart'}
               className="flex w-full justify-center bg-black"
@@ -56,6 +45,7 @@ export default function OrderSummery({
               svgInnerClassName="!text-black"
               svgClassName="bg-white"
               type="button"
+              navigateTo={routes?.eCommerce?.cart}
             />
           ) : (
             <Button
@@ -65,7 +55,7 @@ export default function OrderSummery({
               svgInnerClassName="!text-black"
               svgClassName="bg-white"
               type="button"
-              navigateTo={routes?.eCommerce?.cart}
+              navigateTo={routes?.eCommerce?.products}
             />
           )}
         </div>

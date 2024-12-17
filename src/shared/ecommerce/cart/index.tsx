@@ -69,6 +69,14 @@ export default function CartPageWrapper() {
     }
   };
 
+  if (cartItems.length <= 0) {
+    return (
+      <SmallWidthContainer className="@container">
+        <Empty image={<EmptyProductBoxIcon />} text="No Product in the Cart" />
+      </SmallWidthContainer>
+    );
+  }
+
   return (
     <SmallWidthContainer className="@container">
       <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
@@ -88,22 +96,27 @@ export default function CartPageWrapper() {
             />
           )}
         </div>
-        {session && cartItems.length > 0 && (
-          <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
-            <CartCalculations
-              handleSubmit={handleCheckout}
-              isLoading={isLoading}
-              session={session}
-            />
-          </div>
-        )}
+
+        <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
+          <CartCalculations
+            handleSubmit={handleCheckout}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            session={session}
+          />
+        </div>
       </div>
     </SmallWidthContainer>
   );
 }
 
 // total cart balance calculation
-function CartCalculations({ handleSubmit, isLoading, session }: any) {
+function CartCalculations({
+  handleSubmit,
+  isLoading,
+  session,
+  setIsLoading,
+}: any) {
   const router = useRouter();
   const { cartItems } = useCart();
 
@@ -124,7 +137,10 @@ function CartCalculations({ handleSubmit, isLoading, session }: any) {
             className="flex items-center justify-between"
           >
             <Title as="h3" className="mb-1 text-base font-semibold">
-              <Link href={routes.eCommerce.productDetails(item.productId)}>
+              <Link
+                // href={routes.eCommerce.productDetails(item.productId)}
+                href={''}
+              >
                 {item?.productName}
               </Link>
             </Title>
@@ -154,8 +170,12 @@ function CartCalculations({ handleSubmit, isLoading, session }: any) {
           <Button
             size="xl"
             rounded="pill"
-            onClick={() => router.push('/auth/sigin')}
+            onClick={() => {
+              setIsLoading(true);
+              router.push(routes.auth.signIn);
+            }}
             className="w-full"
+            isLoading={isLoading}
           >
             Login to Checkout
           </Button>

@@ -12,6 +12,7 @@ declare module 'next-auth' {
     isAdmin: boolean;
     userStatus: boolean;
     role?: Role;
+    cart?: any;
     accessToken?: string;
   }
 
@@ -35,6 +36,7 @@ declare module 'next-auth' {
     updatedAt: string;
     __v: number;
   }
+
 }
 
 declare module 'next-auth/jwt' {
@@ -48,6 +50,7 @@ declare module 'next-auth/jwt' {
     isAdmin: boolean;
     userStatus: boolean;
     role?: Role;
+    cart?:any;
     accessToken?: string;
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { routes } from '@/config/routes';
 import { NextAuthConfig } from 'next-auth';
 import Google from 'next-auth/providers/google';
@@ -69,6 +70,7 @@ export default {
         token.isAdmin = user.isAdmin;
         token.userStatus = user.userStatus;
         token.role = user.role;
+        token.cart = user.cart;
         token.accessToken = user.accessToken;
       }
       if (trigger === 'update' && session) {
@@ -85,6 +87,7 @@ export default {
       session.user.isAdmin = token.isAdmin;
       session.user.userStatus = token.userStatus;
       session.user.role = token.role;
+      session.user.cart = token.cart
       session.user.accessToken = token.accessToken as string;
       return session;
     },

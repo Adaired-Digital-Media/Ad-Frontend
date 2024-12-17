@@ -1,4 +1,5 @@
 'use client';
+
 import { cn } from '@core/utils/class-names';
 import { Icon } from '@iconify/react';
 import { Badge } from 'rizzui';

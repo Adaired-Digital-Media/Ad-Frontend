@@ -17,7 +17,6 @@ const initialValues: LoginSchema = {
 
 export default function SignInForm() {
   const onSubmit: SubmitHandler<LoginSchema> = (data) => {
-    console.log(data);
     signIn('credentials', {
       ...data,
     });

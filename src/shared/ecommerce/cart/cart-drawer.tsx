@@ -26,7 +26,7 @@ export default function CartDrawer() {
   // list of included pages
   const includedPaths: string[] = [
     routes.eCommerce.shop,
-    routes.eCommerce.productDetails(params?.slug as string),
+    // routes.eCommerce.productDetails(params?.slug as string),
   ];
 
   //   const isPathIncluded = includedPaths.some((path) => pathname === path);
