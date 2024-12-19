@@ -2,25 +2,26 @@ import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Empty, EmptyProductBoxIcon } from 'rizzui';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../@core/utils/class-names';
 import parse from 'html-react-parser';
 import { Icon } from '@iconify/react';
-import { Tabs } from '@core/ui/aceternity-ui/tabs';
-import TwoColumnGrid from '@core/components/twoColumnGrid';
+import { Tabs } from '../../../@core/ui/aceternity-ui/tabs';
+import TwoColumnGrid from '../../../@core/components/twoColumnGrid';
 import SmallContainer from '@/app/(website)/components/SmallWidthContainer';
-import IconBox from '@core/components/iconBox';
-import IconList from '@core/components/iconList';
+import IconBox from '../../../@core/components/iconBox';
+import IconList from '../../../@core/components/iconList';
 import { ProductCategory } from '@/types';
 import { routes } from '@/config/routes';
-import { generateSlug } from '@core/utils/generate-slug';
+import { generateSlug } from '../../../@core/utils/generate-slug';
 import {
   HeroSectionDetails,
   StandOutSectionDetails,
   ApproachSectionDetails,
   SurferSEOSectionDetails,
   ProductSectionDetails,
-} from '@core/data/website/Landingpage';
+} from '../../../@core/data/website/Landingpage';
 import { FAQSection } from '@web-components/eComFaqSection';
+import { EcomPageForm } from '../forms/EcomForm';
 const Landing = () => {
   return (
     <>
@@ -38,6 +39,7 @@ export default Landing;
 const HeroSection = () => {
   return (
     <div
+      id="heroSection"
       className={cn(
         `flex items-end justify-center overflow-hidden bg-[#FFF9F1]`
       )}
@@ -124,7 +126,7 @@ const HeroSection = () => {
 };
 const StandOutSection = () => {
   return (
-    <SmallContainer>
+    <SmallContainer id="standoutSection">
       <TwoColumnGrid>
         {' '}
         <div className={cn(`h-full w-full rounded-2xl bg-[#EDEDED]`)} />{' '}
@@ -140,7 +142,7 @@ const StandOutSection = () => {
             titleClassName={`text-[#424242] font-poppins text-base font-regular pl-[35px] py-1`}
           />{' '}
           <h2 className={cn(`bhw_h2`)}>{StandOutSectionDetails.title}</h2>{' '}
-          <div className={cn(`space-y-[10px] text-[#424242]`)}>
+          <div className={cn(`space-y-[10px] text-[#424242] text-base`)}>
             {' '}
             {parse(StandOutSectionDetails.description)}{' '}
           </div>
@@ -233,7 +235,7 @@ const ProductSection = async () => {
 };
 const ApproachSection = () => {
   return (
-    <SmallContainer>
+    <SmallContainer id='approachSection'>
       {' '}
       <>
         {' '}
@@ -267,7 +269,7 @@ const ApproachSection = () => {
 };
 const SurferSEOSection = () => {
   return (
-    <section className={cn('overflow-hidden bg-[#FFFBF5]')}>
+    <section className={cn('overflow-hidden bg-[#FFFBF5]')} id="surferSeoSection">
       {' '}
       <SmallContainer>
         {' '}
@@ -339,7 +341,7 @@ const SurferSEOSection = () => {
 };
 const ContactUsSection = () => {
   return (
-    <SmallContainer>
+    <SmallContainer id="contact">
       {' '}
       <TwoColumnGrid className={cn(`gap-x-20`)}>
         {' '}
@@ -374,7 +376,7 @@ const ContactUsSection = () => {
                 drive results{' '}
               </p>{' '}
             </div>
-            {/* <LandingPageForm /> */}{' '}
+            <EcomPageForm />
           </div>{' '}
         </div>{' '}
       </TwoColumnGrid>{' '}

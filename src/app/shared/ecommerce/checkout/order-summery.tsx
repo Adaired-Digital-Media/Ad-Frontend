@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import { Title } from 'rizzui';
 import Button from '@web-components/Button';
 import OrderProducts from './order-products';

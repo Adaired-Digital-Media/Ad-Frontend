@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@core/utils/class-names";
+import { cn } from "../../utils/class-names";
 import React, { FC } from "react";
 import { Icon } from "@iconify/react";
 import { Button } from "rizzui";

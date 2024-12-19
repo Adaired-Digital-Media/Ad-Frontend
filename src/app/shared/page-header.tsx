@@ -1,6 +1,6 @@
 import { Title } from 'rizzui';
-import {cn} from '@core/utils/class-names';
-import Breadcrumb from '@core/ui/breadcrumb';
+import {cn} from '../../@core/utils/class-names';
+import Breadcrumb from '../../@core/ui/breadcrumb';
 
 export type PageHeaderTypes = {
   title: string;

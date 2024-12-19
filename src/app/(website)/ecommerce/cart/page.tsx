@@ -1,7 +1,7 @@
-import CartTemplate from '@shared/ecommerce/cart';
+import CartTemplate from '@/app/shared/ecommerce/cart';
 import SmallWidthContainer from '../../components/SmallWidthContainer';
-import { cn } from '@core/utils/class-names';
-import PageHeader from '@shared/page-header';
+import { cn } from '../../../../@core/utils/class-names';
+import PageHeader from '@/app/shared/page-header';
 import { routes } from '@/config/routes';
 const pageHeader = {
   title: 'Cart',

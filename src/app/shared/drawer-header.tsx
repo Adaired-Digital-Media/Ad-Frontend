@@ -1,7 +1,7 @@
 'use client';
 
 import { Title, ActionIcon } from 'rizzui';
-import {cn} from '@core/utils/class-names';
+import {cn} from '../../@core/utils/class-names';
 import { PiXBold } from 'react-icons/pi';
 
 type DrawerHeaderProps = {

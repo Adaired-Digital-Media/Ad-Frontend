@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import { Icons } from '@/app/(website)/components/Icons';
 import React, { useEffect, useState, useRef } from 'react';
 

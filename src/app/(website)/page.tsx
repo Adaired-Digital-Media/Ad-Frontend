@@ -6,8 +6,8 @@ import BannerSlider from '@/app/(website)/components/BannerSlider';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
 import Button from '@/app/(website)/components/Button';
 import parse from 'html-react-parser';
-import { InfiniteMovingCards } from '@/@core/ui/aceternity-ui/infinite-moving-cards';
-import { HoverEffect } from '@core/ui/aceternity-ui/card-hover-effect';
+import { InfiniteMovingCards } from '../../@core/ui/aceternity-ui/infinite-moving-cards';
+import { HoverEffect } from '../../@core/ui/aceternity-ui/card-hover-effect';
 import HomepageForm from './forms/HomepageForm';
 
 // Data
@@ -18,7 +18,7 @@ import {
   GrowthSectionData,
   LogoSliderSectionData,
   ServiceSectionData,
-} from '@core/data/website/Homepage';
+} from '../../@core/data/website/Homepage';
 export default function HomePage() {
   return (
     <>

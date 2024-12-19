@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Title, Button } from 'rizzui';
 import { PiHouseLineBold } from 'react-icons/pi';
-import SocialItems from '@/@core/ui/rizzui-ui/social-shares';
+import SocialItems from '../@core/ui/rizzui-ui/social-shares';
 // import { siteConfig } from '@/config/site.config';
 import NotFoundImg from '@public/not-found.png';
 

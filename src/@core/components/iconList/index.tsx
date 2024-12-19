@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { cn } from "@core/utils/class-names";
+import { cn } from "../../utils/class-names";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 

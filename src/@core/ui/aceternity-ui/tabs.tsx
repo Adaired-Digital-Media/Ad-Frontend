@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../utils/class-names';
 
 type Tab = {
   title: string;

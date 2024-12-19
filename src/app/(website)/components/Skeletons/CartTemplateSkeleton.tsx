@@ -1,4 +1,4 @@
-import { Skeleton } from "@core/ui/shadcn-ui/skeleton";
+import { Skeleton } from "../../../../@core/ui/shadcn-ui/skeleton";
 
 export function CartTemplateSkeleton() {
   return (

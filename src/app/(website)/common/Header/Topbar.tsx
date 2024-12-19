@@ -1,6 +1,6 @@
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import MaxWidthWrapper from '@/app/(website)/components/MaxWidthWrapper';
-import { Separator } from '@/@core/ui/shadcn-ui/separator';
+import { Separator } from '../../../../@core/ui/shadcn-ui/separator';
 import Link from 'next/link';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
 
@@ -21,7 +21,7 @@ const Topbar = ({ className }: Props) => {
           >
             <CldImage
               src="Static Website Images/Us_Flag_a3eloz"
-              alt="alt"
+              alt="Us Flag"
               width={20}
               height={20}
             />
@@ -39,7 +39,7 @@ const Topbar = ({ className }: Props) => {
           >
             <CldImage
               src="Static Website Images/Indian_Flag_ncjo16"
-              alt="alt"
+              alt="Indian Flag"
               width={20}
               height={20}
             />

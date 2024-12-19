@@ -1,5 +1,5 @@
 import { routes } from '@/config/routes';
-import { CouponType } from '@core/config/enums';
+import { CouponType } from '../@core/config/enums';
 
 export type HeaderItems = (typeof routes.websiteNav)[number];
 

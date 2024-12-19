@@ -1,64 +1,82 @@
 'use client';
-import { cn } from '@core/utils/class-names';
+
+import { cn } from '../../../../@core/utils/class-names';
 import Topbar from './Topbar';
 import { useState, useEffect } from 'react';
 import MaxWidthWrapper from '../../components/MaxWidthWrapper';
+import SmallWidthContainer from '../../components/SmallWidthContainer';
 import Link from 'next/link';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
 import MobileNav from './MobileNav';
 import NavItems from './NavItems';
+import { usePathname } from 'next/navigation';
+import { debounce } from 'lodash';
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const [isAtTop, setIsAtTop] = useState(true);
   const [isWindowScrollingUp, setIsWindowScrollingUp] = useState(true);
   const [isScreenScrolled, setIsScreenScrolled] = useState(false);
-  const [isAtTop, setIsAtTop] = useState(true);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   useEffect(() => {
+    let lastScrollTop = 0;
+
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       setIsAtTop(scrollTop < 100);
       setIsScreenScrolled(scrollTop > 100);
       setIsWindowScrollingUp(scrollTop < lastScrollTop);
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+      lastScrollTop = Math.max(0, scrollTop);
     };
 
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', handleScroll);
+    const debouncedHandleScroll = debounce(handleScroll, 50);
+    window.addEventListener('scroll', debouncedHandleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', debouncedHandleScroll);
     };
   }, []);
 
   const openSidebar = () => setIsSidebarVisible(true);
   const closeSidebar = () => setIsSidebarVisible(false);
 
+  const WrapperComponent = pathname.startsWith('/ecommerce')
+    ? SmallWidthContainer
+    : MaxWidthWrapper;
+
   return (
     <>
-      <Topbar
-        className={
-          isWindowScrollingUp || isAtTop
-            ? 'origin-top scale-y-100'
-            : 'origin-top scale-y-0'
-        }
-      />
+      {!pathname.startsWith('/ecommerce') && (
+        <Topbar
+          className={cn(
+            isWindowScrollingUp || isAtTop
+              ? 'origin-top scale-y-100'
+              : 'origin-top scale-y-0'
+          )}
+        />
+      )}
+
       <section
         className={cn(
-          `sticky top-0 z-[100]`,
+          'sticky top-0 z-[100] transition-shadow duration-300',
           isScreenScrolled && !isAtTop
             ? 'bg-white shadow-md'
             : 'bg-transparent shadow-none'
         )}
       >
-        <div className={`sticky inset-x-0 top-0 z-50 h-16 bg-white lg:h-20`}>
-          <header className={cn(`relative flex items-center bg-white`)}>
-            <MaxWidthWrapper>
-              <div className={cn(`relative`)}>
-                <div className={cn`flex h-16 items-center lg:h-20`}>
+        <div className="sticky inset-x-0 top-0 z-50 h-16 bg-white lg:h-20">
+          <header className="relative flex items-center bg-white">
+            <WrapperComponent
+              className={cn(
+                `${pathname.startsWith('/ecommerce') ? 'py-0 xl:py-0 2xl:py-0 3xl:py-0' : ''}`
+              )}
+            >
+              <div className="relative">
+                <div className="flex h-16 items-center lg:h-20">
                   <div>
                     <Link
-                      href={'/'}
+                      href="/"
                       className="sm:w-10/0 flex w-28 items-center md:w-36 lg:w-10/12 xl:w-full"
                     >
                       <div className="relative h-[60px] w-[170px] md:h-[72px] lg:h-[80px] xl:h-[89px]">
@@ -70,12 +88,11 @@ const Navbar = () => {
                       </div>
                     </Link>
                   </div>
-                  <div className={cn(`ml-auto flex items-center`)}>
-                    <div
-                      aria-label="menu"
-                      className={cn(
-                        `header__menu-toggle block cursor-pointer text-3xl lg:hidden`
-                      )}
+                  <div className="ml-auto flex items-center">
+                    {/* Mobile Menu Toggle */}
+                    <button
+                      aria-label="Open Menu"
+                      className="header__menu-toggle block cursor-pointer text-3xl lg:hidden"
                       onClick={openSidebar}
                     >
                       <svg
@@ -93,18 +110,16 @@ const Navbar = () => {
                         <line x1="3" y1="6" x2="21" y2="6"></line>
                         <line x1="3" y1="18" x2="21" y2="18"></line>
                       </svg>
-                    </div>
-                    <div
-                      className={cn(
-                        `hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6`
-                      )}
-                    >
+                    </button>
+                    {/* Desktop Nav Items */}
+                    <nav className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                       <NavItems />
-                    </div>
+                    </nav>
                   </div>
                 </div>
               </div>
-            </MaxWidthWrapper>
+            </WrapperComponent>
+            {/* Mobile Navigation */}
             <MobileNav
               isSidebarVisible={isSidebarVisible}
               closeSidebar={closeSidebar}

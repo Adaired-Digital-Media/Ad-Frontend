@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { generateSlug } from '@core/utils/generate-slug';
+import { generateSlug } from '../../../../@core/utils/generate-slug';
 
 export default function ProductDetails() {
   const params = useParams();

@@ -7,7 +7,7 @@ import QuantityInput from './quantity-input';
 import Link from 'next/link';
 import { Title, Text } from 'rizzui';
 import { routes } from '@/config/routes';
-import { toCurrency } from '@core/utils/to-currency';
+import { toCurrency } from '../../../../@core/utils/to-currency';
 import RemoveItem from './remove-item';
 
 function CartProduct({ product }: { product: CartItem }) {

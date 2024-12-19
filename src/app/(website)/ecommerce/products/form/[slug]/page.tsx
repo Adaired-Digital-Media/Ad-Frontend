@@ -1,11 +1,11 @@
 import { auth } from '@/auth';
-import { cn } from '@core/utils/class-names';
-import { ProductForm as PForm } from '@shared/ecommerce/product/product-form';
+import { cn } from '../../../../../../@core/utils/class-names';
+import { ProductForm as PForm } from '@/app/shared/ecommerce/product/product-form';
 import SmallWidthContainer from '@/app/(website)/components/SmallWidthContainer';
 import dynamic from 'next/dynamic';
 
 const OrderSummery = dynamic(
-  () => import('@/shared/ecommerce/checkout/order-summery'),
+  () => import('@/app/shared/ecommerce/checkout/order-summery'),
   {
     ssr: false,
   }

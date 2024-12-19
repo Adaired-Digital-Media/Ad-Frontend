@@ -3,7 +3,7 @@
 import { Placement } from '@floating-ui/react';
 import { PiTrashBold, PiTrashFill } from 'react-icons/pi';
 import { ActionIcon, Popover, Title, Text, Button } from 'rizzui';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import { useCart } from '@/store/quick-cart/cart.context';
 
 interface RemoveItemProps {

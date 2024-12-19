@@ -234,31 +234,31 @@ export const routes = {
       value: 'contact',
     },
   ],
-  landingPageNav: [
+  ecommerceNav: [
     {
       label: 'Home',
       value: 'home',
-      href: '/landing-page',
+      href: '/ecommerce',
     },
     {
       label: 'Services',
       value: 'services',
-      href: '#service',
+      href: '/ecommerce#products',
     },
     {
       label: 'FAQs',
       value: 'faqs',
-      href: '#faqs',
+      href: '/ecommerce#faqs',
     },
     {
       label: 'Pricing',
       value: 'pricing',
-      href: '#pricing',
+      href: '/ecommerce#products',
     },
     {
       label: 'Contact',
-      value: 'pricing',
-      href: '#pricing',
+      value: 'contact',
+      href: '/ecommerce#contact',
     },
   ],
   eCommerce: {

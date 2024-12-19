@@ -1,13 +1,13 @@
 'use client';
 import Image from 'next/image';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import { Empty, Title } from 'rizzui';
 import { CartItem } from '@/types';
-import SimpleBar from '@core/ui/simplebar';
+import SimpleBar from '../../../../@core/ui/simplebar';
 import { PiMinus, PiPlus, PiTrash } from 'react-icons/pi';
 import Link from 'next/link';
 import { routes } from '@/config/routes';
-import { toCurrency } from '@/@core/utils/to-currency';
+import { toCurrency } from '../../../../@core/utils/to-currency';
 
 export default function OrderProducts({
   items,

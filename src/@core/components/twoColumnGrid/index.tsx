@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../utils/class-names';
 import { ITwoColumnGridTypes } from '../../types/TwocolumnGridTypes';
 
 const TwoColumnGrid: FC<ITwoColumnGridTypes> = ({

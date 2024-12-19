@@ -19,7 +19,6 @@ export default function AuthWrapperOne({
   description,
   pageImage,
   isSocialLoginActive = false,
-  isSignIn = false,
 }: {
   children: React.ReactNode;
   title: React.ReactNode;

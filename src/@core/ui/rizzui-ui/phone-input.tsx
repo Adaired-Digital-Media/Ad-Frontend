@@ -139,7 +139,8 @@ export const PhoneNumber = ({
   errorClassName,
   className,
   ...props
-}: PhoneNumberProps) => (
+}: PhoneNumberProps
+) => (
   <div className={cn('rizzui-phone-number', className)}>
     {label ? (
       <label className={cn('block', labelClasses.size[size], labelClassName)}>

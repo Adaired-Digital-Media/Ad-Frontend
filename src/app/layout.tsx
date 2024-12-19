@@ -1,12 +1,15 @@
 import { Toaster } from 'react-hot-toast';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../@core/utils/class-names';
 import { inter, lexendDeca, nunito, dm, baby, poppins } from '@/app/fonts';
 import Script from 'next/script';
 import { siteConfig } from '@/config/site.config';
-import NextProgress from '@/@core/components/next-progress';
+import NextProgress from '../@core/components/next-progress';
+import { ReCaptchaProvider } from 'next-recaptcha-v3';
 
 // styles
 import '@/app/globals.css';
+import GlobalDrawer from '@/app/shared/drawer-views/container';
+import GlobalModal from '@/app/shared/modal-views/container';
 
 export const metadata = {
   title: siteConfig.title,
@@ -127,9 +130,13 @@ export default async function RootLayout({
           `font-inter antialiased`
         )}
       >
-        <NextProgress />
-        {children}
-        <Toaster />
+        <ReCaptchaProvider reCaptchaKey="6LdkMHAqAAAAAOlEvKHUbYfKzfpKGr9jNOD0oorN">
+          <NextProgress />
+          {children}
+          <Toaster />
+          <GlobalDrawer />
+          <GlobalModal/>
+        </ReCaptchaProvider>
       </body>
     </html>
   );

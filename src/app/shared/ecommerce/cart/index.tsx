@@ -1,6 +1,6 @@
 'use client';
 
-import { Form } from '@/@core/ui/rizzui-ui/form';
+import { Form } from '../../../../@core/ui/rizzui-ui/form';
 import SmallWidthContainer from '@/app/(website)/components/SmallWidthContainer';
 import { routes } from '@/config/routes';
 import { useCart } from '@/store/quick-cart/cart.context';
@@ -11,11 +11,11 @@ import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Empty, EmptyProductBoxIcon, Title, Text, Input, Button } from 'rizzui';
 import { ProductSkeleton } from '@/app/(website)/components/Skeletons/ProductSkeleton';
-import { toCurrency } from '@/@core/utils/to-currency';
+import { toCurrency } from '../../../../@core/utils/to-currency';
 import { loadStripe } from '@stripe/stripe-js';
 import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react';
-import { cn } from '@/@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 
 const CartProduct = dynamic(() => import('./cart-product'), {
   loading: () => <ProductSkeleton />,

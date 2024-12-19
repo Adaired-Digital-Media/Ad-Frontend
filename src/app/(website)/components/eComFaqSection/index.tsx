@@ -1,15 +1,15 @@
 'use client';
 
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import SmallContainer from '../SmallWidthContainer';
 import { Accordion } from 'rizzui';
 import { FaChevronDown } from 'react-icons/fa';
 import { GoDotFill } from 'react-icons/go';
-import { FAQSectionDetails } from '@/@core/data/website/Landingpage';
+import { FAQSectionDetails } from '../../../../@core/data/website/Landingpage';
 
 export const FAQSection = () => {
   return (
-    <div className={cn('overflow-hidden bg-[#F6FBFF]')}>
+    <div className={cn('overflow-hidden bg-[#F6FBFF]')} id="faqs">
       <SmallContainer>
         <h2
           className={cn(

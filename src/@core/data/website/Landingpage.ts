@@ -12,7 +12,7 @@ export const HeroSectionDetails: IHeroSection = {
   description:
     "Get noticed online with specialized SEO-driven content writing solutions that engage, inform, and convert your audience. Our expert writers craft compelling articles, blogs, and web content tailored to your brand's unique voice, ensuring that every piece connects to your target market.",
   buttonText: 'Place Your Order',
-  buttonLink: '/landing-page',
+  buttonLink: '/ecommerce#products',
   phoneNumber: '+91 890740-0008',
   imageUrl: '/assets/images/hero_image_bhw.png',
 };

@@ -1,25 +1,22 @@
 'use client';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { cn } from '../../../@core/utils/class-names';
+import { Input, Select, Checkbox, Textarea, type SelectOption } from 'rizzui';
 import { Controller, useForm } from 'react-hook-form';
-import {
-  Input,
-  Select,
-  NumberInput,
-  Checkbox,
-  Textarea,
-  type SelectOption,
-} from 'rizzui';
 import Button from '@web-components/Button';
-import { PhoneNumber } from '@core/ui/rizzui-ui/phone-input';
-import { cn } from '@/@core/utils/class-names';
+import { PhoneNumber } from '../../../@core/ui/rizzui-ui/phone-input';
 import { routes } from '@/config/routes';
 import { FaDollarSign } from 'react-icons/fa6';
 import Link from 'next/link';
+import { useReCaptcha } from 'next-recaptcha-v3';
+import { FaCaretDown } from 'react-icons/fa';
+import { usePathname, useRouter } from 'next/navigation';
 
 const schema = z.object({
   gRecaptchaToken: z.string(),
   formId: z.string(),
+  formUrl: z.string(),
   name: z.string().min(1, { message: 'Name is required' }),
   email: z
     .string()
@@ -39,6 +36,10 @@ const schema = z.object({
 type SchemaType = z.infer<typeof schema>;
 
 const HomepageForm = () => {
+  const { executeRecaptcha } = useReCaptcha();
+  const pathname = usePathname();
+  const router = useRouter();
+
   const services =
     routes.websiteNav
       ?.find((item) => item.value === 'services')
@@ -48,11 +49,13 @@ const HomepageForm = () => {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SchemaType>({
     defaultValues: {
-      gRecaptchaToken: 'test',
+      gRecaptchaToken: '',
       formId: 'Homepage Form',
+      formUrl: `${process.env.NEXT_PUBLIC_SITE_URI}${pathname}`,
       name: '',
       email: '',
       phone: '',
@@ -64,30 +67,46 @@ const HomepageForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: SchemaType) => {
+  const onSubmit = async (data: SchemaType) => {
+    const token = await executeRecaptcha('homepage_form');
+    if (token) {
+      data.gRecaptchaToken = token;
+      reset();
+      // router.push('/thankyou');
+      // try {
+      //   const response = await formSubmission(values);
+      //   if (!response.sendMailSuccess) {
+      //     router.back();
+      //     toast({
+      //       variant: "destructive",
+      //       description: "Failed to send email",
+      //     });
+      //   }
+      // } catch (error) {
+      //   router.back();
+      // }
+    }
     console.log('Submitted data', data);
   };
 
   return (
-    <div className={cn(`z-2 rounded-lg bg-white p-6`)}>
-      <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+    <div className={cn(`z-2 rounded-lg bg-white px-6 py-10`)}>
+      <form className="space-y-7" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col justify-between gap-5 sm:flex-row">
           <Input
             type="text"
-            placeholder="John Doe"
+            placeholder="Name"
             {...register('name')}
-            variant="text"
-            className="w-full border-b-2"
-            inputClassName="border-none [&.is-focus]:ring-[0px] [&.is-hover]:border-transparent [&.is-focus]:border-transparent [&.is-focus]:ring-transparent"
+            className="w-full"
+            inputClassName="!border-0 !ring-0 !border-b-2 !rounded-none"
             error={errors.name?.message}
           />
           <Input
             type="email"
-            placeholder="Johndoe@mail.com"
+            placeholder="Email"
             {...register('email')}
-            variant="text"
-            className="w-full border-b-2"
-            inputClassName="border-none [&.is-focus]:ring-[0px] [&.is-hover]:border-transparent [&.is-focus]:border-transparent [&.is-focus]:ring-transparent"
+            className="w-full"
+            inputClassName="!border-0 !ring-0 !border-b-2 !rounded-none"
             error={errors.email?.message}
           />
         </div>
@@ -103,6 +122,7 @@ const HomepageForm = () => {
                 onChange={(value) => field.onChange(value)}
                 error={errors.phone?.message}
                 className="w-full"
+                inputClassName="!border-t-0 !border-r-0 !border-l-0 !rounded-none !border-b-2"
               />
             )}
           />
@@ -114,12 +134,14 @@ const HomepageForm = () => {
               <Select
                 value={value}
                 options={services}
+                suffix={<FaCaretDown />}
                 onChange={(v: SelectOption) => onChange(v.value)}
-                error={error?.message}
+                error={errors?.interest?.message}
                 displayValue={(selected: string) =>
                   services?.find((r) => r.value === selected)?.label ?? ''
                 }
-                selectClassName="border-none hover:border-none ring-[0px] hover:ring-[0px] focus:border-b-primary focus:ring-[0px] focus:ring-[0px] border border-muted ring-muted"
+                suffixClassName={cn(`text-[#F39019]`)}
+                selectClassName="!border-0 !ring-0 !border-b-2 !rounded-none"
               />
             )}
           />
@@ -132,14 +154,20 @@ const HomepageForm = () => {
           placeholder="Enter your budget"
           {...register('budget')}
           className="w-full border-b-2"
-            inputClassName="border-none ring-[0px] [&.is-focus]:ring-[0px] [&.is-hover]:border-transparent [&.is-focus]:border-transparent [&.is-focus]:ring-transparent"
+          inputClassName="border-none ring-[0px] [&.is-focus]:ring-[0px] [&.is-hover]:border-transparent [&.is-focus]:border-transparent [&.is-focus]:ring-transparent"
         />
 
-        <Textarea label="Message" {...register('message')} />
+        <Textarea
+          label="Message"
+          size="xl"
+          {...register('message')}
+          className="font-nunito text-lg"
+        />
 
         <Checkbox
+          {...register('terms')}
           label={
-            <p className='font-nunito'>
+            <p className="font-nunito">
               I accept the{' '}
               <Link
                 href="/terms-and-conditions"
@@ -150,6 +178,8 @@ const HomepageForm = () => {
               </Link>
             </p>
           }
+          labelClassName="text-lg"
+          error={errors?.terms?.message}
         />
 
         <Button

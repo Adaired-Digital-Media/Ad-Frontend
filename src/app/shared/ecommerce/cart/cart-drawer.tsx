@@ -11,7 +11,7 @@ const Drawer = dynamic(() => import('rizzui').then((module) => module.Drawer), {
   ssr: false,
 });
 const FloatingCartButton = dynamic(
-  () => import('@/shared/floating-cart-button'),
+  () => import('@/app/shared/floating-cart-button'),
   {
     ssr: false,
   }

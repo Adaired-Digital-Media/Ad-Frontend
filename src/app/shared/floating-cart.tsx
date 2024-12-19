@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import { PiShoppingCartBold } from 'react-icons/pi';
 import { routes } from '@/config/routes';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../@core/utils/class-names';
 
 const Drawer = dynamic(() => import('rizzui').then((module) => module.Drawer), {
   ssr: false,

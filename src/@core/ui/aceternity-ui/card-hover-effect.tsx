@@ -1,6 +1,6 @@
 'use client';
-import { cn } from '@core/utils/class-names';
-import { hexToHexWithOpacity } from '@core/utils/hexToHexWithOpacity';
+import { cn } from '../../utils/class-names';
+import { hexToHexWithOpacity } from '../../utils/hexToHexWithOpacity';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';

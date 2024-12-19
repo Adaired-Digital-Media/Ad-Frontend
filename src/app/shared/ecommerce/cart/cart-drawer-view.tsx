@@ -3,13 +3,13 @@
 import Link from 'next/link';
 import { useRouter } from 'nextjs-toploader/app';
 import isEmpty from 'lodash/isEmpty';
-import OrderProducts from '@shared/ecommerce/checkout/order-products';
-import { toCurrency } from '@core/utils/to-currency';
+import OrderProducts from '@/app/shared/ecommerce/checkout/order-products';
+import { toCurrency } from '../../../../@core/utils/to-currency';
 import { Title, Text, Button, EmptyProductBoxIcon } from 'rizzui';
-import { cn } from '@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import { routes } from '@/config/routes';
 import { CartItem } from '@/types';
-import DrawerHeader from '@shared/drawer-header';
+import DrawerHeader from '@/app/shared/drawer-header';
 
 type CartDrawerViewProps = {
   items: CartItem[];

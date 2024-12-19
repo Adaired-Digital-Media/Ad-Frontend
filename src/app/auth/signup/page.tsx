@@ -1,5 +1,5 @@
 // import Image from 'next/image';
-import UnderlineShape from '@core/components/shape/underline';
+import UnderlineShape from '../../../@core/components/shape/underline';
 import SignUpForm from './sign-up-form';
 import AuthWrapperOne from '@/app/shared/auth-layout/auth-wrapper-one';
 // import { metaObject } from '@/config/site.config';
