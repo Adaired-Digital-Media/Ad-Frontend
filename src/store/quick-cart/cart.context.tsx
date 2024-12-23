@@ -17,6 +17,8 @@ import { useSession } from 'next-auth/react';
 
 interface CartProviderState extends State {
   addItemToCart: (cartItem: Item) => void;
+  // increaseQuantity: (itemId: string) => void;
+  // decreaseQuantity: (itemId: string) => void;
   isLoading: boolean;
 }
 
@@ -54,21 +56,18 @@ export function CartProvider({
   const [pendingItems, setPendingItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const addItemToCart = (item: Item) => {
-  //   dispatch({ type: 'ADD_ITEM', item });
-  //   setPendingItems((prev) => [...prev, item]);
-  // };
   // Add item to cart
   const addItemToCart = (item: Item) => {
-    if (session?.user?.accessToken) {
-      // Directly sync with backend if logged in
-      // sendCartWithBackend([item]);
-      setPendingItems((prev) => [...prev, item]);
-    } else {
-      // Store item locally if not logged in
-      dispatch({ type: 'ADD_ITEM', item });
-      setPendingItems((prev) => [...prev, item]); // Store pending items for sync
-    }
+    dispatch({ type: 'ADD_ITEM', item });
+    setPendingItems((prev) => [...prev, item]);
+  };
+
+  const increaseQuantity = (itemId: string) => {
+    dispatch({ type: 'INCREASE_QUANTITY', itemId });
+  };
+
+  const decreaseQuantity = (itemId: string) => {
+    dispatch({ type: 'DECREASE_QUANTITY', itemId });
   };
 
   const sendCartWithBackend = useCallback(
@@ -146,39 +145,25 @@ export function CartProvider({
     }
   }, [session]);
 
-  // Sync pending items on user login
   useEffect(() => {
-    if (session && pendingItems.length > 0) {
-      sendCartWithBackend(pendingItems);
+    // If the user is logged in, send cart to the backend
+    if (session) {
+      const savedCartFromStorage = JSON.parse(savedCart || '{}');
+      if (
+        savedCartFromStorage &&
+        Object.keys(savedCartFromStorage).length > 0
+      ) {
+        sendCartWithBackend(savedCartFromStorage.cartItems);
+        saveCart(JSON.stringify(initialState));
+      }
     }
-  }, [session, pendingItems, sendCartWithBackend]);
 
-  // Save cart to local storage for logged-out users
-  useEffect(() => {
     if (!session) {
       saveCart(JSON.stringify(state));
     }
-  }, [state, session, saveCart]);
 
-  // useEffect(() => {
-  //   // If the user is logged in, send cart to the backend
-  //   if (session) {
-  //     const savedCartFromStorage = JSON.parse(savedCart || '{}');
-  //     if (
-  //       savedCartFromStorage &&
-  //       Object.keys(savedCartFromStorage).length > 0
-  //     ) {
-  //       sendCartWithBackend(savedCartFromStorage.cartItems);
-  //       saveCart(JSON.stringify(initialState));
-  //     }
-  //   }
-
-  //   if (!session) {
-  //     saveCart(JSON.stringify(state));
-  //   }
-
-  //   sendCartWithBackend(pendingItems);
-  // }, [state, saveCart, sendCartWithBackend, pendingItems, session, savedCart]);
+    sendCartWithBackend(pendingItems);
+  }, [state, saveCart, sendCartWithBackend, pendingItems, session, savedCart]);
 
   const value = useMemo(
     () => ({
@@ -195,4 +180,3 @@ export function CartProvider({
     </cartContext.Provider>
   );
 }
-

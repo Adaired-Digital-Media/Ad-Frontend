@@ -33,7 +33,7 @@ export default function QuantityInput({ product }: { product: CartItem }) {
         size="sm"
         variant="flat"
         className="h-auto px-1 py-1.5"
-        // onClick={() => addItemToCart(product, 1)}
+        onClick={() => addItemToCart(product)}
       >
         <PiPlusBold className="h-3.5 w-3.5" />
       </ActionIcon>

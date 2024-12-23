@@ -54,9 +54,13 @@ function CartProduct({ product }: { product: CartItem }) {
             {toCurrency(product.pricePerUnit)}
           </span>
         </div>
-        <Text className="mt-1 w-full max-w-xs truncate leading-6 2xl:max-w-lg">
-          {product?.pricePerUnit}
-        </Text>
+
+        <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
+          <li className="flex items-center gap-3 text-gray-500">
+            <span>Quantity :</span>
+            <span className="text-gray-1000">{product?.quantity}</span>
+          </li>
+        </ul>
 
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
           <QuantityInput product={product} />
