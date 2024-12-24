@@ -3,32 +3,38 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { CartItem, Product } from '@/types';
-import QuantityInput from './quantity-input';
 import Link from 'next/link';
 import { Title, Text } from 'rizzui';
 import { routes } from '@/config/routes';
 import { toCurrency } from '../../../../@core/utils/to-currency';
+import QuantityInput from './quantity-input';
 import RemoveItem from './remove-item';
+import { useCart } from '@/store/quick-cart/cart.context';
 
 function CartProduct({ product }: { product: CartItem }) {
-  const [fetchedProduct, setFetchedProduct] = useState<Product>();
+  const { cartItems } = useCart();
 
-  useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URI}/product/read-product?query=${product.productId}`
-        );
-        if (res.status === 200) {
-          setFetchedProduct(res.data.data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch product:', error);
-      }
-    }
+  // Find the updated product in the cart
+  const updatedProduct = cartItems.find((item) => item._id === product._id);
 
-    fetchProduct();
-  }, [product.productId]);
+  // const [fetchedProduct, setFetchedProduct] = useState<Product>();
+
+  // useEffect(() => {
+  //   async function fetchProduct() {
+  //     try {
+  //       const res = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_URI}/product/read-product?query=${product.productId}`
+  //       );
+  //       if (res.status === 200) {
+  //         setFetchedProduct(res.data.data);
+  //       }
+  //     } catch (error) {
+  //       console.error('Failed to fetch product:', error);
+  //     }
+  //   }
+
+  //   fetchProduct();
+  // }, [product.productId]);
 
   return (
     <div className="grid grid-cols-12 items-start gap-4 border-b border-muted py-6 first:pt-0 sm:flex sm:gap-6 2xl:py-8">
@@ -50,12 +56,23 @@ function CartProduct({ product }: { product: CartItem }) {
           >
             <Link href={''}>{product?.productName}</Link>
           </Title>
-          <span className="inline-block text-sm font-semibold text-gray-1000 sm:font-medium md:text-base 3xl:text-lg">
-            {toCurrency(product.pricePerUnit)}
-          </span>
+          <div>
+            <span className="inline-block text-sm font-semibold text-gray-500 sm:font-medium md:text-base 3xl:text-lg">
+              Total :
+            </span>{' '}
+            <span className="inline-block text-sm font-semibold text-gray-1000 sm:font-medium md:text-base 3xl:text-lg">
+              {toCurrency(product.totalPrice)}
+            </span>
+          </div>
         </div>
 
         <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
+          <li className="flex items-center gap-3 text-gray-500">
+            <span>Price / Unit :</span>
+            <span className="text-gray-1000">
+              {toCurrency(product.pricePerUnit)}
+            </span>
+          </li>
           <li className="flex items-center gap-3 text-gray-500">
             <span>Quantity :</span>
             <span className="text-gray-1000">{product?.quantity}</span>
@@ -65,7 +82,6 @@ function CartProduct({ product }: { product: CartItem }) {
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
           <QuantityInput product={product} />
           <div className="flex items-center gap-4">
-            {/* <AddToWishList /> */}
             <RemoveItem
               productID={product?._id || product?.productId}
               placement="bottom-end"

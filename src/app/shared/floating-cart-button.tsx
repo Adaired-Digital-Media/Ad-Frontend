@@ -17,7 +17,7 @@ export default function FloatingCartButton({
   return (
     <button
       className={cn(
-        'group/cartButton fixed end-0 top-1/2 z-[100] flex -translate-y-1/2 flex-col items-center justify-center gap-1.5 rounded-bl-[10px] rounded-tl-[10px] bg-[#1C5B98] p-3 pr-12 pt-6 text-xs font-semibold text-primary-foreground shadow-[0_25px_50px_-12px_#000000]',
+        'group/cartButton fixed end-0 top-1/2 z-[100] flex -translate-y-1/2 flex-col items-center justify-center gap-1.5 rounded-bl-[10px] rounded-tl-[10px] bg-[#1C5B98] p-2 pr-6 pt-5 text-xs font-semibold text-primary-foreground shadow-[0_25px_50px_-12px_#000000]',
         className
       )}
       {...props}

@@ -123,7 +123,7 @@ function CartCalculations({
   // Calculate total price dynamically
   const total = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
-    <div>
+    <div className={cn(' p-6 rounded-lg shadow-sm border border-dashed')}>
       <Title
         as="h2"
         className="border-b border-muted pb-4 text-center text-xl font-medium"

@@ -1,52 +1,68 @@
 import { CartItem as Item } from '@/types';
-import { addItem } from './cart.utils';
+import { addItem, updateQuantity, removeItem } from './cart.utils';
 
 type Action =
   | { type: 'ADD_ITEM'; item: Item }
   | { type: 'INITIALIZE_CART'; payload: Item[] }
-  | { type: 'INCREASE_QUANTITY'; itemId: string }
-  | { type: 'DECREASE_QUANTITY'; itemId: string };
+  | {
+      type: 'UPDATE_QUANTITY';
+      productEntryId: string;
+      action: 'INCREMENT' | 'DECREMENT';
+    }
+  | { type: 'REMOVE_ITEM'; productEntryId: string };
+
 export interface State {
   cartItems: Item[];
+  totalPrice: number;
 }
 
 export const initialState: State = {
   cartItems: [],
+  totalPrice: 0,
+};
+
+const updateItemTotalPrice = (items: Item[]) => {
+  return items.map((item) => ({
+    ...item,
+    totalPrice: item.pricePerUnit * item.quantity,
+  }));
 };
 
 export function cartReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'ADD_ITEM': {
       const items = addItem(state.cartItems, action.item);
+      const updatedItems = updateItemTotalPrice(items);
       return {
         ...state,
-        cartItems: items,
+        cartItems: updatedItems,
       };
     }
     case 'INITIALIZE_CART': {
+      const updatedItems = updateItemTotalPrice(action.payload);
       return {
         ...state,
-        cartItems: action.payload,
+        cartItems: updatedItems,
       };
     }
-    case 'INCREASE_QUANTITY': {
+    case 'UPDATE_QUANTITY': {
+      const items = updateQuantity(
+        state.cartItems,
+        action.productEntryId,
+        action.action
+      );
+      const updatedItems = updateItemTotalPrice(items);
       return {
         ...state,
-        cartItems: state.cartItems.map((item) =>
-          item._id === action.itemId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        ),
+        cartItems: updatedItems,
       };
     }
-    case 'DECREASE_QUANTITY': {
+    case 'REMOVE_ITEM': {
+      const items = removeItem(state.cartItems, action.productEntryId);
+      const updatedItems = updateItemTotalPrice(items);
       return {
         ...state,
-        cartItems: state.cartItems.map((item) =>
-          item._id === action.itemId && item.quantity > 1
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        ),
+        cartItems: updatedItems,
       };
     }
     default:

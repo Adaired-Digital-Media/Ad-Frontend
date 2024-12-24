@@ -14,11 +14,13 @@ import { useLocalStorage } from '../../@core/hooks/use-local-storage';
 import { CART_KEY } from '@/config/constants';
 import { CartItem as Item } from '@/types';
 import { useSession } from 'next-auth/react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface CartProviderState extends State {
   addItemToCart: (cartItem: Item) => void;
-  // increaseQuantity: (itemId: string) => void;
-  // decreaseQuantity: (itemId: string) => void;
+  increaseQuantity: (productEntryId: string) => void;
+  decreaseQuantity: (productEntryId: string) => void;
+  removeItemFromCart: (productEntryId: string) => void;
   isLoading: boolean;
 }
 
@@ -52,22 +54,42 @@ export function CartProvider({
     cartReducer,
     JSON.parse(savedCart || JSON.stringify(initialState))
   );
-
   const [pendingItems, setPendingItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // Add item to cart
   const addItemToCart = (item: Item) => {
-    dispatch({ type: 'ADD_ITEM', item });
-    setPendingItems((prev) => [...prev, item]);
+    const updatedItem = { ...item };
+
+    // Add a temporary _id if the user is not logged in
+    if (!session) {
+      updatedItem._id = uuidv4();
+    }
+
+    dispatch({ type: 'ADD_ITEM', item: updatedItem });
+    setPendingItems((prev) => [...prev, updatedItem]);
+
+    // Save updated cart to local storage if user is not logged in
+    if (!session) {
+      const updatedCart = {
+        ...state,
+        cartItems: [...state.cartItems, updatedItem],
+      };
+      saveCart(JSON.stringify(updatedCart));
+    }
   };
 
-  const increaseQuantity = (itemId: string) => {
-    dispatch({ type: 'INCREASE_QUANTITY', itemId });
+  const increaseQuantity = (productEntryId: string) => {
+    dispatch({ type: 'UPDATE_QUANTITY', productEntryId, action: 'INCREMENT' });
   };
 
-  const decreaseQuantity = (itemId: string) => {
-    dispatch({ type: 'DECREASE_QUANTITY', itemId });
+  const decreaseQuantity = (productEntryId: string) => {
+    dispatch({ type: 'UPDATE_QUANTITY', productEntryId, action: 'DECREMENT' });
+  };
+
+  const removeItemFromCart = (productEntryId: string) => {
+    dispatch({ type: 'REMOVE_ITEM', productEntryId });
   };
 
   const sendCartWithBackend = useCallback(
@@ -169,9 +191,12 @@ export function CartProvider({
     () => ({
       ...state,
       addItemToCart,
+      increaseQuantity,
+      decreaseQuantity,
+      removeItemFromCart,
       isLoading,
     }),
-    [state, isLoading]
+    [state, isLoading, totalPrice]
   );
 
   return (
