@@ -16,6 +16,8 @@ import { useEffect, useCallback, useState } from 'react';
 import { generateCartProduct } from '@/store/quick-cart/generate-cart-product';
 import { Product } from '@/types';
 import { useCart } from '@/store/quick-cart/cart.context';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/config/routes';
 
 // Utility function to generate Zod schema
 const generateFormSchema = (
@@ -106,6 +108,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   product,
   session,
 }) => {
+  const router = useRouter();
   const { isLoading, addItemToCart } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
@@ -232,13 +235,15 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               )}
             >
               <div className={cn(`flex items-center gap-6`)}>
-                <Image
-                  src={'https://picsum.photos/30'}
-                  width="60"
-                  height="60"
-                  alt={product.name}
-                  className={cn(`rounded-full bg-[#FAFAFA] p-2`)}
-                />
+                <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
+                  <Image
+                    src={product.featuredImage || 'https://picsum.photos/90'}
+                    alt={'icon'}
+                    fill
+                    priority
+                    className="h-full w-full p-2"
+                  />
+                </figure>
                 <Title
                   as="h4"
                   className={cn(`font-poppins text-[22px] font-semibold`)}
@@ -327,6 +332,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         className={cn(`w-full`)}
                         variant="flat"
                         inputClassName={cn(`bg-[#FAFAFA]`)}
+                        required={field.required}
                       />
                     )}
                     {errors[
@@ -413,6 +419,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         className={cn(`w-full`)}
                         variant="flat"
                         inputClassName={cn(`bg-[#FAFAFA]`)}
+                        required={field.required}
                       />
                     )}
                     {errors[
@@ -493,6 +500,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                           valueAsNumber: field.type === 'number',
                         }
                       )}
+                      required={field.required}
                       className={cn(`w-full`)}
                       variant="flat"
                       inputClassName={cn(`bg-[#FAFAFA]`)}
@@ -538,7 +546,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   className="flex w-full justify-center bg-white"
                   svgInnerClassName="text-white"
                   svgClassName="bg-[#1B5A96]"
-                  type="submit"
+                  type="button"
+                  onClick={(data) => {
+                    if (onSubmit(data)) {
+                      console.log('Payment Successful');
+                      alert('Payment Successful');
+                      router.push(routes?.eCommerce?.cart);
+                    }
+                  }}
                 />
               </div>
             </div>

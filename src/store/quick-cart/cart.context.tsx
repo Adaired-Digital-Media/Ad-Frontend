@@ -12,7 +12,7 @@ import {
 import { cartReducer, State, initialState } from './cart.reducer';
 import { useLocalStorage } from '../../@core/hooks/use-local-storage';
 import { CART_KEY } from '@/config/constants';
-import { CartItem as Item } from '@/types';
+import { CartItem as Item, UpdateCartItem } from '@/types';
 import { useSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -56,7 +56,6 @@ export function CartProvider({
   );
   const [pendingItems, setPendingItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   // Add item to cart
   const addItemToCart = (item: Item) => {
@@ -69,27 +68,6 @@ export function CartProvider({
 
     dispatch({ type: 'ADD_ITEM', item: updatedItem });
     setPendingItems((prev) => [...prev, updatedItem]);
-
-    // Save updated cart to local storage if user is not logged in
-    if (!session) {
-      const updatedCart = {
-        ...state,
-        cartItems: [...state.cartItems, updatedItem],
-      };
-      saveCart(JSON.stringify(updatedCart));
-    }
-  };
-
-  const increaseQuantity = (productEntryId: string) => {
-    dispatch({ type: 'UPDATE_QUANTITY', productEntryId, action: 'INCREMENT' });
-  };
-
-  const decreaseQuantity = (productEntryId: string) => {
-    dispatch({ type: 'UPDATE_QUANTITY', productEntryId, action: 'DECREMENT' });
-  };
-
-  const removeItemFromCart = (productEntryId: string) => {
-    dispatch({ type: 'REMOVE_ITEM', productEntryId });
   };
 
   const sendCartWithBackend = useCallback(
@@ -103,6 +81,7 @@ export function CartProvider({
             cartItems: items.map((item) => ({
               productId: item?.productId,
               productName: item?.productName,
+              productImage: item?.productImage,
               wordCount: item?.wordCount,
               quantity: item?.quantity,
               additionalInfo: item?.additionalInfo,
@@ -145,6 +124,65 @@ export function CartProvider({
     [session]
   );
 
+  const updateCartInBackend = async (updatedItem: UpdateCartItem) => {
+    if (!session?.user) return;
+    
+
+    try {
+      console.log('updatedItem', updatedItem);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URI}/cart/update-cart?userId=${session.user._id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.user.accessToken}`,
+          },
+          body: JSON.stringify(updatedItem),
+        }
+      );
+
+      if (!response.ok) {
+        console.error('Failed to update cart in backend:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating cart in backend:', error);
+    }
+  };
+
+  const increaseQuantity = (productEntryId: string) => {
+    dispatch({ type: 'UPDATE_QUANTITY', productEntryId, action: 'INCREMENT' });
+
+    const updatedItem = state.cartItems.find(
+      (item) => item._id === productEntryId
+    );
+    const updatedItemPayload = {
+      productEntryId: productEntryId || updatedItem?._id || '',
+      productId: updatedItem?.productId || '',
+      productName: updatedItem?.productName || undefined,
+      productImage: updatedItem?.productImage || undefined,
+      wordCount: updatedItem?.wordCount || undefined,
+      quantity: updatedItem?.quantity || undefined,
+      additionalInfo: updatedItem?.additionalInfo || undefined,
+      name: updatedItem?.name || undefined,
+      email: updatedItem?.email || undefined,
+      phone: updatedItem?.phone || undefined,
+      pricePerUnit: updatedItem?.pricePerUnit || undefined,
+      totalPrice: updatedItem?.totalPrice || undefined,
+      productType: updatedItem?.productType || undefined,
+    };
+
+    updateCartInBackend(updatedItemPayload);
+  };
+
+  const decreaseQuantity = (productEntryId: string) => {
+    dispatch({ type: 'UPDATE_QUANTITY', productEntryId, action: 'DECREMENT' });
+  };
+
+  const removeItemFromCart = (productEntryId: string) => {
+    dispatch({ type: 'REMOVE_ITEM', productEntryId });
+  };
+
   // Initialize cart from backend when user logs in
   useEffect(() => {
     if (session) {
@@ -168,23 +206,22 @@ export function CartProvider({
   }, [session]);
 
   useEffect(() => {
-    // If the user is logged in, send cart to the backend
-    if (session) {
-      const savedCartFromStorage = JSON.parse(savedCart || '{}');
-      if (
-        savedCartFromStorage &&
-        Object.keys(savedCartFromStorage).length > 0
-      ) {
-        sendCartWithBackend(savedCartFromStorage.cartItems);
-        saveCart(JSON.stringify(initialState));
-      }
-    }
-
     if (!session) {
       saveCart(JSON.stringify(state));
+    } else {
+      // If the user is logged in, send cart to the backend
+      if (session) {
+        const savedCartFromStorage = JSON.parse(savedCart || '{}');
+        if (
+          savedCartFromStorage &&
+          Object.keys(savedCartFromStorage).length > 0
+        ) {
+          sendCartWithBackend(savedCartFromStorage.cartItems);
+          saveCart(JSON.stringify(initialState));
+        }
+      }
+      sendCartWithBackend(pendingItems);
     }
-
-    sendCartWithBackend(pendingItems);
   }, [state, saveCart, sendCartWithBackend, pendingItems, session, savedCart]);
 
   const value = useMemo(
@@ -196,7 +233,7 @@ export function CartProvider({
       removeItemFromCart,
       isLoading,
     }),
-    [state, isLoading, totalPrice]
+    [state, isLoading]
   );
 
   return (

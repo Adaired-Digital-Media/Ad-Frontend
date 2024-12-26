@@ -13,6 +13,7 @@ export function generateCartProduct({
   return {
     productId: product._id,
     productName: product.name,
+    productImage: product.featuredImage,
     wordCount: parseInt(data.wordCount || '100'),
     quantity: parseInt(data.quantity || '1'),
     additionalInfo: data.additionalInfo || '',

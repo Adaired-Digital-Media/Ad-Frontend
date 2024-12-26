@@ -13,12 +13,10 @@ type Action =
 
 export interface State {
   cartItems: Item[];
-  totalPrice: number;
 }
 
 export const initialState: State = {
   cartItems: [],
-  totalPrice: 0,
 };
 
 const updateItemTotalPrice = (items: Item[]) => {

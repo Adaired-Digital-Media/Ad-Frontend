@@ -9,13 +9,8 @@ import { routes } from '@/config/routes';
 import { toCurrency } from '../../../../@core/utils/to-currency';
 import QuantityInput from './quantity-input';
 import RemoveItem from './remove-item';
-import { useCart } from '@/store/quick-cart/cart.context';
 
 function CartProduct({ product }: { product: CartItem }) {
-  const { cartItems } = useCart();
-
-  // Find the updated product in the cart
-  const updatedProduct = cartItems.find((item) => item._id === product._id);
 
   // const [fetchedProduct, setFetchedProduct] = useState<Product>();
 
@@ -40,7 +35,7 @@ function CartProduct({ product }: { product: CartItem }) {
     <div className="grid grid-cols-12 items-start gap-4 border-b border-muted py-6 first:pt-0 sm:flex sm:gap-6 2xl:py-8">
       <figure className="col-span-4 sm:max-w-[180px]">
         <Image
-          src={'https://picsum.photos/180'}
+          src={product?.productImage || 'https://picsum.photos/90'}
           alt={'icon'}
           width={180}
           height={180}

@@ -7,6 +7,7 @@ export type CartItem = {
   _id?: string;
   productId: string;
   productName: string;
+  productImage?: string;
   wordCount?: number;
   quantity: number;
   additionalInfo?: string;
@@ -16,6 +17,22 @@ export type CartItem = {
   pricePerUnit: number;
   totalPrice: number;
   productType: string;
+};
+
+export type UpdateCartItem = {
+  productEntryId: string;
+  productId: string;
+  productName?: string;
+  productImage?: string;
+  wordCount?: number;
+  quantity?: number;
+  additionalInfo?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  pricePerUnit?: number;
+  totalPrice?: number;
+  productType?: string;
 };
 
 export type Product = {

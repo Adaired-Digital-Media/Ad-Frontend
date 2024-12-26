@@ -34,7 +34,7 @@ export default function OrderProducts({
         {items.map((item) => {
           return (
             <div
-              key={item.productId}
+              key={item._id}
               className={cn(
                 'group relative flex items-center justify-between',
                 itemClassName
@@ -44,19 +44,18 @@ export default function OrderProducts({
                 <div className="flex items-center">
                   <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                     <Image
-                      src={''}
+                      src={item.productImage || 'https://picsum.photos/90'}
                       alt={'icon'}
                       fill
                       priority
-                      sizes="(max-width: 768px) 100vw"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full p-2"
                     />
                   </figure>
                   <div className="ps-3">
                     <Title as="h3" className="mb-1 text-base font-semibold">
                       <Link
                         // href={routes.eCommerce.productDetails(item.productId)}
-                        href={""}
+                        href={''}
                       >
                         {item?.productName}
                       </Link>

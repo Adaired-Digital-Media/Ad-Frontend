@@ -11,7 +11,7 @@ interface QuantityInputProps {
 }
 
 const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
-  const { increaseQuantity, decreaseQuantity } = useCart();
+  const { increaseQuantity, decreaseQuantity, removeItemFromCart } = useCart();
 
   return (
     <div className="inline-flex items-center rounded-lg border border-muted px-1.5 hover:border-gray-1000">
@@ -20,7 +20,13 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
         size="sm"
         variant="flat"
         className="h-auto px-1 py-[5px]"
-        onClick={() => decreaseQuantity(product._id as string)}
+        onClick={() => {
+          if (product.quantity === 1) {
+            removeItemFromCart(product._id as string);
+          } else {
+            decreaseQuantity(product._id as string);
+          }
+        }}
       >
         <PiMinusBold className="h-4 w-4" />
       </ActionIcon>
