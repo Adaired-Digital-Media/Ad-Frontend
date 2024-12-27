@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { Title, Collapse } from 'rizzui';
 import {cn} from '@core/utils/class-names';
 import { PiCaretDownBold } from 'react-icons/pi';
-import { menuItems } from '@/layouts/hydrogen/menu-items';
+import { menuItems } from '@/layouts/dashboard/menu-items';
 import StatusBadge from '@core/components/get-status-badge';
 
 export function SidebarMenu() {

@@ -1,4 +1,4 @@
-import WebsiteLayout from "@/layouts/website/layout";
+import WebsiteLayout from '@/layouts/website/layout';
 
 export default function DefaulWebsitetLayout({
   children,

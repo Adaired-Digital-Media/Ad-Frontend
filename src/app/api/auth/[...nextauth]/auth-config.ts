@@ -87,7 +87,7 @@ export default {
       session.user.isAdmin = token.isAdmin;
       session.user.userStatus = token.userStatus;
       session.user.role = token.role;
-      session.user.cart = token.cart
+      session.user.cart = token.cart;
       session.user.accessToken = token.accessToken as string;
       return session;
     },
@@ -102,9 +102,12 @@ export default {
       }
 
       if (parsedUrl.origin === baseUrl) {
-        return baseUrl;
+        if (parsedUrl.pathname === '/ecommerce/cart') {
+          return `${baseUrl}/ecommerce/cart`;
+        }
+        return `${baseUrl}/ecommerce/cart`;
       }
-      return baseUrl;
+      return `${baseUrl}/userDashboard`;
     },
   },
   pages: {
