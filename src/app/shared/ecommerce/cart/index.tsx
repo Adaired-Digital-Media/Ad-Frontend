@@ -16,6 +16,8 @@ import { loadStripe } from '@stripe/stripe-js';
 import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react';
 import { cn } from '../../../../@core/utils/class-names';
+import { usePathname } from 'next/navigation';
+import PageHeader from '@/app/shared/page-header';
 
 const CartProduct = dynamic(() => import('./cart-product'), {
   loading: () => <ProductSkeleton />,
@@ -27,9 +29,44 @@ type FormValues = {
 };
 
 export default function CartPageWrapper() {
+  const pathname = usePathname();
   const { cartItems } = useCart();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+
+  const isDashboard = pathname.includes('/dashboard');
+
+  const TagName = !isDashboard ? SmallWidthContainer : 'div';
+
+  const pageHeader = isDashboard
+    ? {
+        title: 'Cart',
+        breadcrumb: [
+
+          {
+            href: routes?.userDashboard?.dashboard,
+            name: 'Dashboard',
+          },
+          {
+            name: 'Cart',
+          },
+        ],
+      }
+    : {
+        title: 'Cart',
+        breadcrumb: [
+          {
+            name: 'Home',
+          },
+          {
+            href: routes.userDashboard.dashboard,
+            name: 'E-Commerce',
+          },
+          {
+            name: 'Cart',
+          },
+        ],
+      };
 
   const handleCheckout = async () => {
     const stripePromise = loadStripe(
@@ -71,42 +108,45 @@ export default function CartPageWrapper() {
 
   if (cartItems.length <= 0) {
     return (
-      <SmallWidthContainer className="@container">
+      <TagName className="@container">
         <Empty image={<EmptyProductBoxIcon />} text="No Product in the Cart" />
-      </SmallWidthContainer>
+      </TagName>
     );
   }
 
   return (
-    <SmallWidthContainer className="@container">
-      <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
-        <div
-          className={cn(
-            `${cartItems.length < 0 ? '@5xl:col-span-12 @6xl:col-span-12' : '@5xl:col-span-8 @6xl:col-span-7'}`
-          )}
-        >
-          {cartItems.length ? (
-            cartItems.map((item, idx) => (
-              <CartProduct key={idx} product={item} />
-            ))
-          ) : (
-            <Empty
-              image={<EmptyProductBoxIcon />}
-              text="No Product in the Cart"
-            />
-          )}
-        </div>
+    <>
+      {isDashboard && <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}  isDashboard={isDashboard}/>}
+      <TagName className="@container">
+        <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
+          <div
+            className={cn(
+              `${cartItems.length < 0 ? '@5xl:col-span-12 @6xl:col-span-12' : '@5xl:col-span-8 @6xl:col-span-7'}`
+            )}
+          >
+            {cartItems.length ? (
+              cartItems.map((item, idx) => (
+                <CartProduct key={idx} product={item} />
+              ))
+            ) : (
+              <Empty
+                image={<EmptyProductBoxIcon />}
+                text="No Product in the Cart"
+              />
+            )}
+          </div>
 
-        <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
-          <CartCalculations
-            handleSubmit={handleCheckout}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            session={session}
-          />
+          <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
+            <CartCalculations
+              handleSubmit={handleCheckout}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              session={session}
+            />
+          </div>
         </div>
-      </div>
-    </SmallWidthContainer>
+      </TagName>
+    </>
   );
 }
 
@@ -123,7 +163,7 @@ function CartCalculations({
   // Calculate total price dynamically
   const total = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
-    <div className={cn(' p-6 rounded-lg shadow-sm border border-dashed')}>
+    <div className={cn('rounded-lg border border-dashed p-6 shadow-sm')}>
       <Title
         as="h2"
         className="border-b border-muted pb-4 text-center text-xl font-medium"

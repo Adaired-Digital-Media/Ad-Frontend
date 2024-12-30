@@ -6,6 +6,7 @@ export type HeaderItems = (typeof routes.websiteNav)[number];
 export type CartItem = {
   _id?: string;
   productId: string;
+  category?: string;
   productName: string;
   productImage?: string;
   wordCount?: number;
@@ -16,12 +17,12 @@ export type CartItem = {
   phone?: string;
   pricePerUnit: number;
   totalPrice: number;
-  productType: string;
 };
 
 export type UpdateCartItem = {
   productEntryId: string;
   productId: string;
+  category?: string;
   productName?: string;
   productImage?: string;
   wordCount?: number;
@@ -32,7 +33,6 @@ export type UpdateCartItem = {
   phone?: string;
   pricePerUnit?: number;
   totalPrice?: number;
-  productType?: string;
 };
 
 export type Product = {
@@ -41,7 +41,7 @@ export type Product = {
   name: string;
   description: string;
   category: string;
-  subCategory: string;
+  subCategory: any;
   minimumQuantity?: number;
   slug: string;
   pricePerUnit: number;

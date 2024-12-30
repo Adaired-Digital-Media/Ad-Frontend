@@ -261,8 +261,15 @@ export const routes = {
       href: '/ecommerce#contact',
     },
   ],
+  userDashboard:{
+    website: '/ecommerce',
+    dashboard: '/dashboard',
+    accountSettings: '/dashboard/forms/profile-settings',
+    cart: '/dashboard/shop/cart',
+    orders: '/dashboard/orders',
+    invoices: '/dashboard/invoices',
+  },
   eCommerce: {
-    dashboard: '/ecommerce',
     products: '/ecommerce/#products',
     shop: '/ecommerce/#products',
     cart: '/ecommerce/cart',

@@ -80,6 +80,7 @@ export function CartProvider({
           const payload = {
             cartItems: items.map((item) => ({
               productId: item?.productId,
+              category: item?.category,
               productName: item?.productName,
               productImage: item?.productImage,
               wordCount: item?.wordCount,
@@ -90,7 +91,6 @@ export function CartProvider({
               phone: item?.phone,
               pricePerUnit: item?.pricePerUnit,
               totalPrice: item?.totalPrice,
-              productType: item?.productType,
             })),
           };
 
@@ -169,7 +169,6 @@ export function CartProvider({
       phone: updatedItem?.phone || undefined,
       pricePerUnit: updatedItem?.pricePerUnit || undefined,
       totalPrice: updatedItem?.totalPrice || undefined,
-      productType: updatedItem?.productType || undefined,
     };
 
     updateCartInBackend(updatedItemPayload);

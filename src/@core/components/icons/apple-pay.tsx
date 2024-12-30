@@ -1,4 +1,4 @@
-import cn from '../../utils/class-names';
+import {cn} from '@core/utils/class-names';
 
 export default function ApplePayIcon({
   className,

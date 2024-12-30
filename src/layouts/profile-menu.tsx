@@ -1,22 +1,23 @@
 'use client';
 
 import { Title, Text, Avatar, Button, Popover } from 'rizzui';
-import {cn} from '@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { routes } from '@/config/routes';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 export default function ProfileMenu({
   buttonClassName,
   avatarClassName,
-  username = false,
 }: {
   buttonClassName?: string;
   avatarClassName?: string;
   username?: boolean;
 }) {
+  const { data: session } = useSession();
   return (
     <ProfileMenuPopover>
       <Popover.Trigger>
@@ -31,16 +32,19 @@ export default function ProfileMenu({
             name="John Doe"
             className={cn('!h-9 w-9 sm:!h-10 sm:!w-10', avatarClassName)}
           />
-          {!!username && (
+          {/* {!!username && (
             <span className="username hidden text-gray-200 dark:text-gray-700 md:inline-flex">
               Hi, Andry
             </span>
-          )}
+          )} */}
         </button>
       </Popover.Trigger>
 
       <Popover.Content className="z-[9999] p-0 dark:bg-gray-100 [&>svg]:dark:fill-gray-100">
-        <DropdownMenu />
+        <DropdownMenu
+          name={session?.user?.name || 'John Doe'}
+          email={session?.user.email || 'user@mail.com'}
+        />
       </Popover.Content>
     </ProfileMenuPopover>
   );
@@ -68,22 +72,12 @@ function ProfileMenuPopover({ children }: React.PropsWithChildren<{}>) {
 
 const menuItems = [
   {
-    name: 'My Profile',
-    // href: routes.profile,
-    href:""
-  },
-  {
     name: 'Account Settings',
-    // href: routes.forms.profileSettings,
-    href:""
-  },
-  {
-    name: 'Activity Log',
-    href: '#',
+    href: routes.forms.profileSettings,
   },
 ];
 
-function DropdownMenu() {
+function DropdownMenu({ name, email }: { name?: string; email?: string }) {
   return (
     <div className="w-64 text-left rtl:text-right">
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
@@ -93,9 +87,9 @@ function DropdownMenu() {
         />
         <div className="ms-3">
           <Title as="h6" className="font-semibold">
-            Albert Flores
+            {name}
           </Title>
-          <Text className="text-gray-600">flores@doe.io</Text>
+          <Text className="text-gray-600">{email}</Text>
         </div>
       </div>
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">

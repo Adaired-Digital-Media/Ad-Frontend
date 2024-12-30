@@ -12,6 +12,7 @@ export function generateCartProduct({
 }) {
   return {
     productId: product._id,
+    category: product.subCategory[0].name,
     productName: product.name,
     productImage: product.featuredImage,
     wordCount: parseInt(data.wordCount || '100'),
@@ -22,6 +23,6 @@ export function generateCartProduct({
     phone: data.phone || '',
     pricePerUnit: product.pricePerUnit,
     totalPrice: price,
-    productType: data.productType || 'OneTime',
+    orderType: data.orderType || 'OneTime',
   };
 }

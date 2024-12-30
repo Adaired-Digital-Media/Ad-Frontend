@@ -35,8 +35,8 @@ export default function ProfileSettingsView() {
     ...defaultValues,
     first_name: firstName,
     last_name: lastName,
+    username: session?.user?.userName || '',
     email: session?.user?.email || '',
-    userName: session?.user?.userName || '',
     avatar: { name: '', url: session?.user?.image || '', size: 0 },
   };
 
@@ -54,7 +54,7 @@ export default function ProfileSettingsView() {
         className="@container"
         useFormProps={{
           mode: 'onChange',
-          defaultValues:defaultValuesWithSession,
+          defaultValues: defaultValuesWithSession,
         }}
       >
         {({
@@ -91,13 +91,29 @@ export default function ProfileSettingsView() {
                 </FormGroup>
 
                 <FormGroup
+                  title="Email Address"
+                  className="pt-7 @2xl:pt-9 @3xl:grid-cols-12 @3xl:pt-11"
+                >
+                  <Input
+                    className="col-span-full"
+                    prefix={
+                      <PiEnvelopeSimple className="h-6 w-6 text-gray-500" />
+                    }
+                    type="email"
+                    placeholder="georgia.young@example.com"
+                    {...register('email')}
+                    error={errors.email?.message}
+                    disabled
+                  />
+                </FormGroup>
+
+                <FormGroup
                   title="Username"
                   className="pt-7 @2xl:pt-9 @3xl:grid-cols-12 @3xl:pt-11"
                 >
                   <Input
                     className="col-span-full"
-                    // prefix="https://redq.io/"
-                    placeholder="First Name"
+                    placeholder=""
                     prefixClassName="relative pe-2.5 before:w-[1px] before:h-[38px] before:absolute before:bg-gray-300 before:-top-[9px] before:right-0"
                     {...register('username')}
                     error={errors.username?.message}
@@ -150,7 +166,7 @@ export function ProfileHeader({
             alt="profile-pic"
             fill
             sizes="(max-width: 768px) 100vw"
-            className="aspect-auto"
+            className="auto"
           />
         </div>
         <div>

@@ -68,7 +68,7 @@ export function SidebarMenu() {
 
                       return (
                         <Link
-                          href={dropdownItem?.href}
+                          href={dropdownItem?.href || ""}
                           key={dropdownItem?.name + index}
                           className={cn(
                             'mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2 2xl:mx-5',

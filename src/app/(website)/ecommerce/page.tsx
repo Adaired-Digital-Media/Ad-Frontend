@@ -142,7 +142,7 @@ const StandOutSection = () => {
             titleClassName={`text-[#424242] font-poppins text-base font-regular pl-[35px] py-1`}
           />{' '}
           <h2 className={cn(`bhw_h2`)}>{StandOutSectionDetails.title}</h2>{' '}
-          <div className={cn(`space-y-[10px] text-[#424242] text-base`)}>
+          <div className={cn(`space-y-[10px] text-base text-[#424242]`)}>
             {' '}
             {parse(StandOutSectionDetails.description)}{' '}
           </div>
@@ -202,11 +202,8 @@ const ProductSection = async () => {
   }));
   return (
     <section className={cn(`bg-[#F6FBFF]`)} id="products">
-      {' '}
       <SmallContainer>
-        {' '}
         <div className={cn(`space-y-[15px] pb-[40px] text-center`)}>
-          {' '}
           <IconList
             icon={ProductSectionDetails.subHeadingIconUrl}
             title={ProductSectionDetails.subHeadingText}
@@ -215,12 +212,11 @@ const ProductSection = async () => {
             iconContainerClassName={`bg-[#F39019] h-[40px] w-[40px] rounded-full flex items-center justify-center ring-4 ring-offset-0 ring-white absolute`}
             iconClassName={`h-[22px] w-[22px] text-white`}
             titleClassName={`text-[#424242] font-poppins text-base font-regular pl-[35px] py-1`}
-          />{' '}
+          />
           <div className={cn(`m-auto max-w-[661px] font-poppins`)}>
-            {' '}
-            {parse(ProductSectionDetails.title)}{' '}
-          </div>{' '}
-        </div>{' '}
+            {parse(ProductSectionDetails.title)}
+          </div>
+        </div>
         <Tabs
           tabs={tabs}
           containerClassName={cn(`bg-white rounded-full`)}
@@ -228,25 +224,21 @@ const ProductSection = async () => {
           tabContentClassName={cn(`font-poppins text-[17px] font-medium`)}
           activeTabClassName={cn(`bg-[#1C5B98] `)}
           activeTabContentClassName={cn(`text-white`)}
-        />{' '}
-      </SmallContainer>{' '}
+        />
+      </SmallContainer>
     </section>
   );
 };
 const ApproachSection = () => {
   return (
-    <SmallContainer id='approachSection'>
-      {' '}
+    <SmallContainer id="approachSection">
       <>
-        {' '}
-        <h2 className={cn(`bhw_h2`)}>{ApproachSectionDetails.title}</h2>{' '}
+        <h2 className={cn(`bhw_h2`)}>{ApproachSectionDetails.title}</h2>
         <p className={cn(`pt-[10px] text-[#424242]`)}>
-          {' '}
-          {ApproachSectionDetails.description}{' '}
-        </p>{' '}
+          {ApproachSectionDetails.description}
+        </p>
       </>
       <div className={cn(`grid grid-cols-2 gap-x-10 gap-y-[30px] pt-[30px]`)}>
-        {' '}
         {ApproachSectionDetails.iconList.map((iconBox, idx) => {
           return (
             <IconBox
@@ -262,14 +254,17 @@ const ApproachSection = () => {
               iconClassName={`h-[50px] w-[50px]`}
             />
           );
-        })}{' '}
-      </div>{' '}
+        })}
+      </div>
     </SmallContainer>
   );
 };
 const SurferSEOSection = () => {
   return (
-    <section className={cn('overflow-hidden bg-[#FFFBF5]')} id="surferSeoSection">
+    <section
+      className={cn('overflow-hidden bg-[#FFFBF5]')}
+      id="surferSeoSection"
+    >
       {' '}
       <SmallContainer>
         {' '}

@@ -6,6 +6,7 @@ export type PageHeaderTypes = {
   title: string;
   breadcrumb: { name: string; href?: string }[];
   className?: string;
+  isDashboard?: boolean;
 };
 
 export default function PageHeader({
@@ -13,6 +14,7 @@ export default function PageHeader({
   breadcrumb,
   children,
   className,
+  isDashboard,
 }: React.PropsWithChildren<PageHeaderTypes>) {
   return (
     <header className={cn('mb-6 @container xs:-mt-2 lg:mb-7', className)}>
@@ -20,7 +22,8 @@ export default function PageHeader({
         <div>
           <Title
             as="h2"
-            className="mb-2 text-[22px] lg:text-3xl 2xl:text-4xl"
+            // className="mb-2 text-[22px] lg:text-3xl 2xl:text-4xl"
+            className={cn(!isDashboard ? 'text-[22px] lg:text-3xl 2xl:text-4xl' : 'text-[22px] lg:text-2xl 4xl:text-[26px]', 'mb-2')}
           >
             {title}
           </Title>

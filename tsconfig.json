@@ -28,7 +28,7 @@
       "@app-types/*": ["./src/app/types/*"],
       "@global-types/*": ["./src/types/*"],
       "@shared/*": ["./src/app/shared/*"],
-      "@root/*": ["./src/*"]
+      "@root/*": ["./src/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

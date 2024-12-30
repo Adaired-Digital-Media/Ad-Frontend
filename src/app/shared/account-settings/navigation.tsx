@@ -7,41 +7,19 @@ import { useScrollableSlider } from '@core/hooks/use-scrollable-slider';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
 
-
 const menuItems = [
   {
-    label: 'My Details',
-    value: '/userDashboard/forms/profile-settings',
-  },
-  {
     label: 'Profile',
-    value: '/userDashboard/forms/profile-settings/profile',
+    value: '/userDashboard/forms/profile-settings',
   },
   {
     label: 'Password',
     value: '/userDashboard/forms/profile-settings/password',
   },
-  // {
-  //   label: 'Team',
-  //   value: '/forms/profile-settings/team',
-  // },
-  // {
-  //   label: 'Billing',
-  //   value: '/forms/profile-settings/billing',
-  // },
-  // {
-  //   label: 'Notifications',
-  //   value: '/forms/profile-settings/notification',
-  // },
-  // {
-  //   label: 'Integrations',
-  //   value: '/forms/profile-settings/integration',
-  // },
 ];
 
 export default function ProfileSettingsNav() {
   const pathname = usePathname();
-
 
   const {
     sliderEl,
