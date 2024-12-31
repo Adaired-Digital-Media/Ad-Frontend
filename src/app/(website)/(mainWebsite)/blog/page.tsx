@@ -1,8 +1,8 @@
 import React from "react";
-import PageBanner from "@/components/PageBanner";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import PopularPosts from "@/components/PopularPosts";
-import BlogWPagination from "@/components/BlogWithPagination";
+import PageBanner from "@web-components/PageBanner";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
+import PopularPosts from "@web-components/PopularPosts";
+import BlogWPagination from "@web-components/BlogWithPagination";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 async function getBlogs() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog?limit=10000`
+    `${process.env.NEXT_PUBLIC_API_URI}/blog/readBlog?limit=10000`
   );
   const data = await res.json();
   return data;

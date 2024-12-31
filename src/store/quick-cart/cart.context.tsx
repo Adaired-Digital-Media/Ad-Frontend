@@ -24,7 +24,14 @@ interface CartProviderState extends State {
   isLoading: boolean;
 }
 
-const cartContext = createContext<CartProviderState | undefined>(undefined);
+const cartContext = createContext<CartProviderState>({
+  ...initialState,
+  addItemToCart: () => {},
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
+  removeItemFromCart: () => {},
+  isLoading: false,
+});
 cartContext.displayName = 'CartContext';
 
 export const useCart = () => {

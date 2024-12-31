@@ -1,6 +1,7 @@
 "use client";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { cn, hexToHexWithOpacity } from "@/lib/utils";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
+import { hexToHexWithOpacity } from "@core/utils/hexToHexWithOpacity";
+import { cn } from "@core/utils/class-names";
 import React from "react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";

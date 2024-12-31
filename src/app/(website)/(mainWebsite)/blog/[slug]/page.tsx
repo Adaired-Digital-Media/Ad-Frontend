@@ -1,15 +1,16 @@
 import React from "react";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
 import Image from "next/image";
 import parse, { domToReact, Element, DOMNode } from "html-react-parser";
-import PageBanner from "@/components/PageBanner";
-import PopularPosts from "@/components/PopularPosts";
+import PageBanner from "@web-components/PageBanner";
+import PopularPosts from "@web-components/PopularPosts";
 import type { Metadata } from "next";
-import { formatDate, parseStyleString } from "@/lib/utils";
+import { parseStyleString } from "@core/utils/parseStyleString";
+import { formatDate } from "@core/utils/format-date";
 
 async function getBlogs({ params }: { params: { slug: string } }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog/${params.slug}`
+    `${process.env.NEXT_PUBLIC_API_URI}/blog/readBlog/${params.slug}`
   );
   const data = await res.json();
   return data;
@@ -22,7 +23,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const data = await getBlogs({ params });
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_DOMAIN_NAME}`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
     title: data.metaTitle
       ? data.metaTitle
       : `Read Our Blog for Helpful Tips and Ideas | Adaired`,
@@ -41,7 +42,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog`
+    `${process.env.NEXT_PUBLIC_API_URI}/blog/readBlog`
   ).then((res) => res.json());
   const blogs = res;
   return blogs.map((blog: any) => ({

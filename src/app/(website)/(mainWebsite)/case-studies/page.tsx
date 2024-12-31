@@ -1,8 +1,8 @@
-import PageBanner from "@/components/PageBanner";
+import PageBanner from "@web-components/PageBanner";
 import { ProcessSection } from "../about/page";
-import TestimonialSlider from "@/components/TestimonialSlider";
-import BlogCards from "@/components/BlogCard/BlogCards";
-import CaseStudyCards from "@/components/CaseStudyCards";
+import TestimonialSlider from "@web-components/TestimonialSlider";
+import BlogCards from "@web-components/BlogCard/BlogCards";
+import CaseStudyCards from "@web-components/CaseStudyCards";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 

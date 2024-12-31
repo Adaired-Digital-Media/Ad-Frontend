@@ -1,8 +1,9 @@
 "use client";
-import { cn, hexToHexWithOpacity } from "@/lib/utils";
+import { cn } from "@core/utils/class-names";
 import Link from "next/link";
 import React from "react";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@web-components/Icons";
+import { hexToHexWithOpacity } from "@core/utils/hexToHexWithOpacity";
 
 type CTAProps = {
   colorScheme: string;

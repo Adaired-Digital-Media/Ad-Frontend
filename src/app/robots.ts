@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 const robots = async () => {
-  const siteUrl: string | undefined = process.env.NEXT_PUBLIC_DOMAIN_NAME;
+  const siteUrl: string | undefined = process.env.NEXT_PUBLIC_SITE_URI;
 
   const metaRobots: MetadataRoute.Robots = {
     rules: [

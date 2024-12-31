@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
 import { motion } from "framer-motion";
 
 const Process = () => {

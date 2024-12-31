@@ -107,7 +107,7 @@ export default {
         }
         return `${baseUrl}/ecommerce/cart`;
       }
-      return `${baseUrl}/userDashboard`;
+      return `${baseUrl}/dashboard`;
     },
   },
   pages: {

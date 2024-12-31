@@ -1,12 +1,15 @@
-import React from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
-import parse from "html-react-parser";
+'use client';
+import React from 'react';
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from '@/components/ui/accordion';
+import { cn } from '@core/utils/class-names';
+import parse from 'html-react-parser';
+import { Accordion } from 'rizzui';
+import { BsChevronDown } from 'react-icons/bs';
 
 type FAQ = {
   question: string;
@@ -20,29 +23,32 @@ type FaqSectionProps = {
 const FaqSection: React.FC<FaqSectionProps> = ({ faqs }) => {
   return (
     <div className="space-y-3">
-      <h2 className="text-2xl md:text-[38px] leading-snug font-nunito font-semibold text-gray-900">
+      <h2 className="font-nunito text-2xl font-semibold leading-snug text-gray-900 md:text-[38px]">
         Frequently Asked Questions
       </h2>
-      <Accordion type="single" collapsible>
-        {faqs.map((faq, index) => {
-          return (
-            <AccordionItem
-              key={faq.question}
-              value={faq.question}
-              className={cn(
-                `data-[state=open]:bg-[#F8F8F8] data-[state=open]:p-3 data-[state=open]:md:p-6 md:p-6 data-[state=open]:rounded-lg data-[state=open]:border-b-0 transition-all duration-300 ease-in-out`,
+      {faqs.map((faq) => {
+        return (
+          <Accordion
+            key={faq.question}
+            className="mx-8 border-b last-of-type:border-b-0"
+          >
+            <Accordion.Header>
+              {({ open }) => (
+                <div className="flex w-full cursor-pointer items-center justify-between py-5 text-xl font-semibold">
+                  {faq.question}
+                  <BsChevronDown
+                    className={cn(
+                      'h-5 w-5 -rotate-90 transform transition-transform duration-300',
+                      open && '-rotate-0'
+                    )}
+                  />
+                </div>
               )}
-            >
-              <AccordionTrigger className="font-semibold sm:font-bold text-lg md:text-xl hover:no-underline text-left">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent>
-                <div>{parse(faq.answer)}</div>
-              </AccordionContent>
-            </AccordionItem>
-          );
-        })}
-      </Accordion>
+            </Accordion.Header>
+              <Accordion.Body className="mb-7">{parse(faq.answer)}</Accordion.Body>
+          </Accordion>
+        );
+      })}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@core/utils/class-names";
 import Link from "next/link";
 import React from "react";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@web-components/Icons";
 
 interface IchildService {
   childServiceName: string;

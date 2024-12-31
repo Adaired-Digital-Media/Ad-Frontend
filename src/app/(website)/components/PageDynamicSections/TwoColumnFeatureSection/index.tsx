@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { hexToHexWithOpacity } from "@/lib/utils";
+import { hexToHexWithOpacity } from "@core/utils/hexToHexWithOpacity";
 import parse from "html-react-parser";
 
 type TwoColumnFeatureSectionProps = {

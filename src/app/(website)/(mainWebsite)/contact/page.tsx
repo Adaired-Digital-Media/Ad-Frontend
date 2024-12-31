@@ -1,9 +1,9 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import PageBanner from "@/components/PageBanner";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
+import PageBanner from "@web-components/PageBanner";
 import React from "react";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@web-components/Icons";
 import Link from "next/link";
-import ContactPageForm from "@/forms/ContactPageForm";
+// import ContactPageForm from "@/forms/ContactPageForm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ const Contact = () => {
       <section className="py-12 lg:py-24">
         <MaxWidthWrapper className="flex gap-20 flex-col lg:flex-row">
           <div className="flex-1 lg:w-1/2">
-            <ContactPageForm />
+            {/* <ContactPageForm /> */}
           </div>
           <div className="flex-1 lg:w-1/2">
             <ContactDetails />

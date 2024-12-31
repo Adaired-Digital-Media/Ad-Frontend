@@ -1,26 +1,26 @@
 import React from "react";
 import type { Metadata } from "next";
-import NavigationMenu from "@/components/NavigationMenu";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import PageBanner from "@/components/PageBanner";
+import NavigationMenu from "@web-components/NavigationMenu";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
+import PageBanner from "@web-components/PageBanner";
 
 // Sections
-import GetInTouchForm from "@/forms/GetInTouchForm";
-import CTA from "@/components/PageDynamicSections/CTA";
-import FaqSection from "@/components/PageDynamicSections/FaqSection";
-import GridSection from "@/components/PageDynamicSections/GridSection";
-import ProcessSection from "@/components/PageDynamicSections/ProcessSection";
-import StickyScroll from "@/components/PageDynamicSections/StickyScrollSection";
-import ImageWithIconbox from "@/components/PageDynamicSections/ImageWithIconboxSection";
-import KeyFeatureListLayout from "@/components/PageDynamicSections/KeyFeatureListLayout";
-import KeyFeatureCrossLayout from "@/components/PageDynamicSections/KeyFeatureCrossLayout";
-import TwoColumnFeatureSection from "@/components/PageDynamicSections/TwoColumnFeatureSection";
-import ServiceKeyFeaturesLayout from "@/components/PageDynamicSections/ServiceKeyFeaturesLayout";
-import ImageWithDetailedFeatureDescription from "@/components/PageDynamicSections/ImageWithDetailedFeatureDescription";
+// import GetInTouchForm from "@/forms/GetInTouchForm";
+import CTA from "@web-components/PageDynamicSections/CTA";
+import FaqSection from "@web-components/PageDynamicSections/FaqSection";
+import GridSection from "@web-components/PageDynamicSections/GridSection";
+import ProcessSection from "@web-components/PageDynamicSections/ProcessSection";
+import StickyScroll from "@web-components/PageDynamicSections/StickyScrollSection";
+import ImageWithIconbox from "@web-components/PageDynamicSections/ImageWithIconboxSection";
+import KeyFeatureListLayout from "@web-components/PageDynamicSections/KeyFeatureListLayout";
+import KeyFeatureCrossLayout from "@web-components/PageDynamicSections/KeyFeatureCrossLayout";
+import TwoColumnFeatureSection from "@web-components/PageDynamicSections/TwoColumnFeatureSection";
+import ServiceKeyFeaturesLayout from "@web-components/PageDynamicSections/ServiceKeyFeaturesLayout";
+import ImageWithDetailedFeatureDescription from "@web-components/PageDynamicSections/ImageWithDetailedFeatureDescription";
 
 const fetchservice = async (slug: string) => {
   const result = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/service/getServices/${slug}`
+    `${process.env.NEXT_PUBLIC_API_URI}/service/getServices/${slug}`
   );
   const data = await result.json();
   return data;
@@ -35,7 +35,7 @@ export async function generateMetadata({
   const data = await fetchservice(c.slug);
 
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_DOMAIN_NAME}`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
     title: data?.metaTitle ? data.metaTitle : data?.serviceName,
     description: data?.metaDescription ? data.metaDescription : "",
     alternates: {
@@ -50,7 +50,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/service/getServices`
+    `${process.env.NEXT_PUBLIC_API_URI}/service/getServices`
   );
   const data = await res.json();
   const newData = data;
@@ -95,9 +95,9 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                               childServices={fetchedService?.childServices}
                             />
                           )}
-                          <GetInTouchForm
+                          {/* <GetInTouchForm
                             colorScheme={fetchedService.colorScheme}
-                          />
+                          /> */}
                         </div>
                       </aside>
                     </div>

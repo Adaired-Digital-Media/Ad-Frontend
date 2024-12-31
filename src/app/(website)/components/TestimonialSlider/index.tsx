@@ -7,10 +7,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "@core/ui/shadcn-ui/carousel";
 import Image from "next/image";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Icons } from "@/components/Icons";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
+import { Icons } from "@web-components/Icons";
 
 const TestimonialSlider = () => {
   type Data = {

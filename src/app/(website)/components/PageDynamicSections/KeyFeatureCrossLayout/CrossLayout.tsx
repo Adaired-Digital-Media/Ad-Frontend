@@ -1,6 +1,6 @@
 import React from "react";
-import { cn } from "@/lib/utils";
-import { Icons } from "@/components/Icons";
+import { cn } from "@core/utils/class-names";
+import { Icons } from "@web-components/Icons";
 
 const Box = ({
   colorScheme,

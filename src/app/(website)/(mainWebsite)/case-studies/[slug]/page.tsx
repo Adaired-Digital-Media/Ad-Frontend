@@ -1,12 +1,12 @@
-import { Icons } from "@/components/Icons";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import PageBanner from "@/components/PageBanner";
-
-import { cn, hexToHexWithOpacity } from "@/lib/utils";
-import Image from "next/image";
-import React from "react";
-import parse from "html-react-parser";
-import type { Metadata } from "next";
+import { Icons } from '@web-components/Icons';
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
+import PageBanner from '@web-components/PageBanner';
+import { hexToHexWithOpacity } from '@core/utils/hexToHexWithOpacity';
+import { cn } from 'rizzui';
+import Image from 'next/image';
+import React from 'react';
+import parse from 'html-react-parser';
+import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
   const res = await fetch(
@@ -35,7 +35,7 @@ export async function generateMetadata({
     slug: params.slug,
   });
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_DOMAIN_NAME}`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
     title: data.metaTitle
       ? data.metaTitle
       : `Adaired Case Studies: See How We Help Businesses Thrive`,
@@ -56,7 +56,7 @@ async function fetchCaseStudyCategory({ slug }: { slug: string }) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies-category/getCaseStudiesCategory/${slug}`,
     {
-      method: "GET",
+      method: 'GET',
     }
   );
   const data = await res.json();
@@ -131,33 +131,32 @@ const Introsection = ({
   return (
     <section className="py-6 lg:py-12">
       <MaxWidthWrapper>
-        <div className="text-center flex flex-col items-center justify-center">
-          <h5 className="inline font-nunito text-[#515151] relative px-4 text-base sm:text-lg">
-            <div className="hidden sm:block absolute top-1/2 left-full transform -translate-y-1/2 bg-[#A7A9AC] h-px w-16"></div>
-            <div className="hidden sm:block absolute top-1/2 right-full transform -translate-y-1/2 bg-[#A7A9AC] h-px w-16"></div>
+        <div className="flex flex-col items-center justify-center text-center">
+          <h5 className="relative inline px-4 font-nunito text-base text-[#515151] sm:text-lg">
+            <div className="absolute left-full top-1/2 hidden h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] sm:block"></div>
+            <div className="absolute right-full top-1/2 hidden h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] sm:block"></div>
             {subHeading}
           </h5>
-          <h2 className="text-[1.688rem] md:text-4xl py-2">{caseStudyName}</h2>
-          <p className="py-2 text-base sm:text-lg text-justify sm:text-center hyphens-auto ">
+          <h2 className="py-2 text-[1.688rem] md:text-4xl">{caseStudyName}</h2>
+          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
             {caseStudyDescription}
           </p>
         </div>
       </MaxWidthWrapper>
-      <div className="relative ">
+      <div className="relative">
         <MaxWidthWrapper>
-          <div className="flex items-center justify-center relative z-10">
+          <div className="relative z-10 flex items-center justify-center">
             <Image
               src={`${process.env.NEXT_PUBLIC_IMG_URL}${caseStudyImage}`}
               alt="hero image"
               priority
               width={1000}
               height={400}
-               
               blurDataURL={`${process.env.NEXT_PUBLIC_IMG_URL}${caseStudyImage}`}
             />
           </div>
         </MaxWidthWrapper>
-        <div className="w-full h-full absolute bottom-0 left-0 z-0">
+        <div className="absolute bottom-0 left-0 z-0 h-full w-full">
           <svg
             viewBox="0 0 1920 391"
             fill="none"
@@ -192,69 +191,67 @@ const Aboutsection = ({
   return (
     <section className="pb-6 lg:pb-12">
       <MaxWidthWrapper className="pb-10">
-        <div className="text-center flex flex-col items-center justify-center">
-          <h2 className="text-[1.688rem] md:text-4xl py-2">
+        <div className="flex flex-col items-center justify-center text-center">
+          <h2 className="py-2 text-[1.688rem] md:text-4xl">
             About the project
           </h2>
-          <p className="py-2 text-base sm:text-lg text-justify sm:text-center hyphens-auto ">
+          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
             {aboutProjectDescription}
           </p>
         </div>
       </MaxWidthWrapper>
-      <section className={cn("flex lg:flex-row flex-col-reverse ")}>
-        <div className="w-full lg:w-1/2 flex justify-end ">
-          <div className="lg:max-w-[720px] space-y-4 lg:p-10 lg:pl-6 px-4 py-4">
+      <section className={cn('flex flex-col-reverse lg:flex-row')}>
+        <div className="flex w-full justify-end lg:w-1/2">
+          <div className="space-y-4 px-4 py-4 lg:max-w-[720px] lg:p-10 lg:pl-6">
             <h2 className="text-[1.688rem] md:text-4xl">The Challenges</h2>
-            <p className="text-justify sm:text-left text-base sm:text-lg hyphens-auto">
+            <p className="hyphens-auto text-justify text-base sm:text-left sm:text-lg">
               {challengesDescription}
             </p>
             <ul className="space-y-4">
               {challengesAndSolutions.map((item: any) => (
                 <li
                   key={item.title}
-                  className="border flex  gap-1 py-2 px-1 text-base sm:text-lg"
+                  className="flex gap-1 border px-1 py-2 text-base sm:text-lg"
                 >
-                  <Icons.CharmSquareTick className="shrink-0 mt-1" />
+                  <Icons.CharmSquareTick className="mt-1 shrink-0" />
                   {item.title}
                 </li>
               ))}
             </ul>
           </div>
         </div>
-        <div className="w-full lg:w-1/2 cover">
+        <div className="cover w-full lg:w-1/2">
           <Image
             src={`${process.env.NEXT_PUBLIC_IMG_URL}${challengesImage}`}
             alt="hero image"
             width={1000}
             height={400}
-             
             blurDataURL={`${process.env.NEXT_PUBLIC_IMG_URL}${challengesImage}`}
-            className="object-cover w-full h-full"
+            className="h-full w-full object-cover"
           />
         </div>
       </section>
-      <section className={cn("flex lg:flex-row flex-col")}>
+      <section className={cn('flex flex-col lg:flex-row')}>
         <div className="w-full lg:w-1/2">
           <Image
             src={`${process.env.NEXT_PUBLIC_IMG_URL}${solutionsImage}`}
             alt="hero image"
             width={1000}
             height={400}
-             
             blurDataURL={`${process.env.NEXT_PUBLIC_IMG_URL}${solutionsImage}`}
-            className="object-cover w-full h-full"
+            className="h-full w-full object-cover"
           />
         </div>
         <div className="w-full lg:w-1/2">
-          <div className="lg:max-w-[720px] space-y-4 lg:p-10 lg:pr-6 px-4 py-4">
+          <div className="space-y-4 px-4 py-4 lg:max-w-[720px] lg:p-10 lg:pr-6">
             <h2 className="text-[1.688rem] md:text-4xl">The Solutions</h2>
-            <p className="text-justify sm:text-left text-base sm:text-lg hyphens-auto">
+            <p className="hyphens-auto text-justify text-base sm:text-left sm:text-lg">
               {challengesDescription}
             </p>
             <ul className="space-y-4">
               {challengesAndSolutions.map((item: any, index: number) => (
                 <li key={item.content}>
-                  <div className="flex  gap-2">
+                  <div className="flex gap-2">
                     {/* <div className="w-0 h-0 border-t-4 border-t-transparent border-l-8 border-l-[#BC1D8D] border-b-4 border-b-transparent shrink-0" /> */}
                     <h3>{index + 1}.</h3>
                     <div className="text-base sm:text-lg">
@@ -286,15 +283,15 @@ const TechnologiesUsedsection = ({
   return (
     <section className="pb-6 lg:pb-12">
       <MaxWidthWrapper className="space-y-3">
-        <div className="text-center flex flex-col items-center justify-center">
-          <h2 className="text-[1.688rem] md:text-4xl py-2">
+        <div className="flex flex-col items-center justify-center text-center">
+          <h2 className="py-2 text-[1.688rem] md:text-4xl">
             {technologiesUsedTitle}
           </h2>
-          <p className="py-2 text-base sm:text-lg text-justify sm:text-center hyphens-auto">
+          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
             {technologiesUsedDescription}
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
           {technologiesUsed.map((item) => {
             const category = categoryData.find(
               (category: any) => category._id === item
@@ -302,14 +299,13 @@ const TechnologiesUsedsection = ({
             return (
               <div
                 key={item}
-                className="p-6 min-h-32 flex justify-center items-center border rounded-lg"
+                className="flex min-h-32 items-center justify-center rounded-lg border p-6"
               >
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMG_URL}${category.icon}`}
                   alt="Technology used image"
                   width={150}
                   height={150}
-                   
                   blurDataURL={`${process.env.NEXT_PUBLIC_IMG_URL}${category.icon}`}
                 />
               </div>
@@ -348,30 +344,27 @@ const Goalssection = ({
         if (index === 3) {
           // Handle alpha: convert decimal to integer between 0-255
           const alpha = Math.round(parseFloat(x) * 255);
-          return alpha.toString(16).padStart(2, "0");
+          return alpha.toString(16).padStart(2, '0');
         } else {
-          return parseInt(x).toString(16).padStart(2, "0");
+          return parseInt(x).toString(16).padStart(2, '0');
         }
       });
 
-    return "#" + (hexValues?.join("") ?? "");
+    return '#' + (hexValues?.join('') ?? '');
   };
 
   const hexColor = rgbaToHex(themeColor);
 
   return (
     <section
-      className={`${cn("relative py-6 lg:py-12 ")} 
-      ${hexColor ? "bg-[" + hexColor + "]" : ""} 
-      ${hexColor ? "lg:bg-transparent" : ""}
-      `}
+      className={`${cn('relative py-6 lg:py-12')} ${hexColor ? 'bg-[' + hexColor + ']' : ''} ${hexColor ? 'lg:bg-transparent' : ''} `}
     >
-      <div className="absolute top-0 left-0 h-full w-full hidden lg:block">
+      <div className="absolute left-0 top-0 hidden h-full w-full lg:block">
         <svg
           viewBox="0 0 1920 1242"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-0 left-0 "
+          className="absolute left-0 top-0"
         >
           <path
             d="M0 0H1920V899.5C1920 1088.66 1766.66 1242 1577.5 1242H342.5C153.343 1242 0 1088.66 0 899.5V0Z"
@@ -379,25 +372,25 @@ const Goalssection = ({
           />
         </svg>
       </div>
-      <MaxWidthWrapper className="relative z-10 ">
-        <div className="text-center flex flex-col items-center justify-center pb-6 lg:bg-none">
-          <h2 className="text-[1.688rem] md:text-4xl py-2">{goalsTitle}</h2>
-          <p className="py-2 text-base sm:text-lg text-justify sm:text-center hyphens-auto">
+      <MaxWidthWrapper className="relative z-10">
+        <div className="flex flex-col items-center justify-center pb-6 text-center lg:bg-none">
+          <h2 className="py-2 text-[1.688rem] md:text-4xl">{goalsTitle}</h2>
+          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
             {goalsDescription}
           </p>
         </div>
-        <div className="flex flex-col gap-10 lg:flex-row lg:gap-20 xl:gap-32 pb-10 lg:bg-none">
-          <div className="shadow-2xl bg-white p-6 sm:p-10 rounded-2xl space-y-3">
+        <div className="flex flex-col gap-10 pb-10 lg:flex-row lg:gap-20 lg:bg-none xl:gap-32">
+          <div className="space-y-3 rounded-2xl bg-white p-6 shadow-2xl sm:p-10">
             <h2 className="text-[1.688rem] md:text-4xl">Objectives</h2>
             <ul>
               {objectives.map((item: any, index: number) => (
                 <li
                   key={item.title}
-                  className="text-justify hyphens-auto sm:text-left sm:hyphens-none "
+                  className="hyphens-auto text-justify sm:hyphens-none sm:text-left"
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <div className="w-0 h-0 border-t-4 border-t-transparent border-l-8 border-l-[#BC1D8D] border-b-4 border-b-transparent shrink-0" />
+                      <div className="h-0 w-0 shrink-0 border-b-4 border-l-8 border-t-4 border-b-transparent border-l-[#BC1D8D] border-t-transparent" />
                       <h3>{index + 1}</h3>
                     </div>
                     <p className="text-base sm:text-lg">{item.title}</p>
@@ -406,17 +399,17 @@ const Goalssection = ({
               ))}
             </ul>
           </div>
-          <div className="shadow-2xl bg-white p-6 sm:p-10 rounded-2xl space-y-3">
+          <div className="space-y-3 rounded-2xl bg-white p-6 shadow-2xl sm:p-10">
             <h2 className="text-[1.688rem] md:text-4xl">Stratergy</h2>
             <ul>
               {stratergy.map((item: any, index: number) => (
                 <li
                   key={item.title}
-                  className="text-justify hyphens-auto sm:text-left sm:hyphens-none "
+                  className="hyphens-auto text-justify sm:hyphens-none sm:text-left"
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <div className="w-0 h-0 border-t-4 border-t-transparent border-l-8 border-l-[#BC1D8D] border-b-4 border-b-transparent shrink-0" />
+                      <div className="h-0 w-0 shrink-0 border-b-4 border-l-8 border-t-4 border-b-transparent border-l-[#BC1D8D] border-t-transparent" />
                       <h3>{index + 1}</h3>
                     </div>
                     <p className="text-base sm:text-lg">{item.title}</p>
@@ -432,35 +425,34 @@ const Goalssection = ({
             alt="goals image"
             width={1400}
             height={400}
-             
             blurDataURL={`${process.env.NEXT_PUBLIC_IMG_URL}${goalImage}`}
           />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:px-10 mt-10 sm:-mt-20">
+        <div className="mt-10 grid grid-cols-1 gap-8 sm:-mt-20 sm:grid-cols-3 lg:px-10">
           {growthBox.map((item: any) => (
             <div
-              className="md:space-y-1 relative border flex flex-col justify-center items-center bg-white rounded-3xl p-5 lg:p-10 shadow-2xl sm:shadow-none"
+              className="relative flex flex-col items-center justify-center rounded-3xl border bg-white p-5 shadow-2xl sm:shadow-none md:space-y-1 lg:p-10"
               style={{
                 borderColor: colorScheme,
               }}
               key={item.title}
             >
               <Icons.UpArrow
-                className="absolute -top-6 text-5xl p-2 border rounded-full text-white"
+                className="absolute -top-6 rounded-full border p-2 text-5xl text-white"
                 style={{
                   backgroundColor: colorScheme,
                   borderColor: colorScheme,
                 }}
               />
               <h2
-                className="text-xl sm:text-2xl md:text-4xl text-center"
+                className="text-center text-xl sm:text-2xl md:text-4xl"
                 style={{
                   color: colorScheme,
                 }}
               >
                 {item.title}
               </h2>
-              <p className="text-base md:text-lg text-center">{item.content}</p>
+              <p className="text-center text-base md:text-lg">{item.content}</p>
             </div>
           ))}
         </div>
@@ -484,7 +476,7 @@ const Resultsection = ({
   return (
     <section className="py-6 lg:py-12">
       <MaxWidthWrapper className="space-y-5">
-        <h2 className="text-[1.688rem] md:text-4xl inline-block">
+        <h2 className="inline-block text-[1.688rem] md:text-4xl">
           Result:
           <div
             className="h-0.5 w-full"
@@ -493,13 +485,13 @@ const Resultsection = ({
             }}
           />
         </h2>
-        <p className="text-justify hyphens-auto sm:text-left sm:hyphens-none">
+        <p className="hyphens-auto text-justify sm:hyphens-none sm:text-left">
           {resultDescription}
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {resultBox.map((item: any) => (
             <div
-              className="space-y-1 border flex gap-3 bg-white p-5"
+              className="flex gap-3 space-y-1 border bg-white p-5"
               style={{
                 borderColor: colorScheme,
               }}
@@ -509,10 +501,10 @@ const Resultsection = ({
                 style={{
                   borderColor: colorScheme,
                 }}
-                className="shrink-0 text-5xl border p-2 rounded-lg"
+                className="shrink-0 rounded-lg border p-2 text-5xl"
               />
               <div>
-                <h3 className="font-nunito font-bold text-xl">
+                <h3 className="font-nunito text-xl font-bold">
                   {item.title}
                   <div
                     className="h-0.5 w-10"
@@ -529,12 +521,12 @@ const Resultsection = ({
                 >
                   {item.percentage}
                 </p>
-                <p className="text-base sm:text-lg ">{item.description}</p>
+                <p className="text-base sm:text-lg">{item.description}</p>
               </div>
             </div>
           ))}
         </div>
-        <p className="text-base sm:text-lg text-justify hyphens-auto sm:text-left sm:hyphens-none">
+        <p className="hyphens-auto text-justify text-base sm:hyphens-none sm:text-left sm:text-lg">
           {resultFinalDescription}
         </p>
       </MaxWidthWrapper>

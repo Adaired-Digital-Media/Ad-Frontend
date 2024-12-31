@@ -1,11 +1,11 @@
 import React from "react";
-import BlogCard from "@/components/BlogCard/BlogCard";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import Button from "@/components/Button";
+import BlogCard from "@web-components/BlogCard/BlogCard";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
+import Button from "@web-components/Button";
 
 export async function getBlogsData() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog?limit=3&skip=0`
+    `${process.env.NEXT_PUBLIC_API_URI}/blog/readBlog?limit=3&skip=0`
   );
   const data = await res.json();
   return data;

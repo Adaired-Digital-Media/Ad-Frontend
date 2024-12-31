@@ -1,28 +1,32 @@
-"use client";
-import { FC, useState, useMemo, useEffect } from "react";
-import Image from "next/image";
-import { calculateReadingTime, cn, formatDate } from "@/lib/utils";
-import Button from "@/components/Button";
+'use client';
+import { FC, useState, useMemo, useEffect } from 'react';
+import Image from 'next/image';
+import { calculateReadingTime } from '@core/utils/calculateReadingTime';
+import { formatDate } from '@core/utils/format-date';
+import { cn } from 'rizzui';
+import Button from '@web-components/Button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import parse from "html-react-parser";
-import Link from "next/link";
+} from '@core/ui/shadcn-ui/card';
+import { Separator } from '@core/ui/shadcn-ui/separator';
+import parse from 'html-react-parser';
+import Link from 'next/link';
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+// import {
+//   Pagination,
+//   PaginationContent,
+//   PaginationEllipsis,
+//   PaginationItem,
+//   PaginationLink,
+//   PaginationNext,
+//   PaginationPrevious,
+// } from "@/components/ui/pagination";
+
+import Pagination from '@/@core/ui/rizzui-ui/pagination';
 
 interface IProps {
   data: any;
@@ -35,7 +39,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
   // Filter and sort the blogs by date
   const sortedBlogs = useMemo(() => {
     const publishedBlogs = data.filter(
-      (blog: any) => blog.status === "publish"
+      (blog: any) => blog.status === 'publish'
     );
     return publishedBlogs.sort(
       (a: any, b: any) =>
@@ -61,34 +65,34 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-0 xl:grid-cols-1">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 xl:gap-0">
         {currentBlogs.map((blog: any) => {
           return (
             <>
-              <figure className="hidden xl:flex border p-10 rounded-lg first:mt-10 mb-10">
+              <figure className="mb-10 hidden rounded-lg border p-10 first:mt-10 xl:flex" key={blog.postTitle}>
                 <div className="w-[45%] shrink-0">
                   <Link href={`/blog/${blog.slug}`}>
                     <Image
                       src={blog.featuredImage}
                       height={400}
                       width={800}
-                      alt={blog.title}
+                      alt={blog.postTitle || 'Blog Image'}
                       className="-ml-14 rounded-lg"
                     />
                   </Link>
                 </div>
                 <div className="w-[55%] shrink-0">
                   <div className="flex items-center justify-between">
-                    <p className="text-sm lg:text-base text-gray-500 mb-1">
+                    <p className="mb-1 text-sm text-gray-500 lg:text-base">
                       {formatDate(blog.createdAt)}
                     </p>
-                    <p className="text-sm lg:text-base text-gray-500 mb-1">
+                    <p className="mb-1 text-sm text-gray-500 lg:text-base">
                       {calculateReadingTime(blog.postDescription) +
-                        " min read "}
+                        ' min read '}
                     </p>
                   </div>
                   <div>
-                    <h2 className="font-nunito lg:text-2xl font-semibold mb-1">
+                    <h2 className="mb-1 font-nunito font-semibold lg:text-2xl">
                       <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
                     </h2>
                     <span className="line-clamp-2 font-nunito">
@@ -99,7 +103,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                     <Button
                       title="Read Blog"
                       svgClassName="bg-[#F89520] "
-                      className="mt-4 bg-white text-black border-none"
+                      className="mt-4 border-none bg-white text-black"
                       type="button"
                       navigateTo={`/blog/${blog.slug}`}
                     />
@@ -107,16 +111,16 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                 </div>
               </figure>
 
-              <Card className="xl:hidden">
+              <Card className="xl:hidden" key={blog.slug}>
                 <CardHeader className="p-4">
                   <div className="mb-4">
                     <Link href={`/blog/${blog.slug}`}>
                       <Image
                         src={blog.featuredImage}
-                        alt="Blog Image"
+                        alt={blog.postTitle || 'Blog Image'}
                         height={400}
                         width={800}
-                        style={{ objectFit: "cover" }}
+                        style={{ objectFit: 'cover' }}
                       />
                     </Link>
                   </div>
@@ -124,7 +128,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                     <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="font-nunito text-lg text-left p-4 pt-0">
+                <CardContent className="p-4 pt-0 text-left font-nunito text-lg">
                   <div className="line-clamp-3">
                     {parse(blog.postDescription)}
                   </div>
@@ -132,7 +136,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                 <div className="p-4">
                   <Button
                     title="Read More"
-                    className="bg-white text-black border-none"
+                    className="border-none bg-white text-black"
                     svgClassName="bg-[#F89520] right-2.5 group-hover/btn:right-28"
                     type="button"
                     navigateTo={`/blog/${blog.slug}`}
@@ -142,8 +146,8 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                 <CardFooter className="justify-between pt-6">
                   <p>{formatDate(blog.createdAt)}</p>
                   <p>
-                    {" "}
-                    {calculateReadingTime(blog.postDescription) + " min read "}
+                    {' '}
+                    {calculateReadingTime(blog.postDescription) + ' min read '}
                   </p>
                 </CardFooter>
               </Card>
@@ -152,7 +156,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
         })}
       </div>
 
-      <Pagination>
+      {/* <Pagination>
         <PaginationContent>
           <PaginationItem className="cursor-pointer">
             <PaginationPrevious
@@ -180,7 +184,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
             />
           </PaginationItem>
         </PaginationContent>
-      </Pagination>
+      </Pagination> */}
     </>
   );
 };

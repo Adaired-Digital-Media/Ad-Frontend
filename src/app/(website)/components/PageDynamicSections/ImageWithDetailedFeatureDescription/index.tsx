@@ -7,8 +7,8 @@ import parse, {
   Element,
   DOMNode,
 } from "html-react-parser";
-import Button from "@/components/Button";
-import { Icons } from "@/components/Icons";
+import Button from "@web-components/Button";
+import { Icons } from "@web-components/Icons";
 
 type ImageWithDetailedFeatureDescriptionProps = {
   colorScheme: string;

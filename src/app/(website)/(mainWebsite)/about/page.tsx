@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
 import PageBanner from "@web-components/PageBanner";
-import BlogCards from "@/components/BlogCard/BlogCards";
-import TestimonialSlider from "@/components/TestimonialSlider";
-import { Icons } from "@/components/Icons";
-import Process from "@/components/Timeline/Process";
+import BlogCards from "@web-components/BlogCard/BlogCards";
+import TestimonialSlider from "@web-components/TestimonialSlider";
+import { Icons } from "@web-components/Icons";
+import Process from "@web-components/Timeline/Process";
 import type { Metadata } from "next";
-import CldImage from "@/components/CloudinaryImageComponent";
+import CldImage from "@web-components/CloudinaryImageComponent";
 
 export const metadata: Metadata = {
   title: "Unveiling Adaired: Our History, Team, and Vision | Learn About Us",

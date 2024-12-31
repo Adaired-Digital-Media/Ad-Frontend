@@ -1,6 +1,6 @@
 import React from "react";
 import parse from "html-react-parser";
-import { Icons } from "@/components/Icons";
+import { Icons } from "@web-components/Icons";
 
 type KeyFeatureListLayoutProps = {
   colorScheme: string;
