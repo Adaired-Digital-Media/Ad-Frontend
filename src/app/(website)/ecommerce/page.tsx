@@ -21,7 +21,7 @@ import {
   ProductSectionDetails,
 } from '../../../@core/data/website/Landingpage';
 import { FAQSection } from '@web-components/eComFaqSection';
-import { EcomPageForm } from '../forms/EcomForm';
+import { EcomPageForm } from '../components/forms/EcomForm';
 const Landing = () => {
   return (
     <>

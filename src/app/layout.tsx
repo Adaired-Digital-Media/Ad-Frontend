@@ -131,7 +131,7 @@ export default async function RootLayout({
         )}
       >
         <ReCaptchaProvider reCaptchaKey="6LdkMHAqAAAAAOlEvKHUbYfKzfpKGr9jNOD0oorN">
-          <NextProgress />
+          <NextProgress/>
           {children}
           <Toaster />
           <GlobalDrawer />

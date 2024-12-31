@@ -2,10 +2,10 @@
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cn } from '../../../@core/utils/class-names';
+import { cn } from '../../../../@core/utils/class-names';
 import { Button, Input, Select, Textarea, type SelectOption } from 'rizzui';
 import { Controller, useForm } from 'react-hook-form';
-import { PhoneNumber } from '../../../@core/ui/rizzui-ui/phone-input';
+import { PhoneNumber } from '../../../../@core/ui/rizzui-ui/phone-input';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import { usePathname } from 'next/navigation';
 import { FaCaretDown } from 'react-icons/fa';
