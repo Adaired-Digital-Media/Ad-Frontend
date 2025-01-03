@@ -79,7 +79,7 @@ export default function CartPageWrapper() {
       };
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URI}/orders/create`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/orders/create`,
         orderData,
         {
           headers: {

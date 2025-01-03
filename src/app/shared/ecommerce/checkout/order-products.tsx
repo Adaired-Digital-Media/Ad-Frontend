@@ -44,7 +44,7 @@ export default function OrderProducts({
                 <div className="flex items-center">
                   <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                     <Image
-                      src={item.productImage || 'https://picsum.photos/90'}
+                      src={item.productImage as string}
                       alt={'icon'}
                       fill
                       priority

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 async function getBlogs() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/blog/readBlog`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog`
   );
   const data = await res.json();
   return data;

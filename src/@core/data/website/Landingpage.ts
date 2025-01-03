@@ -112,16 +112,10 @@ export const SurferSEOSectionDetails: ISurferSEOSection = {
       description: 'Monitors organic traffic growth and keyword rankings.',
     },
   ],
-  images: [
-    {
-      src: '/assets/images/macFrame.png',
-      alt: 'Surfer SEO - image 1',
-    },
-    {
-      src: '/assets/images/surferSEOStatics.png',
-      alt: 'Surfer SEO - image 2',
-    },
-  ],
+  image: {
+    src: 'https://res.cloudinary.com/adaired/image/upload/v1735899368/surferSEO_COZlL.png',
+    alt: 'Surfer SEO - image 1',
+  },
 };
 
 export const BHWServices: IBHWServices[] = [

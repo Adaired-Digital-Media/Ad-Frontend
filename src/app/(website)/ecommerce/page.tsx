@@ -2,24 +2,24 @@ import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Empty, EmptyProductBoxIcon } from 'rizzui';
-import { cn } from '../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import parse from 'html-react-parser';
 import { Icon } from '@iconify/react';
-import { Tabs } from '../../../@core/ui/aceternity-ui/tabs';
-import TwoColumnGrid from '../../../@core/components/twoColumnGrid';
+import { Tabs } from '@core/ui/aceternity-ui/tabs';
+import TwoColumnGrid from '@core/components/twoColumnGrid';
 import SmallContainer from '@/app/(website)/components/SmallWidthContainer';
-import IconBox from '../../../@core/components/iconBox';
-import IconList from '../../../@core/components/iconList';
+import IconBox from '@core/components/iconBox';
+import IconList from '@core/components/iconList';
 import { ProductCategory } from '@/types';
 import { routes } from '@/config/routes';
-import { generateSlug } from '../../../@core/utils/generate-slug';
+import { generateSlug } from '@core/utils/generate-slug';
 import {
   HeroSectionDetails,
   StandOutSectionDetails,
   ApproachSectionDetails,
   SurferSEOSectionDetails,
   ProductSectionDetails,
-} from '../../../@core/data/website/Landingpage';
+} from '@core/data/website/Landingpage';
 import { FAQSection } from '@web-components/eComFaqSection';
 import { EcomPageForm } from '../components/forms/EcomForm';
 const Landing = () => {
@@ -163,7 +163,7 @@ const StandOutSection = () => {
 };
 const ProductSection = async () => {
   const categoryData = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URI}/product/category/read-category?identifier=content-writing&children=true&childrenProducts=true&products=true`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/category/read-category?identifier=content-writing&children=true&childrenProducts=true&products=true`
   );
   const categories: ProductCategory[] = categoryData.data.data.children || [];
   const tabs = categories.map((category: ProductCategory) => ({
@@ -265,15 +265,12 @@ const SurferSEOSection = () => {
       className={cn('overflow-hidden bg-[#FFFBF5]')}
       id="surferSeoSection"
     >
-      {' '}
       <SmallContainer>
-        {' '}
         <h2
           className={cn(
             'flex items-center justify-center gap-2 font-poppins text-3xl font-semibold capitalize leading-[48px]'
           )}
         >
-          {' '}
           <Image
             src={SurferSEOSectionDetails.icon}
             alt="Surfer SEO Icon"
@@ -288,9 +285,7 @@ const SurferSEOSection = () => {
             `relative grid-cols-7 gap-x-12 from-[#fef0df] from-0% to-[#fffbf5] to-100% pt-12 before:absolute before:left-[calc(100%-330px)] before:top-10 before:h-full before:w-1/2 before:rounded-bl-[15px] before:rounded-tl-[21px] before:bg-gradient-to-r`
           )}
         >
-          {' '}
           <div className="col-span-4 flex h-full w-full flex-col items-start space-y-8">
-            {' '}
             {SurferSEOSectionDetails.iconList.map((iconBox, idx) => (
               <IconBox
                 key={idx}
@@ -303,78 +298,58 @@ const SurferSEOSection = () => {
                 descriptionClassName="leading-[27px] text-[#424242] pt-2 text-base"
                 iconClassName="h-[22px] w-[22px] rotate-[270deg] mt-1"
               />
-            ))}{' '}
+            ))}
           </div>
           <div className="col-span-3 flex h-full w-full items-end">
-            {' '}
             <div className="relative">
-              {' '}
-              {SurferSEOSectionDetails.images.map((surferImage, idx) => (
-                <div
-                  key={idx}
-                  className={cn(
-                    `${idx === 0 ? '' : 'absolute -right-24 -top-14'}`
-                  )}
-                >
-                  {' '}
-                  <Image
-                    src={surferImage.src}
-                    alt={surferImage.alt}
-                    width={idx === 0 ? 473 : 222}
-                    height={idx === 0 ? 271 : 243}
-                    quality={100}
-                    loading={idx === 0 ? 'eager' : 'lazy'}
-                  />{' '}
-                </div>
-              ))}{' '}
-            </div>{' '}
-          </div>{' '}
-        </TwoColumnGrid>{' '}
-      </SmallContainer>{' '}
+              <Image
+                src={SurferSEOSectionDetails.image.src}
+                alt={SurferSEOSectionDetails.image.alt}
+                width={572}
+                height={321}
+                quality={100}
+                loading={'lazy'}
+              />
+            </div>
+          </div>
+        </TwoColumnGrid>
+      </SmallContainer>
     </section>
   );
 };
 const ContactUsSection = () => {
   return (
     <SmallContainer id="contact">
-      {' '}
       <TwoColumnGrid className={cn(`gap-x-20`)}>
-        {' '}
         <div className={cn(`h-full w-full rounded-2xl bg-[#EDEDED]`)}>
-          {' '}
-          {/* TODO:Add Image */}{' '}
+          {/* TODO:Add Image */}
         </div>
         <div className={cn(`h-full w-full pr-5`)}>
-          {' '}
           <div className={cn(`h-full w-full rounded-[15px] border p-10`)}>
-            {' '}
             <div className={cn(`text-center`)}>
-              {' '}
               <h2
                 className={cn(
                   `font-poppins text-[28px] font-semibold text-[#1c5b98]`
                 )}
               >
-                {' '}
-                Contact Us Today!{' '}
-              </h2>{' '}
+                Contact Us Today!
+              </h2>
               <div
                 className={cn(`m-auto my-[10px] h-[1px] w-[92px] bg-[#d9d9d9]`)}
-              />{' '}
+              />
               <p
                 className={cn(
                   `m-auto max-w-[430px] pb-[20px] text-base text-[#424242]`
                 )}
               >
-                {' '}
                 Ready to Elevate Your Content? Let’s amplify your brand and
-                drive results{' '}
-              </p>{' '}
+                drive results
+              </p>
             </div>
             <EcomPageForm />
-          </div>{' '}
-        </div>{' '}
-      </TwoColumnGrid>{' '}
+          </div>
+        </div>
+      </TwoColumnGrid>
     </SmallContainer>
   );
 };

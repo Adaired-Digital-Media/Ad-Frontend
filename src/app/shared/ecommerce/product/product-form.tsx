@@ -237,7 +237,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               <div className={cn(`flex items-center gap-6`)}>
                 <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                   <Image
-                    src={product.featuredImage || 'https://picsum.photos/90'}
+                    src={product.featuredImage}
                     alt={'icon'}
                     fill
                     priority

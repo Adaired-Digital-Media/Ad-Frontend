@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Services URLs
   const Services = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/service/getServices`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/service/getServices`
   );
 
   const data = await Services.json();

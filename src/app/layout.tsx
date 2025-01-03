@@ -130,12 +130,12 @@ export default async function RootLayout({
           `font-inter antialiased`
         )}
       >
-        <ReCaptchaProvider reCaptchaKey="6LdkMHAqAAAAAOlEvKHUbYfKzfpKGr9jNOD0oorN">
-          <NextProgress/>
+        <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
+          <NextProgress />
           {children}
           <Toaster />
           <GlobalDrawer />
-          <GlobalModal/>
+          <GlobalModal />
         </ReCaptchaProvider>
       </body>
     </html>

@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 import { MAIL } from '@/config/mail';
 import { messages } from '@/config/messages';
-import { env } from '@/env.mjs';
+// import { env } from '@/env.mjs';
 
 type EmailPayload = {
   to: string;

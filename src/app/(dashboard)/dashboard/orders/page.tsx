@@ -34,7 +34,7 @@ async function fetchOrders() {
   const session = await auth();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/orders/getUserOrders`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/orders/getUserOrders`,
     {
       method: 'GET',
       headers: {

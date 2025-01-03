@@ -10,7 +10,7 @@ import { formatDate } from "@core/utils/format-date";
 
 async function getBlogs({ params }: { params: { slug: string } }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/blog/readBlog/${params.slug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog/${params.slug}`
   );
   const data = await res.json();
   return data;
@@ -42,7 +42,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/blog/readBlog`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog`
   ).then((res) => res.json());
   const blogs = res;
   return blogs.map((blog: any) => ({

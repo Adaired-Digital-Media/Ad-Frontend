@@ -20,7 +20,7 @@ import ImageWithDetailedFeatureDescription from "@web-components/PageDynamicSect
 
 const fetchservice = async (slug: string) => {
   const result = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/service/getServices/${slug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/service/getServices/${slug}`
   );
   const data = await result.json();
   return data;
@@ -50,7 +50,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/service/getServices`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/service/getServices`
   );
   const data = await res.json();
   const newData = data;

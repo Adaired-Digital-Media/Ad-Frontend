@@ -21,12 +21,12 @@ const ProductForm = async ({ params }: ProductFormProps) => {
   const { slug } = params;
 
   const productRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/product/read-product?query=${slug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product?query=${slug}`
   );
   const product = await productRes.json();
 
   const formRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URI}/product/form/read-form?formId=${product?.data?.formId}`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product?.data?.formId}`
   );
   const form = await formRes.json();
 

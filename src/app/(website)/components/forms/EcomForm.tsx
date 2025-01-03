@@ -55,10 +55,22 @@ export const EcomPageForm = () => {
   const onSubmit = async (data: SchemaType) => {
     const token = await executeRecaptcha('ecom_page_form');
     if (token) {
-      // Set the gRecaptchaToken and submit the form
       data.gRecaptchaToken = token;
       console.log('Submitted data', data);
       reset();
+      // try {
+      //   const response = await fetch('/api/zoho/leadRegister', {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: JSON.stringify(data),
+      //   });
+      //   const result = await response.json();
+      //   return result;
+      // } catch (error) {
+      //   throw new Error('Failed to send data to Zoho CRM');
+      // }
     }
   };
 

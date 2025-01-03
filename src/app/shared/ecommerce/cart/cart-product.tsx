@@ -12,30 +12,11 @@ import RemoveItem from './remove-item';
 
 function CartProduct({ product }: { product: CartItem }) {
 
-  // const [fetchedProduct, setFetchedProduct] = useState<Product>();
-
-  // useEffect(() => {
-  //   async function fetchProduct() {
-  //     try {
-  //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URI}/product/read-product?query=${product.productId}`
-  //       );
-  //       if (res.status === 200) {
-  //         setFetchedProduct(res.data.data);
-  //       }
-  //     } catch (error) {
-  //       console.error('Failed to fetch product:', error);
-  //     }
-  //   }
-
-  //   fetchProduct();
-  // }, [product.productId]);
-
   return (
     <div className="grid grid-cols-12 items-start gap-4 border-b border-muted py-6 first:pt-0 sm:flex sm:gap-6 2xl:py-8">
       <figure className="col-span-4 sm:max-w-[180px]">
         <Image
-          src={product?.productImage || 'https://picsum.photos/90'}
+          src={product?.productImage as string}
           alt={'icon'}
           width={180}
           height={180}

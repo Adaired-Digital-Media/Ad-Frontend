@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     return new Response("Invalid request", {
       status: 400,
       headers: {
-        "Access-Control-Allow-Origin": "*", // Allow all origins, change "*" to specific domain if needed
+        "Access-Control-Allow-Origin": "*", 
         "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
       },
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     return new Response("Revalidation successful", {
       status: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*", // Change "*" to your specific domain if needed
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
       },
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     return new Response("Failed to revalidate", {
       status: 500,
       headers: {
-        "Access-Control-Allow-Origin": "*", // Change "*" to your specific domain if needed
+        "Access-Control-Allow-Origin": "*", 
         "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
       },
@@ -43,29 +43,9 @@ export async function OPTIONS(request: Request) {
   return new Response(null, {
     status: 204,
     headers: {
-      "Access-Control-Allow-Origin": "*", // Change "*" to your specific domain if needed
+      "Access-Control-Allow-Origin": "*", 
       "Access-Control-Allow-Methods": "POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
     },
   });
 }
-
-
-
-// import { revalidatePath } from "next/cache";
-// export async function POST(request: Request) {
-//   const body = await request.json();
-//   const slug = body?.slug;
-
-//   if (!slug) {
-//     return new Response("Invalid request", { status: 400 });
-//   }
-
-//   try {
-//     await revalidatePath(String(slug));
-//     return new Response("Revalidation successful", { status: 200 });
-//   } catch (error) {
-//     console.error(error);
-//     return new Response("Failed to revalidate", { status: 500 });
-//   }
-// }
