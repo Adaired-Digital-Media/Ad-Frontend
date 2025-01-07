@@ -1,6 +1,6 @@
 'use client';
 
-import { Form } from '../../../../@core/ui/rizzui-ui/form';
+import { Form } from '@core/ui/rizzui-ui/form';
 import SmallWidthContainer from '@/app/(website)/components/SmallWidthContainer';
 import { routes } from '@/config/routes';
 import { useCart } from '@/store/quick-cart/cart.context';
@@ -11,18 +11,14 @@ import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Empty, EmptyProductBoxIcon, Title, Text, Input, Button } from 'rizzui';
 import { ProductSkeleton } from '@/app/(website)/components/Skeletons/ProductSkeleton';
-import { toCurrency } from '../../../../@core/utils/to-currency';
+import { toCurrency } from '@core/utils/to-currency';
 import { loadStripe } from '@stripe/stripe-js';
 import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react';
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { usePathname } from 'next/navigation';
 import PageHeader from '@/app/shared/page-header';
-
-const CartProduct = dynamic(() => import('./cart-product'), {
-  loading: () => <ProductSkeleton />,
-  ssr: false,
-});
+import CartProduct from './cart-product';
 
 type FormValues = {
   couponCode: string;
@@ -42,7 +38,6 @@ export default function CartPageWrapper() {
     ? {
         title: 'Cart',
         breadcrumb: [
-
           {
             href: routes?.userDashboard?.dashboard,
             name: 'Dashboard',
@@ -116,7 +111,13 @@ export default function CartPageWrapper() {
 
   return (
     <>
-      {isDashboard && <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb}  isDashboard={isDashboard}/>}
+      {isDashboard && (
+        <PageHeader
+          title={pageHeader.title}
+          breadcrumb={pageHeader.breadcrumb}
+          isDashboard={isDashboard}
+        />
+      )}
       <TagName className="@container">
         <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
           <div
@@ -124,16 +125,10 @@ export default function CartPageWrapper() {
               `${cartItems.length < 0 ? '@5xl:col-span-12 @6xl:col-span-12' : '@5xl:col-span-8 @6xl:col-span-7'}`
             )}
           >
-            {cartItems.length ? (
+            {cartItems.length &&
               cartItems.map((item, idx) => (
                 <CartProduct key={idx} product={item} />
-              ))
-            ) : (
-              <Empty
-                image={<EmptyProductBoxIcon />}
-                text="No Product in the Cart"
-              />
-            )}
+              ))}
           </div>
 
           <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
@@ -172,10 +167,7 @@ function CartCalculations({
       </Title>
       <div className="mt-6 grid grid-cols-1 gap-4 @md:gap-6">
         {cartItems.map((item) => (
-          <div
-            key={item?.productId}
-            className="flex items-center justify-between"
-          >
+          <div key={item?._id} className="flex items-center justify-between">
             <Title as="h3" className="mb-1 text-base font-semibold">
               <Link
                 // href={routes.eCommerce.productDetails(item.productId)}

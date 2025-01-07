@@ -1,9 +1,9 @@
-'use client';
-import CartTemplate from '@/app/shared/ecommerce/cart';
-import SmallWidthContainer from '../../components/SmallWidthContainer';
-import { cn } from '../../../../@core/utils/class-names';
+import SmallWidthContainer from '@web-components/SmallWidthContainer';
+import { cn } from '@core/utils/class-names';
 import PageHeader from '@/app/shared/page-header';
 import { routes } from '@/config/routes';
+import CartTemplate from '@/app/shared/ecommerce/cart';
+
 const pageHeader = {
   title: 'Cart',
   breadcrumb: [
@@ -32,7 +32,6 @@ export default function CartPageWrapper() {
             className="mb-0 lg:mb-0"
           />
         </SmallWidthContainer>
-        {/* <div className="h-[60px] w-11/12 max-w-[600px] rounded-bl-full rounded-tl-full bg-[#D2E9FF]"></div> */}
       </div>
       <SmallWidthContainer className={cn(`!pt-0`)}>
         <CartTemplate />

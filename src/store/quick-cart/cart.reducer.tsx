@@ -22,7 +22,11 @@ export const initialState: State = {
 const updateItemTotalPrice = (items: Item[]) => {
   return items.map((item) => ({
     ...item,
-    totalPrice: item.pricePerUnit * item.quantity,
+
+    // totalPrice: item.pricePerUnit * item.quantity,
+    totalPrice: item.wordCount
+      ? (item.wordCount / 100) * item.pricePerUnit * item.quantity
+      : item.pricePerUnit * item.quantity,
   }));
 };
 
