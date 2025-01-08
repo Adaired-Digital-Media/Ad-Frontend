@@ -22,6 +22,8 @@ import {
 } from '@core/data/website/Landingpage';
 import { FAQSection } from '@web-components/eComFaqSection';
 import { EcomPageForm } from '../components/forms/EcomForm';
+import CldImage from '@web-components/CloudinaryImageComponent';
+
 const Landing = () => {
   return (
     <>
@@ -47,12 +49,12 @@ const HeroSection = () => {
       <SmallContainer className="relative z-[2] grid !py-0 3xl:pb-0 3xl:pt-14">
         <div
           className={cn(
-            `absolute bottom-1/2 left-[calc(100%-280px)] h-[calc(100%+145px)] w-full translate-y-1/2 rounded-tl-[250px] bg-[#FFDCB2] xl:h-[calc(100%+105px)] 2xl:h-full`
+            `absolute bottom-1/2 left-[calc(100%-400px)] h-[calc(100%+145px)] w-full translate-y-1/2 rounded-tl-[250px] bg-[#FFDCB2] xl:h-[calc(100%+105px)] 2xl:h-full`
           )}
         ></div>
         <div
           className={cn(
-            `absolute bottom-1/2 left-[calc(100%-250px)] h-[calc(100%+145px)] w-full translate-y-1/2 rounded-tl-[250px] bg-[#F39019] xl:h-[calc(100%+105px)] 2xl:h-full`
+            `absolute bottom-1/2 left-[calc(100%-380px)] h-[calc(100%+145px)] w-full translate-y-1/2 rounded-tl-[250px] bg-[#F39019] xl:h-[calc(100%+105px)] 2xl:h-full`
           )}
         ></div>
         <TwoColumnGrid className={cn(`relative z-[2] m-0 place-items-center`)}>
@@ -105,18 +107,18 @@ const HeroSection = () => {
           </div>
           <div
             className={cn(
-              `lg:scale-[1.3] lg:pt-16 xl:scale-[1.2] xl:pt-10 2xl:scale-100 3xl:-mr-20 4xl:-mr-32`
+              `lg:scale-[1.25] lg:pt-16 xl:scale-[1.18] xl:pt-10 2xl:scale-100 3xl:-mr-20 4xl:-mr-32`
             )}
           >
-            <Image
+            <CldImage
               src={HeroSectionDetails.imageUrl || ''}
               alt="Hero Image"
-              width={700}
-              height={600}
+              width={718} 
+              height={630}
               quality={100}
               priority
               className={cn(`object-contain`)}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="100vw"
             />
           </div>
         </TwoColumnGrid>
@@ -128,10 +130,10 @@ const StandOutSection = () => {
   return (
     <SmallContainer id="standoutSection">
       <TwoColumnGrid>
-        {' '}
-        <div className={cn(`h-full w-full rounded-2xl bg-[#EDEDED]`)} />{' '}
-        <div className={cn(`space-y-[15px]`)}>
-          {' '}
+        <div className={cn(`relative h-full w-full rounded-2xl`)}>
+          <CldImage src="standOut_fOg7J.png" alt="standout_image" fill />
+        </div>
+        <div className={cn(`space-y-[18px]`)}>
           <IconList
             icon={StandOutSectionDetails.subHeadingIconUrl}
             title={StandOutSectionDetails.subHeadingText}
@@ -140,11 +142,10 @@ const StandOutSection = () => {
             iconContainerClassName={`bg-[#F39019] h-[40px] w-[40px] rounded-full flex items-center justify-center ring-4 ring-offset-0 ring-white absolute`}
             iconClassName={`h-[18px] w-[18px] text-white`}
             titleClassName={`text-[#424242] font-poppins text-base font-regular pl-[35px] py-1`}
-          />{' '}
-          <h2 className={cn(`bhw_h2`)}>{StandOutSectionDetails.title}</h2>{' '}
-          <div className={cn(`space-y-[10px] text-base text-[#424242]`)}>
-            {' '}
-            {parse(StandOutSectionDetails.description)}{' '}
+          />
+          <h2 className={cn(`bhw_h2`)}>{StandOutSectionDetails.title}</h2>
+          <div className={cn(`space-y-[13px] text-base text-[#424242]`)}>
+            {parse(StandOutSectionDetails.description)}
           </div>
           {StandOutSectionDetails?.listItems?.map((text: string) => (
             <IconList
@@ -321,8 +322,8 @@ const ContactUsSection = () => {
   return (
     <SmallContainer id="contact">
       <TwoColumnGrid className={cn(`gap-x-20`)}>
-        <div className={cn(`h-full w-full rounded-2xl bg-[#EDEDED]`)}>
-          {/* TODO:Add Image */}
+        <div className={cn(`relative h-full w-full rounded-2xl bg-[#EDEDED]`)}>
+          <CldImage src="contactSection_3EsHL.png" alt="" fill />
         </div>
         <div className={cn(`h-full w-full pr-5`)}>
           <div className={cn(`h-full w-full rounded-[15px] border p-10`)}>

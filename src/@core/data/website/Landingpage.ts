@@ -14,7 +14,7 @@ export const HeroSectionDetails: IHeroSection = {
   buttonText: 'Place Your Order',
   buttonLink: '/ecommerce#products',
   phoneNumber: '+91 890740-0008',
-  imageUrl: '/assets/images/hero_image_bhw.png',
+  imageUrl: 'BHW_banner_VTtvR.png',
 };
 
 export const StandOutSectionDetails: IStandOutSection = {
