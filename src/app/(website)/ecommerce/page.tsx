@@ -113,7 +113,7 @@ const HeroSection = () => {
             <CldImage
               src={HeroSectionDetails.imageUrl || ''}
               alt="Hero Image"
-              width={718} 
+              width={718}
               height={630}
               quality={100}
               priority
@@ -167,40 +167,42 @@ const ProductSection = async () => {
     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/category/read-category?identifier=content-writing&children=true&childrenProducts=true&products=true`
   );
   const categories: ProductCategory[] = categoryData.data.data.children || [];
-  const tabs = categories.map((category: ProductCategory) => ({
-    title: category.name,
-    value: category.slug,
-    content: (
-      <div className={cn(`grid grid-cols-4 gap-x-[62px] gap-y-[41px]`)}>
-        {' '}
-        {Array.isArray(category.products) && category.products.length > 0 ? (
-          category.products.map((product) =>
-            typeof product === 'object' ? (
-              <IconBox
-                key={product._id}
-                icon={product.featuredImage}
-                isSvg={true}
-                title={product.name}
-                buttonText={'Order Now'}
-                buttonLink={routes.eCommerce.productForm(
-                  String(product.slug ?? generateSlug(product.name))
-                )}
-                buttonClassName={`bg-[#424242] rounded-full mt-[55px] hidden group-hover:block mx-auto`}
-                containerClassName={`text-center p-[30px] rounded-[20px] bg-white max-h-[286px] min-h-[286px] min-w-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
-                titleClassName={`font-poppins text-[20px] font-medium text-black `}
-                iconContainerClassName={`pb-[15px]`}
-              />
-            ) : null
-          )
-        ) : (
-          <Empty
-            image={<EmptyProductBoxIcon />}
-            text="No Products in this category"
-          />
-        )}{' '}
-      </div>
-    ),
-  }));
+  const tabs = categories
+    .filter((category) => category.slug !== 'free-products')
+    .map((category: ProductCategory) => ({
+      title: category.name,
+      value: category.slug,
+      content: (
+        <div className={cn(`grid grid-cols-4 gap-x-[62px] gap-y-[41px]`)}>
+          {' '}
+          {Array.isArray(category.products) && category.products.length > 0 ? (
+            category.products.map((product) =>
+              typeof product === 'object' ? (
+                <IconBox
+                  key={product._id}
+                  icon={product.featuredImage}
+                  isSvg={true}
+                  title={product.name}
+                  buttonText={'Order Now'}
+                  buttonLink={routes.eCommerce.productForm(
+                    String(product.slug ?? generateSlug(product.name))
+                  )}
+                  buttonClassName={`bg-[#424242] rounded-full mt-[55px] hidden group-hover:block mx-auto`}
+                  containerClassName={`text-center p-[30px] rounded-[20px] bg-white max-h-[286px] min-h-[286px] min-w-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
+                  titleClassName={`font-poppins text-[20px] font-medium text-black `}
+                  iconContainerClassName={`pb-[15px]`}
+                />
+              ) : null
+            )
+          ) : (
+            <Empty
+              image={<EmptyProductBoxIcon />}
+              text="No Products in this category"
+            />
+          )}{' '}
+        </div>
+      ),
+    }));
   return (
     <section className={cn(`bg-[#F6FBFF]`)} id="products">
       <SmallContainer>

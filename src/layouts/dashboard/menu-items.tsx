@@ -4,6 +4,7 @@ import {
   PiUserGearDuotone,
   PiBrowsersFill,
   PiShoppingBagDuotone,
+  PiShapesDuotone,
   PiInvoiceDuotone,
 } from 'react-icons/pi';
 
@@ -13,6 +14,12 @@ export const menuItems = [
     name: 'Visit Website',
     href: routes?.userDashboard?.website,
     icon: <PiBrowsersFill />,
+  },
+
+  {
+    name: 'Dashboard',
+    href: routes?.userDashboard?.dashboard,
+    icon: <PiShapesDuotone />,
   },
 
   // label start
@@ -41,11 +48,11 @@ export const menuItems = [
     href: routes?.userDashboard.orders,
     icon: <PiShoppingBagDuotone />,
   },
-  {
-    name: 'Invoices',
-    href: routes?.userDashboard.invoices,
-    icon: <PiInvoiceDuotone />,
-  },
+  // {
+  //   name: 'Invoices',
+  //   href: routes?.userDashboard.invoices,
+  //   icon: <PiInvoiceDuotone />,
+  // },
 
   //  label start
   // {

@@ -81,12 +81,14 @@ export default function ProfileSettingsView() {
                     {...register('first_name')}
                     error={errors.first_name?.message}
                     className="flex-grow"
+                    disabled
                   />
                   <Input
                     placeholder="Last Name"
                     {...register('last_name')}
                     error={errors.last_name?.message}
                     className="flex-grow"
+                    disabled
                   />
                 </FormGroup>
 
@@ -117,10 +119,11 @@ export default function ProfileSettingsView() {
                     prefixClassName="relative pe-2.5 before:w-[1px] before:h-[38px] before:absolute before:bg-gray-300 before:-top-[9px] before:right-0"
                     {...register('username')}
                     error={errors.username?.message}
+                    disabled
                   />
                 </FormGroup>
 
-                <FormGroup
+                {/* <FormGroup
                   title="Your Photo"
                   description="This will be displayed on your profile."
                   className="pt-7 @2xl:pt-9 @3xl:grid-cols-12 @3xl:pt-11"
@@ -133,13 +136,13 @@ export default function ProfileSettingsView() {
                       error={errors?.avatar?.message as string}
                     />
                   </div>
-                </FormGroup>
+                </FormGroup> */}
               </div>
-              <FormFooter
+              {/* <FormFooter
                 // isLoading={isLoading}
                 altBtnText="Cancel"
                 submitBtnText="Save"
-              />
+              /> */}
             </>
           );
         }}

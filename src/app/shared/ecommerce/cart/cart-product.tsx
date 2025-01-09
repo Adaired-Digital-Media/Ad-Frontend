@@ -1,14 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import axios from 'axios';
 import { CartItem, Product } from '@/types';
 import Link from 'next/link';
-import { Title, Text } from 'rizzui';
-import { routes } from '@/config/routes';
+import { Title } from 'rizzui';
 import { toCurrency } from '../../../../@core/utils/to-currency';
 import QuantityInput from './quantity-input';
 import RemoveItem from './remove-item';
+import { routes } from '@/config/routes';
 
 function CartProduct({ product }: { product: CartItem }) {
   return (
@@ -29,7 +27,9 @@ function CartProduct({ product }: { product: CartItem }) {
             as="h3"
             className="truncate text-base font-medium transition-colors hover:text-primary 3xl:text-lg"
           >
-            <Link href={''}>{product?.productName}</Link>
+            <Link href={routes.eCommerce.productFormEdit(product.productSlug)}>
+              {product?.productName}
+            </Link>
           </Title>
           <div>
             <span className="inline-block text-sm font-semibold text-gray-500 sm:font-medium md:text-base 3xl:text-lg">

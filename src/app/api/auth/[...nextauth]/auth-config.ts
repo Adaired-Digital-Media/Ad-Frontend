@@ -105,7 +105,7 @@ export default {
         if (parsedUrl.pathname === '/ecommerce/cart') {
           return `${baseUrl}/ecommerce/cart`;
         }
-        return `${baseUrl}/ecommerce/cart`;
+        return `${baseUrl}/ecommerce`;
       }
       return `${baseUrl}/dashboard`;
     },

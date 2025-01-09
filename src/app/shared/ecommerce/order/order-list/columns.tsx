@@ -70,24 +70,24 @@ export const ordersColumns = (expanded: boolean = true) => {
       enableSorting: false,
       cell: ({ row }) => getStatusBadge(row.original.status),
     }),
-    columnHelper.display({
-      id: 'action',
-      size: 130,
-      cell: ({
-        row,
-        table: {
-          options: { meta },
-        },
-      }) => (
-        <TableRowActionGroup
-          editUrl={routes.eCommerce.editOrder(row.original._id)}
-          viewUrl={routes.eCommerce.orderDetails(row.original._id)}
-          deletePopoverTitle={`Delete the order`}
-          deletePopoverDescription={`Are you sure you want to delete this #${row.original.id} order?`}
-          onDelete={() => meta?.handleDeleteRow?.(row.original)}
-        />
-      ),
-    }),
+    // columnHelper.display({
+    //   id: 'action',
+    //   size: 130,
+    //   cell: ({
+    //     row,
+    //     table: {
+    //       options: { meta },
+    //     },
+    //   }) => (
+    //     <TableRowActionGroup
+    //       // editUrl={routes.eCommerce.editOrder(row.original._id)}
+    //       // viewUrl={routes.eCommerce.orderDetails(row.original._id)}
+    //       deletePopoverTitle={`Delete the order`}
+    //       deletePopoverDescription={`Are you sure you want to delete this #${row.original.id} order?`}
+    //       // onDelete={() => meta?.handleDeleteRow?.(row.original)}
+    //     />
+    //   ),
+    // }),
   ];
 
   return expanded ? [expandedOrdersColumns, ...columns] : columns;

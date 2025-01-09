@@ -12,9 +12,16 @@ import { PiMagnifyingGlassBold } from 'react-icons/pi';
 
 export type OrdersDataType = (typeof orderData1)[number];
 
-export default function RecentOrder({ className }: { className?: string }) {
+export default function RecentOrder({
+  className,
+  ordersData,
+}: {
+  className?: string;
+  ordersData: any;
+}) {
+
   const { table, setData } = useTanStackTable<OrdersDataType>({
-    tableData: orderData1,
+    tableData: ordersData,
     columnConfig: ordersColumns(false),
     options: {
       initialState: {
@@ -31,6 +38,8 @@ export default function RecentOrder({ className }: { className?: string }) {
       enableColumnResizing: false,
     },
   });
+
+
   return (
     <WidgetCard
       title="Recent Orders"

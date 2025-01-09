@@ -1,5 +1,10 @@
 import { CartItem as Item } from '@/types';
-import { addItem, updateQuantity, removeItem } from './cart.utils';
+import {
+  addItem,
+  updateQuantity,
+  removeItem,
+  updateDetails,
+} from './cart.utils';
 
 type Action =
   | { type: 'ADD_ITEM'; item: Item }
@@ -8,6 +13,11 @@ type Action =
       type: 'UPDATE_QUANTITY';
       productEntryId: string;
       action: 'INCREMENT' | 'DECREMENT';
+    }
+  | {
+      type: 'UPDATE_DETAILS';
+      productEntryId: string;
+      details: Partial<Item>;
     }
   | { type: 'REMOVE_ITEM'; productEntryId: string };
 
@@ -52,6 +62,18 @@ export function cartReducer(state: State, action: Action): State {
         state.cartItems,
         action.productEntryId,
         action.action
+      );
+      const updatedItems = updateItemTotalPrice(items);
+      return {
+        ...state,
+        cartItems: updatedItems,
+      };
+    }
+    case 'UPDATE_DETAILS': {
+      const items = updateDetails(
+        state.cartItems,
+        action.productEntryId,
+        action.details
       );
       const updatedItems = updateItemTotalPrice(items);
       return {

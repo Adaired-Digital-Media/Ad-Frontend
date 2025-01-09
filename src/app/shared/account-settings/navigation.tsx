@@ -6,15 +6,16 @@ import { cn } from '@core/utils/class-names';
 import { useScrollableSlider } from '@core/hooks/use-scrollable-slider';
 import { PiCaretLeftBold, PiCaretRightBold } from 'react-icons/pi';
 import { usePathname } from 'next/navigation';
+import { routes } from '@/config/routes';
 
 const menuItems = [
   {
     label: 'Profile',
-    value: '/userDashboard/forms/profile-settings',
+    value: routes.userDashboard.accountSettings,
   },
   {
     label: 'Password',
-    value: '/userDashboard/forms/profile-settings/password',
+    value: routes.userDashboard.passwordSettings,
   },
 ];
 

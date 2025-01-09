@@ -12,8 +12,9 @@ export function generateCartProduct({
 }) {
   return {
     productId: product._id,
-    category: product.subCategory[0].name,
     productName: product.name,
+    category: product.subCategory[0].name,
+    productSlug: product.slug,
     productImage: product.featuredImage,
     wordCount: parseInt(data.wordCount || '100'),
     quantity: parseInt(data.quantity || '1'),

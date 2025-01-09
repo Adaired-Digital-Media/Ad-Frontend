@@ -7,11 +7,17 @@ import welcomeImg from '@public/assets/images/shop-illustration.png';
 import HandWaveIcon from '@core/components/icons/hand-wave';
 import { BsBrowserChrome } from 'react-icons/bs';
 import StatCards from './stat-cards';
+import axios from 'axios';
 import RecentOrder from './recent-order';
 
-export default function EcommerceDashboard({ session }: { session: any }) {
+export default async function EcommerceDashboard({
+  session,
+  ordersData,
+}: {
+  session: any;
+  ordersData: any;
+}) {
   const userName = session?.user.name.split(' ').slice(0, 2).join(' ');
-
   const getGreeting = () => {
     const currentHour = new Date().getHours();
     if (currentHour < 12) {
@@ -56,9 +62,9 @@ export default function EcommerceDashboard({ session }: { session: any }) {
           </Link>
         </WelcomeBanner>
 
-        <StatCards className="@2xl:grid-cols-3 @3xl:gap-6 @4xl:col-span-2 @7xl:col-span-8" />
+        {/* <StatCards className="@2xl:grid-cols-3 @3xl:gap-6 @4xl:col-span-2 @7xl:col-span-8" /> */}
 
-        <RecentOrder className="relative @4xl:col-span-2 @7xl:col-span-12" />
+        <RecentOrder className="relative @4xl:col-span-2 @7xl:col-span-12" ordersData={ordersData} />
       </div>
     </div>
   );

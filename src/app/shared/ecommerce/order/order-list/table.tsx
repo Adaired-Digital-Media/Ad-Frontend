@@ -1,7 +1,6 @@
 'use client';
 
 import { ordersColumns } from '@/app/shared/ecommerce/order/order-list/columns';
-import { orderData1 } from '@/data/order-data';
 import Table from '@core/components/table';
 import { CustomExpandedComponent } from '@core/components/table/custom/expanded-row';
 import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
@@ -10,19 +9,24 @@ import { OrdersDataType } from '@/app/shared/ecommerce/dashboard/recent-order';
 import Filters from './filters';
 import { TableVariantProps } from 'rizzui';
 
+
 export default function OrderTable({
   className,
   variant = 'modern',
   hideFilters = false,
   hidePagination = false,
+  orderData,
 }: {
   className?: string;
   hideFilters?: boolean;
   hidePagination?: boolean;
   variant?: TableVariantProps;
+  orderData: any;
 }) {
+
+
   const { table, setData } = useTanStackTable<OrdersDataType>({
-    tableData: orderData1,
+    tableData: orderData,
     columnConfig: ordersColumns(),
     options: {
       initialState: {

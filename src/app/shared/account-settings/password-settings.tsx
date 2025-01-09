@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SubmitHandler, Controller } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
 import { Form } from '@core/ui/rizzui-ui/form';
 import { Button, Password, Title, Text } from 'rizzui';
 import { ProfileHeader } from '@/app/shared/account-settings/profile-settings';
@@ -11,27 +11,50 @@ import {
   PasswordFormTypes,
 } from '@/validators/password-settings.schema';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-export default function PasswordSettingsView({
-  settings,
-}: {
-  settings?: PasswordFormTypes;
-}) {
+export default function PasswordSettingsView({}: {}) {
   const [isLoading, setLoading] = useState(false);
   const [reset, setReset] = useState({});
   const { data: session } = useSession();
 
-  const onSubmit: SubmitHandler<PasswordFormTypes> = (data) => {
+  const onSubmit: SubmitHandler<PasswordFormTypes> = async (data) => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      console.log('Password settings data ->', data);
-      setReset({
-        currentPassword: '',
-        newPassword: '',
-        confirmedPassword: '',
+    toast
+      .promise(
+        axios.patch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/auth/reset-password`,
+          {
+            currentPassword: data.currentPassword,
+            newPassword: data.newPassword,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${session?.user?.accessToken}`,
+            },
+          }
+        ),
+        {
+          loading: 'Updating password...',
+          success: 'Password updated successfully',
+          error: 'Failed to update password',
+        }
+      )
+      .then(() => {
+        setReset({
+          currentPassword: '',
+          newPassword: '',
+          confirmedPassword: '',
+        });
+      })
+      .catch((error) => {
+        console.error('Error updating password:', error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    }, 600);
   };
 
   return (
@@ -43,9 +66,6 @@ export default function PasswordSettingsView({
         className="@container"
         useFormProps={{
           mode: 'onChange',
-          defaultValues: {
-            ...settings,
-          },
         }}
       >
         {({ register, control, formState: { errors }, getValues }) => {
@@ -72,20 +92,10 @@ export default function PasswordSettingsView({
                   title="New Password"
                   titleClassName="text-base font-medium"
                 >
-                  <Controller
-                    control={control}
-                    name="newPassword"
-                    render={({ field: { onChange, value } }) => (
-                      <Password
-                        placeholder="Enter your password"
-                        helperText={
-                          getValues().newPassword.length < 8 &&
-                          'Your current password must be more than 8 characters'
-                        }
-                        onChange={onChange}
-                        error={errors.newPassword?.message}
-                      />
-                    )}
+                  <Password
+                    {...register('newPassword')}
+                    placeholder="Enter your password"
+                    error={errors.newPassword?.message}
                   />
                 </HorizontalFormBlockWrapper>
 
@@ -93,23 +103,17 @@ export default function PasswordSettingsView({
                   title="Confirm New Password"
                   titleClassName="text-base font-medium"
                 >
-                  <Controller
-                    control={control}
-                    name="confirmedPassword"
-                    render={({ field: { onChange, value } }) => (
-                      <Password
-                        placeholder="Enter your password"
-                        onChange={onChange}
-                        error={errors.confirmedPassword?.message}
-                      />
-                    )}
+                  <Password
+                    {...register('confirmedPassword')}
+                    placeholder="Enter your password"
+                    error={errors.confirmedPassword?.message}
                   />
                 </HorizontalFormBlockWrapper>
 
-                <div className="mt-6 flex w-auto items-center justify-end gap-3">
-                  <Button type="button" variant="outline">
+                <div className="mr-10 mt-6 flex w-auto items-center justify-end gap-3">
+                  {/* <Button type="button" variant="outline">
                     Cancel
-                  </Button>
+                  </Button> */}
                   <Button type="submit" variant="solid" isLoading={isLoading}>
                     Update Password
                   </Button>
@@ -122,4 +126,3 @@ export default function PasswordSettingsView({
     </>
   );
 }
-

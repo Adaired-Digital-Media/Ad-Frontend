@@ -19,71 +19,24 @@ import { useCart } from '@/store/quick-cart/cart.context';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
 
-// Utility function to generate Zod schema
+// Utility: Dynamic Zod Schema
 const generateFormSchema = (
-  fields: {
-    name: string;
-    label: string;
-    placeholder: string;
-    type: string;
-    required: boolean;
-    options: any[];
-  }[]
+  fields: { name: string; type: string; required: boolean }[]
 ) => {
   const schema: Record<string, z.ZodTypeAny> = {};
-
-  fields.forEach((field) => {
-    let fieldSchema: z.ZodTypeAny;
-
-    switch (field.type) {
-      case 'number':
-        fieldSchema = z
-          .number({
-            invalid_type_error: `${field.label} must be a number`,
-          })
-          .min(
-            field.name === 'quantity' ? 1 : 100,
-            field.name === 'quantity'
-              ? `${field.label} must be at least 1`
-              : `Minimum purchase is 100 words for this product.`
-          );
-        break;
-
-      case 'textarea':
-      case 'text':
-        fieldSchema = z
-          .string({
-            invalid_type_error: `${field.label} must be a string`,
-          })
-          .max(500, `${field.label} cannot exceed 500 characters`);
-        break;
-
-      default:
-        fieldSchema = z.string();
-    }
-
-    if (field.required) {
-      if (field.type === 'number') {
-        fieldSchema = (fieldSchema as z.ZodNumber).min(
-          1,
-          `${field.label} is required`
-        );
-      } else if (field.type === 'textarea' || field.type === 'text') {
-        fieldSchema = (fieldSchema as z.ZodString).min(
-          1,
-          `${field.label} is required`
-        );
-      }
-    }
-
-    schema[field.name] = fieldSchema;
+  fields.forEach(({ name, type, required }) => {
+    let fieldSchema: z.ZodTypeAny =
+      type === 'number'
+        ? z.number().min(1, `${name} must be at least 1`)
+        : z.string().max(500, `${name} cannot exceed 500 characters`);
+    schema[name] = required
+      ? (fieldSchema as z.ZodString | z.ZodNumber).min(1, `${name} is required`)
+      : fieldSchema;
   });
-
   return z.object(schema);
 };
 
-// Component Props
-interface DynamicFormProps {
+interface ProductFormProps {
   form: {
     fields: {
       name: string;
@@ -91,40 +44,27 @@ interface DynamicFormProps {
       placeholder: string;
       type: string;
       required: boolean;
-      options: any[];
     }[];
   };
-}
-
-interface ProductFormProps {
-  form: DynamicFormProps;
   product: Product;
-  session: any;
+  initialValues?: Record<string, any>;
 }
 
-export const ProductForm: React.FC<ProductFormProps> = ({
+export const ProductFormEdit: React.FC<ProductFormProps> = ({
   form,
   product,
-  session,
+  initialValues,
 }) => {
   const router = useRouter();
-  const { addItemToCart } = useCart();
+  const { updateDetails } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   // Generate schema based on form fields
-  const formSchema = generateFormSchema(form?.form?.fields);
+  const formSchema = generateFormSchema(form?.fields);
 
   const methods = useForm<FieldValues>({
-    mode: 'onChange',
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: session?.user?.name,
-      email: session?.user?.email,
-      phone: session?.user?.contact,
-      wordCount: '100',
-      quantity: '1',
-      additionalInfo: '',
-    },
+    defaultValues: initialValues,
   });
 
   const { handleSubmit, register, formState, watch } = methods;
@@ -133,34 +73,20 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   // Watch form values for word count and quantity
   const watchedFields = watch();
 
+  // Calculate Total Price
   const calculateTotalPrice = useCallback(() => {
-    if (product.pricingType === 'perWord') {
-      const words = parseInt(watchedFields?.wordCount || '0');
-      const quantity = parseInt(watchedFields?.quantity || '1');
-      const pricePerUnit = product.pricePerUnit;
-
-      // Calculate the price based on the exact word count
-      let totalPrice = (words / 100) * pricePerUnit * quantity;
-
-      // Round to 2 decimal places
-      totalPrice = Math.round(totalPrice * 100) / 100;
-      return totalPrice;
-    } else if (product.pricingType === 'perReview') {
-      const quantity = parseInt(watchedFields?.quantity || '1');
-      let totalPrice = product.pricePerUnit * quantity;
-
-      // Round to 2 decimal places
-      totalPrice = Math.round(totalPrice * 100) / 100;
-      return totalPrice;
-    }
-    return 0;
+    const wordCount = parseInt(watch('wordCount') || '100');
+    const quantity = parseInt(watch('quantity') || '1');
+    return product.pricingType === 'perWord'
+      ? Math.round((wordCount / 100) * product.pricePerUnit * quantity * 100) /
+          100
+      : Math.round(product.pricePerUnit * quantity * 100) / 100;
   }, [watchedFields, product]);
 
   // Update the price when form values change
   useEffect(() => {
-    const price = calculateTotalPrice();
-    setTotalPrice(price);
-  }, [watchedFields, calculateTotalPrice]);
+    setTotalPrice(calculateTotalPrice());
+  }, [watch, calculateTotalPrice]);
 
   const addToCart = async (data: FieldValues) => {
     // Calculate the total price of the product
@@ -172,7 +98,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       price,
     });
 
-    addItemToCart(cartItem);
+    updateDetails(product._id, cartItem);
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {

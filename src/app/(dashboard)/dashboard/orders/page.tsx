@@ -8,6 +8,7 @@ import { orderData } from '@/data/order-data';
 import { metaObject } from '@/config/site.config';
 import ExportButton from '@/app/shared/export-button';
 import { auth } from '@/auth';
+import axios from 'axios';
 
 export const metadata = {
   ...metaObject('Orders'),
@@ -33,17 +34,16 @@ const pageHeader = {
 async function fetchOrders() {
   const session = await auth();
 
-  const res = await fetch(
+  const res = await axios.get(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/orders/getUserOrders`,
     {
-      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${session?.user?.accessToken}`,
       },
     }
   );
-  const data = await res.json();
+  const data = res.data.data;
   return data;
 }
 
@@ -74,7 +74,7 @@ export default async function OrdersPage() {
         </div>
       </PageHeader>
 
-      <OrdersTable />
+      <OrdersTable orderData={orders} />
     </>
   );
 }
