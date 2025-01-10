@@ -1,7 +1,7 @@
 import SmallWidthContainer from '@web-components/SmallWidthContainer';
 import CldImage from '@web-components/CloudinaryImageComponent';
-import { Separator } from '../../../../@core/ui/shadcn-ui/separator';
-import { cn } from '../../../../@core/utils/class-names';
+import { Separator } from '@core/ui/shadcn-ui/separator';
+import { cn } from '@core/utils/class-names';
 import Link from 'next/link';
 
 const EcomFooter = () => {
