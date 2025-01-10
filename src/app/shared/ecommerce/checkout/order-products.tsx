@@ -10,8 +10,6 @@ import { routes } from '@/config/routes';
 import { toCurrency } from '@core/utils/to-currency';
 import { v4 as uuidv4 } from 'uuid';
 
-
-
 export default function OrderProducts({
   items,
   className,
@@ -57,8 +55,12 @@ export default function OrderProducts({
                   <div className="ps-3">
                     <Title as="h3" className="mb-1 text-base font-semibold">
                       <Link
-                        // href={routes.eCommerce.productDetails(item.productId)}
-                        href={''}
+                        href={{
+                          pathname: routes?.eCommerce?.productFormEdit(
+                            item.productSlug
+                          ),
+                          query: { id: item._id }, 
+                        }}
                       >
                         {item?.productName}
                       </Link>

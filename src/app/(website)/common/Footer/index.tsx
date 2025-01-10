@@ -11,5 +11,5 @@ export default function ConditionalFooter() {
   const pathname = usePathname();
 
   // Conditionally render the appropriate footer based on the pathname
-  return pathname.startsWith('/ecommerce') ? <EcomFooter /> : <WebFooter />;
+  return pathname.startsWith('/expert-content-solutions') ? <EcomFooter /> : <WebFooter />;
 }

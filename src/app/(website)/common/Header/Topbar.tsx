@@ -1,14 +1,17 @@
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import MaxWidthWrapper from '@/app/(website)/components/MaxWidthWrapper';
-import { Separator } from '../../../../@core/ui/shadcn-ui/separator';
+import { Separator } from '@core/ui/shadcn-ui/separator';
 import Link from 'next/link';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
 
+import UserAvatarIcon from './AvatarIcon';
+
 type Props = {
   className: string;
+  session?: any;
 };
 
-const Topbar = ({ className }: Props) => {
+const Topbar = ({ className, session }: Props) => {
   return (
     <div className={cn(`flex h-10 items-center bg-[#EEEEEE] ${className}`)}>
       <MaxWidthWrapper
@@ -46,6 +49,8 @@ const Topbar = ({ className }: Props) => {
             <p className={cn(`text-xs sm:text-base`)}>+91 89074-00008</p>
           </Link>
         </div>
+
+        {session && <UserAvatarIcon session={session} />}
       </MaxWidthWrapper>
     </div>
   );

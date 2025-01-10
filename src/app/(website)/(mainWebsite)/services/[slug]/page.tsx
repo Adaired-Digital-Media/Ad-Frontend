@@ -1,22 +1,23 @@
-import React from "react";
-import type { Metadata } from "next";
-import NavigationMenu from "@web-components/NavigationMenu";
-import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
-import PageBanner from "@web-components/PageBanner";
+import React from 'react';
+import type { Metadata } from 'next';
+import NavigationMenu from '@web-components/NavigationMenu';
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
+import PageBanner from '@web-components/PageBanner';
+import GetInTouchForm from '@web-components/forms/GetInTouchForm';
 
 // Sections
 // import GetInTouchForm from "@/forms/GetInTouchForm";
-import CTA from "@web-components/PageDynamicSections/CTA";
-import FaqSection from "@web-components/PageDynamicSections/FaqSection";
-import GridSection from "@web-components/PageDynamicSections/GridSection";
-import ProcessSection from "@web-components/PageDynamicSections/ProcessSection";
-import StickyScroll from "@web-components/PageDynamicSections/StickyScrollSection";
-import ImageWithIconbox from "@web-components/PageDynamicSections/ImageWithIconboxSection";
-import KeyFeatureListLayout from "@web-components/PageDynamicSections/KeyFeatureListLayout";
-import KeyFeatureCrossLayout from "@web-components/PageDynamicSections/KeyFeatureCrossLayout";
-import TwoColumnFeatureSection from "@web-components/PageDynamicSections/TwoColumnFeatureSection";
-import ServiceKeyFeaturesLayout from "@web-components/PageDynamicSections/ServiceKeyFeaturesLayout";
-import ImageWithDetailedFeatureDescription from "@web-components/PageDynamicSections/ImageWithDetailedFeatureDescription";
+import CTA from '@web-components/PageDynamicSections/CTA';
+import FaqSection from '@web-components/PageDynamicSections/FaqSection';
+import GridSection from '@web-components/PageDynamicSections/GridSection';
+import ProcessSection from '@web-components/PageDynamicSections/ProcessSection';
+import StickyScroll from '@web-components/PageDynamicSections/StickyScrollSection';
+import ImageWithIconbox from '@web-components/PageDynamicSections/ImageWithIconboxSection';
+import KeyFeatureListLayout from '@web-components/PageDynamicSections/KeyFeatureListLayout';
+import KeyFeatureCrossLayout from '@web-components/PageDynamicSections/KeyFeatureCrossLayout';
+import TwoColumnFeatureSection from '@web-components/PageDynamicSections/TwoColumnFeatureSection';
+import ServiceKeyFeaturesLayout from '@web-components/PageDynamicSections/ServiceKeyFeaturesLayout';
+import ImageWithDetailedFeatureDescription from '@web-components/PageDynamicSections/ImageWithDetailedFeatureDescription';
 
 const fetchservice = async (slug: string) => {
   const result = await fetch(
@@ -37,7 +38,7 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
     title: data?.metaTitle ? data.metaTitle : data?.serviceName,
-    description: data?.metaDescription ? data.metaDescription : "",
+    description: data?.metaDescription ? data.metaDescription : '',
     alternates: {
       canonical: `/services/${c.slug}`,
     },
@@ -72,22 +73,22 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
   return (
     <>
       <PageBanner title={fetchedService.serviceName} />
-      <div className="space-y-12 md:space-y-24 pb-20">
+      <div className="space-y-12 pb-20 md:space-y-24">
         {bodyData ? (
           bodyData.map((data: any) => {
             switch (data.componentName) {
-              case "TwoColumnFeatureSection":
+              case 'TwoColumnFeatureSection':
                 return (
                   <MaxWidthWrapper key={data.componentName}>
-                    <div className="flex justify-between gap-10 mt-12">
+                    <div className="mt-12 flex justify-between gap-10">
                       <div className="w-full xl:w-[70%]">
                         <TwoColumnFeatureSection
                           colorScheme={fetchedService.colorScheme}
                           data={data}
                         />
                       </div>
-                      <aside className="hidden xl:block w-[30%] ">
-                        <div className="space-y-8 sticky top-28">
+                      <aside className="hidden w-[30%] xl:block">
+                        <div className="sticky top-28 space-y-8">
                           {fetchedService?.childServices?.length !== 0 && (
                             <NavigationMenu
                               colorScheme={fetchedService.colorScheme}
@@ -95,16 +96,16 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                               childServices={fetchedService?.childServices}
                             />
                           )}
-                          {/* <GetInTouchForm
+                          <GetInTouchForm
                             colorScheme={fetchedService.colorScheme}
-                          /> */}
+                          />
                         </div>
                       </aside>
                     </div>
                   </MaxWidthWrapper>
                 );
 
-              case "KeyFeatureCrossLayout":
+              case 'KeyFeatureCrossLayout':
                 return (
                   <MaxWidthWrapper key={data.componentName}>
                     <KeyFeatureCrossLayout
@@ -114,7 +115,7 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                   </MaxWidthWrapper>
                 );
 
-              case "ImagewithDetailedFeatureDescription":
+              case 'ImagewithDetailedFeatureDescription':
                 return (
                   <MaxWidthWrapper key={data.componentName}>
                     <ImageWithDetailedFeatureDescription
@@ -124,14 +125,14 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                   </MaxWidthWrapper>
                 );
 
-              case "FAQ":
+              case 'FAQ':
                 return (
                   <MaxWidthWrapper key={data.componentName}>
                     <FaqSection faqs={data.body.faq ?? []} />
                   </MaxWidthWrapper>
                 );
 
-              case "CallToAction":
+              case 'CallToAction':
                 return (
                   <MaxWidthWrapper key={data.componentName}>
                     <CTA
@@ -141,7 +142,7 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                   </MaxWidthWrapper>
                 );
 
-              case "KeyFeatureListLayout":
+              case 'KeyFeatureListLayout':
                 return (
                   <MaxWidthWrapper key={data.componentName}>
                     <KeyFeatureListLayout
@@ -151,7 +152,7 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                   </MaxWidthWrapper>
                 );
 
-              case "ServiceKeyFeaturesLayout":
+              case 'ServiceKeyFeaturesLayout':
                 return (
                   <div key={data.componentName}>
                     <ServiceKeyFeaturesLayout
@@ -161,7 +162,7 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                   </div>
                 );
 
-              case "StickyScrollLayout":
+              case 'StickyScrollLayout':
                 return (
                   <div key={data.componentName}>
                     <StickyScroll
@@ -171,7 +172,7 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
                   </div>
                 );
 
-              case "ImageWithIconBoxList":
+              case 'ImageWithIconBoxList':
                 return (
                   <div key={data.componentName}>
                     <ImageWithIconbox

@@ -1,6 +1,7 @@
 "use client";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { cn, hexToHexWithOpacity } from "@/lib/utils";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
+import { cn,  } from "@core/utils/class-names";
+import { hexToHexWithOpacity } from "@core/utils/hexToHexWithOpacity";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import parse from "html-react-parser";

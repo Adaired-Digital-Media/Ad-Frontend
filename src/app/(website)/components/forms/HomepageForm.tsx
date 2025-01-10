@@ -72,6 +72,7 @@ const HomepageForm = () => {
     if (token) {
       data.gRecaptchaToken = token;
       reset();
+      // router.push('/thankyou');
 
       // try {
       //   const response = await fetch('/api/zoho/leadRegister', {

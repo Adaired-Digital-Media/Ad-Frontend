@@ -3,7 +3,7 @@ import { FC, useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { calculateReadingTime } from '@core/utils/calculateReadingTime';
 import { formatDate } from '@core/utils/format-date';
-import { cn } from 'rizzui';
+import { cn } from '@core/utils/class-names';
 import Button from '@web-components/Button';
 import {
   Card,

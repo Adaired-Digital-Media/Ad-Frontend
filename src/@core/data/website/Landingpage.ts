@@ -12,7 +12,7 @@ export const HeroSectionDetails: IHeroSection = {
   description:
     "Get noticed online with specialized SEO-driven content writing solutions that engage, inform, and convert your audience. Our expert writers craft compelling articles, blogs, and web content tailored to your brand's unique voice, ensuring that every piece connects to your target market.",
   buttonText: 'Place Your Order',
-  buttonLink: '/ecommerce#products',
+  buttonLink: '/expert-content-solutions#products',
   phoneNumber: '+91 890740-0008',
   imageUrl: 'BHW_banner_VTtvR.png',
 };
@@ -323,23 +323,28 @@ export const FAQSectionDetails: IFAQSection[] = [
       'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
   },
   {
-    title: 'What are your payment terms and accepted methods?',
+    title: 'Are your payment methods secure?',
     content:
-      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+      'Yes, we handle every transaction securely to provide a smooth and safe experience for our clients.',
   },
   {
     title: 'What if we need content outside your normal TAT?',
     content:
-      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+      'We understand that urgent needs may arise, and we’re happy to accommodate such requests. Get in touch to know more!',
   },
   {
     title: 'How can I cancel or pause my content order?',
     content:
-      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+      'If you need to cancel or pause your order, please reach out to our support team. Ideally, within 24 hours of placing your order, discuss your options',
   },
   {
-    title: 'Is there a minimum order requirement for content?',
+    title: 'How Do I Reach Out To You?',
     content:
-      'We’re dedicated to ensuring your complete satisfaction and are happy to work with you until the content meets your expectations.',
+      'You can reach out to us via our website form, email, or support line for any inquiries.',
+  },
+  {
+    title: 'Do You Offer Automated Invoices?',
+    content:
+      'Yes, once you’ve made the payment, you will receive the invoice directly to your registered email.',
   },
 ];

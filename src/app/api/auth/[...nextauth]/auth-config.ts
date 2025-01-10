@@ -102,10 +102,10 @@ export default {
       }
 
       if (parsedUrl.origin === baseUrl) {
-        if (parsedUrl.pathname === '/ecommerce/cart') {
-          return `${baseUrl}/ecommerce/cart`;
+        if (parsedUrl.pathname === '/expert-content-solutions/cart') {
+          return `${baseUrl}/expert-content-solutions/cart`;
         }
-        return `${baseUrl}/ecommerce`;
+        return `${baseUrl}/expert-content-solutions`;
       }
       return `${baseUrl}/dashboard`;
     },

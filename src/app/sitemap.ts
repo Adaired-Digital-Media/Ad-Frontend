@@ -1,4 +1,4 @@
-import { DateComponent } from "@/lib/utils";
+import { DateComponent } from "@core/utils/dateComponent";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

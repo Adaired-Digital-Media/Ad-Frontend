@@ -1,17 +1,17 @@
-import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
-import PageBanner from "@web-components/PageBanner";
-import React from "react";
-import { Icons } from "@web-components/Icons";
-import Link from "next/link";
-// import ContactPageForm from "@/forms/ContactPageForm";
-import type { Metadata } from "next";
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
+import PageBanner from '@web-components/PageBanner';
+import React from 'react';
+import { Icons } from '@web-components/Icons';
+import Link from 'next/link';
+import ContactPageForm from '@web-components/forms/ContactPageForm';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Contact Adaired – Speak with Our Team Today!",
+  title: 'Contact Adaired – Speak with Our Team Today!',
   description:
     "Need to ask something or just want to say hi? Our Contact page is where you can reach out easily. We're here to listen and help. Let's chat!",
   alternates: {
-    canonical: "https://www.adaired.com/contact",
+    canonical: 'https://www.adaired.com/contact',
   },
 };
 
@@ -20,9 +20,9 @@ const Contact = () => {
     <>
       <PageBanner title="Contact Us" />
       <section className="py-12 lg:py-24">
-        <MaxWidthWrapper className="flex gap-20 flex-col lg:flex-row">
+        <MaxWidthWrapper className="flex flex-col gap-20 lg:flex-row">
           <div className="flex-1 lg:w-1/2">
-            {/* <ContactPageForm /> */}
+            <ContactPageForm />
           </div>
           <div className="flex-1 lg:w-1/2">
             <ContactDetails />
@@ -49,13 +49,15 @@ const ContactDetails = () => {
   return (
     <div>
       <div className="p-2 text-center md:text-left">
-        <h5 className=" sm:text-xl inline font-nunito text-[#515151] relative md:pl-20 text-lg">
-          <div className="absolute top-1/2 -left-1/2 md:left-0 transform -translate-y-1/2 bg-[#A7A9AC] h-px w-16"></div>
-          <div className="md:hidden absolute top-1/2 -right-1/2 transform -translate-y-1/2 bg-[#A7A9AC] h-px w-16"></div>
+        <h5 className="relative inline font-nunito text-lg text-[#515151] sm:text-xl md:pl-20">
+          <div className="absolute -left-1/2 top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] md:left-0"></div>
+          <div className="absolute -right-1/2 top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] font-nunito font-normal md:hidden"></div>
           Ready To Elevate?
         </h5>
-        <h2 className="text-[1.688rem] md:text-4xl">Get In Touch</h2>
-        <p className="py-3 text-base sm:text-lg text-justify md:text-left">
+        <h2 className="font-dm text-[1.688rem] font-normal md:text-4xl">
+          Get In Touch
+        </h2>
+        <p className="py-3 text-justify text-base sm:text-lg md:text-left">
           Welcome to Adaired, your one-stop destination for comprehensive
           digital marketing solutions. Every ambitious entrepreneur needs a
           digital marketing partner like us. To get started, please fill out the
@@ -64,22 +66,22 @@ const ContactDetails = () => {
           objectives.
         </p>
       </div>
-      <div className="grid gap-5 grid-cols-12 py-6">
-        <div className="flex gap-3 md:gap-5 p-5 border col-span-12 flex-col md:flex-row items-center md:items-start text-center md:text-left">
-          <Icons.Map className="flex-none h-12 w-12 border p-2  text-[#1b5b97] rounded" />
+      <div className="grid grid-cols-12 gap-5 py-6">
+        <div className="col-span-12 flex flex-col items-center gap-3 border p-5 text-center md:flex-row md:items-start md:gap-5 md:text-left">
+          <Icons.Map className="h-12 w-12 flex-none rounded border p-2 text-[#1b5b97]" />
           <div>
             <p>We&apos;re located at</p>
             <Link
               href="https://maps.app.goo.gl/CEMtUbQd1246YQ3c7"
-              className="font-semibold "
+              className="font-semibold"
             >
               B-509, 5th Floor, Bestech Business Towers, Sector 66, SAS Nagar,
               Punjab 160066
             </Link>
           </div>
         </div>
-        <div className="flex gap-3 md:gap-5 p-5 border col-span-12 sm:col-span-6 lg:col-span-12 flex-col md:flex-row items-center md:items-start text-center md:text-left">
-          <Icons.Phone className="flex-none h-12 w-12 border p-2  text-[#1b5b97] rounded" />
+        <div className="col-span-12 flex flex-col items-center gap-3 border p-5 text-center sm:col-span-6 md:flex-row md:items-start md:gap-5 md:text-left lg:col-span-12">
+          <Icons.Phone className="h-12 w-12 flex-none rounded border p-2 text-[#1b5b97]" />
           <div>
             <p>Need assistance? Call us at</p>
             <Link href="tel:+1 (205) 273-6006" className="block font-semibold">
@@ -93,19 +95,19 @@ const ContactDetails = () => {
             </Link>
           </div>
         </div>
-        <div className="flex gap-3 md:gap-5 p-5 border col-span-12 sm:col-span-6 lg:col-span-12 flex-col md:flex-row items-center md:items-start text-center md:text-left">
-          <Icons.Mail className="flex-none h-12 w-12 border p-2  text-[#1b5b97] rounded" />
+        <div className="col-span-12 flex flex-col items-center gap-3 border p-5 text-center sm:col-span-6 md:flex-row md:items-start md:gap-5 md:text-left lg:col-span-12">
+          <Icons.Mail className="h-12 w-12 flex-none rounded border p-2 text-[#1b5b97]" />
           <div>
             <p>Helpdesk</p>
             <Link
               href="mailto:info@adaired.com?subject=Adaired Support&body=Hi Adaired Team,"
-              className="block font-semibold "
+              className="block font-semibold"
             >
-              <span>General Inquiries - </span>{" "}
+              <span>General Inquiries - </span>{' '}
               <span className="text-sky-600">info@adaired.com</span>
             </Link>
             <Link href="mailto:hr@adaired.com" className="block font-semibold">
-              <span>HR Department - </span>{" "}
+              <span>HR Department - </span>{' '}
               <span className="text-sky-600">hr@adaired.com</span>
             </Link>
           </div>

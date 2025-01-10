@@ -1,9 +1,5 @@
 import { CartItem as Item } from '@/types';
 
-// export function addItem(cartItems: Item[], item: Item) {
-//   return [...cartItems, item];
-// }
-
 export function addItem(cartItems: Item[], item: Item) {
   // Check if the item's slug includes "free"
   if (item.productSlug.includes('free')) {

@@ -1,36 +1,36 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper/";
-import { TypewriterEffect, TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import type { Metadata } from "next";
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper/';
+// import { TypingAnimation } from "@core/ui/shadcn-ui/typing-animation";
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Thank you",
-  description: "Thank you for reaching out to Adaired!",
+  title: 'Thank you',
+  description: 'Thank you for reaching out to Adaired!',
 };
 
 const Thankyou = () => {
   const words = [
     {
-      text: "Thanks",
-      className: "font-dm",
+      text: 'Thanks',
+      className: 'font-dm',
     },
     {
-      text: "for",
-      className: "font-dm",
+      text: 'for',
+      className: 'font-dm',
     },
     {
-      text: "reaching",
-      className: "font-dm",
+      text: 'reaching',
+      className: 'font-dm',
     },
     {
-      text: "out",
-      className: "font-dm",
+      text: 'out',
+      className: 'font-dm',
     },
     {
-      text: "Adaired!",
-      className: "font-dm text-[#1B5A96]",
+      text: 'Adaired!',
+      className: 'font-dm text-[#1B5A96]',
     },
   ];
 
@@ -67,7 +67,7 @@ const Thankyou = () => {
     },
   ];
   return (
-    <MaxWidthWrapper className="h-[85vh] flex items-center justify-center flex-col">
+    <MaxWidthWrapper className="flex h-[85vh] flex-col items-center justify-center">
       {/* <main className=""> */}
       <div className="pb-5">
         <Image
@@ -78,10 +78,8 @@ const Thankyou = () => {
           draggable={false}
         />
       </div>
-      <div className="text-center pb-24">
-        <TypewriterEffect words={words} className="pb-4" />
-        {/* <TypewriterEffectSmooth words={words} /> */}
-        {/* <h1 className="text-5xl">Thanks for reaching out!</h1> */}
+      <div className="pb-24 text-center">
+        <h1 className="font-dm text-5xl">Thanks for reaching out!</h1>
         <p>
           We&apos;ll be in touch shortly and look forward to discussing how
           Adaired can best support your business.
@@ -89,12 +87,12 @@ const Thankyou = () => {
       </div>
       <Link
         href={`/`}
-        className="flex items-center justify-center text-[#1B5A96] font-semibold"
+        className="flex items-center justify-center font-semibold text-[#1B5A96]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 6 10"
-          className="h-3 w-3 fill-[#1B5A96] mr-1"
+          className="mr-1 h-3 w-3 fill-[#1B5A96]"
         >
           <path
             id="arrow-1"

@@ -1,19 +1,25 @@
 'use client';
 
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import Topbar from './Topbar';
 import { useState, useEffect } from 'react';
-import MaxWidthWrapper from '../../components/MaxWidthWrapper';
-import SmallWidthContainer from '../../components/SmallWidthContainer';
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
+import SmallWidthContainer from '@web-components/SmallWidthContainer';
 import Link from 'next/link';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
 import MobileNav from './MobileNav';
 import NavItems from './NavItems';
 import { usePathname } from 'next/navigation';
 import { debounce } from 'lodash';
+import { useSession } from 'next-auth/react';
+
+
+
+// https://avatar.iran.liara.run/username?username=[firstname+lastname]
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const [isAtTop, setIsAtTop] = useState(true);
   const [isWindowScrollingUp, setIsWindowScrollingUp] = useState(true);
   const [isScreenScrolled, setIsScreenScrolled] = useState(false);
@@ -47,15 +53,14 @@ const Navbar = () => {
 
   return (
     <>
-      {!pathname.startsWith('/ecommerce') && (
-        <Topbar
-          className={cn(
-            isWindowScrollingUp || isAtTop
-              ? 'origin-top scale-y-100'
-              : 'origin-top scale-y-0'
-          )}
-        />
-      )}
+      <Topbar
+        className={cn(
+          isWindowScrollingUp || isAtTop
+            ? 'origin-top scale-y-100'
+            : 'origin-top scale-y-0'
+        )}
+        session={session}
+      />
 
       <section
         className={cn(
@@ -134,3 +139,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+

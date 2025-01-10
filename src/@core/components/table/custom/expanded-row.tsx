@@ -30,9 +30,8 @@ export function CustomExpandedComponent<TData extends Record<string, any>>(
               <Image
                 fill
                 className="object-cover"
-                src={product.productImage}
+                src={product.productImage || ""}
                 alt={product.productName}
-                sizes=""
               />
             </div>
             <header>

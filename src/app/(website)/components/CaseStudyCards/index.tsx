@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
 import Image from 'next/image';
 import Button from '@web-components/Button';
-import { cn } from 'rizzui';
+import { cn } from '@core/utils/class-names';
 import { Select } from 'rizzui';
 
 interface Technology {

@@ -78,12 +78,12 @@ export default function Filters<TData extends Record<string, any>>({
             color="danger"
             variant="outline"
             className="h-[34px] gap-2 text-sm"
-            onClick={() =>
-              meta?.handleMultipleDelete &&
-              meta.handleMultipleDelete(
-                table.getSelectedRowModel().rows.map((r) => r.original.id)
-              )
-            }
+            // onClick={() =>
+            //   meta?.handleMultipleDelete &&
+            //   meta.handleMultipleDelete(
+            //     table.getSelectedRowModel().rows.map((r) => r.original.id)
+            //   )
+            // }
           >
             <PiTrash size={18} />
             Delete

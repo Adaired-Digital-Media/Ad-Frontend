@@ -2,7 +2,7 @@ import { Icons } from '@web-components/Icons';
 import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
 import PageBanner from '@web-components/PageBanner';
 import { hexToHexWithOpacity } from '@core/utils/hexToHexWithOpacity';
-import { cn } from 'rizzui';
+import { cn } from '@core/utils/class-names';
 import Image from 'next/image';
 import React from 'react';
 import parse from 'html-react-parser';

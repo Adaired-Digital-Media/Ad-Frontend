@@ -27,9 +27,7 @@ function CartProduct({ product }: { product: CartItem }) {
             as="h3"
             className="truncate text-base font-medium transition-colors hover:text-primary 3xl:text-lg"
           >
-            <Link href={routes.eCommerce.productFormEdit(product.productSlug)}>
-              {product?.productName}
-            </Link>
+            <Link href={''}>{product?.productName}</Link>
           </Title>
           <div>
             <span className="inline-block text-sm font-semibold text-gray-500 sm:font-medium md:text-base 3xl:text-lg">

@@ -5,7 +5,8 @@ import { DUMMY_ID } from '@/config/constants';
 export const pageLinks = [
   // label start
   {
-    name: 'Home',
+    name: 'Dashboard',
+    href: routes.eCommerce.home,
   },
   // label end
   // {

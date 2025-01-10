@@ -11,6 +11,7 @@
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@floating-ui/react": "^0.26.25",
     "@headlessui/react": "^2.2.0",
     "@radix-ui/react-separator": "^1.1.1",
@@ -35,6 +36,7 @@
     "lenis": "^1.1.14",
     "lodash": "^4.17.21",
     "lucide-react": "^0.454.0",
+    "motion": "^11.16.4",
     "next": "14.2.16",
     "next-auth": "5.0.0-beta.25",
     "next-cloudinary": "^6.16.0",

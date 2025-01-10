@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import BackgroundImage, { Data } from './BackgroundImage';
 import MaxWidthWrapper from '../MaxWidthWrapper';
-import BoxReveal from '@core/magic-ui/BoxReveal';
 import Button from '../Button';
 import { gsap } from 'gsap';
 

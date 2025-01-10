@@ -1,5 +1,5 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper/";
-import PageBanner from "@/components/PageBanner/";
+import MaxWidthWrapper from "@web-components/MaxWidthWrapper/";
+import PageBanner from "@web-components/PageBanner/";
 import Link from "next/link";
 import React, { FC } from "react";
 

@@ -1,7 +1,8 @@
 "use client";
-import { cn, hexToHexWithOpacity } from "@/lib/utils";
+import { cn,  } from "@core/utils/class-names";
+import { hexToHexWithOpacity } from "@core/utils/hexToHexWithOpacity";
 import React, { useState } from "react";
-import Switch from "@/components/ui/big-switch";
+import Switch from "@core/ui/shadcn-ui/big-switch";
 
 type ProcessSectionProps = {
   colorScheme: string;

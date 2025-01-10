@@ -370,6 +370,44 @@ export function CartProvider({
   }, [updatingQuantityItemId, state]);
 
   useEffect(() => {
+    if (updatingItemId) {
+      try {
+        const updatedItem = state.cartItems.find(
+          (item) => item._id === updatingQuantityItemId
+        );
+
+        const updatedItemPayload = {
+          productEntryId: updatingItemId || updatedItem?._id || '',
+          productId: updatedItem?.productId || '',
+          productName: updatedItem?.productName || undefined,
+          productImage: updatedItem?.productImage || undefined,
+          productSlug: updatedItem?.productSlug || undefined,
+          wordCount: updatedItem?.wordCount || undefined,
+          quantity: updatedItem?.quantity || undefined,
+          additionalInfo: updatedItem?.additionalInfo || undefined,
+          name: updatedItem?.name || undefined,
+          email: updatedItem?.email || undefined,
+          phone: updatedItem?.phone || undefined,
+          pricePerUnit: updatedItem?.pricePerUnit || undefined,
+          totalPrice: updatedItem?.totalPrice || undefined,
+        };
+
+        if (session) {
+          updateRealCart(updatedItemPayload);
+          setUpdatingQuantityItemId('');
+        } else {
+          if (tempUserId) {
+            updateJunkCart(updatedItemPayload);
+            setUpdatingQuantityItemId('');
+          }
+        }
+      } catch (error) {
+        console.error('Something went wrong while updating cart -> ', error);
+      }
+    }
+  }, [updatingItemId, state]);
+
+  useEffect(() => {
     if (deletingItemId) {
       try {
         const updatedItem = state.cartItems.find(
