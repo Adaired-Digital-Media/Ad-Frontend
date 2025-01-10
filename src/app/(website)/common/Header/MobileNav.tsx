@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { routes } from '@/config/routes';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { cn } from '@core/utils/class-names';
 import { Icons } from '@/app/(website)/components/Icons';
 import { Accordion, Input } from 'rizzui';
@@ -29,6 +29,13 @@ const MobileNav: React.FC<MobileNavProps> = ({
   );
   const [submenu, setSubmenu] = useState<Array<any> | null>(null);
   const [submenuActive, setSubmenuActive] = useState<boolean>(false);
+
+    const navItems = useMemo(() => {
+      return pathname.startsWith('/expert-content-solutions')
+        ? routes.ecommerceNav
+        : routes.websiteNav;
+    }, [pathname]);
+  
 
   const sidebarRef = useRef<HTMLDivElement>(null);
 
@@ -80,14 +87,14 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 </div>
                 <div>
                   <ul className="space-y-4">
-                    {routes?.websiteNav?.map((item) => (
+                    {navItems.map((item) => (
                       <li
                         key={item.label}
                         onClick={() => {
-                          if (item.subItems || item.childrens) {
+                          if ('subItems' in item || 'childrens' in item) {
                             setSubmenuActive(!submenuActive);
                             setSubmenu(
-                              item.subItems ? item.subItems : item.childrens
+                              item.subItems ? item.subItems : item.childrens || []
                             );
                           } else {
                             closeSidebar();
@@ -98,7 +105,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                           href={item.href || ''}
                           className={cn(
                             `flex w-full cursor-pointer items-center justify-between py-1 text-base font-semibold ${
-                              item.childrens || item.subItems
+                              item?.childrens || item?.subItems
                                 ? 'items-center justify-between'
                                 : ''
                             }`
@@ -111,6 +118,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
                         </Link>
                       </li>
                     ))}
+
+
                   </ul>
                 </div>
               </div>
