@@ -7,8 +7,8 @@ export const siteConfig = {
 };
 
 export const metaObject = (
-  title: string,
-  description: string,
+  title?: string,
+  description?: string,
   canonical?: string,
   robots?: string,
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Form } from '../../../../@core/ui/rizzui-ui/form';
+import { Form } from '@core/ui/rizzui-ui/form';
 import SmallWidthContainer from '@/app/(website)/components/SmallWidthContainer';
 import { routes } from '@/config/routes';
 import { useCart } from '@/store/quick-cart/cart.context';
@@ -11,25 +11,57 @@ import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Empty, EmptyProductBoxIcon, Title, Text, Input, Button } from 'rizzui';
 import { ProductSkeleton } from '@/app/(website)/components/Skeletons/ProductSkeleton';
-import { toCurrency } from '../../../../@core/utils/to-currency';
+import { toCurrency } from '@core/utils/to-currency';
 import { loadStripe } from '@stripe/stripe-js';
 import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react';
-import { cn } from '../../../../@core/utils/class-names';
-
-const CartProduct = dynamic(() => import('./cart-product'), {
-  loading: () => <ProductSkeleton />,
-  ssr: false,
-});
+import { cn } from '@core/utils/class-names';
+import { usePathname } from 'next/navigation';
+import PageHeader from '@/app/shared/page-header';
+import CartProduct from './cart-product';
 
 type FormValues = {
   couponCode: string;
 };
 
 export default function CartPageWrapper() {
+  const pathname = usePathname();
   const { cartItems } = useCart();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+
+  const isDashboard = pathname.includes('/dashboard');
+
+  const TagName = !isDashboard ? SmallWidthContainer : 'div';
+
+  const pageHeader = isDashboard
+    ? {
+        title: 'Cart',
+        breadcrumb: [
+          {
+            href: routes?.userDashboard?.dashboard,
+            name: 'Dashboard',
+          },
+          {
+            name: 'Cart',
+          },
+        ],
+      }
+    : {
+        title: 'Cart',
+        breadcrumb: [
+          {
+            name: 'Home',
+          },
+          {
+            href: routes.userDashboard.dashboard,
+            name: 'E-Commerce',
+          },
+          {
+            name: 'Cart',
+          },
+        ],
+      };
 
   const handleCheckout = async () => {
     const stripePromise = loadStripe(
@@ -42,7 +74,7 @@ export default function CartPageWrapper() {
       };
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URI}/orders/create`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/orders/create`,
         orderData,
         {
           headers: {
@@ -71,42 +103,45 @@ export default function CartPageWrapper() {
 
   if (cartItems.length <= 0) {
     return (
-      <SmallWidthContainer className="@container">
+      <TagName className="@container">
         <Empty image={<EmptyProductBoxIcon />} text="No Product in the Cart" />
-      </SmallWidthContainer>
+      </TagName>
     );
   }
 
   return (
-    <SmallWidthContainer className="@container">
-      <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
-        <div
-          className={cn(
-            `${cartItems.length < 0 ? '@5xl:col-span-12 @6xl:col-span-12' : '@5xl:col-span-8 @6xl:col-span-7'}`
-          )}
-        >
-          {cartItems.length ? (
-            cartItems.map((item, idx) => (
-              <CartProduct key={idx} product={item} />
-            ))
-          ) : (
-            <Empty
-              image={<EmptyProductBoxIcon />}
-              text="No Product in the Cart"
-            />
-          )}
-        </div>
+    <>
+      {isDashboard && (
+        <PageHeader
+          title={pageHeader.title}
+          breadcrumb={pageHeader.breadcrumb}
+          isDashboard={isDashboard}
+        />
+      )}
+      <TagName className="@container">
+        <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
+          <div
+            className={cn(
+              `${cartItems.length < 0 ? '@5xl:col-span-12 @6xl:col-span-12' : '@5xl:col-span-8 @6xl:col-span-7'}`
+            )}
+          >
+            {cartItems.length &&
+              cartItems.map((item, idx) => (
+                <CartProduct key={idx} product={item} />
+              ))}
+          </div>
 
-        <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
-          <CartCalculations
-            handleSubmit={handleCheckout}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            session={session}
-          />
+          <div className="sticky top-24 mt-10 @container @5xl:col-span-4 @5xl:mt-0 @5xl:px-4 @6xl:col-span-3 2xl:top-28">
+            <CartCalculations
+              handleSubmit={handleCheckout}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              session={session}
+            />
+          </div>
         </div>
-      </div>
-    </SmallWidthContainer>
+      </TagName>
+    </>
   );
 }
 
@@ -123,7 +158,7 @@ function CartCalculations({
   // Calculate total price dynamically
   const total = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
   return (
-    <div>
+    <div className={cn('rounded-lg border border-dashed p-6 shadow-sm')}>
       <Title
         as="h2"
         className="border-b border-muted pb-4 text-center text-xl font-medium"
@@ -132,10 +167,7 @@ function CartCalculations({
       </Title>
       <div className="mt-6 grid grid-cols-1 gap-4 @md:gap-6">
         {cartItems.map((item) => (
-          <div
-            key={item?.productId}
-            className="flex items-center justify-between"
-          >
+          <div key={item?._id} className="flex items-center justify-between">
             <Title as="h3" className="mb-1 text-base font-semibold">
               <Link
                 // href={routes.eCommerce.productDetails(item.productId)}

@@ -133,10 +133,11 @@ export type LayoverAirPortOptionType = {
 };
 
 export type TanTableProductsDataType = {
-  id: string;
-  name: string;
-  category: string;
-  image: string;
-  price: string;
+  productId: string;
+  productImage?: string;
+  productName: string;
+  category?: string;
   quantity: number;
+  pricePerUnit: string;
+  totalPrice: string;
 };

@@ -2,26 +2,27 @@ export const routes = {
   auth: {
     signUp: '/auth/signup',
     signIn: '/auth/signin',
+    resetPassword: '/auth/reset-password',
   },
   websiteNav: [
     {
       label: 'Home',
-      value: 'home',
+      value: 'home' as const,
       href: '/',
     },
     {
       label: 'About',
-      value: 'about',
+      value: 'about' as const,
       href: '/about',
     },
     {
       label: 'Services',
-      value: 'services',
-      href: '#',
+      value: 'services' as const,
+      // href: "#",
       subItems: [
         {
           name: 'Web Design & Development',
-          href: '/services/web-designing-and-development',
+          href: '/services/web-design-and-development-services',
           subItems: [
             {
               name: 'WordPress Development',
@@ -46,6 +47,10 @@ export const routes = {
             {
               name: 'Laravel Development',
               href: '/services/laravel-development',
+            },
+            {
+              name: 'Web Development Company USA',
+              href: '/services/web-development-company-usa',
             },
           ],
         },
@@ -77,6 +82,10 @@ export const routes = {
             {
               name: 'Local SEO (GBP)',
               href: '/services/local-seo',
+            },
+            {
+              name: 'SEO Company USA',
+              href: '/services/seo-company-usa',
             },
           ],
         },
@@ -132,7 +141,7 @@ export const routes = {
         },
 
         {
-          name: 'Paid Media & Advertising (PPC)',
+          name: 'Paid Media & Advertising',
           href: '/services/paid-media-and-advertising',
           subItems: [
             {
@@ -148,7 +157,7 @@ export const routes = {
               href: '/services/paid-media-and-advertising',
             },
             {
-              name: 'PPC Bid Management',
+              name: 'CPC Bid Management',
               href: '/services/paid-media-and-advertising',
             },
             {
@@ -212,7 +221,7 @@ export const routes = {
     },
     {
       label: 'Resources',
-      value: 'resources',
+      value: 'resources' as const,
       href: '#',
       childrens: [
         {
@@ -231,53 +240,175 @@ export const routes = {
     },
     {
       label: 'Contact',
-      value: 'contact',
+      value: 'contact' as const,
+      href: '/contact',
     },
   ],
   ecommerceNav: [
     {
       label: 'Home',
       value: 'home',
-      href: '/ecommerce',
+      href: '/expert-content-solutions',
     },
     {
       label: 'Services',
       value: 'services',
-      href: '/ecommerce#products',
+      href: '/expert-content-solutions#products',
     },
     {
       label: 'FAQs',
       value: 'faqs',
-      href: '/ecommerce#faqs',
+      href: '/expert-content-solutions#faqs',
     },
     {
       label: 'Pricing',
       value: 'pricing',
-      href: '/ecommerce#products',
+      href: '/expert-content-solutions#products',
     },
     {
       label: 'Contact',
       value: 'contact',
-      href: '/ecommerce#contact',
+      href: '/expert-content-solutions#contact',
     },
   ],
-  eCommerce: {
-    dashboard: '/ecommerce',
-    products: '/ecommerce/#products',
-    shop: '/ecommerce/#products',
-    cart: '/ecommerce/cart',
-    productForm: (slug: string) => `/ecommerce/products/form/${slug}`,
-    // productDetails: (slug: string) => `/ecommerce/products/details/${slug}`,
-    ediProduct: (slug: string) => `/ecommerce/products/${slug}/edit`,
-    categories: '/ecommerce/categories',
-    createCategory: '/ecommerce/categories/create',
-    editCategory: (id: string) => `/ecommerce/categories/${id}/edit`,
-    orders: '/ecommerce/orders',
-    createOrder: '/ecommerce/orders/create',
-    orderDetails: (id: string) => `/ecommerce/orders/${id}`,
-    editOrder: (id: string) => `/ecommerce/orders/${id}/edit`,
-    reviews: '/ecommerce/reviews',
-    checkout: '/ecommerce/checkout',
-    trackingId: (id: string) => `/ecommerce/tracking/${id}`,
+  userDashboard: {
+    website: '/expert-content-solutions',
+    dashboard: '/dashboard',
+    accountSettings: '/dashboard/forms/profile-settings',
+    passwordSettings: '/dashboard/forms/profile-settings/password',
+    cart: '/dashboard/shop/cart',
+    orders: '/dashboard/orders',
+    invoices: '/dashboard/invoices',
   },
+  eCommerce: {
+    home: '/expert-content-solutions',
+    products: '/expert-content-solutions/#products',
+    shop: '/expert-content-solutions/#products',
+    cart: '/expert-content-solutions/cart',
+    productForm: (slug: string) =>
+      `/expert-content-solutions/products/form/${slug}`,
+    productFormEdit: (slug: string) =>
+      `/expert-content-solutions/products/form/edit/${slug}`,
+    ediProduct: (slug: string) =>
+      `/expert-content-solutions/products/${slug}/edit`,
+    categories: '/expert-content-solutions/categories',
+    createCategory: '/expert-content-solutions/categories/create',
+    editCategory: (id: string) =>
+      `/expert-content-solutions/categories/${id}/edit`,
+    orders: '/expert-content-solutions/orders',
+    createOrder: '/expert-content-solutions/orders/create',
+    orderDetails: (id: string) => `/expert-content-solutions/orders/${id}`,
+    editOrder: (id: string) => `/expert-content-solutions/orders/${id}/edit`,
+    reviews: '/expert-content-solutions/reviews',
+    checkout: '/expert-content-solutions/checkout',
+    trackingId: (id: string) => `/expert-content-solutions/tracking/${id}`,
+  },
+  searchAndFilter: {
+    realEstate: '/search/real-estate',
+    nft: '/search/nft',
+    flight: '/search/flight',
+  },
+  support: {
+    dashboard: '/support',
+    inbox: '/support/inbox',
+    supportCategory: (category: string) => `/support/inbox/${category}`,
+    messageDetails: (id: string) => `/support/inbox/${id}`,
+    snippets: '/support/snippets',
+    createSnippet: '/support/snippets/create',
+    viewSnippet: (id: string) => `/support/snippets/${id}`,
+    editSnippet: (id: string) => `/support/snippets/${id}/edit`,
+    templates: '/support/templates',
+    createTemplate: '/support/templates/create',
+    viewTemplate: (id: string) => `/support/templates/${id}`,
+    editTemplate: (id: string) => `/support/templates/${id}/edit`,
+  },
+  logistics: {
+    dashboard: '/logistics',
+    shipmentList: '/logistics/shipments',
+    customerProfile: '/logistics/customer-profile',
+    createShipment: '/logistics/shipments/create',
+    editShipment: (id: string) => `/logistics/shipments/${id}/edit`,
+    shipmentDetails: (id: string) => `/logistics/shipments/${id}`,
+    tracking: (id: string) => `/logistics/tracking/${id}`,
+  },
+  appointment: {
+    dashboard: '/appointment',
+    appointmentList: '/appointment/list',
+  },
+  crm: {
+    dashboard: '/crm',
+  },
+  affiliate: {
+    dashboard: 'https://isomorphic-dnd.vercel.app',
+  },
+  executive: {
+    dashboard: '/executive',
+  },
+  project: {
+    dashboard: '/project',
+  },
+  socialMedia: {
+    dashboard: '/social-media',
+  },
+  jobBoard: {
+    dashboard: '/job-board',
+    jobFeed: '/job-board/feed',
+  },
+  analytics: '/analytics',
+  financial: {
+    dashboard: '/financial',
+  },
+  file: {
+    dashboard: '/file',
+    manager: '/file-manager',
+    upload: '/file-manager/upload',
+    create: '/file-manager/create',
+  },
+  pos: {
+    index: '/point-of-sale',
+  },
+  eventCalendar: '/event-calendar',
+  rolesPermissions: '/roles-permissions',
+  invoice: {
+    home: '/invoice',
+    create: '/invoice/create',
+    details: (id: string) => `/invoice/${id}`,
+    edit: (id: string) => `/invoice/${id}/edit`,
+    builder: '/invoice/builder',
+  },
+  imageViewer: '/image-viewer',
+  widgets: {
+    cards: '/widgets/cards',
+    icons: '/widgets/icons',
+    charts: '/widgets/charts',
+    maps: '/widgets/maps',
+    banners: '/widgets/banners',
+  },
+  tables: {
+    basic: '/tables/basic',
+    collapsible: '/tables/collapsible',
+    enhanced: '/tables/enhanced',
+    pagination: '/tables/pagination',
+    search: '/tables/search',
+    stickyHeader: '/tables/sticky-header',
+    resizable: '/tables/resizable',
+    pinning: '/tables/pinning',
+    dnd: '/tables/dnd',
+  },
+  multiStep: '/multi-step',
+  forms: {
+    profileSettings: '/userDashboard/forms/profile-settings',
+    notificationPreference:
+      '/userDashboard/forms/profile-settings/notification',
+    personalInformation: '/userDashboard/forms/profile-settings/profile',
+    newsletter: '/userDashboard/forms/newsletter',
+  },
+  emailTemplates: '/email-templates',
+  profile: '/profile',
+  welcome: '/welcome',
+  comingSoon: '/coming-soon',
+  accessDenied: '/access-denied',
+  notFound: '/not-found',
+  maintenance: '/maintenance',
+  blank: '/blank',
 };

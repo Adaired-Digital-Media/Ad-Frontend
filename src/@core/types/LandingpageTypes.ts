@@ -43,7 +43,7 @@ export type ISurferSEOSection = {
   icon: string;
   title: string;
   iconList: IsurferSEOIconList[];
-  images: IsurferSEOImages[];
+  image: IsurferSEOImages;
 };
 
 export type IBHWServices = {

@@ -1,13 +1,14 @@
 'use client';
 import Image from 'next/image';
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { Empty, Title } from 'rizzui';
 import { CartItem } from '@/types';
-import SimpleBar from '../../../../@core/ui/simplebar';
+import SimpleBar from '@core/ui/simplebar';
 import { PiMinus, PiPlus, PiTrash } from 'react-icons/pi';
 import Link from 'next/link';
 import { routes } from '@/config/routes';
-import { toCurrency } from '../../../../@core/utils/to-currency';
+import { toCurrency } from '@core/utils/to-currency';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function OrderProducts({
   items,
@@ -34,7 +35,7 @@ export default function OrderProducts({
         {items.map((item) => {
           return (
             <div
-              key={item.productId}
+              key={item._id || uuidv4()}
               className={cn(
                 'group relative flex items-center justify-between',
                 itemClassName
@@ -44,19 +45,22 @@ export default function OrderProducts({
                 <div className="flex items-center">
                   <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                     <Image
-                      src={''}
+                      src={item.productImage as string}
                       alt={'icon'}
                       fill
                       priority
-                      sizes="(max-width: 768px) 100vw"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full p-2"
                     />
                   </figure>
                   <div className="ps-3">
                     <Title as="h3" className="mb-1 text-base font-semibold">
                       <Link
-                        // href={routes.eCommerce.productDetails(item.productId)}
-                        href={""}
+                        href={{
+                          pathname: routes?.eCommerce?.productFormEdit(
+                            item.productSlug
+                          ),
+                          query: { id: item._id }, 
+                        }}
                       >
                         {item?.productName}
                       </Link>

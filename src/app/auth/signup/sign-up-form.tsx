@@ -27,7 +27,7 @@ export default function SignUpForm() {
   const onSubmit: SubmitHandler<SignUpSchema> = async (data) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URI}/auth/register`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/auth/register`,
         {
           name: `${data.firstName} ${data.lastName || ''}`,
           email: data.email,

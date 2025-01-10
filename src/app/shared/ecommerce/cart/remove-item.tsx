@@ -17,7 +17,7 @@ export default function RemoveItem({
   className,
   placement,
 }: RemoveItemProps) {
-  //   const { clearItemFromCart } = useCart();
+  const { removeItemFromCart } = useCart();
   return (
     <Popover placement={placement}>
       <Popover.Trigger>
@@ -25,7 +25,6 @@ export default function RemoveItem({
           variant="text"
           rounded="full"
           className="hover:border-red-light h-auto w-auto border border-muted p-2"
-          //   onClick={() => clearItemFromCart(productID)}
         >
           <PiTrashBold className="text-red-light h-4 w-4" />
         </ActionIcon>
@@ -42,16 +41,28 @@ export default function RemoveItem({
               as="h6"
               className="mb-0.5 flex items-start text-sm sm:items-center"
             >
-              <PiTrashFill className="me-1 h-5 w-5" /> Delete the order
+              <PiTrashFill className="me-1 h-5 w-5" /> Delete the Item
             </Title>
             <Text className="mb-2 leading-relaxed">
-              Are you sure you want to delete this order?
+              Are you sure you want to delete this Item?
             </Text>
             <div className="flex items-center justify-end">
-              <Button size="sm" className="me-1.5 h-7">
+              <Button
+                size="sm"
+                className="me-1.5 h-7"
+                onClick={() => {
+                  removeItemFromCart(productID);
+                  setOpen(false);
+                }}
+              >
                 Yes
               </Button>
-              <Button size="sm" variant="outline" className="h-7">
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-7"
+                onClick={() => setOpen(false)}
+              >
                 No
               </Button>
             </div>

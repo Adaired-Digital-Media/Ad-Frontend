@@ -2,8 +2,9 @@ import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Icons } from '@web-components/Icons';
-import { Separator } from '../../../../@core/ui/shadcn-ui/separator';
-import { cn } from '../../../../@core/utils/class-names';
+import { Separator } from '@core/ui/shadcn-ui/separator';
+import { cn } from '@core/utils/class-names';
+import NewsLetter from '@web-components/forms/NewsLetter';
 // import dynamic from "next/dynamic";
 
 // const NewsLetter = dynamic(() => import("@/forms/NewsLetter"), {
@@ -99,7 +100,7 @@ const WebFooter = () => {
               <div className="mt-4 flex gap-2">
                 <Link
                   href={process.env.NEXT_PUBLIC_FACEBOOK_URL || '/'}
-                  className="hover:bg-theme-orange group/fb rounded-lg bg-white p-2"
+                  className="group/fb rounded-lg bg-white p-2 hover:bg-theme-orange"
                 >
                   <Icons.Facebook className="text-[#1B5A96] group-hover/fb:text-white" />
                   <span className="sr-only">
@@ -108,7 +109,7 @@ const WebFooter = () => {
                 </Link>
                 <Link
                   href={process.env.NEXT_PUBLIC_TWITTER_URL || '/'}
-                  className="hover:bg-theme-orange group/x rounded-lg bg-white p-2"
+                  className="group/x rounded-lg bg-white p-2 hover:bg-theme-orange"
                 >
                   <Icons.Twitter className="text-[#1B5A96] group-hover/x:text-white" />
                   <span className="sr-only">
@@ -117,7 +118,7 @@ const WebFooter = () => {
                 </Link>
                 <Link
                   href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || '/'}
-                  className="hover:bg-theme-orange group/insta rounded-lg bg-white p-2"
+                  className="group/insta rounded-lg bg-white p-2 hover:bg-theme-orange"
                 >
                   <Icons.Instagram className="text-[#1B5A96] group-hover/insta:text-white" />
                   <span className="sr-only">
@@ -126,7 +127,7 @@ const WebFooter = () => {
                 </Link>
                 <Link
                   href={process.env.NEXT_PUBLIC_LINKEDIN_URL || '/'}
-                  className="hover:bg-theme-orange group/in rounded-lg bg-white p-2"
+                  className="group/in rounded-lg bg-white p-2 hover:bg-theme-orange"
                 >
                   <Icons.LinkedIn className="text-[#1B5A96] group-hover/in:text-white" />
                   <span className="sr-only">
@@ -143,7 +144,7 @@ const WebFooter = () => {
             </h3>
             <ul
               className={cn(
-                `hover:[&>li]:text-theme-orange mt-6 space-y-2 transition-colors duration-200`
+                `mt-6 space-y-2 transition-colors duration-200 hover:[&>li]:text-theme-orange`
               )}
             >
               <li>
@@ -188,7 +189,7 @@ const WebFooter = () => {
             </h3>
             <ul
               className={cn(
-                `hover:[&>li]:text-theme-orange mt-6 space-y-2 transition-colors duration-200`
+                `mt-6 space-y-2 transition-colors duration-200 hover:[&>li]:text-theme-orange`
               )}
             >
               <li>
@@ -244,7 +245,7 @@ const WebFooter = () => {
               Share your email address to subscribe to Adaired&apos;s
               newsletter.
             </p>
-            {/* <NewsLetter /> */}
+            <NewsLetter />
           </div>
           <div className="col-span-12 mt-6 lg:hidden">
             <h3 className="font-nunito text-lg font-semibold tracking-wide text-white lg:text-2xl">

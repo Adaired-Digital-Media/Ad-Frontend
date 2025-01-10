@@ -19,7 +19,7 @@ export default {
       authorize: async (credentials) => {
         try {
           const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URI}/auth/login`,
+            `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/auth/login`,
             {
               email: credentials?.email,
               password: credentials?.password,
@@ -87,7 +87,7 @@ export default {
       session.user.isAdmin = token.isAdmin;
       session.user.userStatus = token.userStatus;
       session.user.role = token.role;
-      session.user.cart = token.cart
+      session.user.cart = token.cart;
       session.user.accessToken = token.accessToken as string;
       return session;
     },
@@ -102,9 +102,12 @@ export default {
       }
 
       if (parsedUrl.origin === baseUrl) {
-        return baseUrl;
+        if (parsedUrl.pathname === '/expert-content-solutions/cart') {
+          return `${baseUrl}/expert-content-solutions/cart`;
+        }
+        return `${baseUrl}/expert-content-solutions`;
       }
-      return baseUrl;
+      return `${baseUrl}/dashboard`;
     },
   },
   pages: {

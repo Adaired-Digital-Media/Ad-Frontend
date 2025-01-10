@@ -1,9 +1,13 @@
-import WebsiteLayout from "@/layouts/website/layout";
-
+import WebsiteLayout from '@/layouts/website/layout';
+import { SessionProvider } from 'next-auth/react';
 export default function DefaulWebsitetLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <WebsiteLayout>{children}</WebsiteLayout>;
+  return (
+    <SessionProvider>
+      <WebsiteLayout>{children}</WebsiteLayout>
+    </SessionProvider>
+  );
 }

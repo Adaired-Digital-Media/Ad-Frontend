@@ -21,19 +21,19 @@ const EcomFooter = () => {
           <Separator orientation="vertical" className="h-20" />
           <div className="ml-auto">
             <ul className="inline-flex items-center gap-5 font-poppins text-lg text-white">
-              <Link href="/ecommerce">
+              <Link href="/expert-content-solutions">
                 <li>Home</li>
               </Link>
-              <Link href="/ecommerce#products">
+              <Link href="/expert-content-solutions#products">
                 <li>Services</li>
               </Link>
-              <Link href="/ecommerce#faqs">
+              <Link href="/expert-content-solutions#faqs">
                 <li>FAQs</li>
               </Link>
-              <Link href="/ecommerce#products">
+              <Link href="/expert-content-solutions#products">
                 <li>Pricing</li>
               </Link>
-              <Link href="/ecommerce#contact">
+              <Link href="/expert-content-solutions#contact">
                 <li
                   className={cn(`rounded-full bg-white px-4 py-2 text-black`)}
                 >

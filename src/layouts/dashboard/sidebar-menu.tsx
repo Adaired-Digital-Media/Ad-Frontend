@@ -1,10 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { Fragment } from 'react';
 import { usePathname } from 'next/navigation';
 import { Title, Collapse } from 'rizzui';
-import {cn} from '@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { PiCaretDownBold } from 'react-icons/pi';
-import { menuItems } from '@/layouts/hydrogen/menu-items';
+import { menuItems } from '@/layouts/dashboard/menu-items';
 import StatusBadge from '@core/components/get-status-badge';
 
 export function SidebarMenu() {
@@ -14,16 +16,16 @@ export function SidebarMenu() {
     <div className="mt-4 pb-3 3xl:mt-6">
       {menuItems.map((item, index) => {
         const isActive = pathname === (item?.href as string);
-        const pathnameExistInDropdowns: any = item?.dropdownItems?.filter(
-          (dropdownItem) => dropdownItem.href === pathname
-        );
-        const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
+        // const pathnameExistInDropdowns: any = item?.dropdownItems?.filter(
+        //   (dropdownItem) => dropdownItem.href === pathname
+        // );
+        // const isDropdownOpen = Boolean(pathnameExistInDropdowns?.length);
 
         return (
           <Fragment key={item.name + '-' + index}>
             {item?.href ? (
               <>
-                {item?.dropdownItems ? (
+                {/* {item?.dropdownItems ? (
                   <Collapse
                     defaultOpen={isDropdownOpen}
                     header={({ open, toggle }) => (
@@ -68,7 +70,7 @@ export function SidebarMenu() {
 
                       return (
                         <Link
-                          href={dropdownItem?.href}
+                          href={dropdownItem?.href || ''}
                           key={dropdownItem?.name + index}
                           className={cn(
                             'mx-3.5 mb-0.5 flex items-center justify-between rounded-md px-3.5 py-2 font-medium capitalize last-of-type:mb-1 lg:last-of-type:mb-2 2xl:mx-5',
@@ -97,7 +99,7 @@ export function SidebarMenu() {
                       );
                     })}
                   </Collapse>
-                ) : (
+                ) : ( */}
                   <Link
                     href={item?.href}
                     className={cn(
@@ -122,11 +124,11 @@ export function SidebarMenu() {
                       )}
                       <span className="truncate">{item.name}</span>
                     </div>
-                    {item?.badge?.length ? (
+                    {/* {item?.badge?.length ? (
                       <StatusBadge status={item?.badge} />
-                    ) : null}
+                    ) : null} */}
                   </Link>
-                )}
+                 {/* )} */}
               </>
             ) : (
               <Title
