@@ -173,25 +173,34 @@ const ProductSection = async () => {
       title: category.name,
       value: category.slug,
       content: (
-        <div className={cn(`grid grid-cols-4 gap-x-[62px] gap-y-[41px]`)}>
+        <div
+          className={cn(
+            `grid gap-x-4 gap-y-4 xs:grid-cols-2 md:grid-cols-3 opt-md:grid-cols-4 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px]`
+          )}
+        >
           {' '}
           {Array.isArray(category.products) && category.products.length > 0 ? (
             category.products.map((product) =>
               typeof product === 'object' ? (
-                <IconBox
+                <div
+                  className="flex h-full w-full items-center justify-center"
                   key={product._id}
-                  icon={product.featuredImage}
-                  isSvg={true}
-                  title={product.name}
-                  buttonText={'Order Now'}
-                  buttonLink={routes.eCommerce.productForm(
-                    String(product.slug ?? generateSlug(product.name))
-                  )}
-                  buttonClassName={`bg-[#424242] rounded-full mt-[55px] hidden group-hover:block mx-auto`}
-                  containerClassName={`text-center p-[30px] rounded-[20px] bg-white max-h-[286px] min-h-[286px] min-w-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
-                  titleClassName={`font-poppins text-[20px] font-medium text-black `}
-                  iconContainerClassName={`pb-[15px]`}
-                />
+                >
+                  <IconBox
+                    key={product._id}
+                    icon={product.featuredImage}
+                    isSvg={true}
+                    title={product.name}
+                    buttonText={'Order Now'}
+                    buttonLink={routes.eCommerce.productForm(
+                      String(product.slug ?? generateSlug(product.name))
+                    )}
+                    buttonClassName={`bg-[#424242] rounded-full mt-[55px] hidden group-hover:block mx-auto`}
+                    containerClassName={`text-center p-2 md:p-3 lg:p-[30px] rounded-[20px] bg-white aspect-square w-full h-full max-h-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
+                    titleClassName={`font-poppins text-[20px] font-medium text-black `}
+                    iconContainerClassName={`pb-[15px]`}
+                  />
+                </div>
               ) : null
             )
           ) : (
@@ -222,8 +231,9 @@ const ProductSection = async () => {
         </div>
         <Tabs
           tabs={tabs}
-          containerClassName={cn(`bg-white rounded-full`)}
-          tabClassName={cn(`flex-1`)}
+          containerClassName={cn(`md:bg-white sm:rounded-full`)}
+          contentClassName={`p-2 bg-red-400`}
+          tabClassName={cn(`flex-1 bg-white`)}
           tabContentClassName={cn(`font-poppins text-[17px] font-medium`)}
           activeTabClassName={cn(`bg-[#1C5B98] `)}
           activeTabContentClassName={cn(`text-white`)}
@@ -241,7 +251,7 @@ const ApproachSection = () => {
           {ApproachSectionDetails.description}
         </p>
       </>
-      <div className={cn(`grid grid-cols-2 gap-x-10 gap-y-[30px] pt-[30px]`)}>
+      <div className={cn(`grid md:grid-cols-2 gap-x-10 gap-y-[30px] pt-[30px]`)}>
         {ApproachSectionDetails.iconList.map((iconBox, idx) => {
           return (
             <IconBox
@@ -285,7 +295,7 @@ const SurferSEOSection = () => {
         </h2>
         <TwoColumnGrid
           className={cn(
-            `relative grid-cols-7 gap-x-12 from-[#fef0df] from-0% to-[#fffbf5] to-100% pt-12 before:absolute before:left-[calc(100%-330px)] before:top-10 before:h-full before:w-1/2 before:rounded-bl-[15px] before:rounded-tl-[21px] before:bg-gradient-to-r`
+            `relative opt-md:grid-cols-7 gap-x-12 from-[#fef0df] from-0% to-[#fffbf5] to-100% pt-12 before:absolute before:left-[calc(100%-330px)] before:top-10 before:h-full before:w-1/2 before:rounded-bl-[15px] before:rounded-tl-[21px] before:bg-gradient-to-r`
           )}
         >
           <div className="col-span-4 flex h-full w-full flex-col items-start space-y-8">

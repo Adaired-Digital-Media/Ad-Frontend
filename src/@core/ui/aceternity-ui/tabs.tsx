@@ -42,7 +42,50 @@ export const Tabs = ({
 
   return (
     <>
-      <div
+    <div
+  className={cn(
+    'no-visible-scrollbar relative grid w-full max-w-full sm:grid-cols-2 gap-3 md:gap-0 md:grid-cols-4 items-center overflow-auto [perspective:1000px] sm:overflow-visible',
+    containerClassName
+  )}
+>
+  {propTabs.map((tab, idx) => (
+    <button
+      key={tab.title}
+      onClick={() => {
+        moveSelectedTabToTop(idx);
+      }}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      className={cn('relative rounded-full px-4 py-2 w-full', tabClassName)}
+      style={{
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {active.value === tab.value && (
+        <motion.div
+          layoutId="clickedbutton"
+          transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+          className={cn(
+            'absolute inset-0 rounded-full bg-gray-200 dark:bg-zinc-800',
+            activeTabClassName
+          )}
+        />
+      )}
+
+      <span
+        className={cn(
+          `relative block text-black dark:text-white`,
+          active.value === tab.value && activeTabContentClassName,
+          tabContentClassName
+        )}
+      >
+        {tab.title}
+      </span>
+    </button>
+  ))}
+</div>
+
+      {/* <div
         className={cn(
           'no-visible-scrollbar relative flex w-full max-w-full flex-row items-center justify-start overflow-auto [perspective:1000px] sm:overflow-visible',
           containerClassName
@@ -83,7 +126,7 @@ export const Tabs = ({
             </span>
           </button>
         ))}
-      </div>
+      </div> */}
       <FadeInDiv
         tabs={tabs}
         active={active}
