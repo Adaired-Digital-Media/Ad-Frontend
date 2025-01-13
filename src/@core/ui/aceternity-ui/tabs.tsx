@@ -44,7 +44,7 @@ export const Tabs = ({
     <>
       <div
         className={cn(
-          'no-visible-scrollbar relative flex w-full max-w-full flex-row items-center justify-start overflow-auto [perspective:1000px] sm:overflow-visible',
+          'no-visible-scrollbar  relative grid w-full max-w-full items-center gap-3 overflow-auto [perspective:1000px] sm:grid-cols-2 sm:overflow-visible md:grid-cols-4 md:gap-0',
           containerClassName
         )}
       >
@@ -56,7 +56,10 @@ export const Tabs = ({
             }}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
-            className={cn('relative rounded-full px-4 py-2', tabClassName)}
+            className={cn(
+              'relative w-full rounded-full px-4 py-3',
+              tabClassName
+            )}
             style={{
               transformStyle: 'preserve-3d',
             }}
@@ -84,6 +87,7 @@ export const Tabs = ({
           </button>
         ))}
       </div>
+
       <FadeInDiv
         tabs={tabs}
         active={active}

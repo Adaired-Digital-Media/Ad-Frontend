@@ -1,11 +1,11 @@
 'use client';
 
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import SmallContainer from '../SmallWidthContainer';
 import { Accordion } from 'rizzui';
-import { FaChevronDown } from 'react-icons/fa';
 import { GoDotFill } from 'react-icons/go';
-import { FAQSectionDetails } from '../../../../@core/data/website/Landingpage';
+import { FAQSectionDetails } from '@core/data/website/Landingpage';
+import { HiChevronDown } from "react-icons/hi2";
 
 export const FAQSection = () => {
   return (
@@ -29,18 +29,19 @@ export const FAQSection = () => {
                   <div className="flex w-full cursor-pointer items-center justify-between py-5 font-nunito text-xl font-semibold">
                     <div className={cn(`flex items-center`)}>
                       <GoDotFill className="mr-2 h-3 w-3" />
-                      {item.title}
+                      <p className='text-left'>{item.title}</p>
                     </div>
-                    <FaChevronDown
+                    <HiChevronDown
                       className={cn(
-                        'h-5 w-5 -rotate-0 transform transition-transform duration-300',
+                        'h-5 w-5 -rotate-0 transform transition-transform duration-300 font-thin',
                         open && '-rotate-180 text-[#1C5B98]'
                       )}
+                      strokeWidth={1}
                     />
                   </div>
                 )}
               </Accordion.Header>
-              <Accordion.Body className="mx-6 mb-7 font-nunito text-xl font-normal text-[#424242]">
+              <Accordion.Body className="mx-6 mb-7 font-nunito text-base font-normal text-[#424242]">
                 {item.content}
               </Accordion.Body>
             </Accordion>
