@@ -3,19 +3,25 @@ import MaxWidthWrapper from '@/app/(website)/components/MaxWidthWrapper';
 import { Separator } from '@core/ui/shadcn-ui/separator';
 import Link from 'next/link';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
-
 import UserAvatarIcon from './AvatarIcon';
+import SmallWidthContainer from '@web-components/SmallWidthContainer';
 
 type Props = {
   className: string;
   session?: any;
+  pathname: string;
 };
 
-const Topbar = ({ className, session }: Props) => {
+const Topbar = ({ className, session, pathname }: Props) => { 
+  const WrapperComponent = pathname.startsWith('/expert-content-solutions')
+    ? SmallWidthContainer
+    : MaxWidthWrapper;
   return (
     <div className={cn(`flex h-10 items-center bg-[#EEEEEE] ${className}`)}>
-      <MaxWidthWrapper
-        className={cn(`flex items-center justify-center gap-2 sm:justify-end`)}
+      <WrapperComponent
+        className={cn(
+          `flex items-center justify-center gap-2 py-0 sm:justify-end xl:py-0 2xl:py-0 3xl:py-0`
+        )}
       >
         <div>
           <Link
@@ -51,7 +57,7 @@ const Topbar = ({ className, session }: Props) => {
         </div>
 
         {session && <UserAvatarIcon session={session} />}
-      </MaxWidthWrapper>
+      </WrapperComponent>
     </div>
   );
 };

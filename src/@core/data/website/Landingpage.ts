@@ -13,7 +13,7 @@ export const HeroSectionDetails: IHeroSection = {
     "Get noticed online with specialized SEO-driven content writing solutions that engage, inform, and convert your audience. Our expert writers craft compelling articles, blogs, and web content tailored to your brand's unique voice, ensuring that every piece connects to your target market.",
   buttonText: 'Place Your Order',
   buttonLink: '/expert-content-solutions#products',
-  phoneNumber: '+91 890740-0008',
+  phoneNumber: '+91 89074-00008',
   imageUrl: 'BHW_banner_VTtvR.png',
 };
 
@@ -27,7 +27,7 @@ export const StandOutSectionDetails: IStandOutSection = {
   listItems: [
     'Industry-Specific Expertise',
     '100% Human-Crafted Content, CopyScape Passed',
-    'Timely Delivery, Every Time With Quality Assured',
+    'Timely Delivery, Every Time, With Accuracy Guaranteed',
     'Consistency in Quality—A Promise We Keep',
   ],
 };
@@ -73,7 +73,7 @@ export const ApproachSectionDetails: IApproachSection = {
       icon: 'assets/icons/approach-5.svg',
       title: 'Delivery & Support',
       description:
-        'You can rely on us to deliver high-quality content on time, every time, with a dedicated team available for any questions.',
+        'You can rely on us to deliver high-quality content, every time, with a dedicated team available for any questions.',
     },
     {
       icon: 'assets/icons/approach-6.svg',
@@ -87,7 +87,7 @@ export const ApproachSectionDetails: IApproachSection = {
 export const SurferSEOSectionDetails: ISurferSEOSection = {
   icon: 'assets/icons/surferSEO.svg',
   title:
-    "<span className='uppercase bg-[#f39019]/10 rounded-lg px-[10px] font-semibold text-3xl font-poppins'>Surfer seo</span> : Our key to content success",
+    "<span className='uppercase bg-[#f39019]/10 rounded-lg px-[10px] font-semibold text-3xl font-poppins whitespace-nowrap'>Surfer seo</span> : Our key to content success",
   iconList: [
     {
       icon: 'fluent:arrow-down-16-filled',

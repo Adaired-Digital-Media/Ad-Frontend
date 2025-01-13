@@ -85,7 +85,26 @@
     /* ----------------------------------- */
     --green-lighter: 185 249 207; /* #b9f9cf */
     --green-default: 17 168 73; /* #11a849 */
-    --green-dark: 17 132 60; /* #11843c */ --card: 0 0% 100%; --card-foreground: 224 71.4% 4.1%; --popover: 0 0% 100%; --popover-foreground: 224 71.4% 4.1%; --primary: 220.9 39.3% 11%; --secondary: 220 14.3% 95.9%; --accent: 220 14.3% 95.9%; --accent-foreground: 220.9 39.3% 11%; --destructive: 0 84.2% 60.2%; --destructive-foreground: 210 20% 98%; --border: 220 13% 91%; --input: 220 13% 91%; --ring: 224 71.4% 4.1%; --chart-1: 12 76% 61%; --chart-2: 173 58% 39%; --chart-3: 197 37% 24%; --chart-4: 43 74% 66%; --chart-5: 27 87% 67%; --radius: 0.5rem;
+    --green-dark: 17 132 60; /* #11843c */
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 220.9 39.3% 11%;
+    --secondary: 220 14.3% 95.9%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 224 71.4% 4.1%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
   }
 
   /* dark theme */
@@ -310,6 +329,34 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.text-muted-foreground{
+  color: var(--muted-foreground);
+}
 /* ................................................... */
 /* scrollbar design starts from here */
 /* ................................................... */
@@ -1547,7 +1594,6 @@ div[style='z-index: 1000001;'],
   }
 }
 
-
 .font-weight-inherit {
   font-weight: inherit;
 }
@@ -1557,7 +1603,7 @@ div[style='z-index: 1000001;'],
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
 }
- 
+
 .no-visible-scrollbar::-webkit-scrollbar {
   display: none;
 }

@@ -129,9 +129,7 @@ export const EcomPageForm = () => {
               onChange={(v: SelectOption) => onChange(v.value)}
               error={errors?.services?.message}
               placeholder="Select Services..."
-              dropdownClassName="text-black"
-              className={cn(`rounded-lg border-0 bg-gray-100`)}
-              suffixClassName={cn(`text-[#F39019]`)}
+              className={cn(`rounded-lg border-0 bg-gray-100 !text-black`)}
             />
           )}
         />

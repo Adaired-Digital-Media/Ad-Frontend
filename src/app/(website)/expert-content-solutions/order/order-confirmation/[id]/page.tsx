@@ -1,6 +1,8 @@
 import { cn } from '@core/utils/class-names';
 import SmallWidthContainer from '@/app/(website)/components/SmallWidthContainer';
 import { Button } from 'rizzui';
+import Link from 'next/link';
+import { routes } from '@/config/routes';
 interface OrderConfirmedProps {
   params: {
     id: string;
@@ -11,9 +13,11 @@ const OrderConfirmed: React.FC<OrderConfirmedProps> = ({ params }) => {
   const { id } = params;
 
   return (
-    <SmallWidthContainer className="h-dvh ">
+    <SmallWidthContainer className="h-dvh">
       <div
-        className={cn(`max-w-2xl space-y-10 rounded-lg px-36 py-6 shadow-xl m-auto`)}
+        className={cn(
+          `m-auto max-w-2xl space-y-10 rounded-lg px-36 py-6 shadow-xl`
+        )}
       >
         <div></div>
         <div className={cn(`space-y-2 text-center`)}>
@@ -24,11 +28,20 @@ const OrderConfirmed: React.FC<OrderConfirmedProps> = ({ params }) => {
           </p>
           <p>You will receive an email with your order details shortly.</p>
         </div>
-        <div className={cn(`flex items-center gap-16 justify-center`)}>
-          <Button variant="outline" className="w-full sm:w-auto border-[#ccc]">
-            View Orders
-          </Button>
-          <Button className="w-full sm:w-auto bg-[#f39019]">Continue Shopping</Button>
+        <div className={cn(`flex items-center justify-center gap-16`)}>
+          <Link href={routes.userDashboard.orders}>
+            <Button
+              variant="outline"
+              className="w-full border-[#ccc] sm:w-auto"
+            >
+              View Orders
+            </Button>
+          </Link>
+          <Link href={routes.eCommerce.products}>
+            <Button className="w-full bg-[#f39019] sm:w-auto">
+              Continue Shopping
+            </Button>
+          </Link>
         </div>
       </div>
     </SmallWidthContainer>

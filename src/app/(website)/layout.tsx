@@ -1,5 +1,6 @@
 import WebsiteLayout from '@/layouts/website/layout';
 import { SessionProvider } from 'next-auth/react';
+import { ReactLenis } from '@core/utils/lenis';
 export default function DefaulWebsitetLayout({
   children,
 }: {
@@ -7,7 +8,9 @@ export default function DefaulWebsitetLayout({
 }) {
   return (
     <SessionProvider>
-      <WebsiteLayout>{children}</WebsiteLayout>
+      <WebsiteLayout>
+        <ReactLenis root>{children}</ReactLenis>
+      </WebsiteLayout>
     </SessionProvider>
   );
 }

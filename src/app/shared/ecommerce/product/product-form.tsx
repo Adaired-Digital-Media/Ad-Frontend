@@ -18,6 +18,7 @@ import { Product } from '@/types';
 import { useCart } from '@/store/quick-cart/cart.context';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
+import toast from 'react-hot-toast';
 
 // Utility function to generate Zod schema
 const generateFormSchema = (
@@ -127,7 +128,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     },
   });
 
-  const { handleSubmit, register, formState, watch } = methods;
+  const { handleSubmit, register, formState, watch, reset } = methods;
   const { errors } = formState;
 
   // Watch form values for word count and quantity
@@ -173,6 +174,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     });
 
     addItemToCart(cartItem);
+    toast.success("Product added to cart successfully")
+    reset();
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -186,13 +189,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           {/* Header */}
           <div
             className={cn(
-              `flex items-center justify-between rounded-tl-[15px] rounded-tr-[15px] bg-black px-10 py-5`
+              `flex gap-5 xs:gap-0 flex-col xs:flex-row items-center justify-between rounded-tl-[15px] rounded-tr-[15px] bg-black px-10 py-5`
             )}
           >
             <Title
               as="h3"
               className={cn(
-                `font-poppins text-[22px] font-semibold text-white`
+                `font-poppins text-2xl xs:text-[22px] font-semibold text-white`
               )}
             >
               Shopping Cart
@@ -203,7 +206,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               svgInnerClassName="text-[#F89520]"
               svgClassName=" bg-black"
               type="button"
-              navigateTo="/ecommerce/#products"
+              navigateTo={routes.eCommerce.products}
             />
           </div>
 
@@ -215,10 +218,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           >
             <div
               className={cn(
-                `flex items-center justify-between border-b-2 border-dashed border-[#1B5A96] pb-[15px]`
+                `flex flex-col xs:flex-row items-center justify-between border-b-2 border-dashed border-[#1B5A96] pb-[15px] gap-2 xs:gap-0`
               )}
             >
-              <div className={cn(`flex items-center gap-6`)}>
+              <div className={cn(`flex flex-col xs:flex-row items-center gap-3 xs:gap-6`)}>
                 <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                   <Image
                     src={product.featuredImage}
@@ -257,7 +260,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             {/* Dynamic Form Fields */}
             <div className="mt-5 space-y-6">
               {/* First pair of fields */}
-              <div className="flex gap-4">
+              <div className="flex flex-col xs:flex-row gap-4 ">
                 {form?.form?.fields.slice(0, 2).map((field) => (
                   <div key={field.name} className="flex-1">
                     <Title
@@ -341,7 +344,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               </div>
 
               {/* Second pair of fields */}
-              <div className="flex gap-4">
+              <div className="flex flex-col xs:flex-row gap-4">
                 {form?.form?.fields.slice(2, 4).map((field) => (
                   <div key={field.name} className="flex-1">
                     <Title
@@ -516,7 +519,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </div>
               ))}
 
-              <div className={cn(`flex items-center justify-between gap-10`)}>
+              <div
+                className={cn(
+                  `flex flex-col items-center justify-between gap-5 sm:flex-row sm:gap-10`
+                )}
+              >
                 <Button
                   title="Add To Cart"
                   className="flex w-full justify-center bg-[#1B5A96]"

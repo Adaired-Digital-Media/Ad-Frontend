@@ -3,6 +3,8 @@ import { Dropdown, Text, Avatar } from 'rizzui';
 import { cn } from '@core/utils/class-names';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { routes } from '@/config/routes';
 export default function UserAvatarIcon({ session }: { session: any }) {
   const router = useRouter();
 
@@ -36,14 +38,11 @@ export default function UserAvatarIcon({ session }: { session: any }) {
             </span>
           </Dropdown.Item>
           <div className="mb-2 mt-3 pt-2">
-            <Dropdown.Item
-              className="hover:bg-gray-900 hover:text-gray-50"
-              onClick={() => {
-                router.push('/dashboard');
-              }}
-            >
-              Dashboard
-            </Dropdown.Item>
+            <Link href={routes.userDashboard.dashboard}>
+              <Dropdown.Item className="hover:bg-gray-900 hover:text-gray-50">
+                Dashboard
+              </Dropdown.Item>
+            </Link>
           </div>
           <div className="mt-2 pt-2">
             <Dropdown.Item

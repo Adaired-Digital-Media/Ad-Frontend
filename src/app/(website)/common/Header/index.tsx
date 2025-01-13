@@ -13,10 +13,6 @@ import { usePathname } from 'next/navigation';
 import { debounce } from 'lodash';
 import { useSession } from 'next-auth/react';
 
-
-
-// https://avatar.iran.liara.run/username?username=[firstname+lastname]
-
 const Navbar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
@@ -60,6 +56,7 @@ const Navbar = () => {
             : 'origin-top scale-y-0'
         )}
         session={session}
+        pathname={pathname}
       />
 
       <section

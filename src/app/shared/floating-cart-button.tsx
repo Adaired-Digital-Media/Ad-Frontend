@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { Icon } from '@iconify/react';
 import { Badge } from 'rizzui';
 import { useCart } from '@/store/quick-cart/cart.context';
@@ -14,6 +14,9 @@ export default function FloatingCartButton({
   ...props
 }: FloatingCartProps) {
   const { cartItems } = useCart();
+  const formattedCartCount = cartItems?.length
+    ? cartItems.length.toString().padStart(2, '0')
+    : '00';
   return (
     <button
       className={cn(
@@ -25,14 +28,14 @@ export default function FloatingCartButton({
       <div className="relative inline-flex">
         <Icon
           icon="mdi:cart-outline"
-          className="h-[40px] w-[40px] transition-all duration-150 group-hover/cartButton:rotate-[-10deg]"
+          className="h-[30px] w-[30px] transition-all duration-150 group-hover/cartButton:rotate-[-10deg]"
         />
         <Badge
           size="sm"
           enableOutlineRing
-          className="absolute right-0 top-0 -translate-y-1/3 translate-x-1/2"
+          className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2"
         >
-          {cartItems?.length}
+          {formattedCartCount}
         </Badge>
       </div>
     </button>

@@ -12,7 +12,7 @@ const SmallWidthContainer: FC<ISmallContainerType> = ({
     <section
       {...props}
       className={cn(
-        `m-auto box-border w-full max-w-[1340px] scale-[0.8] py-6 xl:scale-[0.85] xl:py-10 2xl:scale-100 2xl:py-16 3xl:py-24 ${className} `
+        `m-auto box-border w-full max-w-[1340px] scale-[0.9] py-6 opt-md:scale-[0.8] xl:scale-[0.85] xl:py-10 2xl:scale-100 2xl:py-16 3xl:py-24 ${className} `
       )}
       style={typeof style === 'string' ? undefined : style}
     >
