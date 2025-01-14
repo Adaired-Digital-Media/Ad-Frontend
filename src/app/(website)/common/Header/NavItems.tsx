@@ -11,11 +11,11 @@ const NavItems = () => {
   const pathname = usePathname();
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
+  const isLandingPage = pathname.startsWith('/expert-content-solutions');
+
   // Memoize the navigation items based on the current pathname to avoid recalculating on every render
   const navItems = useMemo(() => {
-    return pathname.startsWith('/expert-content-solutions')
-      ? routes.ecommerceNav
-      : routes.websiteNav;
+    return isLandingPage ? routes.ecommerceNav : routes.websiteNav;
   }, [pathname]);
 
   const handleSetActive = useCallback((idx: number) => {
@@ -28,7 +28,10 @@ const NavItems = () => {
         <Item
           key={item.value}
           navitems={item}
-          activeIndex={() => handleSetActive(idx)}
+          activeIndex={activeIndex}
+          index={idx}
+          isLandingPage={isLandingPage}
+          handleSetActive={handleSetActive}
         />
       ))}
 
@@ -49,11 +52,17 @@ const NavItems = () => {
 export default NavItems;
 
 const Item = ({
-  activeIndex,
   navitems,
+  activeIndex,
+  index,
+  isLandingPage,
+  handleSetActive,
 }: {
   navitems: any;
-  activeIndex: () => void;
+  activeIndex: number;
+  index: number;
+  isLandingPage: boolean;
+  handleSetActive: (idx: number) => void;
 }) => {
   const [submenuClicked, setSubmenuClicked] = useState(false);
 
@@ -156,10 +165,11 @@ const Item = ({
       <div className={cn('group flex items-center')}>
         <Link
           className={cn(
-            'relative flex h-20 items-center gap-1 px-2 font-nunito text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-[0%] after:bg-[#aaa] after:transition-all after:duration-300 after:content-[""] hover:after:w-[100%]'
+            'relative flex h-20 items-center gap-1 px-2 font-nunito text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-[0%] after:bg-[#aaa] after:transition-all after:duration-300 after:content-[""] hover:after:w-[100%]',
+            activeIndex === index && isLandingPage ? '' : ''
           )}
           href={navitems.href || ''}
-          onClick={activeIndex}
+          onClick={() => handleSetActive(index)}
         >
           {navitems.label}
           {(navitems.subItems || navitems.childrens) && (
