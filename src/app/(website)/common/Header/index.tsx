@@ -12,6 +12,7 @@ import NavItems from './NavItems';
 import { usePathname } from 'next/navigation';
 import { debounce } from 'lodash';
 import { useSession } from 'next-auth/react';
+import LandingPageMobileMenu from './Landing-mobile-menu';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -43,7 +44,9 @@ const Navbar = () => {
   const openSidebar = () => setIsSidebarVisible(true);
   const closeSidebar = () => setIsSidebarVisible(false);
 
-  const WrapperComponent = pathname.startsWith('/expert-content-solutions')
+  const isLandingPage = pathname.startsWith('/expert-content-solutions');
+
+  const WrapperComponent = isLandingPage
     ? SmallWidthContainer
     : MaxWidthWrapper;
 
@@ -124,10 +127,17 @@ const Navbar = () => {
               </div>
             </WrapperComponent>
             {/* Mobile Navigation */}
-            <MobileNav
-              isSidebarVisible={isSidebarVisible}
-              closeSidebar={closeSidebar}
-            />
+            {!isLandingPage ? (
+              <MobileNav
+                isSidebarVisible={isSidebarVisible}
+                closeSidebar={closeSidebar}
+              />
+            ) : (
+              <LandingPageMobileMenu
+                isSidebarVisible={isSidebarVisible}
+                closeSidebar={closeSidebar}
+              />
+            )}
           </header>
         </div>
       </section>
@@ -136,5 +146,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-

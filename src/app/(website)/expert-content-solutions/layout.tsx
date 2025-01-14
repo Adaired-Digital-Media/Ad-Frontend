@@ -1,20 +1,25 @@
 import CartDrawer from '@/app/shared/ecommerce/cart/cart-drawer';
 import { CartProvider } from '@/store/quick-cart/cart.context';
 import { SessionProvider } from 'next-auth/react';
-import { ReactLenis } from '@core/utils/lenis';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 export default function Ecommercelayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    // <ReactLenis root>
-      <SessionProvider>
-        <CartProvider>
-          {children}
-          <CartDrawer />
-        </CartProvider>
-      </SessionProvider>
-    // </ReactLenis>
+    <SessionProvider>
+      <CartProvider>
+        {children}
+        <CartDrawer />
+      </CartProvider>
+    </SessionProvider>
   );
 }
