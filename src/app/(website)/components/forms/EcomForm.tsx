@@ -20,9 +20,9 @@ const schema = z.object({
     .min(1, { message: 'Email is required' })
     .email({ message: 'Invalid email' }),
   phone: z.string().min(5, { message: 'Phone number is required' }),
-  services: z
-    .string()
-    .min(1, { message: 'Please select your interested service.' }),
+  // services: z
+  //   .string()
+  //   .min(1, { message: 'Please select your interested service.' }),
   message: z.string().optional(),
 });
 
@@ -47,7 +47,7 @@ export const EcomPageForm = () => {
       name: '',
       email: '',
       phone: '',
-      services: '',
+      // services: '',
       message: '',
     },
   });
@@ -81,7 +81,7 @@ export const EcomPageForm = () => {
   ];
 
   return (
-    <div className={cn(``)}>
+    <div className={cn(`w-full`)}>
       <form
         action=""
         className={cn(`space-y-5`)}
@@ -118,7 +118,7 @@ export const EcomPageForm = () => {
           )}
         />
 
-        <Controller
+        {/* <Controller
           control={control}
           name="services"
           render={({ field: { value, onChange } }) => (
@@ -132,7 +132,7 @@ export const EcomPageForm = () => {
               className={cn(`rounded-lg border-0 bg-gray-100 !text-black`)}
             />
           )}
-        />
+        /> */}
         <Textarea
           placeholder="Message"
           variant="flat"

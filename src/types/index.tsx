@@ -1,14 +1,14 @@
 import { routes } from '@/config/routes';
 import { CouponType } from '../@core/config/enums';
 
-export type HeaderItems = (typeof routes.websiteNav )[number];
+export type HeaderItems = (typeof routes.websiteNav)[number];
 
 export type CartItem = {
   _id?: string;
   productId: string;
   category?: string;
   productName: string;
-  productSlug:string;
+  productSlug: string;
   productImage?: string;
   wordCount?: number;
   quantity: number;
@@ -44,6 +44,7 @@ export type Product = {
   category: string;
   subCategory: any;
   minimumQuantity?: number;
+  minimumWords?: number;
   slug: string;
   pricePerUnit: number;
   pricingType: string;
@@ -57,7 +58,7 @@ export type Product = {
   metaDescription?: string;
   canonicalLink?: string;
   status: string;
-  isFeatured: boolean;
+  isFreeProduct: boolean;
   createBy?: string;
   updateBy?: string;
   createdAt: string;

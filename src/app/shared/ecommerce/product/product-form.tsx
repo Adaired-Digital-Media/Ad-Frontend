@@ -29,7 +29,8 @@ const generateFormSchema = (
     type: string;
     required: boolean;
     options: any[];
-  }[]
+  }[],
+  product: Product
 ) => {
   const schema: Record<string, z.ZodTypeAny> = {};
 
@@ -40,23 +41,31 @@ const generateFormSchema = (
       case 'number':
         fieldSchema = z
           .number({
-            invalid_type_error: `${field.label} must be a number`,
+            invalid_type_error: `${field.label} must be at least  ${field.name === 'quantity' ? product.minimumQuantity : product.minimumWords}`,
           })
           .min(
-            field.name === 'quantity' ? 1 : 100,
+            field.name === 'quantity'
+              ? product.minimumQuantity || 0
+              : product.minimumWords || 0,
             field.name === 'quantity'
               ? `${field.label} must be at least 1`
-              : `Minimum purchase is 100 words for this product.`
+              : `Minimum purchase is ${product.minimumWords} words for this product.`
           );
         break;
 
-      case 'textarea':
       case 'text':
         fieldSchema = z
           .string({
-            invalid_type_error: `${field.label} must be a string`,
+            message: `${field.label} is required`,
           })
           .max(500, `${field.label} cannot exceed 500 characters`);
+        break;
+
+      case 'email':
+        fieldSchema = z
+          .string()
+          .min(1, `${field.label} is required`)
+          .email({ message: 'Invalid email address' });
         break;
 
       default:
@@ -113,7 +122,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   // Generate schema based on form fields
-  const formSchema = generateFormSchema(form?.form?.fields);
+  const formSchema = generateFormSchema(form?.form?.fields, product);
 
   const methods = useForm<FieldValues>({
     mode: 'onChange',
@@ -122,8 +131,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       name: session?.user?.name,
       email: session?.user?.email,
       phone: session?.user?.contact,
-      wordCount: '100',
-      quantity: '1',
+      wordCount: product.minimumWords,
+      quantity: product.minimumQuantity,
       additionalInfo: '',
     },
   });
@@ -146,7 +155,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       // Round to 2 decimal places
       totalPrice = Math.round(totalPrice * 100) / 100;
       return totalPrice;
-    } else if (product.pricingType === 'perReview') {
+    } else if (product.pricingType === 'perQuantity') {
       const quantity = parseInt(watchedFields?.quantity || '1');
       let totalPrice = product.pricePerUnit * quantity;
 
@@ -174,7 +183,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     });
 
     addItemToCart(cartItem);
-    toast.success("Product added to cart successfully")
+    toast.success('Product added to cart successfully');
     reset();
   };
 
@@ -189,13 +198,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           {/* Header */}
           <div
             className={cn(
-              `flex gap-5 xs:gap-0 flex-col xs:flex-row items-center justify-between rounded-tl-[15px] rounded-tr-[15px] bg-black px-10 py-5`
+              `flex flex-col items-center justify-between gap-5 rounded-tl-[15px] rounded-tr-[15px] bg-black px-10 py-5 xs:flex-row xs:gap-0`
             )}
           >
             <Title
               as="h3"
               className={cn(
-                `font-poppins text-2xl xs:text-[22px] font-semibold text-white`
+                `font-poppins text-2xl font-semibold text-white xs:text-[22px]`
               )}
             >
               Shopping Cart
@@ -218,10 +227,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           >
             <div
               className={cn(
-                `flex flex-col xs:flex-row items-center justify-between border-b-2 border-dashed border-[#1B5A96] pb-[15px] gap-2 xs:gap-0`
+                `flex flex-col items-center justify-between gap-2 border-b-2 border-dashed border-[#1B5A96] pb-[15px] xs:flex-row xs:gap-0`
               )}
             >
-              <div className={cn(`flex flex-col xs:flex-row items-center gap-3 xs:gap-6`)}>
+              <div
+                className={cn(
+                  `flex flex-col items-center gap-3 xs:flex-row xs:gap-6`
+                )}
+              >
                 <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                   <Image
                     src={product.featuredImage}
@@ -260,7 +273,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             {/* Dynamic Form Fields */}
             <div className="mt-5 space-y-6">
               {/* First pair of fields */}
-              <div className="flex flex-col xs:flex-row gap-4 ">
+              <div className="flex flex-col gap-4 xs:flex-row">
                 {form?.form?.fields.slice(0, 2).map((field) => (
                   <div key={field.name} className="flex-1">
                     <Title
@@ -320,6 +333,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         variant="flat"
                         inputClassName={cn(`bg-[#FAFAFA]`)}
                         required={field.required}
+                        disabled={
+                          (field.name === 'quantity' ||
+                            field.name === 'wordCount') &&
+                          product.isFreeProduct
+                        }
                       />
                     )}
                     {errors[
@@ -344,7 +362,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               </div>
 
               {/* Second pair of fields */}
-              <div className="flex flex-col xs:flex-row gap-4">
+              <div className="flex flex-col gap-4 xs:flex-row">
                 {form?.form?.fields.slice(2, 4).map((field) => (
                   <div key={field.name} className="flex-1">
                     <Title

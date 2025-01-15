@@ -134,7 +134,7 @@ const HeroSection = () => {
               width={718}
               height={630}
               quality={100}
-              priority
+              loading="eager"
               className={cn(`object-contain`)}
               sizes="(min-width: 808px) 50vw, 100vw"
             />
@@ -152,7 +152,7 @@ const StandOutSection = () => {
       >
         <div className={cn(`flex justify-center rounded-2xl`)}>
           <CldImage
-            src="standOut_fOg7J.png"
+            src="standOut_fOg7J"
             alt="standout_image"
             height={479}
             width={597}
@@ -223,8 +223,12 @@ const ProductSection = async () => {
                     key={product._id}
                     icon={product.featuredImage}
                     isSvg={true}
+                    isFromCloudinary={true}
                     title={product.name}
                     buttonText={'Order Now'}
+                    boxLink={routes.eCommerce.productForm(
+                      String(product.slug ?? generateSlug(product.name))
+                    )}
                     buttonLink={routes.eCommerce.productForm(
                       String(product.slug ?? generateSlug(product.name))
                     )}
@@ -393,8 +397,12 @@ const ContactUsSection = () => {
           />
         </div>
         <div className={cn(`h-full w-full max-w-[635px] opt-md:pr-5`)}>
-          <div className={cn(`h-full w-full rounded-[15px] border p-10`)}>
-            <div className={cn(`text-center`)}>
+          <div
+            className={cn(
+              `flex h-full w-full flex-col items-center justify-center rounded-[15px] border p-10`
+            )}
+          >
+            <div className={cn(`w-full text-center`)}>
               <h2
                 className={cn(
                   `font-poppins text-[28px] font-semibold text-[#1c5b98]`

@@ -18,6 +18,7 @@ import { Product } from '@/types';
 import { useCart } from '@/store/quick-cart/cart.context';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { routes } from '@/config/routes';
 
 // Utility function to generate Zod schema
 const generateFormSchema = (
@@ -28,7 +29,8 @@ const generateFormSchema = (
     type: string;
     required: boolean;
     options: any[];
-  }[]
+  }[],
+  product: Product
 ) => {
   const schema: Record<string, z.ZodTypeAny> = {};
 
@@ -39,23 +41,31 @@ const generateFormSchema = (
       case 'number':
         fieldSchema = z
           .number({
-            invalid_type_error: `${field.label} must be a number`,
+            invalid_type_error: `${field.label} must be at least  ${field.name === 'quantity' ? product.minimumQuantity : product.minimumWords}`,
           })
           .min(
-            field.name === 'quantity' ? 1 : 100,
+            field.name === 'quantity'
+              ? product.minimumQuantity || 0
+              : product.minimumWords || 0,
             field.name === 'quantity'
               ? `${field.label} must be at least 1`
-              : `Minimum purchase is 100 words for this product.`
+              : `Minimum purchase is ${product.minimumWords} words for this product.`
           );
         break;
 
-      case 'textarea':
       case 'text':
         fieldSchema = z
           .string({
-            invalid_type_error: `${field.label} must be a string`,
+            message: `${field.label} is required`,
           })
           .max(500, `${field.label} cannot exceed 500 characters`);
+        break;
+
+      case 'email':
+        fieldSchema = z
+          .string()
+          .min(1, `${field.label} is required`)
+          .email({ message: 'Invalid email address' });
         break;
 
       default:
@@ -117,7 +127,7 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
   const matchingCartItem = cartItems.find((item) => item._id === id);
 
   // Generate schema based on form fields
-  const formSchema = generateFormSchema(form?.form?.fields);
+  const formSchema = generateFormSchema(form?.form?.fields, product);
 
   const methods = useForm<FieldValues>({
     mode: 'onChange',
@@ -126,8 +136,8 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
       name: matchingCartItem?.name,
       email: matchingCartItem?.email,
       phone: matchingCartItem?.phone,
-      wordCount: matchingCartItem?.wordCount || '100',
-      quantity: matchingCartItem?.quantity || '1',
+      wordCount: matchingCartItem?.wordCount || product.minimumWords,
+      quantity: matchingCartItem?.quantity || product.minimumQuantity,
       additionalInfo: matchingCartItem?.additionalInfo || '',
     },
   });
@@ -150,7 +160,7 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
       // Round to 2 decimal places
       totalPrice = Math.round(totalPrice * 100) / 100;
       return totalPrice;
-    } else if (product.pricingType === 'perReview') {
+    } else if (product.pricingType === 'perQuantity') {
       const quantity = parseInt(watchedFields?.quantity || '1');
       let totalPrice = product.pricePerUnit * quantity;
 
@@ -178,9 +188,8 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
     });
 
     updateDetails(matchingCartItem?._id || '', cartItem);
-
-    console.log(matchingCartItem?._id || '', cartItem)
-    toast.success("Product updated")
+    toast.success('Product updated');
+    router.push(routes.eCommerce.cart);
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -211,7 +220,7 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
               svgInnerClassName="text-[#F89520]"
               svgClassName=" bg-black"
               type="button"
-              navigateTo="/ecommerce/#products"
+              navigateTo={routes.eCommerce.products}
             />
           </div>
 
@@ -325,6 +334,11 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
                         variant="flat"
                         inputClassName={cn(`bg-[#FAFAFA]`)}
                         required={field.required}
+                        disabled={
+                          (field.name === 'quantity' ||
+                            field.name === 'wordCount') &&
+                          product.isFreeProduct
+                        }
                       />
                     )}
                     {errors[

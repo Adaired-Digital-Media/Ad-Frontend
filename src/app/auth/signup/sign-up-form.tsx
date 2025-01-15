@@ -3,12 +3,13 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { SubmitHandler } from 'react-hook-form';
+import { Controller, SubmitHandler } from 'react-hook-form';
 import { PiArrowRightBold } from 'react-icons/pi';
 import { Password, Checkbox, Button, Input, Text } from 'rizzui';
 import { Form } from '../../../@core/ui/rizzui-ui/form';
 import { routes } from '@/config/routes';
 import { SignUpSchema, signUpSchema } from '@/validators/signup.schema';
+import { PhoneNumber } from '@/@core/ui/rizzui-ui/phone-input';
 
 const initialValues = {
   firstName: '',
@@ -56,7 +57,7 @@ export default function SignUpForm() {
           defaultValues: initialValues,
         }}
       >
-        {({ register, formState: { errors, isSubmitting } }) => (
+        {({ register, control, formState: { errors, isSubmitting } }) => (
           <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5">
             <Input
               type="text"
@@ -106,16 +107,24 @@ export default function SignUpForm() {
               {...register('confirmPassword')}
               error={errors.confirmPassword?.message}
             />
-            <Input
-              type="tel"
-              size="lg"
-              label="Phone Number"
-              className="col-span-2 [&>label>span]:font-medium"
-              inputClassName="text-sm"
-              placeholder="Enter your email"
-              {...register('phoneNumber')}
-              error={errors.email?.message}
+
+            <Controller
+              name="phoneNumber"
+              control={control}
+              render={({ field }) => (
+                <PhoneNumber
+                  {...field}
+                  country="us"
+                  size="lg"
+                  label="Phone Number"
+                  preferredCountries={['us']}
+                  onChange={(value) => field.onChange(value)}
+                  error={errors.phoneNumber?.message}
+                  className="col-span-2"
+                />
+              )}
             />
+
             <div className="col-span-2 flex items-start">
               <Checkbox
                 {...register('isAgreed')}
@@ -124,14 +133,14 @@ export default function SignUpForm() {
                   <>
                     By signing up you have agreed to our{' '}
                     <Link
-                      href="/"
+                      href={routes.homeWebsite.TermsNConditions}
                       className="font-medium text-blue transition-colors hover:underline"
                     >
                       Terms
                     </Link>{' '}
                     &{' '}
                     <Link
-                      href="/"
+                      href={routes.homeWebsite.PrivacyPolicy}
                       className="font-medium text-blue transition-colors hover:underline"
                     >
                       Privacy Policy

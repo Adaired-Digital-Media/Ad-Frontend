@@ -5,8 +5,11 @@ import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 import axios from 'axios';
 
-const publicRoutes = [routes.auth.signIn, routes.auth.signUp];
-const authRoutes = [routes.auth.signIn, routes.auth.signUp];
+// Function to determine if a route is restricted for logged-in users
+const isAuthRoute = (pathname: string) => {
+  const authRoutePatterns = [/\/auth\/signIn/, /\/auth\/signUp/];
+  return authRoutePatterns.some((pattern) => pattern.test(pathname));
+};
 
 export default {
   providers: [
@@ -28,13 +31,15 @@ export default {
 
           const { accessToken, userData } = res.data;
 
-          if (accessToken && userData) {
-            return { accessToken, ...userData };
+          if (!accessToken || !userData) {
+            throw new Error('Invalid credentials.');
           }
-
-          return null;
+          return { accessToken, ...userData };
         } catch (err: any) {
-          throw new Error(err.response?.data?.message || 'Login failed');
+          if (err instanceof Error) {
+            // Return `null` to indicate that the credentials are invalid
+            return null;
+          }
         }
       },
     }),
@@ -44,17 +49,13 @@ export default {
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
 
-      // Allow access to public routes for all users
-      if (publicRoutes.includes(pathname)) {
-        return true;
-      }
-
       // Redirect logged-in users away from auth routes
-      if (authRoutes.includes(pathname)) {
+      if (isAuthRoute(pathname)) {
         if (isLoggedIn) {
-          return Response.redirect(new URL('/', nextUrl));
+          // Redirect to homepage
+          return Response.redirect(new URL(routes.eCommerce.home, nextUrl));
         }
-        return true;
+        return true; // Allow access to auth routes if not logged in
       }
 
       // Allow access to private routes for logged-in users
@@ -102,9 +103,9 @@ export default {
       }
 
       if (parsedUrl.origin === baseUrl) {
-        if (parsedUrl.pathname === '/expert-content-solutions/cart') {
-          return `${baseUrl}/expert-content-solutions/cart`;
-        }
+        // if (parsedUrl.pathname === '/expert-content-solutions/cart') {
+        //   return `${baseUrl}/expert-content-solutions/cart`;
+        // }
         return `${baseUrl}/expert-content-solutions`;
       }
       return `${baseUrl}/dashboard`;

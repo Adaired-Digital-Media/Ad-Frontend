@@ -1,6 +1,9 @@
 import { CartItem as Item } from '@/types';
 
 export function addItem(cartItems: Item[], item: Item) {
+
+  const isFreeProduct = item.productId
+
   // Check if the item's slug includes "free"
   if (item.productSlug.includes('free')) {
     // Check if there's already an item with the same slug in the cart

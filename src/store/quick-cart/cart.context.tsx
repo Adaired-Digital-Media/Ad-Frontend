@@ -197,7 +197,7 @@ export function CartProvider({
 
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/get-user-cart?customerId=${session.user._id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/get-own-cart`,
         {
           headers: {
             Authorization: `Bearer ${session.user.accessToken}`,

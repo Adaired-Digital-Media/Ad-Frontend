@@ -7,7 +7,7 @@ import { useCart } from '@/store/quick-cart/cart.context';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Empty, EmptyProductBoxIcon, Title, Text, Input, Button } from 'rizzui';
 import { ProductSkeleton } from '@/app/(website)/components/Skeletons/ProductSkeleton';
@@ -19,6 +19,7 @@ import { cn } from '@core/utils/class-names';
 import { usePathname } from 'next/navigation';
 import PageHeader from '@/app/shared/page-header';
 import CartProduct from './cart-product';
+import { CartTemplateSkeleton } from '@/app/(website)/components/Skeletons/CartTemplateSkeleton';
 
 type FormValues = {
   couponCode: string;
@@ -29,6 +30,7 @@ export default function CartPageWrapper() {
   const { cartItems } = useCart();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [areProductsLoaded, setAreProductsLoaded] = useState(false);
 
   const isDashboard = pathname.includes('/dashboard');
 
@@ -96,12 +98,37 @@ export default function CartPageWrapper() {
     } catch (error) {
       alert('Failed to create order');
       console.error(error);
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
   };
 
-  if (cartItems.length <= 0) {
+  // Handle the state change for loaded products
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      setAreProductsLoaded(true);
+    } else {
+      setAreProductsLoaded(false);
+      const timer = setTimeout(() => {
+        if (cartItems.length === 0) {
+          setAreProductsLoaded(true);
+        }
+      }, 1000);
+      // Cleanup the timeout when the component is unmounted or cartItems changes
+      return () => clearTimeout(timer);
+    }
+  }, [cartItems]);
+
+  if (!areProductsLoaded) {
+    return (
+      <TagName className="@container">
+        <CartTemplateSkeleton />
+      </TagName>
+    );
+  }
+
+  if (cartItems.length <= 0 && areProductsLoaded) {
     return (
       <TagName className="@container">
         <Empty image={<EmptyProductBoxIcon />} text="No Product in the Cart" />

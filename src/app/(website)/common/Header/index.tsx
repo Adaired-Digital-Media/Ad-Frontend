@@ -84,11 +84,14 @@ const Navbar = () => {
                       href="/"
                       className="sm:w-10/0 flex w-28 items-center md:w-36 lg:w-10/12 xl:w-full"
                     >
-                      <div className="relative h-[60px] w-[170px] md:h-[72px] lg:h-[80px] xl:h-[89px]">
+                      {/* <div className="relative h-[60px] w-[150px] md:h-[72px] lg:h-[80px] xl:h-[78px] aspect-auto"> */}
+                      <div className="flex items-center justify-center">
                         <CldImage
                           src="Static Website Images/adaired_logo.png"
                           alt="Brand Logo"
-                          fill
+                          // fill
+                          height={78}
+                          width={150}
                           priority
                           sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 100vw, (max-width: 1536px) 100vw, 170px"
                         />
