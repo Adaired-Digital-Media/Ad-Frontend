@@ -3,13 +3,22 @@ import { cn } from '../@core/utils/class-names';
 import { inter, lexendDeca, nunito, dm, baby, poppins } from '@/app/fonts';
 import Script from 'next/script';
 import { siteConfig } from '@/config/site.config';
-import NextProgress from '../@core/components/next-progress';
-import { ReCaptchaProvider } from 'next-recaptcha-v3';
+import NextProgress from '@core/components/next-progress';
+// import { ReCaptchaProvider } from 'next-recaptcha-v3';
+// Dynamically import ReCaptchaProvider
+const LazyReCaptchaProvider = dynamic(
+  () =>
+    import('next-recaptcha-v3').then((mod) => mod.ReCaptchaProvider),
+  { ssr: false } // Ensures it is only loaded on the client side
+);
 
 // styles
 import '@/app/globals.css';
-import GlobalDrawer from '@/app/shared/drawer-views/container';
-import GlobalModal from '@/app/shared/modal-views/container';
+// import GlobalDrawer from '@/app/shared/drawer-views/container';
+// import GlobalModal from '@/app/shared/modal-views/container';
+import dynamic from 'next/dynamic';
+const GlobalDrawer = dynamic(() => import('@/app/shared/drawer-views/container'));
+const GlobalModal = dynamic(() => import('@/app/shared/modal-views/container'));
 
 export const metadata = {
   title: siteConfig.title,
@@ -130,13 +139,13 @@ export default async function RootLayout({
           `font-inter antialiased`
         )}
       >
-        <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
+        <LazyReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
           <NextProgress />
           {children}
           <Toaster />
           <GlobalDrawer />
           <GlobalModal />
-        </ReCaptchaProvider>
+        </LazyReCaptchaProvider>
       </body>
     </html>
   );

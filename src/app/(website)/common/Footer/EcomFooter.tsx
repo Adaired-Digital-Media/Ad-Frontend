@@ -24,7 +24,7 @@ const EcomFooter = () => {
           </div>
           <Separator orientation="vertical" className="hidden h-20 sm:block" />
           <div className="w-full sm:w-auto sm:ml-auto">
-            <ul className="flex flex-col items-center gap-2 font-poppins text-lg text-white sm:inline-flex sm:flex-row md:gap-5">
+            <ul className="flex flex-col items-center gap-2 font-poppins  text-white sm:inline-flex sm:flex-row md:gap-5 text-base">
               <Link href="/expert-content-solutions">
                 <li>Home</li>
               </Link>
@@ -49,7 +49,7 @@ const EcomFooter = () => {
         </div>
         <Separator className="mb-5 mt-10" />
         <div className={cn(`m-auto font-poppins text-lg leading-7 text-white`)}>
-          <p>© 2025 Adaired–All Rights Reserved</p>
+          <p className='text-sm'>© 2025 Adaired–All Rights Reserved</p>
         </div>
       </SmallWidthContainer>
     </footer>

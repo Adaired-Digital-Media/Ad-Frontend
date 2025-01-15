@@ -14,7 +14,7 @@ export const HeroSectionDetails: IHeroSection = {
   buttonText: 'Place Your Order',
   buttonLink: '/expert-content-solutions#products',
   phoneNumber: '+91 89074-00008',
-  imageUrl: 'BHW_banner_VTtvR.png',
+  imageUrl: 'BHW_banner_VTtvR',
 };
 
 export const StandOutSectionDetails: IStandOutSection = {
@@ -37,7 +37,7 @@ export const ProductSectionDetails = {
   subHeadingText: 'Our Content Solutions',
   isSvg: true,
   title:
-    "<h2 className='font-poppins font-semibold text-[30px] leading-[48px]'>We Go Beyond The Ordinary: <span className='text-[#1C5B98] font-poppins font-semibold text-[30px] leading-[48px]'>Explore Our Innovative Content Portfolio</span></h2>",
+    "<h2 className='font-poppins font-semibold text-[30px] leading-[42px]'>We Go Beyond The Ordinary: <span className='text-[#1C5B98] font-poppins font-semibold text-[30px] leading-[42px]'>Explore Our Innovative Content Portfolio</span></h2>",
 };
 
 export const ApproachSectionDetails: IApproachSection = {

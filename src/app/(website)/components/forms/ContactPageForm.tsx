@@ -7,7 +7,7 @@ import Button from '@web-components/Button';
 import { PhoneNumber } from '@core/ui/rizzui-ui/phone-input';
 import { routes } from '@/config/routes';
 import { useReCaptcha } from 'next-recaptcha-v3';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, redirect } from 'next/navigation';
 
 const schema = z.object({
   gRecaptchaToken: z.string(),

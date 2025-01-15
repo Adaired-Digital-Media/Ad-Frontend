@@ -166,7 +166,8 @@ const Item = ({
         <Link
           className={cn(
             'relative flex h-20 items-center gap-1 px-2 font-nunito text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-[0%] after:bg-[#aaa] after:transition-all after:duration-300 after:content-[""] hover:after:w-[100%]',
-            activeIndex === index && isLandingPage ? '' : ''
+            activeIndex === index && isLandingPage ? '' : '',
+            isLandingPage ? 'text-[17px] font-medium font-poppins' : ''
           )}
           href={navitems.href || ''}
           onClick={() => handleSetActive(index)}

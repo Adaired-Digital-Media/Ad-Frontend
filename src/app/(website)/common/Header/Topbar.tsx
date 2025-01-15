@@ -12,8 +12,9 @@ type Props = {
   pathname: string;
 };
 
-const Topbar = ({ className, session, pathname }: Props) => { 
-  const WrapperComponent = pathname.startsWith('/expert-content-solutions')
+const Topbar = ({ className, session, pathname }: Props) => {
+  const isLandingPage = pathname.startsWith('/expert-content-solutions');
+  const WrapperComponent = isLandingPage
     ? SmallWidthContainer
     : MaxWidthWrapper;
   return (
@@ -34,7 +35,14 @@ const Topbar = ({ className, session, pathname }: Props) => {
               width={20}
               height={20}
             />
-            <p className={cn(`text-xs sm:text-base`)}>+1 (205) 273-6006</p>
+            <p
+              className={cn(
+                `text-xs sm:text-base`,
+                isLandingPage ? 'sm:text-sm' : ''
+              )}
+            >
+              +1 (205) 273-6006
+            </p>
           </Link>
         </div>
         <Separator
@@ -52,7 +60,14 @@ const Topbar = ({ className, session, pathname }: Props) => {
               width={20}
               height={20}
             />
-            <p className={cn(`text-xs sm:text-base`)}>+91 89074-00008</p>
+            <p
+              className={cn(
+                `text-xs sm:text-base`,
+                isLandingPage ? 'sm:text-sm' : ''
+              )}
+            >
+              +91 89074-00008
+            </p>
           </Link>
         </div>
 
