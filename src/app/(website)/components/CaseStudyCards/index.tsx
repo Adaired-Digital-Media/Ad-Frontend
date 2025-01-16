@@ -37,7 +37,6 @@ function CaseStudyCards({ categories, caseStudies }: CaseStudyCardsProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [filteredCaseStudies, setFilteredCaseStudies] =
     useState<CaseStudy[]>(caseStudies);
-  console.log(selectedCategory);
 
   useEffect(() => {
     if (selectedCategory === 'all') {
