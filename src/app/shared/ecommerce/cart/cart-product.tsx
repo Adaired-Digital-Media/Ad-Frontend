@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { CartItem, Product } from '@/types';
 import Link from 'next/link';
 import { Title } from 'rizzui';
-import { toCurrency } from '../../../../@core/utils/to-currency';
+import { toCurrency } from '@core/utils/to-currency';
 import QuantityInput from './quantity-input';
 import RemoveItem from './remove-item';
 import { routes } from '@/config/routes';

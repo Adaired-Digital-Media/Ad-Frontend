@@ -26,6 +26,9 @@ type FormValues = {
 export default function CartPageWrapper() {
   const pathname = usePathname();
   const { cartItems } = useCart();
+
+  console.log('CartItems: ', cartItems);
+
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [areProductsLoaded, setAreProductsLoaded] = useState(false);
