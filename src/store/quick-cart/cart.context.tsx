@@ -96,7 +96,6 @@ export function CartProvider({
   const removeItemFromCart = (productEntryId: string) => {
     dispatch({ type: 'REMOVE_ITEM', productEntryId });
     setDeletingItem(productEntryId);
-    console.log(productEntryId);
   };
 
   // ******************** Debounce Functions ************************
@@ -145,7 +144,6 @@ export function CartProvider({
 
   const sendCartWithBackend = useCallback(
     debounce(async (items: Item[]) => {
-      console.log('Backend Called');
       if (items.length === 0) return;
 
       setIsLoading(true);
@@ -186,8 +184,6 @@ export function CartProvider({
               response.statusText
             );
           }
-
-          console.log('Response -> ', response.data.data.products);
           return response.data.data.products;
         }
       } catch (error: any) {
@@ -231,7 +227,6 @@ export function CartProvider({
   const updateRealCart = useCallback(
     debounce(async (updatedItem: UpdateCartItem) => {
       try {
-        console.log("SESSION -> ", session)
         const response = await axios.patch(
           `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/update-cart?userId=${session?.user?._id}`,
           updatedItem,
@@ -242,7 +237,6 @@ export function CartProvider({
             },
           }
         );
-        console.log('Update cart response -> ', response);
       } catch (error) {
         console.error('Error syncing cart with backend:', error);
       }

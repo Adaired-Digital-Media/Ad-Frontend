@@ -27,8 +27,6 @@ export default function CartPageWrapper() {
   const pathname = usePathname();
   const { cartItems } = useCart();
 
-  console.log('CartItems: ', cartItems);
-
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [areProductsLoaded, setAreProductsLoaded] = useState(false);
@@ -249,7 +247,6 @@ function CheckCoupon() {
   const [reset, setReset] = useState({});
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
     setReset({ couponCode: '' });
   };
 

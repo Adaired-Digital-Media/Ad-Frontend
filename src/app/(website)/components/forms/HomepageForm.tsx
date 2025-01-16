@@ -88,7 +88,7 @@ const HomepageForm = () => {
       //   throw new Error('Failed to send data to Zoho CRM');
       // }
     }
-    console.log('Submitted data', data);
+    // console.log('Submitted data', data);
   };
 
   return (

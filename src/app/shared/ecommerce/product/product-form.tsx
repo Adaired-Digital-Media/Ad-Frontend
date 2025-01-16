@@ -555,14 +555,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   className="flex w-full justify-center bg-white"
                   svgInnerClassName="text-white"
                   svgClassName="bg-[#1B5A96]"
-                  type="button"
-                  onClick={(data) => {
-                    if (onSubmit(data)) {
-                      console.log('Payment Successful');
-                      alert('Payment Successful');
-                      router.push(routes?.eCommerce?.cart);
-                    }
-                  }}
+                  type="submit"
                 />
               </div>
             </div>
