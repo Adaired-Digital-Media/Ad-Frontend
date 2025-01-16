@@ -26,7 +26,7 @@ export default function ProfileSettingsLayout({
 }) {
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} isDashboard/>
       <ProfileSettingsNav />
       {children}
     </>
