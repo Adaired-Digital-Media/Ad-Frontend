@@ -102,13 +102,13 @@ export default {
           : `${baseUrl}${callbackUrl}`;
       }
 
-      if (parsedUrl.origin === baseUrl) {
-        // if (parsedUrl.pathname === '/expert-content-solutions/cart') {
-        //   return `${baseUrl}/expert-content-solutions/cart`;
-        // }
-        return `${baseUrl}/expert-content-solutions`;
-      }
-      return `${baseUrl}/dashboard`;
+      // if (parsedUrl.origin === baseUrl) {
+      //   // if (parsedUrl.pathname === '/expert-content-solutions/cart') {
+      //   //   return `${baseUrl}/expert-content-solutions/cart`;
+      //   // }
+      //   return `${baseUrl}/expert-content-solutions`;
+      // }
+      return `${baseUrl}/expert-content-solutions`;
     },
   },
   pages: {

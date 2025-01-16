@@ -339,7 +339,7 @@ export function CartProvider({
         );
 
         const updatedItemPayload = {
-          productEntryId: updatingItemId || updatedItem?._id || '',
+          productEntryId: updatingQuantityItemId || updatedItem?._id || '',
           productId: updatedItem?.productId || '',
           productName: updatedItem?.productName || undefined,
           productImage: updatedItem?.productImage || undefined,
@@ -373,7 +373,7 @@ export function CartProvider({
     if (updatingItemId) {
       try {
         const updatedItem = state.cartItems.find(
-          (item) => item._id === updatingQuantityItemId
+          (item) => item._id === updatingItemId
         );
 
         const updatedItemPayload = {

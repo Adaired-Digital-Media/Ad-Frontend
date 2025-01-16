@@ -292,7 +292,7 @@ export const routes = {
       `/expert-content-solutions/categories/${id}/edit`,
     orders: '/expert-content-solutions/orders',
     createOrder: '/expert-content-solutions/orders/create',
-    orderDetails: (id: string) => `/expert-content-solutions/orders/${id}`,
+    orderDetails: (id: string) => `/dashboard/orders/${id}`,
     editOrder: (id: string) => `/expert-content-solutions/orders/${id}/edit`,
     reviews: '/expert-content-solutions/reviews',
     checkout: '/expert-content-solutions/checkout',

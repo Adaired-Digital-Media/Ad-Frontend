@@ -1,4 +1,4 @@
-import {cn} from '@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { Badge, Flex, Text } from 'rizzui';
 import { replaceUnderscoreDash } from '@core/utils/replace-underscore-dash';
 
@@ -12,11 +12,7 @@ const statusColors = {
 const allStatus = {
   online: statusColors.success,
   offline: statusColors.default,
-  pending: statusColors.warning,
-  paid: statusColors.success,
   overdue: statusColors.danger,
-  completed: statusColors.success,
-  cancelled: statusColors.danger,
   publish: statusColors.success,
   approved: statusColors.success,
   rejected: statusColors.danger,
@@ -26,7 +22,19 @@ const allStatus = {
   at_risk: statusColors.danger,
   delayed: statusColors.default,
   draft: statusColors.default,
-  refunded: statusColors.default,
+
+  // Orders Status
+  pending: statusColors.warning,
+  processing: statusColors.warning,
+  confirmed: statusColors.warning,
+  completed: statusColors.success,
+  cancelled: statusColors.danger,
+
+  // Order Payment Status
+  unpaid: statusColors.warning,
+  paid: statusColors.success,
+  refunded: statusColors.danger,
+  failed: statusColors.danger,
 };
 
 export type StatusTypes = keyof typeof allStatus;
