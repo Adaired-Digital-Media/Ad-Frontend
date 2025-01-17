@@ -81,7 +81,7 @@ const Navbar = () => {
                 <div className="flex h-16 items-center lg:h-20">
                   <div>
                     <Link
-                      href="/"
+                      href={!isLandingPage ? '/' : `/${pathname.split('/')[1]}`}
                       className="sm:w-10/0 flex w-28 items-center md:w-36 lg:w-10/12 xl:w-full"
                     >
                       {/* <div className="relative h-[60px] w-[150px] md:h-[72px] lg:h-[80px] xl:h-[78px] aspect-auto"> */}
@@ -89,7 +89,6 @@ const Navbar = () => {
                         <CldImage
                           src="Static Website Images/adaired_logo.png"
                           alt="Brand Logo"
-                          // fill
                           height={78}
                           width={150}
                           priority

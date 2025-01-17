@@ -80,7 +80,7 @@ const HeroSection = () => {
             >
               {HeroSectionDetails.title}
             </h1>
-            <p className={cn(`pt-[15px] text-base`)}>
+            <p className={cn(`pt-[15px] text-base font-nunito`)}>
               {HeroSectionDetails.description}
             </p>
             <div
@@ -91,7 +91,7 @@ const HeroSection = () => {
               <Link href={HeroSectionDetails.buttonLink || ''}>
                 <Button
                   className={cn(
-                    `rounded-full bg-[#424242] px-6 py-6 font-poppins text-lg font-medium text-white`
+                    `rounded-full bg-[#424242] p-6 font-poppins text-lg font-medium text-white`
                   )}
                 >
                   {HeroSectionDetails.buttonText}
@@ -175,7 +175,7 @@ const StandOutSection = () => {
           >
             {StandOutSectionDetails.title}
           </h2>
-          <div className={cn(`space-y-[13px] text-base text-[#424242]`)}>
+          <div className={cn(`space-y-[13px] text-base text-[#424242] font-nunito`)}>
             {parse(StandOutSectionDetails.description)}
           </div>
           <div className="flex flex-col space-y-[18px]">
@@ -290,7 +290,7 @@ const ApproachSection = () => {
         >
           {ApproachSectionDetails.title}
         </h2>
-        <p className={cn(`pt-[10px] text-base text-[#424242]`)}>
+        <p className={cn(`pt-[10px] text-base text-[#424242] font-nunito `)}>
           {ApproachSectionDetails.description}
         </p>
       </>
@@ -307,7 +307,7 @@ const ApproachSection = () => {
               description={iconBox.description}
               containerClassName={`shadow-3xl p-[25px] flex gap-[15px] items-start justify-between rounded-[15px]`}
               titleClassName={`font-poppins text-[#121212] text-xl font-semibold leading-7 tracking-tight`}
-              descriptionClassName={`text-base leading-[27px] text-[#424242] `}
+              descriptionClassName={`text-base leading-[27px] text-[#424242] font-nunito`}
               iconContainerClassName={`flex-none h-[60px] w-[60px]`}
               iconClassName={`h-[60px] w-[60px]`}
             />
@@ -356,7 +356,7 @@ const SurferSEOSection = () => {
                 description={iconBox.description}
                 containerClassName="flex gap-2.5 items-start"
                 titleClassName="font-poppins leading-7 tracking-tight text-xl font-semibold"
-                descriptionClassName="leading-[27px] text-[#424242] pt-2 text-base"
+                descriptionClassName="leading-[27px] text-[#424242] pt-2 text-base font-nunito"
                 iconClassName="h-[22px] w-[22px] rotate-[270deg] mt-1"
               />
             ))}
@@ -415,7 +415,7 @@ const ContactUsSection = () => {
               />
               <p
                 className={cn(
-                  `m-auto max-w-[430px] pb-[20px] text-base text-[#424242]`
+                  `m-auto max-w-[430px] pb-[20px] text-base text-[#424242] font-nunito`
                 )}
               >
                 Ready to Elevate Your Content? Let’s amplify your brand and

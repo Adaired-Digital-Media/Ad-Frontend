@@ -84,7 +84,7 @@ export const EcomPageForm = () => {
     <div className={cn(`w-full`)}>
       <form
         action=""
-        className={cn(`space-y-5`)}
+        className={cn(`space-y-7`)}
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
@@ -143,7 +143,7 @@ export const EcomPageForm = () => {
         <div className="pt-4">
           <Button
             type="submit"
-            className="w-full rounded-full bg-[#F39019] font-poppins text-lg text-white"
+            className="w-full rounded-full bg-[#F39019] font-poppins text-lg text-white px-6 py-6"
           >
             Request A Quote
           </Button>

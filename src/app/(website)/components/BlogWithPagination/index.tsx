@@ -15,18 +15,7 @@ import {
 import { Separator } from '@core/ui/shadcn-ui/separator';
 import parse from 'html-react-parser';
 import Link from 'next/link';
-
-// import {
-//   Pagination,
-//   PaginationContent,
-//   PaginationEllipsis,
-//   PaginationItem,
-//   PaginationLink,
-//   PaginationNext,
-//   PaginationPrevious,
-// } from "@/components/ui/pagination";
-
-import Pagination from '@/@core/ui/rizzui-ui/pagination';
+import Pagination from '@core/ui/rizzui-ui/pagination';
 
 interface IProps {
   data: any;
@@ -34,6 +23,8 @@ interface IProps {
 
 const BlogWPagination: FC<IProps> = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  console.log('Data ->', data);
   const [blogsPerPage] = useState(6);
 
   // Filter and sort the blogs by date
@@ -51,10 +42,9 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = sortedBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(data.length / blogsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const totalPages = Math.ceil(sortedBlogs.length / blogsPerPage);
+
+  console.log('Total pages: ', totalPages);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -69,7 +59,10 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
         {currentBlogs.map((blog: any) => {
           return (
             <>
-              <figure className="mb-10 hidden rounded-lg border p-10 first:mt-10 xl:flex" key={blog.postTitle}>
+              <figure
+                className="mb-10 hidden rounded-lg border p-10 first:mt-10 xl:flex"
+                key={blog.postTitle}
+              >
                 <div className="w-[45%] shrink-0">
                   <Link href={`/blog/${blog.slug}`}>
                     <Image
@@ -155,36 +148,17 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
           );
         })}
       </div>
-
-      {/* <Pagination>
-        <PaginationContent>
-          <PaginationItem className="cursor-pointer">
-            <PaginationPrevious
-              onClick={() =>
-                currentPage > 1 && setCurrentPage((prev) => prev - 1)
-              }
-            />
-          </PaginationItem>
-          {pageNumbers.map((number) => (
-            <PaginationItem key={number} className="cursor-pointer">
-              <PaginationLink
-                onClick={() => paginate(number)}
-                isActive={currentPage === number}
-              >
-                {number}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationItem className="cursor-pointer">
-            <PaginationNext
-              onClick={() =>
-                currentPage < pageNumbers.length &&
-                setCurrentPage((prev) => prev + 1)
-              }
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination> */}
+ 
+      <div className={cn(`flex items-center justify-center`)}>
+        <Pagination
+          total={sortedBlogs.length + 1}
+          defaultCurrent={currentPage}
+          onChange={paginate}
+          pageSize={blogsPerPage}
+          nextIcon="Next"
+          prevIcon="Previous"
+        />
+      </div>
     </>
   );
 };
