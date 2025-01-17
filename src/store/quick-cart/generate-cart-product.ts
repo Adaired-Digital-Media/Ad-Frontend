@@ -11,14 +11,15 @@ export function generateCartProduct({
   price: number;
 }) {
   return {
+    _id: product._id || '',
     productId: product._id,
     productName: product.name,
     category: product.subCategory[0].name,
     productSlug: product.slug,
     productImage: product.featuredImage,
-    wordCount: parseInt(data.wordCount || '100'),
-    quantity: parseInt(data.quantity || '1'),
-    additionalInfo: data.additionalInfo || '',
+    wordCount: parseInt(data.wordCount),
+    quantity: parseInt(data.quantity),
+    additionalInfo: data.additionalInfo,
     name: data.name || '',
     email: data.email || '',
     phone: data.phone || '',
