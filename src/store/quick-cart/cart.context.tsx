@@ -143,9 +143,8 @@ export function CartProvider({
   }, []);
 
   const sendCartWithBackend = useCallback(
-    debounce(async (items: Item[]) => {
+    async (items: Item[]) => {
       if (items.length === 0) return;
-
       setIsLoading(true);
       try {
         if (session?.user?.accessToken) {
@@ -173,18 +172,13 @@ export function CartProvider({
             {
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${session.user.accessToken}`,
+                Authorization: `Bearer ${session?.user?.accessToken}`,
               },
             }
           );
 
-          if (response.status !== 200) {
-            console.error(
-              'Failed to sync cart with backend:',
-              response.statusText
-            );
-          }
-          return response.data.data.products;
+          console.log('Response Products: ', response);
+          return response.data.cart.products;
         }
       } catch (error: any) {
         toast.error(error.response.data.message);
@@ -192,18 +186,12 @@ export function CartProvider({
       } finally {
         setIsLoading(false);
       }
-    }, 100),
+    },
     [session]
   );
 
-  useEffect(() => {
-    return () => {
-      sendCartWithBackend.cancel();
-    };
-  }, [sendCartWithBackend]);
-
   const updateJunkCart = useCallback(
-    debounce(async (updatedItem: UpdateCartItem) => {
+    async (updatedItem: UpdateCartItem) => {
       try {
         const response = await axios.patch(
           `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/junk-cart/leads/update-cart?userId=${tempUserId}`,
@@ -214,18 +202,16 @@ export function CartProvider({
             },
           }
         );
-        if (response.status === 200) {
-          saveCart(JSON.stringify(state));
-        }
+        console.log(response.data);
       } catch (error) {
         console.error('Error syncing cart with backend:', error);
       }
-    }, 200),
+    },
     []
   );
 
   const updateRealCart = useCallback(
-    debounce(async (updatedItem: UpdateCartItem) => {
+    async (updatedItem: UpdateCartItem) => {
       try {
         const response = await axios.patch(
           `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/update-cart?userId=${session?.user?._id}`,
@@ -240,7 +226,7 @@ export function CartProvider({
       } catch (error) {
         console.error('Error syncing cart with backend:', error);
       }
-    }, 200),
+    },
     [session]
   );
 
@@ -279,6 +265,25 @@ export function CartProvider({
     }
   };
 
+  const deleteJunkCart = async (tempUserId: string) => {
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/junk-cart/leads/delete-cart?userId=${tempUserId}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error clearing junk cart:', error.message);
+      }
+    }
+  };
+
   // ******************** Function Calls ****************************
 
   // Fetches User's cart when user logs in
@@ -298,8 +303,6 @@ export function CartProvider({
       if (response.status === 200) {
         const { data } = response.data;
         dispatch({ type: 'INITIALIZE_CART', payload: data.products || [] });
-      } else if (response.status === 404) {
-        console.log("User's cart does not exist yet.");
       }
     } catch (error: any) {
       console.error('Failed to fetch user cart:', error.response.data.message);
@@ -326,23 +329,26 @@ export function CartProvider({
         }
         saveCart(JSON.stringify(state));
       } else {
-        localStorage.removeItem('tempUserId');
         const savedCartFromStorage = JSON.parse(savedCart || '{}');
         const hasSavedItems = savedCartFromStorage?.cartItems?.length > 0;
         const hasPendingItems = pendingItems.length > 0;
 
         if (hasSavedItems) {
+          const delelteJunkCart = await deleteJunkCart(tempUserId || '');
+          localStorage.removeItem('tempUserId');
           const products = await sendCartWithBackend(
             savedCartFromStorage?.cartItems
           );
           if (products) {
             dispatch({ type: 'INITIALIZE_CART', payload: products });
+            console.log('Cart Re - Initialized 1');
           }
           saveCart(JSON.stringify(initialState));
         } else if (hasPendingItems) {
           const products = await sendCartWithBackend(pendingItems);
           if (products) {
             dispatch({ type: 'INITIALIZE_CART', payload: products });
+            console.log('Cart Re - Initialized 2');
           }
           setPendingItems([]);
         }
@@ -350,7 +356,14 @@ export function CartProvider({
     };
 
     initializeCart();
-  }, [session, pendingItems, sendCartInJunkCarts, sendCartWithBackend]);
+  }, [
+    session,
+    saveCart,
+    pendingItems,
+    sendCartInJunkCarts,
+    sendCartWithBackend,
+    fetchUserCart,
+  ]);
 
   // Update quantity of product
   useEffect(() => {
@@ -368,12 +381,11 @@ export function CartProvider({
 
         if (session) {
           updateRealCart(updatedItemPayload);
-          setUpdatingQuantityItemId('');
         } else {
           if (tempUserId) {
             updateJunkCart(updatedItemPayload);
-            setUpdatingQuantityItemId('');
           }
+          saveCart(JSON.stringify(state));
         }
       } catch (error) {
         console.error('Something went wrong while updating cart -> ', error);
@@ -407,12 +419,11 @@ export function CartProvider({
 
         if (session) {
           updateRealCart(updatedItemPayload);
-          setUpdatingItemId('');
         } else {
           if (tempUserId) {
             updateJunkCart(updatedItemPayload);
-            setUpdatingItemId('');
           }
+          saveCart(JSON.stringify(state));
         }
       } catch (error) {
         console.error('Something went wrong while updating cart -> ', error);
@@ -430,10 +441,9 @@ export function CartProvider({
 
         if (!session) {
           removeItemFromJunkCart(updatedItem?._id || deletingItemId);
-          setDeletingItem('');
+          saveCart(JSON.stringify(state));
         } else {
           removeItemFromRealCart(updatedItem?._id || deletingItemId);
-          setDeletingItem('');
         }
       } catch (error) {
         console.error(

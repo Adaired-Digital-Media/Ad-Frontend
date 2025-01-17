@@ -11,6 +11,7 @@ interface QuantityInputProps {
 }
 
 const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
+  console.log('Product EntryID: ', product?._id);
   const { updateCartItemQuantity, removeItemFromCart } = useCart();
   const isFreeProduct = product.productSlug.includes('free');
 
@@ -23,9 +24,9 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
         className="h-auto px-1 py-[5px]"
         onClick={() => {
           if (product.quantity === 1) {
-            removeItemFromCart(product._id as string);
+            removeItemFromCart(product?._id as string);
           } else {
-            updateCartItemQuantity(product._id || '', 'DECREMENT');
+            updateCartItemQuantity(product?._id, 'DECREMENT');
           }
         }}
         disabled={isFreeProduct}
@@ -35,7 +36,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
       <input
         type="number"
         className="h-full w-12 border-none text-center outline-none focus:ring-0 dark:bg-gray-50 sm:w-20"
-        value={product.quantity}
+        value={product?.quantity}
         readOnly
         disabled={isFreeProduct}
       />
@@ -44,7 +45,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
         size="sm"
         variant="flat"
         className="h-auto px-1 py-1.5"
-        onClick={() => updateCartItemQuantity(product._id || '', 'INCREMENT')}
+        onClick={() => updateCartItemQuantity(product?._id, 'INCREMENT')}
         disabled={isFreeProduct}
       >
         <PiPlusBold className="h-3.5 w-3.5" />
