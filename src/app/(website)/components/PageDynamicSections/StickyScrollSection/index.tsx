@@ -72,7 +72,7 @@ const StickyScroll = ({ colorScheme, data }: StickyScrollProps) => {
             >
               {data.title}
             </h2>
-            <div>{parse(data.description)}</div>
+            <div className='font-nunito text-lg'>{parse(data.description)}</div>
           </div>
 
           <div className={cn(`div relative flex items-start px-4`)}>

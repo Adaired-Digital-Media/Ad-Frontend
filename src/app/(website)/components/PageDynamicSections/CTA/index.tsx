@@ -68,9 +68,9 @@ const CTA = ({ colorScheme, title }: CTAProps) => {
             />
           </svg>
           <div>
-            <span className="block text-sm">For More Information</span>
+            <span className="block text-sm font-nunito">For More Information</span>
             <span
-              className="block text-lg lg:text-xl xl:text-[26px] font-bold"
+              className="block text-lg lg:text-xl xl:text-[26px] font-bold font-nunito"
               style={{
                 color: colorScheme,
               }}

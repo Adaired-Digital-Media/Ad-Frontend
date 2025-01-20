@@ -18,6 +18,7 @@ export type CartItem = {
   phone?: string;
   pricePerUnit: number;
   totalPrice: number;
+  isFreeProduct?: boolean;
 };
 
 export type UpdateCartItem = {
@@ -34,6 +35,7 @@ export type UpdateCartItem = {
   phone?: string;
   pricePerUnit?: number;
   totalPrice?: number;
+  isFreeProduct?: boolean;
 };
 
 export type Product = {

@@ -1,24 +1,23 @@
 import { CartItem as Item } from '@/types';
-
 export function addItem(cartItems: Item[], item: Item) {
-  const isFreeProduct = item.productId;
+  const isFreeProduct = item.isFreeProduct;
+  console.log(isFreeProduct)
 
-  // Check if the item's slug includes "free"
-  if (item.productSlug.includes('free')) {
-    // Check if there's already an item with the same slug in the cart
-    const isFreeItemAlreadyInCart = cartItems.some(
-      (cartItem) => cartItem.productSlug === item.productSlug
-    );
+  // If the item is a free product, check if it already exists in the cart
+  if (isFreeProduct) {
+    const freeProductExists = cartItems.some((cartItem) => {
+      return cartItem.isFreeProduct;
+    });
 
-    if (isFreeItemAlreadyInCart) {
-      // If the free item already exists, return the cart as-is
+    if (freeProductExists) {
       return cartItems;
     }
   }
-
-  // Add the item to the cart and return the updated cart
+  // Otherwise, add the item to the cart and return the updated cart
   return [...cartItems, item];
 }
+
+
 
 export function updateQuantity(
   cartItems: Item[],

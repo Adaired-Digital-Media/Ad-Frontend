@@ -34,7 +34,7 @@ const FaqSection: React.FC<FaqSectionProps> = ({ faqs }) => {
           >
             <Accordion.Header>
               {({ open }) => (
-                <div className="flex w-full cursor-pointer items-center justify-between py-5 text-xl font-semibold">
+                <div className="flex w-full cursor-pointer items-center justify-between py-5 text-xl font-semibold font-nunito">
                   {faq.question}
                   <BsChevronDown
                     className={cn(
@@ -45,7 +45,7 @@ const FaqSection: React.FC<FaqSectionProps> = ({ faqs }) => {
                 </div>
               )}
             </Accordion.Header>
-              <Accordion.Body className="mb-7">{parse(faq.answer)}</Accordion.Body>
+              <Accordion.Body className="mb-7 font-nunito text-base">{parse(faq.answer)}</Accordion.Body>
           </Accordion>
         );
       })}

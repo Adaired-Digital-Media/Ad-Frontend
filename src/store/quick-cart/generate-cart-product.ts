@@ -26,5 +26,6 @@ export function generateCartProduct({
     pricePerUnit: product.pricePerUnit,
     totalPrice: price,
     orderType: data.orderType || 'OneTime',
+    isFreeProduct: product.isFreeProduct,
   };
 }

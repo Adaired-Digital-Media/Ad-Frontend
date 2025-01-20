@@ -2,6 +2,8 @@ import CartDrawer from '@/app/shared/ecommerce/cart/cart-drawer';
 import { CartProvider } from '@/store/quick-cart/cart.context';
 import { SessionProvider } from 'next-auth/react';
 import type { Metadata } from 'next';
+import WhatsappFloatingIcon from '@core/components/floating-social-icons/whatsapp';
+import SkypeFloatingIcon from '@core/components/floating-social-icons/skype';
 
 export const metadata: Metadata = {
   robots: {
@@ -17,6 +19,8 @@ export default function Ecommercelayout({
   return (
     <SessionProvider>
       <CartProvider>
+        <SkypeFloatingIcon className="bottom-24" />
+        <WhatsappFloatingIcon />
         {children}
         <CartDrawer />
       </CartProvider>
