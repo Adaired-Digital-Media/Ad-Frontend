@@ -55,10 +55,7 @@ function CartProduct({ product }: { product: CartItem }) {
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
           <QuantityInput product={product} />
           <div className="flex items-center gap-4">
-            <RemoveItem
-              productID={product?._id || product?.productId}
-              placement="bottom-end"
-            />
+            <RemoveItem productID={product?._id} placement="bottom-end" />
           </div>
         </div>
       </div>

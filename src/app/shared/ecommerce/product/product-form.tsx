@@ -118,7 +118,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   session,
 }) => {
   const router = useRouter();
-  const { addItemToCart } = useCart();
+  const { cartItems, addItemToCart } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   // Generate schema based on form fields
@@ -183,7 +183,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     });
 
     addItemToCart(cartItem);
-    toast.success('Product added to cart successfully');
     reset();
   };
 

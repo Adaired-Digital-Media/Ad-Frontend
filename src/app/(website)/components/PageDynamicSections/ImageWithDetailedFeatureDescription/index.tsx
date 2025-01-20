@@ -97,7 +97,7 @@ const ImageWithDetailedFeatureDescription = ({
         >
           {data.title}
         </h2>
-        <div className="space-y-4">{parse(data.description, options)}</div>
+        <div className="space-y-4 font-nunito text-lg">{parse(data.description, options)}</div>
         <div>
           <Button
             title={data.buttonInnerText}

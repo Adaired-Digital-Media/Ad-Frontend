@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { hexToHexWithOpacity } from "@core/utils/hexToHexWithOpacity";
 import parse from "html-react-parser";
+import CldImage from "../../CloudinaryImageComponent";
 
 type TwoColumnFeatureSectionProps = {
   colorScheme: string;
@@ -23,7 +24,7 @@ const TwoColumnFeatureSection: React.FC<TwoColumnFeatureSectionProps> = ({
       >
         {body.title}
       </h2>
-      <div className="text-justify hyphens-auto text-base sm:hyphens-none sm:text-left sm:text-lg space-y-3">
+      <div className="text-justify hyphens-auto text-base sm:hyphens-none sm:text-left sm:text-lg space-y-3 font-nunito">
         {parse(body.description_1)}
       </div>
       <div
@@ -47,7 +48,7 @@ const TwoColumnFeatureSection: React.FC<TwoColumnFeatureSectionProps> = ({
       <div className="text-justify hyphens-auto text-base sm:hyphens-none sm:text-left sm:text-lg space-y-3">
         {parse(body.description_2)}
       </div>
-      <Image src={body.imgUrl} alt="alt" width={965} height={477} />
+      <CldImage src={body.imgUrl} alt="alt" width={965} height={477}  />
     </div>
   );
 };
@@ -122,7 +123,7 @@ const FeatureCard = ({
             }}
           ></div>
         </div>
-        <p className="text-gray-600">{description}</p>
+        <p className="text-gray-600 font-nunito text-base">{description}</p>
       </div>
     </div>
   );

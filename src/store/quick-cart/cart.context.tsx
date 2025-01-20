@@ -98,7 +98,7 @@ export function CartProvider({
     setDeletingItem(productEntryId);
   };
 
-  // ******************** Debounce Functions ************************
+  // ******************** Functions ************************
 
   const sendCartInJunkCarts = useCallback(async (items: Item[]) => {
     if (items.length === 0) return;
@@ -119,6 +119,7 @@ export function CartProvider({
           phone: item?.phone,
           pricePerUnit: item?.pricePerUnit,
           totalPrice: item?.totalPrice,
+          isFreeProduct: item?.isFreeProduct,
         })),
       };
 
@@ -135,9 +136,11 @@ export function CartProvider({
         if (tempUserId) {
           localStorage.setItem('tempUserId', tempUserId);
         }
+        toast.success(response.data.message);
       }
       return response.data.data.products;
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       console.error('Error syncing cart with backend:', error);
     }
   }, []);
@@ -163,6 +166,7 @@ export function CartProvider({
               phone: item?.phone,
               pricePerUnit: item?.pricePerUnit,
               totalPrice: item?.totalPrice,
+              isFreeProduct: item?.isFreeProduct,
             })),
           };
 
@@ -177,7 +181,9 @@ export function CartProvider({
             }
           );
 
-          console.log('Response Products: ', response);
+          if (response.status === 200) {
+            toast.success(response.data.message);
+          }
           return response.data.cart.products;
         }
       } catch (error: any) {
@@ -187,28 +193,25 @@ export function CartProvider({
         setIsLoading(false);
       }
     },
-    [session]
+    [session?.user?.accessToken]
   );
 
-  const updateJunkCart = useCallback(
-    async (updatedItem: UpdateCartItem) => {
-      try {
-        const response = await axios.patch(
-          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/junk-cart/leads/update-cart?userId=${tempUserId}`,
-          updatedItem,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error syncing cart with backend:', error);
-      }
-    },
-    []
-  );
+  const updateJunkCart = useCallback(async (updatedItem: UpdateCartItem) => {
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/junk-cart/leads/update-cart?userId=${tempUserId}`,
+        updatedItem,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error syncing cart with backend:', error);
+    }
+  }, []);
 
   const updateRealCart = useCallback(
     async (updatedItem: UpdateCartItem) => {
@@ -322,33 +325,33 @@ export function CartProvider({
       if (!session) {
         if (pendingItems.length > 0) {
           const products = await sendCartInJunkCarts(pendingItems);
-          if (products) {
+          if (products && products.length > 0) {
             dispatch({ type: 'INITIALIZE_CART', payload: products });
           }
           setPendingItems([]);
+          saveCart(JSON.stringify(state));
         }
-        saveCart(JSON.stringify(state));
       } else {
         const savedCartFromStorage = JSON.parse(savedCart || '{}');
         const hasSavedItems = savedCartFromStorage?.cartItems?.length > 0;
         const hasPendingItems = pendingItems.length > 0;
 
         if (hasSavedItems) {
-          const delelteJunkCart = await deleteJunkCart(tempUserId || '');
+          const clearJunkCart = await deleteJunkCart(tempUserId || '');
           localStorage.removeItem('tempUserId');
           const products = await sendCartWithBackend(
             savedCartFromStorage?.cartItems
           );
           if (products) {
             dispatch({ type: 'INITIALIZE_CART', payload: products });
-            console.log('Cart Re - Initialized 1');
+            console.log('Cart Re-Initialized From Storage ');
           }
           saveCart(JSON.stringify(initialState));
         } else if (hasPendingItems) {
           const products = await sendCartWithBackend(pendingItems);
           if (products) {
             dispatch({ type: 'INITIALIZE_CART', payload: products });
-            console.log('Cart Re - Initialized 2');
+            console.log('Cart Re-Initialized From Pending Items ');
           }
           setPendingItems([]);
         }

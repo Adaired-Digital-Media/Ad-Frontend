@@ -208,9 +208,19 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
             transform: 'rotate(360deg)',
           },
         },
+        whatsappFloatingPulse: {
+          '0%': { boxShadow: '0 0 0 0 rgba(37, 211, 101, 0.75)' },
+          '100%': { boxShadow: '0 0 0 5px rgba(37, 211, 101, 0)' },
+        },
+        skypeFloatingPulse: {
+          '0%': { boxShadow: '0 0 0 0 rgba(0, 175, 240, 0.75)' },
+          '100%': { boxShadow: '0 0 0 5px rgba(37, 211, 101, 0)' },
+        },
       },
 
       animation: {
+        whatsappFloatingPulse: 'whatsappFloatingPulse 1s infinite',
+        skypeFloatingPulse: 'skypeFloatingPulse 1s infinite',
         marquee: 'marquee var(--duration) linear infinite',
         'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
         scroll:
