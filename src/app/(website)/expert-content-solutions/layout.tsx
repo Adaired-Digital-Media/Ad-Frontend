@@ -19,8 +19,8 @@ export default function Ecommercelayout({
   return (
     <SessionProvider>
       <CartProvider>
-        <SkypeFloatingIcon className="bottom-24" />
-        <WhatsappFloatingIcon />
+        <SkypeFloatingIcon className="bottom-24" skypeID='skype:live:.cid.9031b99e1f2fd630'/>
+        <WhatsappFloatingIcon phoneNumber='8907400008'/>
         {children}
         <CartDrawer />
       </CartProvider>

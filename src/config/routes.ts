@@ -3,6 +3,7 @@ export const routes = {
     signUp: '/auth/signup',
     signIn: '/auth/signin',
     resetPassword: '/auth/reset-password',
+    error: '/auth/error',
   },
   websiteNav: [
     {

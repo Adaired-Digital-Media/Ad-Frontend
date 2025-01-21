@@ -18,7 +18,6 @@ import { usePathname } from 'next/navigation';
 import PageHeader from '@/app/shared/page-header';
 import CartProduct from './cart-product';
 import { CartTemplateSkeleton } from '@/app/(website)/components/Skeletons/CartTemplateSkeleton';
-
 type FormValues = {
   couponCode: string;
 };
@@ -26,6 +25,7 @@ type FormValues = {
 export default function CartPageWrapper() {
   const pathname = usePathname();
   const { cartItems } = useCart();
+  const router = useRouter();
 
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
@@ -85,7 +85,8 @@ export default function CartPageWrapper() {
         }
       );
 
-      if (response.status !== 201) throw new Error('Failed to create order');
+      // if (response.status !== 201) throw new Error('Failed to create order');
+      if (response.data.redirectUrl) return router.push(response.data.redirectUrl);
 
       const order = response.data;
       const stripe = await stripePromise;
@@ -95,7 +96,6 @@ export default function CartPageWrapper() {
         });
       }
     } catch (error) {
-      alert('Failed to create order');
       console.error(error);
       setIsLoading(false);
     } finally {
@@ -195,9 +195,7 @@ function CartCalculations({
         {cartItems.map((item) => (
           <div key={item?._id} className="flex items-center justify-between">
             <Title as="h3" className="mb-1 text-base font-semibold">
-              <Link
-                href={routes.eCommerce.productFormEdit(item.productSlug)}
-              >
+              <Link href={routes.eCommerce.productFormEdit(item.productSlug)}>
                 {item?.productName}
               </Link>
             </Title>
