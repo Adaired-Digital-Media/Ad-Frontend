@@ -1,8 +1,6 @@
 import { CartItem as Item } from '@/types';
 export function addItem(cartItems: Item[], item: Item) {
   const isFreeProduct = item.isFreeProduct;
-  console.log(isFreeProduct)
-
   // If the item is a free product, check if it already exists in the cart
   if (isFreeProduct) {
     const freeProductExists = cartItems.some((cartItem) => {

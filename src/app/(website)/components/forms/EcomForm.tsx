@@ -2,13 +2,12 @@
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cn } from '../../../../@core/utils/class-names';
-import { Button, Input, Select, Textarea, type SelectOption } from 'rizzui';
+import { cn } from '@core/utils/class-names';
+import { Button, Input, Textarea } from 'rizzui';
 import { Controller, useForm } from 'react-hook-form';
-import { PhoneNumber } from '../../../../@core/ui/rizzui-ui/phone-input';
+import { PhoneNumber } from '@core/ui/rizzui-ui/phone-input';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import { usePathname } from 'next/navigation';
-import { FaCaretDown } from 'react-icons/fa';
 
 const schema = z.object({
   gRecaptchaToken: z.string(),
@@ -20,9 +19,6 @@ const schema = z.object({
     .min(1, { message: 'Email is required' })
     .email({ message: 'Invalid email' }),
   phone: z.string().min(5, { message: 'Phone number is required' }),
-  // services: z
-  //   .string()
-  //   .min(1, { message: 'Please select your interested service.' }),
   message: z.string().optional(),
 });
 
@@ -47,7 +43,6 @@ export const EcomPageForm = () => {
       name: '',
       email: '',
       phone: '',
-      // services: '',
       message: '',
     },
   });
@@ -73,12 +68,6 @@ export const EcomPageForm = () => {
       // }
     }
   };
-
-  const options = [
-    { label: 'Service 1', value: 'Service 1' },
-    { label: 'Service 2', value: 'Service 2' },
-    { label: 'Service 3', value: 'Service 3' },
-  ];
 
   return (
     <div className={cn(`w-full`)}>
@@ -118,32 +107,21 @@ export const EcomPageForm = () => {
           )}
         />
 
-        {/* <Controller
-          control={control}
-          name="services"
-          render={({ field: { value, onChange } }) => (
-            <Select
-              options={options}
-              value={value}
-              suffix={<FaCaretDown />}
-              onChange={(v: SelectOption) => onChange(v.value)}
-              error={errors?.services?.message}
-              placeholder="Select Services..."
-              className={cn(`rounded-lg border-0 bg-gray-100 !text-black`)}
-            />
-          )}
-        /> */}
         <Textarea
           placeholder="Message"
           variant="flat"
           {...register('message')}
           error={errors.message?.message}
+          style={{
+            resize: 'none',
+          }}
+
         />
 
         <div className="pt-4">
           <Button
             type="submit"
-            className="w-full rounded-full bg-[#F39019] font-poppins text-lg text-white px-6 py-6"
+            className="w-full rounded-full bg-[#F39019] px-6 py-6 font-poppins text-lg text-white"
           >
             Request A Quote
           </Button>

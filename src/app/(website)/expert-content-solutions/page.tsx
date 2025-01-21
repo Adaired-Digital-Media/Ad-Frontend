@@ -80,7 +80,7 @@ const HeroSection = () => {
             >
               {HeroSectionDetails.title}
             </h1>
-            <p className={cn(`pt-[15px] text-base font-nunito`)}>
+            <p className={cn(`pt-[15px] font-nunito text-base`)}>
               {HeroSectionDetails.description}
             </p>
             <div
@@ -135,6 +135,7 @@ const HeroSection = () => {
               height={630}
               quality={100}
               loading="eager"
+              priority
               className={cn(`object-contain`)}
               sizes="(min-width: 808px) 50vw, 100vw"
             />
@@ -175,7 +176,11 @@ const StandOutSection = () => {
           >
             {StandOutSectionDetails.title}
           </h2>
-          <div className={cn(`space-y-[13px] text-base text-[#424242] font-nunito`)}>
+          <div
+            className={cn(
+              `space-y-[13px] font-nunito text-base text-[#424242]`
+            )}
+          >
             {parse(StandOutSectionDetails.description)}
           </div>
           <div className="flex flex-col space-y-[18px]">
@@ -290,7 +295,7 @@ const ApproachSection = () => {
         >
           {ApproachSectionDetails.title}
         </h2>
-        <p className={cn(`pt-[10px] text-base text-[#424242] font-nunito `)}>
+        <p className={cn(`pt-[10px] font-nunito text-base text-[#424242]`)}>
           {ApproachSectionDetails.description}
         </p>
       </>
@@ -415,7 +420,7 @@ const ContactUsSection = () => {
               />
               <p
                 className={cn(
-                  `m-auto max-w-[430px] pb-[20px] text-base text-[#424242] font-nunito`
+                  `m-auto max-w-[430px] pb-[20px] font-nunito text-base text-[#424242]`
                 )}
               >
                 Ready to Elevate Your Content? Let’s amplify your brand and

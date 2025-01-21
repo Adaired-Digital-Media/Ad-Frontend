@@ -113,6 +113,6 @@ export default {
   },
   pages: {
     signIn: routes.auth.signIn,
-    error: routes.auth.signIn,
+    error: routes.auth.error,
   },
 } satisfies NextAuthConfig;

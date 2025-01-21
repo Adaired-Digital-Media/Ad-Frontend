@@ -8,6 +8,9 @@ import { Checkbox, Password, Button, Input, Text } from 'rizzui';
 import { Form } from '@core/ui/rizzui-ui/form';
 import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/validators/login.schema';
+import { usePathname } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const initialValues: LoginSchema = {
   email: '',
@@ -16,12 +19,16 @@ const initialValues: LoginSchema = {
 };
 
 export default function SignInForm() {
-  const onSubmit: SubmitHandler<LoginSchema> =  (data) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+  const code = searchParams.get('code');
+
+  const onSubmit: SubmitHandler<LoginSchema> = (data) => {
     signIn('credentials', {
       ...data,
     });
   };
-
 
   return (
     <>

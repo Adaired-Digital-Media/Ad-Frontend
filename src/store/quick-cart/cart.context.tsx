@@ -144,7 +144,7 @@ export function CartProvider({
       console.error('Error syncing cart with backend:', error);
     }
   }, []);
-
+  let count = 0;
   const sendCartWithBackend = useCallback(
     async (items: Item[]) => {
       if (items.length === 0) return;
@@ -180,11 +180,7 @@ export function CartProvider({
               },
             }
           );
-
-          if (response.status === 200) {
-            toast.success(response.data.message);
-          }
-          return response.data.cart.products;
+          return response;
         }
       } catch (error: any) {
         toast.error(error.response.data.message);
@@ -207,7 +203,6 @@ export function CartProvider({
           },
         }
       );
-      console.log(response.data);
     } catch (error) {
       console.error('Error syncing cart with backend:', error);
     }
@@ -337,21 +332,32 @@ export function CartProvider({
         const hasPendingItems = pendingItems.length > 0;
 
         if (hasSavedItems) {
+          count = count+1;
+          console.log("Entered -> ",count)
           const clearJunkCart = await deleteJunkCart(tempUserId || '');
           localStorage.removeItem('tempUserId');
-          const products = await sendCartWithBackend(
+          const response = await sendCartWithBackend(
             savedCartFromStorage?.cartItems
           );
-          if (products) {
-            dispatch({ type: 'INITIALIZE_CART', payload: products });
-            console.log('Cart Re-Initialized From Storage ');
+          if (response?.data.cart.products) {
+            dispatch({
+              type: 'INITIALIZE_CART',
+              payload: response?.data?.cart?.products,
+            });
+            console.log('Cart Re-Initialized From Storage');
           }
           saveCart(JSON.stringify(initialState));
         } else if (hasPendingItems) {
-          const products = await sendCartWithBackend(pendingItems);
-          if (products) {
-            dispatch({ type: 'INITIALIZE_CART', payload: products });
-            console.log('Cart Re-Initialized From Pending Items ');
+          const response = await sendCartWithBackend(pendingItems);
+          if (response?.data.cart.products) {
+            if (response.status === 200) {
+              toast.success(response.data.message);
+            }
+            dispatch({
+              type: 'INITIALIZE_CART',
+              payload: response?.data.cart.products,
+            });
+            console.log('Cart Re-Initialized From Pending Items');
           }
           setPendingItems([]);
         }

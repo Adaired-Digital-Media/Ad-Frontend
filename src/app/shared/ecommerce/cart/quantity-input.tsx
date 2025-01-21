@@ -94,7 +94,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
 
         // Reset the action after the update
         setAction(null);
-      }, 300);
+      }, 200);
     }
 
     return () => {

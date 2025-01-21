@@ -81,20 +81,20 @@ export const ordersColumns = (expanded: boolean = true) => {
       enableSorting: false,
       cell: ({ row }) => getStatusBadge(row.original.paymentStatus),
     }),
-    columnHelper.display({
-      id: 'action',
-      size: 30,
-      cell: ({
-        row,
-        table: {
-          options: { meta },
-        },
-      }) => (
-        <UserOrderTableActionGroup
-        viewUrl={routes.eCommerce.orderDetails(row.original.orderNumber)}
-        />
-      ),
-    }),
+    // columnHelper.display({
+    //   id: 'action',
+    //   size: 30,
+    //   cell: ({
+    //     row,
+    //     table: {
+    //       options: { meta },
+    //     },
+    //   }) => (
+    //     <UserOrderTableActionGroup
+    //     viewUrl={routes.eCommerce.orderDetails(row.original.orderNumber)}
+    //     />
+    //   ),
+    // }),
   ];
 
   return expanded ? [expandedOrdersColumns, ...columns] : columns;

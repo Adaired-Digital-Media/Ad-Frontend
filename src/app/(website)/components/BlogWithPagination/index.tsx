@@ -24,7 +24,6 @@ interface IProps {
 const BlogWPagination: FC<IProps> = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log('Data ->', data);
   const [blogsPerPage] = useState(6);
 
   // Filter and sort the blogs by date
@@ -43,8 +42,6 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
   const currentBlogs = sortedBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
   const totalPages = Math.ceil(sortedBlogs.length / blogsPerPage);
-
-  console.log('Total pages: ', totalPages);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -139,7 +136,6 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                 <CardFooter className="justify-between pt-6">
                   <p>{formatDate(blog.createdAt)}</p>
                   <p>
-                    {' '}
                     {calculateReadingTime(blog.postDescription) + ' min read '}
                   </p>
                 </CardFooter>
@@ -148,10 +144,10 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
           );
         })}
       </div>
- 
+
       <div className={cn(`flex items-center justify-center`)}>
         <Pagination
-          total={sortedBlogs.length + 1}
+          total={sortedBlogs.length}
           defaultCurrent={currentPage}
           onChange={paginate}
           pageSize={blogsPerPage}

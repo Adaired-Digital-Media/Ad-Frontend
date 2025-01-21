@@ -67,7 +67,6 @@ const ContactPageForm = () => {
       //   router.back();
       // }
     }
-    console.log('Submitted data', values);
   };
 
   return (
