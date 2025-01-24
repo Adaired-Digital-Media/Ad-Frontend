@@ -139,8 +139,20 @@ export default async function RootLayout({
           {gtagConfig}
         </Script>
 
-        {/* JSON-LD for Schema.org */}
-        <Script
+        {/* JSON-LD for Schema.org */}  
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schemaData.localBusiness),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schemaData.organization),
+          }}
+        />
+        {/* <Script
           type="application/ld+json"
           id="organization-schema"
           strategy="beforeInteractive"
@@ -153,7 +165,7 @@ export default async function RootLayout({
           strategy="beforeInteractive"
         >
           {JSON.stringify(schemaData.localBusiness)}
-        </Script>
+        </Script> */}
       </head>
       <body
         suppressHydrationWarning
