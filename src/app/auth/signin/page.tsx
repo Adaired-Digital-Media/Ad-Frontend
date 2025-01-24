@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import SignInForm from './sign-in-form';
 import AuthWrapperOne from '@/app/shared/auth-layout/auth-wrapper-one';
 import UnderlineShape from '../../../@core/components/shape/underline';
