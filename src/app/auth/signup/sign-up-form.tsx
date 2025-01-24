@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { PiArrowRightBold } from 'react-icons/pi';
 import { Password, Checkbox, Button, Input, Text } from 'rizzui';
-import { Form } from '../../../@core/ui/rizzui-ui/form';
+import { Form } from '@core/ui/rizzui-ui/form';
 import { routes } from '@/config/routes';
 import { SignUpSchema, signUpSchema } from '@/validators/signup.schema';
 import { PhoneNumber } from '@/@core/ui/rizzui-ui/phone-input';
