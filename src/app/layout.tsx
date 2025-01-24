@@ -124,7 +124,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" dir="ltr">
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
         <meta
           name="google-site-verification"
@@ -133,19 +133,13 @@ export default async function RootLayout({
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-5ZWYZ5BF47"
+          strategy="beforeInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="beforeInteractive">
           {gtagConfig}
         </Script>
 
         {/* JSON-LD for Schema.org */}
-        {/* <Script
-          type="application/ld+json"
-          id="local-schema"
-          strategy="beforeInteractive"
-        >
-          {JSON.stringify(schemaData.professionalService)}
-        </Script> */}
         <Script
           type="application/ld+json"
           id="organization-schema"
