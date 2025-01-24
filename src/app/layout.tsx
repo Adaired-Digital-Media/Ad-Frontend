@@ -4,18 +4,13 @@ import { inter, lexendDeca, nunito, dm, baby, poppins } from '@/app/fonts';
 import Script from 'next/script';
 import { siteConfig } from '@/config/site.config';
 import NextProgress from '@core/components/next-progress';
-const LazyReCaptchaProvider = dynamic(
-  () => import('next-recaptcha-v3').then((mod) => mod.ReCaptchaProvider),
-  { ssr: true }
-);
+import { ReCaptchaProvider } from 'next-recaptcha-v3';
+import GlobalDrawer from '@/app/shared/drawer-views/container';
+import GlobalModal from '@/app/shared/modal-views/container';
 
 // styles
 import '@/app/globals.css';
-import dynamic from 'next/dynamic';
-const GlobalDrawer = dynamic(
-  () => import('@/app/shared/drawer-views/container')
-);
-const GlobalModal = dynamic(() => import('@/app/shared/modal-views/container'));
+import Head from 'next/head';
 
 export const metadata = {
   title: siteConfig.title,
@@ -130,7 +125,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html lang="en" dir="ltr">
       <head>
         <meta
           name="google-site-verification"
@@ -145,13 +140,13 @@ export default async function RootLayout({
         </Script>
 
         {/* JSON-LD for Schema.org */}
-        <Script
+        {/* <Script
           type="application/ld+json"
           id="local-schema"
           strategy="beforeInteractive"
         >
           {JSON.stringify(schemaData.professionalService)}
-        </Script>
+        </Script> */}
         <Script
           type="application/ld+json"
           id="organization-schema"
@@ -179,15 +174,13 @@ export default async function RootLayout({
           `font-nunito antialiased`
         )}
       >
-        <LazyReCaptchaProvider
-          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
-        >
+        <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
           <NextProgress />
           {children}
           <Toaster />
           <GlobalDrawer />
           <GlobalModal />
-        </LazyReCaptchaProvider>
+        </ReCaptchaProvider>
       </body>
     </html>
   );
