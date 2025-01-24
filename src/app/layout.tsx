@@ -10,7 +10,6 @@ import GlobalModal from '@/app/shared/modal-views/container';
 
 // styles
 import '@/app/globals.css';
-import Head from 'next/head';
 
 export const metadata = {
   title: siteConfig.title,
