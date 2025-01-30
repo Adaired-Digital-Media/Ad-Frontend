@@ -26,41 +26,6 @@ const gtagConfig = `
 
 // Schema JSON-LD data
 const schemaData = {
-  professionalService: {
-    '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
-    name: 'AdAired Digital Media',
-    image:
-      'https://res.cloudinary.com/adaired/image/upload/c_limit,w_1920/f_auto/q_auto/v1/Static%20Website%20Images/adaired_logo.png?_a=BAVAZGDW0',
-    url: 'https://www.adaired.com/',
-    telephone: '8907400008',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress:
-        '5th Floor, Bestech Business Tower, B-509, Parkview Residence Colony, Sector 66, Sahibzada Ajit Singh Nagar, Punjab',
-      addressLocality: 'Mohali',
-      postalCode: '160066',
-      addressCountry: 'IN',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 30.67625162,
-      longitude: 76.7402769,
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:30',
-      closes: '19:00',
-    },
-    sameAs: [
-      'https://www.facebook.com/adaired.digital/',
-      'https://twitter.com/adaireddigital',
-      'https://www.instagram.com/adaired.digital/',
-      'https://in.linkedin.com/company/adaired',
-      'https://www.adaired.com/',
-    ],
-  },
   organization: {
     '@context': 'https://schema.org',
     '@type': 'Organization',

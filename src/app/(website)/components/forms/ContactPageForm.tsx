@@ -53,19 +53,17 @@ const ContactPageForm = () => {
       values.gRecaptchaToken = token;
       reset();
       router.push('/thankyou');
-      // try {
-      //   const response = await formSubmission(values);
-      //   console.log(response);
-      //   if (!response.sendMailSuccess) {
-      //     router.back();
-      //     toast({
-      //       variant: 'destructive',
-      //       description: 'Failed to send email',
-      //     });
-      //   }
-      // } catch (error) {
-      //   router.back();
-      // }
+      try {
+        const response = await fetch('/api/zoho/leadRegister', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+      } catch (error) {
+        throw new Error('Failed to send data to Zoho CRM');
+      }
     }
   };
 

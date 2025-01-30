@@ -8,16 +8,22 @@ export const siteConfig = {
 
 export const metaObject = (
   title?: string,
-  description?: string,
+  description: string = siteConfig.description,
   canonical?: string,
-  robots?: string,
-
+  robots?: string
 ): Metadata => {
   return {
     title: title ? `${title} | Adaired Digital` : siteConfig.title,
-    description: description || siteConfig.description,
-    alternates:{
-        canonical: canonical || '/',
+    description,
+    alternates: {
+      canonical: canonical || '/',
+    },
+    openGraph: {
+      title: title ? `${title} - AdaireDigital` : siteConfig.title,
+      description,
+      siteName: 'Adaired Digital Media',
+      locale: 'en_US',
+      type: 'website',
     },
     robots: robots || 'index, follow',
   };

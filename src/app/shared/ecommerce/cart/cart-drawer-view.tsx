@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'nextjs-toploader/app';
 import isEmpty from 'lodash/isEmpty';
 import OrderProducts from '@/app/shared/ecommerce/checkout/order-products';
-import { toCurrency } from '../../../../@core/utils/to-currency';
+import { toCurrency } from '@core/utils/to-currency';
 import { Title, Text, Button, EmptyProductBoxIcon } from 'rizzui';
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { routes } from '@/config/routes';
 import { CartItem } from '@/types';
 import DrawerHeader from '@/app/shared/drawer-header';
@@ -23,7 +23,7 @@ export default function CartDrawerView({
   const router = useRouter();
 
   // Calculate total price dynamically
-  const total = items.reduce((acc, item) => acc + item.totalPrice, 0);
+  const total = items.reduce((acc, item) => acc + (item?.totalPrice ?? 0), 0);
 
   const isCartEmpty = isEmpty(items);
 

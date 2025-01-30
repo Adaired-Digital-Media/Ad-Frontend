@@ -72,23 +72,19 @@ const HomepageForm = () => {
     if (token) {
       data.gRecaptchaToken = token;
       reset();
-      // router.push('/thankyou');
-
-      // try {
-      //   const response = await fetch('/api/zoho/leadRegister', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify(data),
-      //   });
-      //   const result = await response.json();
-      //   return result;
-      // } catch (error) {
-      //   throw new Error('Failed to send data to Zoho CRM');
-      // }
+      router.push('/thankyou');
+      try {
+        const response = await fetch('/api/zoho/leadRegister', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+      } catch (error) {
+        throw new Error('Failed to send data to Zoho CRM');
+      }
     }
-    // console.log('Submitted data', data);
   };
 
   return (

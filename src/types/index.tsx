@@ -5,37 +5,19 @@ export type HeaderItems = (typeof routes.websiteNav)[number];
 
 export type CartItem = {
   _id: string;
-  productId: string;
-  category?: string;
-  productName: string;
-  productSlug: string;
-  productImage?: string;
+  product: Product;
   wordCount?: number;
   quantity: number;
   additionalInfo?: string;
-  name?: string;
-  email?: string;
-  phone?: string;
-  pricePerUnit: number;
-  totalPrice: number;
-  isFreeProduct?: boolean;
+  totalPrice?: number;
 };
 
 export type UpdateCartItem = {
-  productEntryId: string;
-  productId?: string;
-  category?: string;
-  productName?: string;
-  productImage?: string;
+  cartItemId: string;
   wordCount?: number;
   quantity?: number;
   additionalInfo?: string;
-  name?: string;
-  email?: string;
-  phone?: string;
-  pricePerUnit?: number;
   totalPrice?: number;
-  isFreeProduct?: boolean;
 };
 
 export type Product = {
