@@ -78,6 +78,8 @@ async function sendToZohoCRM(data: any): Promise<void> {
 export async function POST(request: NextRequest) {
   const payload = await request.json();
 
+  console.log('Payload:', payload);
+
   // Verify the reCAPTCHA token
   try {
     const recaptchaResponse = await fetch(
@@ -100,17 +102,31 @@ export async function POST(request: NextRequest) {
   // Zoho CRM payload
   const zohoData = {
     Company: 'Adaired Digital',
-    First_Name: payload?.Name
-      ? payload?.Name?.split(' ')[0]
-      : payload?.Email?.split('@')[0],
-    Last_Name: payload?.Name
-      ? payload?.Name?.split(' ').slice(1).join(' ')
+    First_Name: payload?.name
+      ? payload?.name?.split(' ')[0]
+      : payload?.email?.split('@')[0],
+    Last_Name: payload?.name
+      ? payload?.name?.split(' ').slice(1).join(' ')
       : 'N/A',
-    Email: payload?.Email,
-    Phone: payload?.Phone,
-    Description: payload?.Message || 'No message provided',
+    Email: payload?.email,
+    Phone: payload?.phone,
+    Description:
+      payload?.interest + ' ' + payload?.message || 'No message provided',
     Lead_Source: 'Website Contact Form',
   };
 
-  await sendToZohoCRM(zohoData);
+  console.log('Zoho CRM Payload:', zohoData);
+
+  try {
+    await sendToZohoCRM(zohoData);
+    return NextResponse.json(
+      { message: 'Data sent to Zoho CRM successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: 'Failed to send data to Zoho CRM', details: error.message },
+      { status: 500 }
+    );
+  }
 }

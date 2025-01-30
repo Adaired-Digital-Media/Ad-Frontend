@@ -1,8 +1,8 @@
 'use client';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input,  Textarea,  } from 'rizzui';
-import {  useForm } from 'react-hook-form';
+import { Input, Textarea } from 'rizzui';
+import { useForm } from 'react-hook-form';
 import Button from '@web-components/Button';
 import { routes } from '@/config/routes';
 import { useReCaptcha } from 'next-recaptcha-v3';
@@ -50,21 +50,20 @@ function GetInTouchForm({ colorScheme }: { colorScheme: string }) {
       values.gRecaptchaToken = token;
       reset();
 
-      // router.push('/thankyou');
-      // try {
-      //   const response = await formSubmission(values);
-      //   if (!response.sendMailSuccess) {
-      //     router.back();
-      //     toast({
-      //       variant: 'destructive',
-      //       description: 'Failed to send email',
-      //     });
-      //   }
-      // } catch (error) {
-      //   router.back();
-      // }
+      router.push('/thankyou');
+
+      try {
+        const response = await fetch('/api/zoho/leadRegister', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+      } catch (error) {
+        throw new Error('Failed to send data to Zoho CRM');
+      }
     }
-    console.log('Submitted data', values);
   };
 
   return (

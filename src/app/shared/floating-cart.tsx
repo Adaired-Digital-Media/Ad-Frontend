@@ -4,7 +4,6 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import { PiShoppingCartBold } from 'react-icons/pi';
-import { routes } from '@/config/routes';
 import { cn } from '../../@core/utils/class-names';
 
 const Drawer = dynamic(() => import('rizzui').then((module) => module.Drawer), {
@@ -18,32 +17,10 @@ interface FloatingCartProps {
 export default function FloatingCart({ className }: FloatingCartProps) {
   const pathname = usePathname();
   const [openDrawer, setOpenDrawer] = useState(false);
-  //   const {
-  //     totalItems,
-  //     items,
-  //     total,
-  //     addItemToCart,
-  //     removeItemFromCart,
-  //     clearItemFromCart,
-  //   } = useCart();
 
-  // Check if this page belongs to ecommerce.
   const isECom = pathname.includes('ecommerce');
 
-  // list of excluded pages
-  //   const excludedPaths = [
-  //     routes.eCommerce.cart,
-  //     routes.eCommerce.checkout,
-  //     routes.eCommerce.orderDetails(DUMMY_ID),
-  //   ];
-
-  // check if current page is cart or checkout
-  //   const isPathExcluded = excludedPaths.includes(pathname);
   const isPathExcluded = false;
-
-  /**
-   * Display this floating cart on all e-commerce pages except for the cart, checkout and order view.
-   */
   return (
     isECom &&
     !isPathExcluded && (

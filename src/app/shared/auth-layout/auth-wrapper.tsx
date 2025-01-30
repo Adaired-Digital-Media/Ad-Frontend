@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
 import { routes } from '@/config/routes';
 
-export default function AuthWrapperOne({
+export default function AuthWrapper({
   children,
   title,
   bannerTitle,

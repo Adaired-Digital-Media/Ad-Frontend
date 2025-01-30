@@ -1,16 +1,16 @@
 // import Image from 'next/image';
 import UnderlineShape from '../../../@core/components/shape/underline';
 import SignUpForm from './sign-up-form';
-import AuthWrapperOne from '@/app/shared/auth-layout/auth-wrapper-one';
-// import { metaObject } from '@/config/site.config';
+import AuthWrapper from '@/app/shared/auth-layout/auth-wrapper';
+import { metaObject } from '@/config/site.config';
 
-// export const metadata = {
-//   ...metaObject('Sign Up 1'),
-// };
+export const metadata = {
+  ...metaObject('Sign Up'),
+};
 
 export default function SignUp() {
   return (
-    <AuthWrapperOne
+    <AuthWrapper
       title={
         <>
           Join us and never miss a thing -{' '}
@@ -40,6 +40,6 @@ export default function SignUp() {
       }
     >
       <SignUpForm />
-    </AuthWrapperOne>
+    </AuthWrapper>
   );
 }

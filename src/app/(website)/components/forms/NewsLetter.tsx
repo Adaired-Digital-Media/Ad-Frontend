@@ -38,6 +38,17 @@ const NewsLetter = () => {
       values.gRecaptchaToken = token;
       toast.success('Thank you for subscribing to our newsletter!');
       reset();
+      try {
+        const response = await fetch('/api/zoho/leadRegister', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+      } catch (error) {
+        throw new Error('Failed to send data to Zoho CRM');
+      }
     }
   };
 

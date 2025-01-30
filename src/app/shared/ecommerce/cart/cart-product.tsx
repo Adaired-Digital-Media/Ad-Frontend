@@ -6,14 +6,13 @@ import { Title } from 'rizzui';
 import { toCurrency } from '@core/utils/to-currency';
 import QuantityInput from './quantity-input';
 import RemoveItem from './remove-item';
-import { routes } from '@/config/routes';
 
 function CartProduct({ product }: { product: CartItem }) {
   return (
     <div className="grid grid-cols-12 items-start gap-4 border-b border-muted py-6 first:pt-0 sm:flex sm:gap-6 2xl:py-8">
       <figure className="col-span-4 sm:max-w-[180px]">
         <Image
-          src={product?.productImage as string}
+          src={product?.product?.featuredImage as string}
           alt={'icon'}
           width={180}
           height={180}
@@ -27,14 +26,14 @@ function CartProduct({ product }: { product: CartItem }) {
             as="h3"
             className="truncate text-base font-medium transition-colors hover:text-primary 3xl:text-lg"
           >
-            <Link href={''}>{product?.productName}</Link>
+            <Link href={''}>{product?.product?.name}</Link>
           </Title>
           <div>
             <span className="inline-block text-sm font-semibold text-gray-500 sm:font-medium md:text-base 3xl:text-lg">
               Total :
             </span>{' '}
             <span className="inline-block text-sm font-semibold text-gray-1000 sm:font-medium md:text-base 3xl:text-lg">
-              {toCurrency(product.totalPrice)}
+              {toCurrency(product?.totalPrice as number)}
             </span>
           </div>
         </div>
@@ -43,7 +42,7 @@ function CartProduct({ product }: { product: CartItem }) {
           <li className="flex items-center gap-3 text-gray-500">
             <span>Price / Unit :</span>
             <span className="text-gray-1000">
-              {toCurrency(product.pricePerUnit)}
+              {toCurrency(product?.product?.pricePerUnit)}
             </span>
           </li>
           <li className="flex items-center gap-3 text-gray-500">
@@ -55,7 +54,7 @@ function CartProduct({ product }: { product: CartItem }) {
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
           <QuantityInput product={product} />
           <div className="flex items-center gap-4">
-            <RemoveItem productID={product?._id} placement="bottom-end" />
+            <RemoveItem cartItemId={product?._id} placement="bottom-end" />
           </div>
         </div>
       </div>

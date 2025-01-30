@@ -45,7 +45,7 @@ export default function OrderProducts({
                 <div className="flex items-center">
                   <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                     <Image
-                      src={item.productImage as string}
+                      src={item.product.featuredImage as string}
                       alt={'icon'}
                       fill
                       priority
@@ -57,12 +57,12 @@ export default function OrderProducts({
                       <Link
                         href={{
                           pathname: routes?.eCommerce?.productFormEdit(
-                            item.productSlug
+                            item.product.slug
                           ),
-                          query: { id: item._id }, 
+                          query: { id: item._id },
                         }}
                       >
-                        {item?.productName}
+                        {item?.product.name}
                       </Link>
                     </Title>
                     <div className="font-poppins text-sm text-[#3a3a3a]">
@@ -82,7 +82,7 @@ export default function OrderProducts({
                     as="h3"
                     className="mb-1 font-nunito text-[22px] font-bold text-[#279B25]"
                   >
-                    {toCurrency(item?.totalPrice)}
+                    {toCurrency(item?.totalPrice as number)}
                   </Title>
                 </div>
               </div>
@@ -136,7 +136,7 @@ function RemoveItem({
   return (
     <button
       className={cn('', className)}
-      onClick={() => clearItemFromCart(product.productId)}
+      onClick={() => clearItemFromCart(product.product._id)}
     >
       <PiTrash className="h-6 w-6" />
     </button>

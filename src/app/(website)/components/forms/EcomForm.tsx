@@ -53,19 +53,17 @@ export const EcomPageForm = () => {
       data.gRecaptchaToken = token;
       console.log('Submitted data', data);
       reset();
-      // try {
-      //   const response = await fetch('/api/zoho/leadRegister', {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     },
-      //     body: JSON.stringify(data),
-      //   });
-      //   const result = await response.json();
-      //   return result;
-      // } catch (error) {
-      //   throw new Error('Failed to send data to Zoho CRM');
-      // }
+      try {
+        const response = await fetch('/api/zoho/leadRegister', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+      } catch (error) {
+        throw new Error('Failed to send data to Zoho CRM');
+      }
     }
   };
 
@@ -115,7 +113,6 @@ export const EcomPageForm = () => {
           style={{
             resize: 'none',
           }}
-
         />
 
         <div className="pt-4">

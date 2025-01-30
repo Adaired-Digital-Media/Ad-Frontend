@@ -13,9 +13,9 @@ export default function FloatingCartButton({
   className,
   ...props
 }: FloatingCartProps) {
-  const { cartItems } = useCart();
-  const formattedCartCount = cartItems?.length
-    ? cartItems.length.toString().padStart(2, '0')
+  const { products } = useCart();
+  const formattedCartCount = products?.length
+    ? products.length.toString().padStart(2, '0')
     : '00';
   return (
     <button

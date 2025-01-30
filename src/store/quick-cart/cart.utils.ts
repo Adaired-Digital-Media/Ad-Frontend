@@ -1,33 +1,31 @@
 import { CartItem as Item } from '@/types';
-export function addItem(cartItems: Item[], item: Item) {
-  const isFreeProduct = item.isFreeProduct;
-  // If the item is a free product, check if it already exists in the cart
-  if (isFreeProduct) {
-    const freeProductExists = cartItems.some((cartItem) => {
-      return cartItem.isFreeProduct;
-    });
 
-    if (freeProductExists) {
-      return cartItems;
-    }
-  }
-  // Otherwise, add the item to the cart and return the updated cart
-  return [...cartItems, item];
+export function addItem(products: Item[], item: Item): Item[] {
+  return [...products, item];
 }
 
+export function removeItem(cartItems: Item[], cartItemId: string): Item[] {
+  return cartItems.filter((item) => item._id !== cartItemId);
+}
 
-
-export function updateQuantity(
+export function updateItem(
   cartItems: Item[],
-  productEntryId: string,
-  action: 'INCREMENT' | 'DECREMENT'
-) {
+  cartItemId: string,
+  updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' }
+): Item[] {
   return cartItems.map((item) => {
-    if (item._id === productEntryId) {
-      const newQuantity =
-        action === 'INCREMENT'
-          ? item.quantity + 1
-          : Math.max(item.quantity - 1, 0);
+    if (item._id === cartItemId) {
+      let newQuantity = item.quantity;
+
+      // Handle quantity updates if `action` is provided
+      if (updates.action) {
+        newQuantity =
+          updates.action === 'INCREMENT'
+            ? item.quantity + 1
+            : Math.max(item.quantity - 1, 0);
+      }
+
+      // Merge the updates into the item
       return {
         ...item,
         quantity: newQuantity,
@@ -37,22 +35,6 @@ export function updateQuantity(
   });
 }
 
-export function updateDetails(
-  cartItems: Item[],
-  productEntryId: string,
-  details: Partial<Item>
-) {
-  return cartItems.map((item) => {
-    if (item._id === productEntryId) {
-      return {
-        ...item,
-        ...details,
-      };
-    }
-    return item;
-  });
-}
-
-export function removeItem(cartItems: Item[], productEntryId: string) {
-  return cartItems.filter((item) => item._id !== productEntryId);
+export function emptyCart(): Item[] {
+  return [];
 }

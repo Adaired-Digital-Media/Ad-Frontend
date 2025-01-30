@@ -7,17 +7,18 @@ import { cn } from '@core/utils/class-names';
 import { useCart } from '@/store/quick-cart/cart.context';
 
 interface RemoveItemProps {
-  productID: string;
+  cartItemId: string;
   className?: string;
   placement: Placement;
 }
 
 export default function RemoveItem({
-  productID,
+  cartItemId,
   className,
   placement,
 }: RemoveItemProps) {
-  const { removeItemFromCart } = useCart();
+  console.log(cartItemId);
+  const { removeCartItem } = useCart();
   return (
     <Popover placement={placement}>
       <Popover.Trigger>
@@ -51,7 +52,7 @@ export default function RemoveItem({
                 size="sm"
                 className="me-1.5 h-7"
                 onClick={() => {
-                  removeItemFromCart(productID);
+                  removeCartItem(cartItemId);
                   setOpen(false);
                 }}
               >

@@ -6,7 +6,7 @@ import {
   useForm,
   FieldValues,
 } from 'react-hook-form';
-import { Input, Title, Textarea } from 'rizzui';
+import { Select, Input, Title, Textarea } from 'rizzui';
 import { cn } from '@core/utils/class-names';
 import * as z from 'zod';
 import Button from '@web-components/Button';
@@ -18,7 +18,6 @@ import { Product } from '@/types';
 import { useCart } from '@/store/quick-cart/cart.context';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
-import toast from 'react-hot-toast';
 
 // Utility function to generate Zod schema
 const generateFormSchema = (
@@ -117,8 +116,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   product,
   session,
 }) => {
-  const router = useRouter();
-  const { cartItems, addItemToCart } = useCart();
+  const { addItemToCart } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   // Generate schema based on form fields
@@ -181,9 +179,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       data,
       price,
     });
-
+    
     addItemToCart(cartItem);
-    reset();
+    // reset();
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {

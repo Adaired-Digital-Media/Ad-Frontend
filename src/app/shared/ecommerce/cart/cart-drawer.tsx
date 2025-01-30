@@ -21,15 +21,13 @@ export default function CartDrawer() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const pathname = usePathname();
   const params = useParams();
-  const { cartItems } = useCart();
+  const { products } = useCart();
 
   // list of included pages
   const includedPaths: string[] = [
     routes.eCommerce.shop,
-    // routes.eCommerce.productDetails(params?.slug as string),
   ];
 
-  //   const isPathIncluded = includedPaths.some((path) => pathname === path);
   const isPathIncluded = includedPaths.some((path) => pathname !== path);
 
   return (
@@ -52,7 +50,7 @@ export default function CartDrawer() {
           // clearItemFromCart={() => {}}
           // removeItemFromCart={() => {}}
           // addItemToCart={() => {}}
-          items={cartItems}
+          items={products}
         />
       </Drawer>
     </>
