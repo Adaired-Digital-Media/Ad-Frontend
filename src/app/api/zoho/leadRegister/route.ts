@@ -115,8 +115,6 @@ export async function POST(request: NextRequest) {
     Lead_Source: 'Website Contact Form',
   };
 
-  console.log('Zoho CRM Payload:', zohoData);
-
   try {
     await sendToZohoCRM(zohoData);
     return NextResponse.json(
