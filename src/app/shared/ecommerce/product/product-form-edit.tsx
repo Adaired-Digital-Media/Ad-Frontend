@@ -120,11 +120,11 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
   id,
 }) => {
   const router = useRouter();
-  const { cartItems, addItemToCart, updateDetails } = useCart();
+  const { products, addItemToCart, updateCartItem } = useCart();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   // Retrieve the matching cart item by id
-  const matchingCartItem = cartItems.find((item) => item._id === id);
+  const matchingCartItem = products.find((item) => item._id === id);
 
   // Generate schema based on form fields
   const formSchema = generateFormSchema(form?.form?.fields, product);
@@ -133,9 +133,6 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
     mode: 'onChange',
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: matchingCartItem?.name,
-      email: matchingCartItem?.email,
-      phone: matchingCartItem?.phone,
       wordCount: matchingCartItem?.wordCount || product.minimumWords,
       quantity: matchingCartItem?.quantity || product.minimumQuantity,
       additionalInfo: matchingCartItem?.additionalInfo || '',
@@ -187,7 +184,7 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
       price,
     });
 
-    updateDetails(matchingCartItem?._id || '', cartItem);
+    // updateDetails(matchingCartItem?._id || '', cartItem);
     toast.success('Product updated');
     router.push(routes.eCommerce.cart);
   };
