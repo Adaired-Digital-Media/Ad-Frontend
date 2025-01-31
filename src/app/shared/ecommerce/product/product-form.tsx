@@ -16,7 +16,6 @@ import { useEffect, useCallback, useState } from 'react';
 import { generateCartProduct } from '@/store/quick-cart/generate-cart-product';
 import { Product } from '@/types';
 import { useCart } from '@/store/quick-cart/cart.context';
-import { useRouter } from 'next/navigation';
 import { routes } from '@/config/routes';
 
 // Utility function to generate Zod schema
@@ -178,8 +177,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       product,
       data,
       price,
+      session,
     });
-    
+
     addItemToCart(cartItem);
     // reset();
   };

@@ -9,7 +9,7 @@ type Action =
       cartItemId: string;
       updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' };
     }
-  | { type: 'REMOVE_ITEM'; productEntryId: string }
+  | { type: 'REMOVE_ITEM'; cartItemId: string }
   | { type: 'EMPTY_CART' };
 
 export interface State {
@@ -59,7 +59,7 @@ export function cartReducer(state: State, action: Action): State {
       };
     }
     case 'REMOVE_ITEM': {
-      const items = removeItem(state.products, action.productEntryId);
+      const items = removeItem(state.products, action.cartItemId);
       const updatedItems = updateItemTotalPrice(items);
       return {
         ...state,

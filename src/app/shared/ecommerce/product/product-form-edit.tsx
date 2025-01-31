@@ -182,6 +182,7 @@ export const ProductFormEdit: React.FC<ProductFormProps> = ({
       product,
       data,
       price,
+      session
     });
 
     // updateDetails(matchingCartItem?._id || '', cartItem);

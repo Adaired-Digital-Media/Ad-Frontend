@@ -5,11 +5,14 @@ export function generateCartProduct({
   product,
   data,
   price,
+  session,
 }: {
   product: Product;
   data: FieldValues;
   price: number;
+  session: any;
 }) {
+
   return {
     _id: crypto.randomUUID(),
     product: product,
