@@ -27,7 +27,6 @@ export const useCartAPI = () => {
             totalPrice: item.totalPrice,
           })),
         };
-
         const response = await axios.post(endpoint, payload, {
           headers: {
             'Content-Type': 'application/json',
@@ -37,7 +36,7 @@ export const useCartAPI = () => {
 
         if (response.status === 200) {
           toast.success(response.data.message);
-          return response.data.data.products;
+          return response.data.cart;
         }
       } catch (error) {
         handleApiError(error);
@@ -59,12 +58,15 @@ export const useCartAPI = () => {
             },
           }
         );
-        return response.data;
+        if (response.status === 200) {
+          toast.success(response.data.message);
+          return response.data.cart;
+        }
       } catch (error) {
         handleApiError(error);
       }
     },
-    [session]
+    [session?.user?.accessToken]
   );
 
   const removeCartItemFromBackend = useCallback(
@@ -79,7 +81,10 @@ export const useCartAPI = () => {
             },
           }
         );
-        return response.status === 200;
+        if (response.status === 200) {
+          toast.success(response.data.message);
+          return response.data.cart;
+        }
       } catch (error) {
         handleApiError(error);
       }
@@ -98,7 +103,10 @@ export const useCartAPI = () => {
           },
         }
       );
-      return response.status === 200;
+      if (response.status === 200) {
+        toast.success(response.data.message);
+        return response.data.cart;
+      }
     } catch (error) {
       handleApiError(error);
     }

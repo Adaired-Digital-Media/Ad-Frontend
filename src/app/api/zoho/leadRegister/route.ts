@@ -77,9 +77,7 @@ async function sendToZohoCRM(data: any): Promise<void> {
 
 export async function POST(request: NextRequest) {
   const payload = await request.json();
-
-  console.log('Payload:', payload);
-
+  
   // Verify the reCAPTCHA token
   try {
     const recaptchaResponse = await fetch(
@@ -102,17 +100,15 @@ export async function POST(request: NextRequest) {
   // Zoho CRM payload
   const zohoData = {
     Company: 'Adaired Digital',
-    First_Name: payload?.name
-      ? payload?.name?.split(' ')[0]
-      : payload?.email?.split('@')[0],
-    Last_Name: payload?.name
-      ? payload?.name?.split(' ').slice(1).join(' ')
-      : 'N/A',
+    First_Name:
+      payload?.name?.split(' ')[0] || payload?.email?.split('@')[0] || '',
+    Last_Name: payload?.name?.split(' ')[1] || '-',
     Email: payload?.email,
     Phone: payload?.phone,
-    Description:
-      payload?.interest + ' ' + payload?.message || 'No message provided',
-    Lead_Source: 'Website Contact Form',
+    Description: payload?.interest
+      ? `Interest: ${payload.interest} | Message: ${payload.message || 'No message provided'}`
+      : `Message: ${payload.message || 'No message provided'}`,
+    Lead_Source: `Adaired ${payload?.formId} Submission`,
   };
 
   try {

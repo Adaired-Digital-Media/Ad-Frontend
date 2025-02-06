@@ -4,6 +4,11 @@
         "source": "/admin-dashboard",
         "destination": "https://dashboard-adaired.vercel.app/auth/login",
         "permanent": true
+      },
+      {
+        "source": "/services/web-designing-and-development",
+        "destination": "/services/web-designing-and-development-services",
+        "permanent": true
       }
     ]
   }

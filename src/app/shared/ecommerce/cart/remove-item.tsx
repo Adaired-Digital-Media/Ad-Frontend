@@ -17,7 +17,6 @@ export default function RemoveItem({
   className,
   placement,
 }: RemoveItemProps) {
-  console.log(cartItemId);
   const { removeCartItem } = useCart();
   return (
     <Popover placement={placement}>

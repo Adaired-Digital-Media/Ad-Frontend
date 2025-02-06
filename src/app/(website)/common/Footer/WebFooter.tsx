@@ -293,7 +293,7 @@ const WebFooter = () => {
         </div>
 
         <div className="mt-6 flex flex-col-reverse items-center justify-center border-t py-6 text-center md:flex-row md:justify-between">
-          <div>Copyright © 2024 - AdAired Digital Media</div>
+          <div>Copyright © {new Date().getFullYear()} - AdAired Digital Media</div>
           <div className="flex gap-5 py-2 sm:gap-1 sm:bg-transparent">
             <Link href="/terms-and-conditions">Terms & Conditions </Link>
             <span className="hidden sm:block">/</span>

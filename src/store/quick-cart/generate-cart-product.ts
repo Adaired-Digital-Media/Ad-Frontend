@@ -10,6 +10,7 @@ export function generateCartProduct({
   data: FieldValues;
   price: number;
 }) {
+
   return {
     _id: crypto.randomUUID(),
     product: product,

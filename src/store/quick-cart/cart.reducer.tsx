@@ -1,6 +1,10 @@
 import { CartItem as Item } from '@/types';
 import { addItem, updateItem, removeItem, emptyCart } from './cart.utils';
 
+export interface State {
+  products: Item[];
+}
+
 type Action =
   | { type: 'ADD_ITEM'; item: Item }
   | { type: 'INITIALIZE_CART'; payload: Item[] }
@@ -8,13 +12,10 @@ type Action =
       type: 'UPDATE_ITEM';
       cartItemId: string;
       updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' };
+      callback: (newState: State) => void;
     }
-  | { type: 'REMOVE_ITEM'; productEntryId: string }
+  | { type: 'REMOVE_ITEM'; cartItemId: string }
   | { type: 'EMPTY_CART' };
-
-export interface State {
-  products: Item[];
-}
 
 export const initialState: State = {
   products: [],
@@ -53,13 +54,15 @@ export function cartReducer(state: State, action: Action): State {
         action.updates
       );
       const updatedItems = updateItemTotalPrice(items);
-      return {
-        ...state,
-        products: updatedItems,
-      };
+      const newState = { ...state, products: updatedItems };
+      // Execute the callback (if provided) with the new state
+      if (action.callback) {
+        action.callback(newState);
+      }
+      return newState;
     }
     case 'REMOVE_ITEM': {
-      const items = removeItem(state.products, action.productEntryId);
+      const items = removeItem(state.products, action.cartItemId);
       const updatedItems = updateItemTotalPrice(items);
       return {
         ...state,

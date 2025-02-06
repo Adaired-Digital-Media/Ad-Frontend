@@ -55,7 +55,7 @@ export default function CartPageWrapper() {
             name: 'Home',
           },
           {
-            href: routes.userDashboard.dashboard,
+            href: routes?.userDashboard?.dashboard,
             name: 'E-Commerce',
           },
           {
@@ -69,7 +69,7 @@ export default function CartPageWrapper() {
     try {
       const response = await fetch('https://api.ipify.org?format=json');
       const data = await response.json();
-      return data.ip; // Get the IP address
+      return data.ip;
     } catch (error) {
       console.error('Error fetching IP:', error);
       return null;

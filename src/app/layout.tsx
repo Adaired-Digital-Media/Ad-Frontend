@@ -104,7 +104,7 @@ export default async function RootLayout({
           {gtagConfig}
         </Script>
 
-        {/* JSON-LD for Schema.org */}  
+        {/* JSON-LD for Schema.org */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -117,20 +117,6 @@ export default async function RootLayout({
             __html: JSON.stringify(schemaData.organization),
           }}
         />
-        {/* <Script
-          type="application/ld+json"
-          id="organization-schema"
-          strategy="beforeInteractive"
-        >
-          {JSON.stringify(schemaData.organization)}
-        </Script>
-        <Script
-          type="application/ld+json"
-          id="localBusiness-schema"
-          strategy="beforeInteractive"
-        >
-          {JSON.stringify(schemaData.localBusiness)}
-        </Script> */}
       </head>
       <body
         suppressHydrationWarning
@@ -151,6 +137,21 @@ export default async function RootLayout({
           <GlobalDrawer />
           <GlobalModal />
         </ReCaptchaProvider>
+
+        {/* Zoho SalesIQ Initialization */}
+        <Script id="zoho-init" strategy="beforeInteractive">
+          {`
+          window.$zoho = window.$zoho || {};
+          $zoho.salesiq = $zoho.salesiq || { ready: function() {} };
+        `}
+        </Script>
+
+        {/* Zoho SalesIQ Widget Script */}
+        <Script
+          id="zsiqscript"
+          src="https://salesiq.zohopublic.com/widget?wc=siq7daf32053a2c9ad94317715612d7eb575af5e85bd3e25754067471d73684b3b9"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
