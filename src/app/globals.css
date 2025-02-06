@@ -354,8 +354,12 @@ html.lenis body {
   pointer-events: none;
 }
 
-.text-muted-foreground{
+.text-muted-foreground {
   color: var(--muted-foreground);
+}
+
+.grecaptcha-badge {
+  display: none !important;
 }
 
 /* ................................................... */

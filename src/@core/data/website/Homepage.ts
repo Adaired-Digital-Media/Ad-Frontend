@@ -90,7 +90,7 @@ export const ServiceSectionData = {
       title: 'Website Designing & Development',
       description:
         'Website Design and development services that deliver exquisite design, a user-friendly interface, and robust functionality for lasting impressions on the audience.',
-      link: '/services/web-designing-and-development',
+      link: '/services/web-designing-and-development-service',
       list: [
         'PHP Development',
         'Website management',

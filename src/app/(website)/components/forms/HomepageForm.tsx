@@ -133,10 +133,10 @@ const HomepageForm = () => {
                 value={value}
                 options={services}
                 suffix={<FaCaretDown />}
-                onChange={(v: SelectOption) => onChange(v.value)}
+                onChange={(v: SelectOption) => onChange(v.label)}
                 error={errors?.interest?.message}
                 displayValue={(selected: string) =>
-                  services?.find((r) => r.value === selected)?.label ?? ''
+                  services?.find((r) => r.label === selected)?.label ?? ''
                 }
                 suffixClassName={cn(`text-[#F39019]`)}
                 selectClassName="!border-0 !ring-0 !border-b-2 !rounded-none"

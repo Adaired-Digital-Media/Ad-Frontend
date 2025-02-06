@@ -281,8 +281,7 @@ export const routes = {
     products: '/expert-content-solutions/#products',
     shop: '/expert-content-solutions/#products',
     cart: '/expert-content-solutions/cart',
-    productForm: (slug: string) =>
-      `/expert-content-solutions/products/form/${slug}`,
+    contentProductForm : `/expert-content-solutions/products/form`,
     productFormEdit: (slug: string) =>
       `/expert-content-solutions/products/form/edit/${slug}`,
     ediProduct: (slug: string) =>

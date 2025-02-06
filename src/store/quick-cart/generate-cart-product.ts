@@ -5,12 +5,10 @@ export function generateCartProduct({
   product,
   data,
   price,
-  session,
 }: {
   product: Product;
   data: FieldValues;
   price: number;
-  session: any;
 }) {
 
   return {

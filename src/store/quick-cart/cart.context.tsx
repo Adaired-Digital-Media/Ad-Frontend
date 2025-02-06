@@ -8,13 +8,14 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useState,
 } from 'react';
 import { cartReducer, State, initialState } from './cart.reducer';
 import { useLocalStorage } from '@core/hooks/use-local-storage';
 import { CART_KEY } from '@/config/constants';
 import { CartItem as Item } from '@/types';
 import { useSession } from 'next-auth/react';
-import { useCartAPI } from '@/hooks/useCartAPI';
+import { useCartAPI } from '@core/hooks/useCartAPI';
 import axios from 'axios';
 
 interface CartProviderState extends State {
@@ -101,7 +102,7 @@ export function CartProvider({
     }
   }, [session]);
 
-  // ******************** Fetch User Cart and Sync Local Cart (Logged-In Users) *********************
+  // ******************** Sync Local Cart (Logged-In Users) *********************
   useEffect(() => {
     if (session?.user?.accessToken && !hasSyncedCart.current) {
       const syncCart = async () => {
@@ -158,43 +159,48 @@ export function CartProvider({
   );
 
   // ******************** Update Cart Item *********************
+  const [updatedItem, setUpdatedItem] = useState<Item | null>(null);
+
+  useEffect(() => {
+    if (updatedItem) {
+      updateCartItemInBackend({
+        cartItemId: updatedItem._id,
+        quantity: updatedItem.quantity,
+        wordCount: updatedItem.wordCount,
+        additionalInfo: updatedItem.additionalInfo,
+        totalPrice: updatedItem.totalPrice,
+      }).catch((error) => {
+        handleApiError(error);
+      });
+    }
+  }, [updatedItem]);
+
   const updateCartItem = useCallback(
     async (
       cartItemId: string,
       updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' }
     ) => {
-      // Optimistically update the local state
-      dispatch({ type: 'UPDATE_ITEM', cartItemId, updates });
-
-      if (session) {
-        try {
-          const updatedItem = state.products.find(
+      dispatch({
+        type: 'UPDATE_ITEM',
+        cartItemId,
+        updates,
+        callback: (newState: State) => {
+          // Find the updated item in the new state
+          const updatedItem = newState.products.find(
             (item) => item._id === cartItemId
           );
-          if (updatedItem) {
-            // Sync with the backend
-            const response = await updateCartItemInBackend({
-              cartItemId,
-              quantity: updatedItem.quantity,
-              wordCount: updatedItem.wordCount,
-              additionalInfo: updatedItem.additionalInfo,
-              totalPrice: updatedItem.totalPrice,
-            });
-
-            console.log(response);
+          if (
+            session &&
+            updatedItem &&
+            updatedItem !==
+              state.products.find((item) => item._id === cartItemId)
+          ) {
+            setUpdatedItem(updatedItem);
           }
-        } catch (error) {
-          // Rollback the local state if the API call fails
-          dispatch({
-            type: 'UPDATE_ITEM',
-            cartItemId,
-            updates: { ...updates },
-          });
-          handleApiError(error);
-        }
-      }
+        },
+      });
     },
-    [session, updateCartItemInBackend, state.products, handleApiError]
+    [session?.user?.accessToken]
   );
 
   // ******************** Remove Cart Item *********************

@@ -27,8 +27,6 @@ export const useCartAPI = () => {
             totalPrice: item.totalPrice,
           })),
         };
-
-        console.log('Payload: ', payload);
         const response = await axios.post(endpoint, payload, {
           headers: {
             'Content-Type': 'application/json',
@@ -68,7 +66,7 @@ export const useCartAPI = () => {
         handleApiError(error);
       }
     },
-    [session]
+    [session?.user?.accessToken]
   );
 
   const removeCartItemFromBackend = useCallback(

@@ -2,6 +2,7 @@
   "name": "ad-front",
   "version": "0.1.0",
   "private": true,
+  "type":"module",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
@@ -26,6 +27,7 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "console": "^0.7.2",
     "cookies-next": "^4.3.0",
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",

@@ -24,6 +24,7 @@ interface IIconBox {
   target?: string;
   buttonClassName?: string;
   containerClassName?: string;
+  onClick?: () => void;
 }
 
 const IconBox: FC<IIconBox> = ({
@@ -42,14 +43,23 @@ const IconBox: FC<IIconBox> = ({
   target,
   buttonClassName,
   containerClassName,
+  onClick,
+  ...rest
 }) => {
   const router = useRouter();
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    router.push(boxLink ?? '');
+  };
   return (
     <>
       <div
         role="button"
-        onClick={() => router.push(boxLink || '')}
+        onClick={handleClick}
         className={cn(`${containerClassName}`)}
+        {...rest}
       >
         <div className={cn(`inline-block ${iconContainerClassName}`)}>
           {isFromCloudinary ? (

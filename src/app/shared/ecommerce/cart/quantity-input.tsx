@@ -24,16 +24,12 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
       if (debouncedTimeoutRef.current) {
         clearTimeout(debouncedTimeoutRef.current);
       }
-
       debouncedTimeoutRef.current = setTimeout(() => {
         if (action === 'INCREMENT') {
           updateCartItem(product?._id, { action: 'INCREMENT' });
-          console.log('Incrementing:', product?._id);
         } else if (action === 'DECREMENT') {
           updateCartItem(product?._id, { action: 'DECREMENT' });
-          console.log('Decrementing:', product?._id);
         }
-
         // Reset the action after the update
         setAction(null);
       }, 200);

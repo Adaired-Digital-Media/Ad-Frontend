@@ -45,10 +45,7 @@ const ProductForm = async ({ params, searchParams }: ProductFormProps) => {
         <div className="items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
           <div className="gap-4 @container @5xl:col-span-8 @5xl:pb-12 @5xl:pe-7 @6xl:col-span-7 @7xl:pe-12">
             <PForm
-              form={form}
-              product={product?.data}
-              session={session || { user: null, expires: null }}
-              id={id}
+
             />
           </div>
 

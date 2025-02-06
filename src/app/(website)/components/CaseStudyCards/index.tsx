@@ -138,10 +138,8 @@ function CaseStudyCard({
     <div
       className={`my-8 flex flex-col-reverse rounded-3xl border bg-gradient-to-b from-white from-70% to-[#02811a] p-5 lg:flex-row lg:gap-10 lg:p-8 xl:gap-20 xl:p-14`}
       style={{
-        // background: `linear-gradient(to bottom, #fff 75%, ${colorScheme} 25%)`;
-        backgroundImage: `linear-gradient(to bottom, white 70%,${colorScheme})`
+        backgroundImage: `linear-gradient(to bottom, white 70%,${colorScheme})`,
       }}
-      
     >
       <div className="flex w-full flex-col lg:w-1/2">
         <div
