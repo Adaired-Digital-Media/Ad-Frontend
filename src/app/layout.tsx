@@ -129,6 +129,7 @@ export default async function RootLayout({
           poppins.variable,
           `font-nunito antialiased`
         )}
+        id='root'
       >
         <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
           <NextProgress />

@@ -14,6 +14,7 @@ import {
   contentProductsAtom,
   selectedContentProductAtom,
 } from '@/store/atoms/selectedContentProductAtom';
+import { useEffect } from 'react';
 
 export const ProductSection = ({
   categories,
@@ -24,9 +25,13 @@ export const ProductSection = ({
 }) => {
   const [, setSelectedProduct] = useAtom(selectedContentProductAtom);
   const [, setAllProducts] = useAtom(contentProductsAtom);
-  if (products) {
-    setAllProducts(products);
-  }
+
+  useEffect(() => {
+    if (products) {
+      setAllProducts(products);
+    }
+  }, []);
+
   const tabs = categories
     .filter((category) => category.slug !== 'free-products')
     .map((category: ProductCategory) => ({

@@ -71,7 +71,8 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
       <input
         type="number"
         className="h-full w-12 border-none text-center outline-none focus:ring-0 dark:bg-gray-50 sm:w-20"
-        value={product?.quantity}
+        // value={product?.quantity}
+        value={debouncedQuantity}
         readOnly
         disabled={isFreeProduct}
       />
