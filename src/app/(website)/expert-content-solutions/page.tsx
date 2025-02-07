@@ -20,7 +20,6 @@ import { FAQSection } from '@web-components/eComFaqSection';
 import { EcomPageForm } from '../components/forms/EcomForm';
 import CldImage from '@web-components/CloudinaryImageComponent';
 import { ProductSection } from '@web-components/ContentProducts';
-
 const Landing = async () => {
   const fetchProductCategory = await axios.get(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/category/read-category?identifier=content-writing&children=true&childrenProducts=true&products=true`
@@ -29,7 +28,7 @@ const Landing = async () => {
     fetchProductCategory.data.data.children || [];
 
   const products: Product[] = fetchProductCategory.data.data.products || [];
-
+  
   return (
     <>
       <HeroSection />

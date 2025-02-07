@@ -25,6 +25,7 @@ import {
   contentProductsAtom,
   selectedContentProductAtom,
 } from '@/store/atoms/selectedContentProductAtom';
+import ProductFormSkeleton from '@/app/(website)/components/Skeletons/ProductFormSkeleton';
 
 export const ProductForm = () => {
   const { addItemToCart } = useCart();
@@ -34,7 +35,6 @@ export const ProductForm = () => {
   const [form, setForm] = useState<DynamicFormTypes>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  console.log('All Products : ', allProducts);
   // Generate schema based on form fields
   const formSchema = product
     ? generateFormSchema(form?.form?.fields ?? [], product)
@@ -108,6 +108,46 @@ export const ProductForm = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const fetchForm = async () => {
+  //     const formRes = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product?.formId}`
+  //     );
+  //     const form = await formRes.json();
+  //     setForm(form);
+  //   };
+  //   fetchForm();
+  // }, [form]);
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      const formRes = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product?.formId}`
+      );
+      const form = await formRes.json();
+      setForm(form);
+    };
+    if (product?.formId) {
+      fetchForm();
+    }
+
+    console.log('Product :', product);
+  }, [product]);
+
+  useEffect(() => {
+    if (product && form) {
+      reset({
+        wordCount: product?.minimumWords,
+        quantity: product?.minimumQuantity,
+        additionalInfo: '',
+      });
+    }
+  }, [product, form, reset]);
+
+  if (!product || !form) {
+    return <ProductFormSkeleton />;
+  }
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -154,7 +194,7 @@ export const ProductForm = () => {
               >
                 <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                   <Image
-                    src={product?.featuredImage ?? ''}
+                    src={product?.featuredImage || ''}
                     alt={'icon'}
                     fill
                     priority
@@ -167,17 +207,88 @@ export const ProductForm = () => {
                 >
                   {product?.name}
                 </Title>
+                <Select
+                  options={allProducts.map((product) => ({
+                    value: product._id,
+                    label: product.name,
+                  }))}
+                  onChange={(selectedOption: any) =>
+                    handleProductChange(selectedOption.value)
+                  }
+                />
               </div>
-              <Select
-                label="Products"
-                options={allProducts.map((product) => ({
-                  value: product._id,
-                  label: product.name,
-                }))}
-                onChange={(selectedOption: any) =>
-                  handleProductChange(selectedOption.value)
-                }
-              />
+              <div>
+                <Title
+                  as="h5"
+                  className={cn(
+                    `font-nunito text-lg font-semibold text-[#515151]`
+                  )}
+                >
+                  Total Cost :
+                  <span
+                    className={cn(
+                      `font-nunito text-[22px] font-bold text-[#18AA15]`
+                    )}
+                  >
+                    $ {totalPrice}
+                  </span>
+                </Title>
+              </div>
+            </div>
+            {/* Dynamic Form Fields */}
+            <div className="mt-5 space-y-6">
+              {form?.form?.fields.map((field) => (
+                <div key={field.name} className="flex-1">
+                  <Title
+                    className={cn(
+                      `mb-2 block font-poppins text-[16px] font-semibold text-[#515151]`
+                    )}
+                  >
+                    {field.label}
+                    {field.required && <span className="text-red-500"> *</span>}
+                  </Title>
+                  <Input
+                    // type={field.type as any}
+                    type={
+                      field.type as
+                        | 'number'
+                        | 'search'
+                        | 'text'
+                        | 'time'
+                        | 'tel'
+                        | 'url'
+                        | 'email'
+                        | 'date'
+                        | 'week'
+                        | 'month'
+                        | 'datetime-local'
+                        | undefined
+                    }
+                    placeholder={field.placeholder}
+                    {...register(
+                      field.name as
+                        | 'name'
+                        | 'email'
+                        | 'phone'
+                        | 'wordCount'
+                        | 'quantity'
+                        | 'additionalInfo',
+                      {
+                        valueAsNumber: field.type === 'number',
+                      }
+                    )}
+                    className={cn(`w-full`)}
+                    variant="flat"
+                    inputClassName={cn(`bg-[#FAFAFA]`)}
+                    required={field.required}
+                    disabled={
+                      (field.name === 'quantity' ||
+                        field.name === 'wordCount') &&
+                      product?.isFreeProduct
+                    }
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
