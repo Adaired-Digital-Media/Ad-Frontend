@@ -44,7 +44,7 @@ const IntroSection = () => {
                 alt="About Image"
                 height={500}
                 width={800}
-                sizes="50vw"
+
                 className="rounded-lg object-cover"
               />
             </div>

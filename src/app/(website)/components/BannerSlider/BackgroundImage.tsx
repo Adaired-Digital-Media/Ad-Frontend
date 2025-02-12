@@ -38,7 +38,6 @@ const BackgroundImage = ({ currentData, nextData }: BackgroundImageProps) => {
           style={{
             objectFit: "cover",
           }}
-          sizes="(max-width: 600px) 100vw, (max-width: 1200px) 100vw, 80vw"
           alt="Banner Image"
           priority
         />
@@ -63,7 +62,6 @@ const BackgroundImage = ({ currentData, nextData }: BackgroundImageProps) => {
           style={{
             objectFit: "cover",
           }}
-          sizes="(max-width: 600px) 100vw, (max-width: 1200px) 100vw, 80vw"
           alt="Banner Image"
         />
         <div className="sm:hidden absolute inset-0 bg-black opacity-50" />

@@ -92,7 +92,6 @@ const Navbar = () => {
                           height={78}
                           width={150}
                           priority
-                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 100vw, (max-width: 1536px) 100vw, 170px"
                         />
                       </div>
                     </Link>

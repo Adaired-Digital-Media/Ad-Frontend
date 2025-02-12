@@ -141,7 +141,7 @@ const HeroSection = () => {
               loading="eager"
               priority
               className={cn(`object-contain`)}
-              sizes="(min-width: 808px) 50vw, 100vw"
+              // sizes="(min-width: 808px) 50vw, 100vw"
             />
           </div>
         </TwoColumnGrid>
@@ -318,7 +318,7 @@ const ContactUsSection = () => {
             height={635}
             width={635}
             quality={100}
-            sizes="(min-width: 808px) 50vw, 100vw"
+            // sizes="(min-width: 808px) 50vw, 100vw"
           />
         </div>
         <div className={cn(`h-full w-full max-w-[635px] opt-md:pr-5`)}>
