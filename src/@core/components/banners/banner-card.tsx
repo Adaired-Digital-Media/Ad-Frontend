@@ -27,7 +27,6 @@ export default function BannerCard({
         }
         alt="Upgrade Storage"
         fill
-        sizes="(max-width: 768px) 100vw"
         className={imageClassName}
       />
       <div className="relative z-10">

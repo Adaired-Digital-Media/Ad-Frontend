@@ -168,7 +168,6 @@ export function ProfileHeader({
             src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-11.webp"
             alt="profile-pic"
             fill
-            sizes="(max-width: 768px) 100vw"
             className="auto"
           />
         </div>

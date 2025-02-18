@@ -77,38 +77,21 @@ async function sendToZohoCRM(data: any): Promise<void> {
 
 export async function POST(request: NextRequest) {
   const payload = await request.json();
-  
-  // Verify the reCAPTCHA token
-  try {
-    const recaptchaResponse = await fetch(
-      `https://www.google.com/recaptcha/api/siteverify?secret=${config.recaptchaSecretKey}&response=${payload.gRecaptchaToken}`
-    ).then((res) => res.json());
-
-    if (!recaptchaResponse.success || recaptchaResponse.score < 0.5) {
-      return NextResponse.json(
-        { error: 'reCAPTCHA verification failed' },
-        { status: 400 }
-      );
-    }
-  } catch (err) {
-    return NextResponse.json(
-      { error: 'reCAPTCHA verification error', err },
-      { status: 500 }
-    );
-  }
 
   // Zoho CRM payload
   const zohoData = {
-    Company: 'Adaired Digital',
-    First_Name:
-      payload?.name?.split(' ')[0] || payload?.email?.split('@')[0] || '',
-    Last_Name: payload?.name?.split(' ')[1] || '-',
-    Email: payload?.email,
-    Phone: payload?.phone,
-    Description: payload?.interest
-      ? `Interest: ${payload.interest} | Message: ${payload.message || 'No message provided'}`
-      : `Message: ${payload.message || 'No message provided'}`,
-    Lead_Source: `Adaired ${payload?.formId} Submission`,
+    Company: payload.company,
+    Salutation: payload.salutation || '',
+    First_Name: payload.first_name,
+    Last_Name: payload.last_name,
+    Email: payload.email,
+    Lead_Source: payload.lead_source,
+    Phone: payload.phone,
+    Service: payload.service,
+    Website: payload.website,
+    Country: payload.country,
+    Agent: payload.agent,
+    Description: payload.description,
   };
 
   try {

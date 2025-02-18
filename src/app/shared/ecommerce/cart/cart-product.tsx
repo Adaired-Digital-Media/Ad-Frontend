@@ -1,11 +1,12 @@
 'use client';
 import Image from 'next/image';
-import { CartItem, Product } from '@/types';
+import { CartItem } from '@/types';
 import Link from 'next/link';
 import { Title } from 'rizzui';
 import { toCurrency } from '@core/utils/to-currency';
 import QuantityInput from './quantity-input';
 import RemoveItem from './remove-item';
+import { routes } from '@/config/routes';
 
 function CartProduct({ product }: { product: CartItem }) {
   return (
@@ -16,7 +17,7 @@ function CartProduct({ product }: { product: CartItem }) {
           alt={'icon'}
           width={180}
           height={180}
-          className="aspect-square w-full rounded-lg bg-gray-100 object-cover"
+          className="h-full w-full rounded-lg bg-gray-100 p-2"
         />
       </figure>
 
@@ -26,7 +27,14 @@ function CartProduct({ product }: { product: CartItem }) {
             as="h3"
             className="truncate text-base font-medium transition-colors hover:text-primary 3xl:text-lg"
           >
-            <Link href={''}>{product?.product?.name}</Link>
+            <Link
+              href={{
+                pathname: routes?.eCommerce?.contentProductEditForm,
+                query: { id: product._id },
+              }}
+            >
+              {product?.product?.name}
+            </Link>
           </Title>
           <div>
             <span className="inline-block text-sm font-semibold text-gray-500 sm:font-medium md:text-base 3xl:text-lg">

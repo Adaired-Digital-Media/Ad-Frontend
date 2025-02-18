@@ -1,7 +1,5 @@
-import { auth } from '@/auth';
 import { cn } from '@core/utils/class-names';
-// import { ProductForm as PForm } from '@/app/shared/ecommerce/product/product-form';
-import { ProductForm as PForm } from '@/app/shared/ecommerce/product/product-form1';
+import { ProductForm as PForm } from '@/app/shared/ecommerce/product/product-form';
 import SmallWidthContainer from '@/app/(website)/components/SmallWidthContainer';
 import dynamic from 'next/dynamic';
 
@@ -12,24 +10,8 @@ const OrderSummery = dynamic(
   }
 );
 
-// interface ProductFormProps {
-//   params: { slug: string };
-// }
-
-const ProductForm = async () => {
-  // const session = await auth();
-
-  // const { slug } = params;
-
-  // const productRes = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product?query=${slug}`
-  // );
-  // const product = await productRes.json();
-
-  // const formRes = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product?.data?.formId}`
-  // );
-  // const form = await formRes.json();
+const ProductForm = async ({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) => {
+  const productId = Array.isArray(searchParams['id']) ? searchParams['id'][0] : searchParams['id'];
 
   return (
     <>
@@ -38,19 +20,16 @@ const ProductForm = async () => {
       </div>
       <SmallWidthContainer
         className={cn(
-          'isomorphic-form isomorphic-form mx-auto flex w-full flex-grow flex-col @container [&_label.block>span]:font-medium'
+          'isomorphic-form mx-auto flex w-full flex-grow flex-col @container [&_label.block>span]:font-medium'
         )}
       >
         <div className="items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
           <div className="gap-4 @container @5xl:col-span-8 @5xl:pb-12 @5xl:pe-7 @6xl:col-span-7 @7xl:pe-12">
-            {/* <PForm
-              form={form}
-              product={product?.data}
-              session={session || { user: null, expires: null }}
-            /> */}
-            <PForm />
+            <PForm
+              isEditMode={!!productId}
+              productId={productId}
+            />
           </div>
-
           <OrderSummery />
         </div>
       </SmallWidthContainer>
