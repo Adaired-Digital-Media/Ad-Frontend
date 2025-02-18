@@ -1,11 +1,11 @@
 'use client';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { Input, Select, Checkbox, Textarea, type SelectOption } from 'rizzui';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '@web-components/Button';
-import { PhoneNumber } from '../../../../@core/ui/rizzui-ui/phone-input';
+import { PhoneNumber } from '@core/ui/rizzui-ui/phone-input';
 import { routes } from '@/config/routes';
 import { FaDollarSign } from 'react-icons/fa6';
 import Link from 'next/link';

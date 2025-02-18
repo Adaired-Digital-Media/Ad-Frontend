@@ -217,11 +217,7 @@ function CartCalculations({
         {products.map((item) => (
           <div key={item?._id} className="flex items-center justify-between">
             <Title as="h3" className="mb-1 text-base font-semibold">
-              <Link
-                href={routes.eCommerce.productFormEdit(item?.product?.slug)}
-              >
                 {item?.product?.name}
-              </Link>
             </Title>
             <div className="text-right">
               {toCurrency(item?.totalPrice as number)}

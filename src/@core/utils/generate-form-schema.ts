@@ -31,7 +31,7 @@ export const generateFormSchema = (
               : `Minimum purchase is ${product.minimumWords} words for this product.`
           );
         break;
-
+    
       case 'text':
         fieldSchema = z
           .string({
@@ -39,17 +39,15 @@ export const generateFormSchema = (
           })
           .max(500, `${field.label} cannot exceed 500 characters`);
         break;
-
-      case 'email':
-        fieldSchema = z
-          .string()
-          .min(1, `${field.label} is required`)
-          .email({ message: 'Invalid email address' });
+    
+      case 'select':
+        fieldSchema = z.union([z.string(), z.number()]); // Allow both string and number for select
         break;
-
+    
       default:
         fieldSchema = z.string();
     }
+    
 
     if (field.required) {
       if (field.type === 'number') {

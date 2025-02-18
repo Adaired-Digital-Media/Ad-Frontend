@@ -3,11 +3,11 @@ import { cn } from '@core/utils/class-names';
 import React from 'react';
 import { Title } from 'rizzui';
 import Button from '../Button';
-import { Skeleton } from '@/@core/ui/shadcn-ui/skeleton';
+import { Skeleton } from '@core/ui/skeleton';
+import SelectLoader from '@core/components/loader/select-loader';
+import QuillLoader from '@core/components/loader/quill-loader';
 
-type Props = {};
-
-const ProductFormSkeleton = (props: Props) => {
+const ProductFormSkeleton = () => {
   return (
     <div>
       <div
@@ -39,25 +39,47 @@ const ProductFormSkeleton = (props: Props) => {
       >
         <div
           className={cn(
-            `flex flex-col items-center justify-between gap-2 border-b-2 border-dashed border-[#1B5A96] pb-[15px] xs:flex-row xs:gap-0`
+            `grid grid-cols-2 items-center gap-3 border-b-2 border-dashed border-[#1B5A96] pb-5`
           )}
         >
-          <div
-            className={cn(
-              `flex flex-col items-center gap-3 xs:flex-row xs:gap-6`
-            )}
-          >
-            <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
-              <Skeleton />
-            </figure>
-            <figure
-              className={cn(
-                `relative h-8 w-32 shrink-0 rounded-lg bg-gray-100`
-              )}
-            >
-              <Skeleton />
-            </figure>
+          <div className={cn(`flex items-center gap-3`)}>
+            <Skeleton className="h-14 w-14 flex-shrink-0 rounded-full" />
+            <Skeleton className="h-10 w-4/5 flex-shrink-0 rounded" />
           </div>
+          <div className="flex justify-end">
+            <Skeleton className="h-10 w-1/2 flex-shrink-0" />
+          </div>
+        </div>
+        <div className="my-5 space-y-10">
+          <SelectLoader />
+          <SelectLoader />
+          <div>
+            <Skeleton className="mb-1.5 h-4 w-28 rounded" />
+            <Skeleton className="h-40 w-full rounded" />
+          </div>
+        </div>
+
+        <div
+          className={cn(
+            `flex flex-col items-center justify-between gap-5 sm:flex-row sm:gap-10`
+          )}
+        >
+          <Button
+            title="Add To Cart"
+            className="flex w-full justify-center bg-[#1B5A96]"
+            svgInnerClassName="!text-[#1B5A96]"
+            svgClassName="bg-white"
+            textClassName="text-white"
+            type="submit"
+            onClick={() => console.log('Clicked')}
+          />
+          <Button
+            title="Instant Payment"
+            className="flex w-full justify-center bg-white"
+            svgInnerClassName="text-white"
+            svgClassName="bg-[#1B5A96]"
+            type="submit"
+          />
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import { CartItem as Item } from '@/types';
 import { useSession } from 'next-auth/react';
 import { useCartAPI } from '@core/hooks/useCartAPI';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 interface CartProviderState extends State {
   addItemToCart: (cartItem: Item) => void;
@@ -153,6 +154,7 @@ export function CartProvider({
       } else {
         // Optimistically update the local state
         dispatch({ type: 'ADD_ITEM', item: updatedItem });
+        toast.success('Product added successfully');
       }
     },
     [session, sendCartToBackend, handleApiError]
@@ -199,6 +201,7 @@ export function CartProvider({
           }
         },
       });
+      if (!session) toast.success('Product Updated successfully');
     },
     [session?.user?.accessToken]
   );
@@ -225,6 +228,7 @@ export function CartProvider({
       } else {
         // Optimistically update the local state
         dispatch({ type: 'REMOVE_ITEM', cartItemId: cartItemId });
+        toast.success('Product removed successfully')
       }
     },
     [session, removeCartItemFromBackend, state.products, handleApiError]

@@ -8,7 +8,6 @@ import { PiMinus, PiPlus, PiTrash } from 'react-icons/pi';
 import Link from 'next/link';
 import { routes } from '@/config/routes';
 import { toCurrency } from '@core/utils/to-currency';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function OrderProducts({
   items,
@@ -35,7 +34,7 @@ export default function OrderProducts({
         {items.map((item) => {
           return (
             <div
-              key={item._id || uuidv4()}
+              key={item._id}
               className={cn(
                 'group relative flex items-center justify-between',
                 itemClassName
@@ -56,9 +55,7 @@ export default function OrderProducts({
                     <Title as="h3" className="mb-1 text-base font-semibold">
                       <Link
                         href={{
-                          pathname: routes?.eCommerce?.productFormEdit(
-                            item.product.slug
-                          ),
+                          pathname: routes?.eCommerce?.contentProductEditForm,
                           query: { id: item._id },
                         }}
                       >

@@ -5,143 +5,71 @@ import {
   SubmitHandler,
   useForm,
   FieldValues,
+  Controller,
 } from 'react-hook-form';
 import { Select, Input, Title, Textarea } from 'rizzui';
 import { cn } from '@core/utils/class-names';
-import * as z from 'zod';
 import Button from '@web-components/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useEffect, useCallback, useState } from 'react';
 import { generateCartProduct } from '@/store/quick-cart/generate-cart-product';
-import { Product } from '@/types';
 import { useCart } from '@/store/quick-cart/cart.context';
 import { routes } from '@/config/routes';
-
-// Utility function to generate Zod schema
-const generateFormSchema = (
-  fields: {
-    name: string;
-    label: string;
-    placeholder: string;
-    type: string;
-    required: boolean;
-    options: any[];
-  }[],
-  product: Product
-) => {
-  const schema: Record<string, z.ZodTypeAny> = {};
-
-  fields.forEach((field) => {
-    let fieldSchema: z.ZodTypeAny;
-
-    switch (field.type) {
-      case 'number':
-        fieldSchema = z
-          .number({
-            invalid_type_error: `${field.label} must be at least  ${field.name === 'quantity' ? product.minimumQuantity : product.minimumWords}`,
-          })
-          .min(
-            field.name === 'quantity'
-              ? product.minimumQuantity || 0
-              : product.minimumWords || 0,
-            field.name === 'quantity'
-              ? `${field.label} must be at least 1`
-              : `Minimum purchase is ${product.minimumWords} words for this product.`
-          );
-        break;
-
-      case 'text':
-        fieldSchema = z
-          .string({
-            message: `${field.label} is required`,
-          })
-          .max(500, `${field.label} cannot exceed 500 characters`);
-        break;
-
-      case 'email':
-        fieldSchema = z
-          .string()
-          .min(1, `${field.label} is required`)
-          .email({ message: 'Invalid email address' });
-        break;
-
-      default:
-        fieldSchema = z.string();
-    }
-
-    if (field.required) {
-      if (field.type === 'number') {
-        fieldSchema = (fieldSchema as z.ZodNumber).min(
-          1,
-          `${field.label} is required`
-        );
-      } else if (field.type === 'textarea' || field.type === 'text') {
-        fieldSchema = (fieldSchema as z.ZodString).min(
-          1,
-          `${field.label} is required`
-        );
-      }
-    }
-
-    schema[field.name] = fieldSchema;
-  });
-
-  return z.object(schema);
-};
-
-// Component Props
-interface DynamicFormProps {
-  form: {
-    fields: {
-      name: string;
-      label: string;
-      placeholder: string;
-      type: string;
-      required: boolean;
-      options: any[];
-    }[];
-  };
-}
+import {
+  DynamicFormTypes,
+  generateFormSchema,
+} from '@core/utils/generate-form-schema';
+import { useAtom } from 'jotai';
+import {
+  contentProductsAtom,
+  selectedContentProductAtom,
+} from '@/store/atoms/selectedContentProductAtom';
+import ProductFormSkeleton from '@/app/(website)/components/Skeletons/ProductFormSkeleton';
 
 interface ProductFormProps {
-  form: DynamicFormProps;
-  product: Product;
-  session: any;
+  isEditMode?: boolean;
+  productId?: string;
 }
 
-export const ProductForm: React.FC<ProductFormProps> = ({
-  form,
-  product,
-  session,
-}) => {
-  const { addItemToCart } = useCart();
+export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
+  const { addItemToCart, updateCartItem, products } = useCart();
+  const [product, setProduct] = useAtom(selectedContentProductAtom);
+  const [allProducts] = useAtom(contentProductsAtom);
+  const [form, setForm] = useState<DynamicFormTypes>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
+  const productToEdit = products.find((product) => product._id === productId);
+
   // Generate schema based on form fields
-  const formSchema = generateFormSchema(form?.form?.fields, product);
+  const formSchema = product
+    ? generateFormSchema(form?.form?.fields ?? [], product)
+    : undefined;
 
   const methods = useForm<FieldValues>({
     mode: 'onChange',
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: session?.user?.name,
-      email: session?.user?.email,
-      phone: session?.user?.contact,
-      wordCount: product.minimumWords,
-      quantity: product.minimumQuantity,
-      additionalInfo: '',
-    },
+    resolver: formSchema ? zodResolver(formSchema) : undefined,
+    // defaultValues: isEditMode
+    //   ? {
+    //       wordCount: productToEdit?.wordCount || product?.minimumWords,
+    //       quantity: productToEdit?.quantity || product?.minimumQuantity,
+    //       additionalInfo: productToEdit?.additionalInfo || '',
+    //     }
+    //   : {
+    //       wordCount: product?.minimumWords,
+    //       quantity: product?.minimumQuantity,
+    //       additionalInfo: '',
+    //     },
   });
 
-  const { handleSubmit, register, formState, watch, reset } = methods;
+  const { control, handleSubmit, formState, watch, reset, setValue, register } =
+    methods;
   const { errors } = formState;
 
-  // Watch form values for word count and quantity
   const watchedFields = watch();
 
   const calculateTotalPrice = useCallback(() => {
-    if (product.pricingType === 'perWord') {
+    if (product?.pricingType === 'perWord') {
       const words = parseInt(watchedFields?.wordCount || '0');
       const quantity = parseInt(watchedFields?.quantity || '1');
       const pricePerUnit = product.pricePerUnit;
@@ -152,9 +80,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       // Round to 2 decimal places
       totalPrice = Math.round(totalPrice * 100) / 100;
       return totalPrice;
-    } else if (product.pricingType === 'perQuantity') {
+    } else if (product?.pricingType === 'perQuantity') {
       const quantity = parseInt(watchedFields?.quantity || '1');
-      let totalPrice = product.pricePerUnit * quantity;
+      let totalPrice = product?.pricePerUnit * quantity;
 
       // Round to 2 decimal places
       totalPrice = Math.round(totalPrice * 100) / 100;
@@ -163,28 +91,88 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     return 0;
   }, [watchedFields, product]);
 
-  // Update the price when form values change
   useEffect(() => {
     const price = calculateTotalPrice();
     setTotalPrice(price);
   }, [watchedFields, calculateTotalPrice]);
 
-  const addToCart = async (data: FieldValues) => {
-    // Calculate the total price of the product
+  const addToCart = (data: FieldValues) => {
+    if (!product) return;
     const price = calculateTotalPrice();
-
     const cartItem = generateCartProduct({
       product,
       data,
       price,
     });
-
     addItemToCart(cartItem);
-    // reset();
+    reset();
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    addToCart(data);
+    console.log(data);
+    if (isEditMode && productToEdit) {
+      updateCartItem(productToEdit._id, data);
+    } else {
+      addToCart(data);
+    }
+  };
+
+  const handleProductChange = (selectedProductId: string) => {
+    const selectedProduct = allProducts.find(
+      (product) => product._id === selectedProductId
+    );
+    if (selectedProduct) {
+      setProduct(selectedProduct);
+    }
+  };
+
+  useEffect(() => {
+    const fetchForm = async () => {
+      const formRes = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product?.formId}`
+      );
+      const form = await formRes.json();
+      setForm(form);
+    };
+    if (product?.formId) {
+      fetchForm();
+    }
+  }, [product]);
+
+  useEffect(() => {
+    if (!isEditMode && product && form) {
+      reset({
+        wordCount: product?.minimumWords,
+        quantity: product?.minimumQuantity,
+        additionalInfo: '',
+      });
+    }
+  }, [isEditMode, product, form, reset]);
+
+  useEffect(() => {
+    if (isEditMode && productToEdit) {
+      reset({
+        wordCount: productToEdit.wordCount,
+        quantity: productToEdit.quantity,
+        additionalInfo: productToEdit.additionalInfo,
+      });
+    }
+  }, [isEditMode, productToEdit, reset]);
+
+  if (!product || !form) {
+    return <ProductFormSkeleton />;
+  }
+
+  const ErrorMessage = ({ name, errors }: { name: string; errors: any }) => {
+    if (errors[name]) {
+      return (
+        <p className="mt-1 text-sm text-red-500">
+          {'This field is required'}
+          {/* {String(errors[name]?.message)} */}
+        </p>
+      );
+    }
+    return null;
   };
 
   return (
@@ -223,31 +211,39 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           >
             <div
               className={cn(
-                `flex flex-col items-center justify-between gap-2 border-b-2 border-dashed border-[#1B5A96] pb-[15px] xs:flex-row xs:gap-0`
+                `grid sm:grid-cols-2 items-center gap-3 border-b-2 border-dashed border-[#1B5A96] pb-5`
               )}
             >
-              <div
-                className={cn(
-                  `flex flex-col items-center gap-3 xs:flex-row xs:gap-6`
-                )}
-              >
-                <figure className="relative aspect-[4.5/4.5] w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
+              <div className={cn(`flex items-center gap-3`)}>
+                <figure className="relative aspect-square w-14 shrink-0 overflow-hidden rounded-full bg-gray-100">
                   <Image
-                    src={product.featuredImage}
+                    src={
+                      isEditMode
+                        ? productToEdit?.product.featuredImage || ''
+                        : product?.featuredImage || ''
+                    }
                     alt={'icon'}
-                    fill
-                    priority
-                    className="h-full w-full p-2"
+                    width={50}
+                    height={50}
+                    className="h-full w-full p-3"
                   />
                 </figure>
-                <Title
-                  as="h4"
-                  className={cn(`font-poppins text-[22px] font-semibold`)}
-                >
-                  {product.name}
-                </Title>
+                <Select
+                  disabled={isEditMode}
+                  value={isEditMode ? productToEdit?.product : product}
+                  selectClassName="text-lg"
+                  className={cn(`w-full font-poppins font-semibold`)}
+                  options={allProducts.map((product) => ({
+                    value: product._id,
+                    label: product.name,
+                  }))}
+                  onChange={(selectedOption: any) =>
+                    handleProductChange(selectedOption.value)
+                  }
+                />
               </div>
-              <div>
+
+              <div className={cn(`items-center justify-self-end`)}>
                 <Title
                   as="h5"
                   className={cn(
@@ -268,34 +264,72 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
             {/* Dynamic Form Fields */}
             <div className="mt-5 space-y-6">
-              {/* First pair of fields */}
-              <div className="flex flex-col gap-4 xs:flex-row">
-                {form?.form?.fields.slice(0, 2).map((field) => (
-                  <div key={field.name} className="flex-1">
-                    <Title
-                      className={cn(
-                        `mb-2 block font-poppins text-[16px] font-semibold text-[#515151]`
-                      )}
-                    >
-                      {field.label}
-                      {field.required && (
-                        <span className="text-red-500"> *</span>
-                      )}
-                    </Title>
-                    {field.type === 'textarea' ? (
+              {form?.form?.fields.map((field) => (
+                <div key={field.name} className="flex-1">
+                  <Title
+                    className={cn(
+                      `mb-2 block font-poppins text-[16px] font-semibold text-[#515151]`
+                    )}
+                  >
+                    {field.label}
+                    {field.required && <span className="text-red-500"> *</span>}
+                  </Title>
+
+                  {/* Render Textarea for 'textarea' type */}
+                  {field.type === 'textarea' && (
+                    <>
                       <Textarea
                         placeholder={field.placeholder}
-                        {...register(
-                          field.name as
-                            | 'wordCount'
-                            | 'quantity'
-                            | 'additionalInfo'
-                        )}
-                        className={cn(`w-full border-none`)}
-                        textareaClassName={cn(`bg-[#FAFAFA]`)}
+                        {...register(field.name)}
+                        className={cn(`w-full`)}
+                        textareaClassName={cn(`text-base`)}
                         variant="flat"
+                        required={field.required}
+                        disabled={
+                          (field.name === 'quantity' ||
+                            field.name === 'wordCount') &&
+                          product?.isFreeProduct
+                        }
                       />
-                    ) : (
+                      <ErrorMessage name={field.name} errors={errors} />
+                    </>
+                  )}
+
+                  {/* Render Select for 'select' type */}
+                  {field.type === 'select' && (
+                    <>
+                      <Controller
+                        name={field.name}
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <Select
+                            options={field.options || []}
+                            placeholder={field.placeholder}
+                            value={
+                              field.options?.find(
+                                (option) => option.value === value
+                              ) || ''
+                            } // Set the selected value
+                            onChange={(selectedOption: { value: number }) => {
+                              onChange(selectedOption.value); // Update the form value
+                            }}
+                            className={cn(`w-full`)}
+                            variant="flat"
+                            disabled={
+                              (field.name === 'quantity' ||
+                                field.name === 'wordCount') &&
+                              product?.isFreeProduct
+                            }
+                          />
+                        )}
+                      />
+                      <ErrorMessage name={field.name} errors={errors} />
+                    </>
+                  )}
+
+                  {/* Render Input for other types */}
+                  {field.type !== 'textarea' && field.type !== 'select' && (
+                    <>
                       <Input
                         type={
                           field.type as
@@ -315,9 +349,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         placeholder={field.placeholder}
                         {...register(
                           field.name as
-                            | 'name'
-                            | 'email'
-                            | 'phone'
                             | 'wordCount'
                             | 'quantity'
                             | 'additionalInfo',
@@ -332,227 +363,35 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         disabled={
                           (field.name === 'quantity' ||
                             field.name === 'wordCount') &&
-                          product.isFreeProduct
+                          product?.isFreeProduct
                         }
                       />
-                    )}
-                    {errors[
-                      field.name as 'wordCount' | 'quantity' | 'additionalInfo'
-                    ] && (
-                      <p className="mt-1 text-sm text-red-500">
-                        {String(
-                          errors[
-                            field.name as
-                              | 'name'
-                              | 'email'
-                              | 'phone'
-                              | 'wordCount'
-                              | 'quantity'
-                              | 'additionalInfo'
-                          ]?.message
-                        )}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Second pair of fields */}
-              <div className="flex flex-col gap-4 xs:flex-row">
-                {form?.form?.fields.slice(2, 4).map((field) => (
-                  <div key={field.name} className="flex-1">
-                    <Title
-                      className={cn(
-                        `mb-2 block font-poppins text-[16px] font-semibold text-[#515151]`
-                      )}
-                    >
-                      {field.label}
-                      {field.required && (
-                        <span className="text-red-500"> *</span>
-                      )}
-                    </Title>
-                    {field.type === 'textarea' ? (
-                      <Textarea
-                        placeholder={field.placeholder}
-                        {...register(
-                          field.name as
-                            | 'name'
-                            | 'email'
-                            | 'phone'
-                            | 'wordCount'
-                            | 'quantity'
-                            | 'additionalInfo'
-                        )}
-                        className={cn(`w-full border-none`)}
-                        textareaClassName={cn(`bg-[#FAFAFA]`)}
-                        variant="flat"
-                      />
-                    ) : (
-                      <Input
-                        type={
-                          field.type as
-                            | 'number'
-                            | 'search'
-                            | 'text'
-                            | 'time'
-                            | 'tel'
-                            | 'url'
-                            | 'email'
-                            | 'date'
-                            | 'week'
-                            | 'month'
-                            | 'datetime-local'
-                            | undefined
-                        }
-                        placeholder={field.placeholder}
-                        {...register(
-                          field.name as
-                            | 'name'
-                            | 'email'
-                            | 'phone'
-                            | 'wordCount'
-                            | 'quantity'
-                            | 'additionalInfo',
-                          {
-                            valueAsNumber: field.type === 'number',
-                          }
-                        )}
-                        className={cn(`w-full`)}
-                        variant="flat"
-                        inputClassName={cn(`bg-[#FAFAFA]`)}
-                        required={field.required}
-                      />
-                    )}
-                    {errors[
-                      field.name as 'wordCount' | 'quantity' | 'additionalInfo'
-                    ] && (
-                      <p className="mt-1 text-sm text-red-500">
-                        {String(
-                          errors[
-                            field.name as
-                              | 'name'
-                              | 'email'
-                              | 'phone'
-                              | 'wordCount'
-                              | 'quantity'
-                              | 'additionalInfo'
-                          ]?.message
-                        )}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Remaining fields in individual rows */}
-              {form?.form?.fields.slice(4).map((field) => (
-                <div key={field.name}>
-                  <Title
-                    className={cn(
-                      `mb-2 block font-poppins text-[16px] font-semibold text-[#515151]`
-                    )}
-                  >
-                    {field.label}
-                    {field.required && <span className="text-red-500"> *</span>}
-                  </Title>
-                  {field.type === 'textarea' ? (
-                    <Textarea
-                      placeholder={field.placeholder}
-                      {...register(
-                        field.name as
-                          | 'name'
-                          | 'email'
-                          | 'phone'
-                          | 'wordCount'
-                          | 'quantity'
-                          | 'additionalInfo'
-                      )}
-                      className={cn(`w-full border-none`)}
-                      textareaClassName={cn(`bg-[#FAFAFA]`)}
-                      variant="flat"
-                    />
-                  ) : (
-                    <Input
-                      type={
-                        field.type as
-                          | 'number'
-                          | 'search'
-                          | 'text'
-                          | 'time'
-                          | 'tel'
-                          | 'url'
-                          | 'email'
-                          | 'date'
-                          | 'week'
-                          | 'month'
-                          | 'datetime-local'
-                          | undefined
-                      }
-                      placeholder={field.placeholder}
-                      {...register(
-                        field.name as
-                          | 'name'
-                          | 'email'
-                          | 'phone'
-                          | 'wordCount'
-                          | 'quantity'
-                          | 'additionalInfo',
-                        {
-                          valueAsNumber: field.type === 'number',
-                        }
-                      )}
-                      required={field.required}
-                      className={cn(`w-full`)}
-                      variant="flat"
-                      inputClassName={cn(`bg-[#FAFAFA]`)}
-                    />
-                  )}
-                  {errors[
-                    field.name as
-                      | 'name'
-                      | 'email'
-                      | 'phone'
-                      | 'wordCount'
-                      | 'quantity'
-                      | 'additionalInfo'
-                  ] && (
-                    <p className="mt-1 text-sm text-red-500">
-                      {String(
-                        errors[
-                          field.name as
-                            | 'name'
-                            | 'email'
-                            | 'phone'
-                            | 'wordCount'
-                            | 'quantity'
-                            | 'additionalInfo'
-                        ]?.message
-                      )}
-                    </p>
+                      <ErrorMessage name={field.name} errors={errors} />
+                    </>
                   )}
                 </div>
               ))}
 
               <div
                 className={cn(
-                  `flex flex-col items-center justify-between gap-5 sm:flex-row sm:gap-10`
+                  `flex flex-col gap-5 sm:flex-row sm:gap-10`
                 )}
               >
                 <Button
-                  title="Add To Cart"
-                  className="flex w-full justify-center bg-[#1B5A96]"
+                  title={isEditMode ? 'Update Product' : 'Add To Cart'}
+                  className="flex w-full md:w-1/2 justify-center bg-[#1B5A96]"
                   svgInnerClassName="!text-[#1B5A96]"
                   svgClassName="bg-white"
                   textClassName="text-white"
                   type="submit"
                 />
-                <Button
+                {/* <Button
                   title="Instant Payment"
                   className="flex w-full justify-center bg-white"
                   svgInnerClassName="text-white"
                   svgClassName="bg-[#1B5A96]"
                   type="submit"
-                />
+                /> */}
               </div>
             </div>
           </div>

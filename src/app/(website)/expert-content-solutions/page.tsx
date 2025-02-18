@@ -22,10 +22,8 @@ import CldImage from '@web-components/CloudinaryImageComponent';
 import { ProductSection } from '@web-components/ContentProducts';
 const Landing = async () => {
   const fetchProductCategory = await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/category/read-category?identifier=content-writing&children=true&childrenProducts=true&products=true`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/category/read-category?identifier=content-writing&products=true`
   );
-  const categories: ProductCategory[] =
-    fetchProductCategory.data.data.children || [];
 
   const products: Product[] = fetchProductCategory.data.data.products || [];
   
@@ -33,7 +31,7 @@ const Landing = async () => {
     <>
       <HeroSection />
       <StandOutSection />
-      <ProductSection categories={categories} products={products}/>
+      <ProductSection products={products}/>
       <ApproachSection />
       <SurferSEOSection />
       <ContactUsSection />
