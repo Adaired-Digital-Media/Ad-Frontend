@@ -228,7 +228,7 @@ export function CartProvider({
       } else {
         // Optimistically update the local state
         dispatch({ type: 'REMOVE_ITEM', cartItemId: cartItemId });
-        toast.success('Product removed successfully')
+        toast.success('Product removed successfully');
       }
     },
     [session, removeCartItemFromBackend, state.products, handleApiError]

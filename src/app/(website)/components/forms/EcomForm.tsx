@@ -51,7 +51,6 @@ export const EcomPageForm = () => {
     const token = await executeRecaptcha('ecom_page_form');
     if (token) {
       data.gRecaptchaToken = token;
-      console.log('Submitted data', data);
       reset();
       try {
         const response = await fetch('/api/zoho/leadRegister', {

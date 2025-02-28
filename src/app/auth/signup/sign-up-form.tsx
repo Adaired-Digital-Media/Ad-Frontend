@@ -39,7 +39,6 @@ export default function SignUpForm() {
       if (response.status !== 201) {
         throw new Error('Failed to register user');
       }
-      console.log('User registered successfully');
     } catch (error) {
       console.error(error);
     }
