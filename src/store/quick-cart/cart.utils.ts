@@ -30,40 +30,12 @@ export function updateItem(
       return {
         ...item,
         ...otherUpdates,
-        quantity: otherUpdates.quantity ?? newQuantity, // Use provided quantity if available
+        quantity: otherUpdates.quantity ?? newQuantity, 
       };
     }
     return item;
   });
 }
-
-// cartItems.map((item) => {
-//   if (item._id === cartItemId) {
-//     console.log('Item : ', item);
-//     let newQuantity = item.quantity;
-//     console.log(newQuantity);
-
-//     // Handle quantity updates if `action` is provided
-//     if (updates.action) {
-//       newQuantity =
-//         updates.action === 'INCREMENT'
-//           ? item.quantity + 1
-//           : Math.max(item.quantity - 1, 0);
-//     }
-
-//     // Destructure to remove the action property from updates
-//     const { action, ...otherUpdates } = updates;
-
-//     // Merge the updates into the item, overriding quantity with newQuantity
-//     return {
-//       ...item,
-//       ...otherUpdates,
-//       quantity: newQuantity,
-//     };
-//   }
-//   return item;
-// });
-// }
 
 export function emptyCart(): Item[] {
   return [];

@@ -109,7 +109,6 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
     if (isEditMode && productToEdit) {
       updateCartItem(productToEdit._id, data);
     } else {

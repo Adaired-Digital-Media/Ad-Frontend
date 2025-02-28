@@ -17,6 +17,7 @@ export const useCartAPI = () => {
   const sendCartToBackend = useCallback(
     async (items: CartItem[], endpoint: string) => {
       if (items.length === 0) return;
+
       try {
         const payload = {
           products: items.map((item) => ({

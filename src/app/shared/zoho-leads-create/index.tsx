@@ -47,7 +47,7 @@ const ZohoLeadCreateForm = () => {
   const [isLoading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<ZohoLeadInput> = async (data) => {
-    console.log('Payload : ', data);
+
     setLoading(true);
 
     toast.promise(axios.post('/api/zoho/createLead', data), {

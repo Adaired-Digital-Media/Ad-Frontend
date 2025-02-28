@@ -44,7 +44,15 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
         </div>
         <div
           className={cn(
-            `grid gap-x-4 gap-y-4 xs:grid-cols-2 md:grid-cols-3 opt-md:grid-cols-4 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px]`
+            // `grid gap-x-4 gap-y-4 xs:grid-cols-2 md:grid-cols-3 opt-md:grid-cols-4 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px] mx-auto`
+            
+            `flex flex-wrap justify-center gap-x-4 gap-y-4`,
+            `xs:[&>*]:w-[calc(50%-0.5rem)]`, // 2 columns
+            `md:[&>*]:w-[calc(33.333%-0.667rem)]`, // 3 columns
+            `opt-md:[&>*]:w-[calc(25%-0.75rem)]`, // 4 columns (custom breakpoint)
+            `lg:[&>*]:w-[calc(25%-1.125rem)]`, // 4 columns
+            `xl:[&>*]:w-[calc(25%-2rem)]`, // 4 columns with larger gaps
+            `lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px] transition-all`
           )}
         >
           {products.length > 0 ? (
