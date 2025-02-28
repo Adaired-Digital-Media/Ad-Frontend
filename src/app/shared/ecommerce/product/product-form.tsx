@@ -35,9 +35,10 @@ interface ProductFormProps {
 export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
   const { addItemToCart, updateCartItem, products } = useCart();
   const [product, setProduct] = useAtom(selectedContentProductAtom);
-  const [allProducts] = useAtom(contentProductsAtom);
+  const [allProducts, setAllProducts] = useAtom(contentProductsAtom);
   const [form, setForm] = useState<DynamicFormTypes>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const productToEdit = products.find((product) => product._id === productId);
 
@@ -49,17 +50,6 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
   const methods = useForm<FieldValues>({
     mode: 'onChange',
     resolver: formSchema ? zodResolver(formSchema) : undefined,
-    // defaultValues: isEditMode
-    //   ? {
-    //       wordCount: productToEdit?.wordCount || product?.minimumWords,
-    //       quantity: productToEdit?.quantity || product?.minimumQuantity,
-    //       additionalInfo: productToEdit?.additionalInfo || '',
-    //     }
-    //   : {
-    //       wordCount: product?.minimumWords,
-    //       quantity: product?.minimumQuantity,
-    //       additionalInfo: '',
-    //     },
   });
 
   const { control, handleSubmit, formState, watch, reset, setValue, register } =
@@ -67,6 +57,36 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
   const { errors } = formState;
 
   const watchedFields = watch();
+
+  // Fetch all products if contentProductsAtom is empty
+  useEffect(() => {
+    const fetchAllProducts = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product`
+        ); 
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const productsData = await response.json();
+        setAllProducts(productsData.data);
+        if (!product && productsData.length > 0) {
+          setProduct(productsData[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (!Array.isArray(allProducts) || allProducts.length === 0) {
+      fetchAllProducts();
+    } else {
+      setIsLoading(false);
+    }
+  }, [allProducts, setAllProducts, setProduct, product]);
 
   const calculateTotalPrice = useCallback(() => {
     if (product?.pricingType === 'perWord') {
@@ -122,6 +142,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
     );
     if (selectedProduct) {
       setProduct(selectedProduct);
+      setIsLoading(false);
     }
   };
 
@@ -132,11 +153,23 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
       );
       const form = await formRes.json();
       setForm(form);
+      setIsLoading(false);
     };
+
+    let timeoutId: NodeJS.Timeout;
+
     if (product?.formId) {
+      // Set default product after 0.5s if still loading
+      timeoutId = setTimeout(() => {
+        if (!form && allProducts.length > 0) {
+          setProduct(allProducts[0]);
+        }
+      }, 500);
+
       fetchForm();
     }
-  }, [product]);
+    return () => clearTimeout(timeoutId);
+  }, [product, allProducts, setProduct]);
 
   useEffect(() => {
     if (!isEditMode && product && form) {
@@ -158,7 +191,14 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
     }
   }, [isEditMode, productToEdit, reset]);
 
-  if (!product || !form) {
+  // Initial product setup
+  useEffect(() => {
+    if (!product && allProducts.length > 0) {
+      setProduct(allProducts[0]);
+    }
+  }, [product, allProducts, setProduct]);
+
+  if (isLoading || !product || !form) {
     return <ProductFormSkeleton />;
   }
 
@@ -210,7 +250,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
           >
             <div
               className={cn(
-                `grid sm:grid-cols-2 items-center gap-3 border-b-2 border-dashed border-[#1B5A96] pb-5`
+                `grid items-center gap-3 border-b-2 border-dashed border-[#1B5A96] pb-5 sm:grid-cols-2`
               )}
             >
               <div className={cn(`flex items-center gap-3`)}>
@@ -371,26 +411,16 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
                 </div>
               ))}
 
-              <div
-                className={cn(
-                  `flex flex-col gap-5 sm:flex-row sm:gap-10`
-                )}
-              >
+              <div className={cn(`flex flex-col gap-5 sm:flex-row sm:gap-10`)}>
                 <Button
                   title={isEditMode ? 'Update Product' : 'Add To Cart'}
-                  className="flex w-full md:w-1/2 justify-center bg-[#1B5A96]"
+                  className="flex w-full justify-center bg-[#1B5A96] md:w-1/2"
                   svgInnerClassName="!text-[#1B5A96]"
                   svgClassName="bg-white"
                   textClassName="text-white"
                   type="submit"
                 />
-                {/* <Button
-                  title="Instant Payment"
-                  className="flex w-full justify-center bg-white"
-                  svgInnerClassName="text-white"
-                  svgClassName="bg-[#1B5A96]"
-                  type="submit"
-                /> */}
+
               </div>
             </div>
           </div>
