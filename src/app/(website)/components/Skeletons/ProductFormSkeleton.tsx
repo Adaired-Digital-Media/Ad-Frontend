@@ -59,25 +59,13 @@ const ProductFormSkeleton = () => {
           </div>
         </div>
 
-        <div
-          className={cn(
-            `flex flex-col items-center justify-between gap-5 sm:flex-row sm:gap-10`
-          )}
-        >
+        <div className={cn(`flex flex-col gap-5 sm:flex-row sm:gap-10`)}>
           <Button
-            title="Add To Cart"
-            className="flex w-full justify-center bg-[#1B5A96]"
+            title={'Add To Cart'}
+            className="flex w-full justify-center bg-[#1B5A96] md:w-1/2"
             svgInnerClassName="!text-[#1B5A96]"
             svgClassName="bg-white"
             textClassName="text-white"
-            type="submit"
-            onClick={() => console.log('Clicked')}
-          />
-          <Button
-            title="Instant Payment"
-            className="flex w-full justify-center bg-white"
-            svgInnerClassName="text-white"
-            svgClassName="bg-[#1B5A96]"
             type="submit"
           />
         </div>
