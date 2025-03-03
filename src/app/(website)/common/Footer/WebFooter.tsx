@@ -206,32 +206,29 @@ const WebFooter = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/services/paid-media-and-advertising" className="">
-                  Paid Media & Advertising
+                <Link
+                  href="/services/digital-marketing-company-usa"
+                  className=""
+                >
+                  Digital Marketing Services USA
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/services/compelling-content-marketing"
+                  href="/services/digital-marketing-company-india"
                   className=""
                 >
-                  Compelling Content Marketing
+                  Digital Marketing Company India
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/services/digital-creative-and-logo-design"
-                  className=""
-                >
-                  Digital Creative & Logo Design
+                <Link href="/services/seo-company-usa" className="">
+                  SEO Services USA
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/services/strategic-social-media-management"
-                  className=""
-                >
-                  Strategic Social Media Management
+                <Link href="/services/web-development-company-usa" className="">
+                  Web Development Company USA
                 </Link>
               </li>
             </ul>
@@ -293,7 +290,9 @@ const WebFooter = () => {
         </div>
 
         <div className="mt-6 flex flex-col-reverse items-center justify-center border-t py-6 text-center md:flex-row md:justify-between">
-          <div>Copyright © {new Date().getFullYear()} - AdAired Digital Media</div>
+          <div>
+            Copyright © {new Date().getFullYear()} - AdAired Digital Media
+          </div>
           <div className="flex gap-5 py-2 sm:gap-1 sm:bg-transparent">
             <Link href="/terms-and-conditions">Terms & Conditions </Link>
             <span className="hidden sm:block">/</span>
