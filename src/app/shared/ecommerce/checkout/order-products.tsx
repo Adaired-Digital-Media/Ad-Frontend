@@ -20,7 +20,7 @@ export default function OrderProducts({
   className?: string;
   itemClassName?: string;
   showControls?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   if (!items.length) {
     return (
