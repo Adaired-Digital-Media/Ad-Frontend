@@ -29,12 +29,12 @@ export default {
             }
           );
 
-          const { accessToken, userData } = res.data;
+          const { accessToken, user } = res.data;
 
-          if (!accessToken || !userData) {
+          if (!accessToken || !user) {
             throw new Error('Invalid credentials.');
           }
-          return { accessToken, ...userData };
+          return { accessToken, ...user };
         } catch (err: any) {
           if (err instanceof Error) {
             // Return `null` to indicate that the credentials are invalid

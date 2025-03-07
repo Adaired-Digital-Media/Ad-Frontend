@@ -182,31 +182,51 @@ export function CartProvider({
       cartItemId: string,
       updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' }
     ) => {
-      dispatch({
-        type: 'UPDATE_ITEM',
-        cartItemId,
-        updates,
-        callback: (newState: State) => {
-          // Find the updated item in the new state
-          const updatedItem = newState.products.find(
-            (item) => item._id === cartItemId
-          );
-          if (
-            session &&
-            updatedItem &&
-            updatedItem !==
-              state.products.find((item) => item._id === cartItemId)
-          ) {
-            setUpdatedItem(updatedItem);
-          }
-        },
-      });
-      if (!session) toast.success('Product Updated successfully');
+      const originalItem = state.products.find(
+        (item) => item._id === cartItemId
+      );
+
+      if (originalItem) {
+        const hasChanges = Object.keys(updates).some((key) => {
+          return updates[key as keyof Item] !== originalItem[key as keyof Item];
+        });
+
+        if (!hasChanges) {
+          toast.success('No changes made!');
+          return;
+        }
+
+        dispatch({
+          type: 'UPDATE_ITEM',
+          cartItemId,
+          updates,
+          callback: (newState: State) => {
+            const updatedItem = newState.products.find(
+              (item) => item._id === cartItemId
+            );
+
+            if (session) {
+              if (updatedItem && updatedItem !== originalItem) {
+                setUpdatedItem(updatedItem);
+              }
+            } else {
+              if (updatedItem) {
+                toast.success('Product updated successfully', {
+                  id: `update-${cartItemId}`,
+                });
+              }
+            }
+          },
+        });
+      } else {
+        toast.error('Item not found in cart', {
+          id: `notfound-${cartItemId}`,
+        });
+      }
     },
-    [session?.user?.accessToken]
+    [session?.user?.accessToken, state.products]
   );
 
-  // ******************** Remove Cart Item *********************
   const removeCartItem = useCallback(
     async (cartItemId: string) => {
       if (session) {

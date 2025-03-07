@@ -57,11 +57,6 @@ export default async function OrdersPage() {
         isDashboard
       >
         <div className="mt-4 flex items-center gap-3 @lg:mt-0">
-          <ExportButton
-            data={orderData}
-            fileName="order_data"
-            header="Order ID,Name,Email,Avatar,Items,Price,Status,Created At,Updated At"
-          />
           <Link
             href={routes?.eCommerce?.products}
             className="w-full @lg:w-auto"

@@ -20,7 +20,7 @@ export default function Ecommercelayout({
     <SessionProvider>
       <CartProvider>
         <SkypeFloatingIcon
-          className="bottom-24"
+          className="bottom-20"
           skypeID="https://join.skype.com/invite/yMb2lmQ0Vs5i"
         />
         <WhatsappFloatingIcon phoneNumber="918907400008" />

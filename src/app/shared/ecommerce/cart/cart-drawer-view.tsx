@@ -28,7 +28,7 @@ export default function CartDrawerView({
   const isCartEmpty = isEmpty(items);
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex h-full w-full flex-col z-[2247483648] ">
       <DrawerHeader
         heading="Shopping Cart"
         onClose={() => setOpenDrawer(false)}
@@ -47,6 +47,7 @@ export default function CartDrawerView({
           items={items}
           className="mb-5 gap-0 divide-y border-b border-gray-100"
           itemClassName="px-4 py-0.5 md:px-6"
+          onClick={() => setOpenDrawer(false)}
         />
       )}
 

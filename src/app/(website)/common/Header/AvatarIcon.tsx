@@ -10,7 +10,7 @@ export default function UserAvatarIcon({ session }: { session: any }) {
 
   const [firstName, lastName] = session?.user?.name?.split(' ') || ['', ''];
   const initials =
-    `${firstName?.charAt(0)}${lastName?.charAt(0)}`.toUpperCase();
+    `${firstName?.charAt(0)}${lastName?.charAt(0) || ''}`.toUpperCase();
   return (
     <div>
       <Dropdown placement="bottom-end">

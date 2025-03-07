@@ -2,7 +2,7 @@ export const routes = {
   auth: {
     signUp: '/auth/signup',
     signIn: '/auth/signin',
-    resetPassword: '/auth/reset-password',
+    forgotPassword: "/auth/forgot-password",
     error: '/auth/error',
   },
   root: {
@@ -312,4 +312,6 @@ export const routes = {
     orders: '/dashboard/orders',
     invoices: '/dashboard/invoices',
   },
+  termsNconditions: "https://www.adaired.com/terms-and-conditions",
+  privacyPolicy: "https://www.adaired.com/privacy-policy",
 };

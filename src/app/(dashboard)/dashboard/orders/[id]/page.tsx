@@ -1,16 +1,33 @@
-import { Button } from 'rizzui';
 import { routes } from '@/config/routes';
 import PageHeader from '@/app/shared/page-header';
-import Link from 'next/link';
 import OrderView from '@/app/shared/ecommerce/order/order-view';
+import axios from 'axios';
+import { auth } from '@/auth';
 
-export default function OrderDetailsPage({ params }: any) {
+async function fetchOrder(orderNumber: string) {
+  const session = await auth();
+
+  const res = await axios.get(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/orders/getUserOrders?orderNumber=${orderNumber}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.user?.accessToken}`,
+      },
+    }
+  );
+  const data = res.data.data;
+  return data;
+}
+
+export default async function OrderDetailsPage({ params }: any) {
+  const session = await auth();
   const pageHeader = {
     title: `Order #${params.id}`,
     breadcrumb: [
       {
         href: routes.userDashboard.dashboard,
-        name: 'E-Commerce',
+        name: 'Dashboard',
       },
       {
         href: routes.eCommerce.orders,
@@ -21,6 +38,9 @@ export default function OrderDetailsPage({ params }: any) {
       },
     ],
   };
+
+  const order = await fetchOrder(params.id);
+
   return (
     <>
       <PageHeader
@@ -37,7 +57,7 @@ export default function OrderDetailsPage({ params }: any) {
           </Button>
         </Link> */}
       </PageHeader>
-      <OrderView />
+      <OrderView order={order} session={session} />
     </>
   );
 }

@@ -25,17 +25,17 @@ const IconList: FC<IIconList> = ({
     <div
       className={cn(`inline-flex items-center space-x-4 ${containerClassName}`)}
     >
-      <div className={cn(`inline-block ${iconContainerClassName}`)}>
+      <div className={cn(`inline-block shrink-0  ${iconContainerClassName}`)}>
         {isSvg ? (
           <Image
             src={icon}
             alt={"icon"}
             height={32}
             width={32}
-            className={cn(`w-full h-full ${iconClassName} `)}
+            className={cn(`w-full h-full shrink-0 ${iconClassName} `)}
           />
         ) : (
-          <Icon icon={icon} className={cn(`w-full h-full ${iconClassName}`)} />
+          <Icon icon={icon} className={cn(`w-full h-full shrink-0 ${iconClassName}`)} />
         )}
       </div>
       <p className={cn(`inline-block ${titleClassName}`)}>{title}</p>

@@ -18,11 +18,11 @@ const WhatsappFloatingIcon = ({
     <Link
       href={`https://api.whatsapp.com/send/?phone=${phoneNumber}`}
       target="_blank"
-      className="relative"
+      className="relative  z-[99999]"
     >
       <div
         className={cn(
-          `w-15 h-15 after:shadow-[0 0 0 0 rgba(37, 211, 101, 0)] after:animate-whatsappFloatingPulse fixed bottom-5 left-5 z-[9998] flex cursor-pointer select-none items-center justify-center rounded-full bg-[#25d366] shadow-lg after:absolute after:h-[55px] after:w-[55px] after:rounded-full after:border-inherit after:content-[''] ${className}`
+          `scale-[0.85] sm:scale-100 w-15 h-15 after:shadow-[0 0 0 0 rgba(37, 211, 101, 0)] after:animate-whatsappFloatingPulse fixed bottom-2.5 left-5 z-[9998] flex cursor-pointer select-none items-center justify-center rounded-full bg-[#25d366] shadow-lg after:absolute after:h-[55px] after:w-[55px] after:rounded-full after:border-inherit after:content-[''] ${className}`
         )}
         aria-hidden="true"
       >

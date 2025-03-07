@@ -6,7 +6,32 @@ export const pageLinks = [
   // label start
   {
     name: 'Dashboard',
-    href: routes.eCommerce.home,
+  },
+  // label end
+  {
+    name: 'Dashboard',
+    href: routes.userDashboard.dashboard,
+  },
+  // label start
+  {
+    name: 'User',
+  },
+  // label end
+  {
+    name: 'Account Settings',
+    href: routes.userDashboard.accountSettings,
+  },
+  // label start
+  {
+    name: 'Shop',
+  },
+  {
+    name: 'Cart',
+    href: routes.userDashboard.cart,
+  },
+  {
+    name: 'Orders',
+    href: routes.userDashboard.orders,
   },
   // label end
   // {

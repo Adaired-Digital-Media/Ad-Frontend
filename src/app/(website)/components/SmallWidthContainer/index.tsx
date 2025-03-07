@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { ISmallContainerType } from '@app-types/SmallContainerTypes';
 
 const SmallWidthContainer: FC<ISmallContainerType> = ({
@@ -12,7 +12,9 @@ const SmallWidthContainer: FC<ISmallContainerType> = ({
     <section
       {...props}
       className={cn(
-        `m-auto box-border w-full max-w-[1340px] scale-[0.9] py-6 opt-md:scale-[0.8] xl:scale-[0.85] xl:py-10 2xl:scale-100 2xl:py-16 3xl:py-24 ${className} `
+        `m-auto box-border w-full px-4 py-10 sm:py-10 md:px-10 md:py-10 lg:px-6 lg:py-12 xl:px-5 xl:py-14 2xl:px-0 2xl:py-16`,
+        `max-w-full sm:max-w-[740px] md:max-w-[900px] lg:max-w-[1100px] xl:max-w-[1240px] 2xl:max-w-[1340px]`,
+        className
       )}
       style={typeof style === 'string' ? undefined : style}
     >

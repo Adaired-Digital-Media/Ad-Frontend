@@ -152,7 +152,11 @@ export default function CartPageWrapper() {
   if (products.length <= 0 && areProductsLoaded) {
     return (
       <TagName className="@container">
-        <Empty image={<EmptyProductBoxIcon />} text="No Product in the Cart" />
+        <Empty
+          image={<EmptyProductBoxIcon />}
+          text="No Product in the Cart"
+          className="p-20"
+        />
       </TagName>
     );
   }
@@ -217,7 +221,7 @@ function CartCalculations({
         {products.map((item) => (
           <div key={item?._id} className="flex items-center justify-between">
             <Title as="h3" className="mb-1 text-base font-semibold">
-                {item?.product?.name}
+              {item?.product?.name}
             </Title>
             <div className="text-right">
               {toCurrency(item?.totalPrice as number)}

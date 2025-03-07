@@ -64,7 +64,7 @@ const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
         variant="flat"
         className="h-auto px-1 py-[5px]"
         onClick={handleDecrement}
-        disabled={isFreeProduct}
+        disabled={isFreeProduct || product.quantity === 1}
       >
         <PiMinusBold className="h-4 w-4" />
       </ActionIcon>

@@ -26,8 +26,8 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
   }, []);
 
   return (
-    <section className={cn(`bg-[#F6FBFF]`)} id="products">
-      <SmallContainer className="py-0">
+    <div className={cn(`bg-[#F6FBFF]`)} id="products">
+      <SmallContainer>
         <div className={cn(`space-y-[15px] pb-[40px] text-center`)}>
           <IconList
             icon={ProductSectionDetails.subHeadingIconUrl}
@@ -45,14 +45,15 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
         <div
           className={cn(
             // `grid gap-x-4 gap-y-4 xs:grid-cols-2 md:grid-cols-3 opt-md:grid-cols-4 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px] mx-auto`
-            
+
             `flex flex-wrap justify-center gap-x-4 gap-y-4`,
+            // `xs:[&>*]:w-full`, // 1 columns
             `xs:[&>*]:w-[calc(50%-0.5rem)]`, // 2 columns
             `md:[&>*]:w-[calc(33.333%-0.667rem)]`, // 3 columns
             `opt-md:[&>*]:w-[calc(25%-0.75rem)]`, // 4 columns (custom breakpoint)
             `lg:[&>*]:w-[calc(25%-1.125rem)]`, // 4 columns
             `xl:[&>*]:w-[calc(25%-2rem)]`, // 4 columns with larger gaps
-            `lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px] transition-all`
+            `transition-all lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px]`
           )}
         >
           {products.length > 0 ? (
@@ -60,10 +61,6 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
               .filter((product) => product.status === 'Active')
               .map((product) =>
                 typeof product === 'object' ? (
-                  <div
-                    className="flex h-full w-full items-center justify-center"
-                    key={product._id}
-                  >
                     <IconBox
                       key={product._id}
                       icon={product.featuredImage}
@@ -73,13 +70,12 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
                       buttonText={'Order Now'}
                       boxLink={routes.eCommerce.contentProductForm}
                       buttonLink={routes.eCommerce.contentProductForm}
-                      buttonClassName={`bg-[#424242] rounded-full mt-10 xs:mt-4 sm:mt-10 lg:mt-[55px] lg:hidden lg:group-hover:block mx-auto`}
-                      containerClassName={`text-center p-5 sm:p-3 md:p-5 lg:p-[30px] rounded-[20px] bg-white aspect-square w-auto w-full h-full max-h-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
-                      titleClassName={`font-poppins text-lg sm:text-[20px] font-medium text-black `}
+                      buttonClassName={`bg-[#424242] rounded-full mt-4 xs:mt-4 sm:mt-5 opt-md:mt-10 lg:mt-[55px] opt-md:hidden opt-md:group-hover:block mx-auto`}
+                      containerClassName={`text-center p-5 sm:p-3 md:p-5 lg:p-[30px] rounded-[20px] bg-white aspect-square w-auto w-full h-full max-h-[286px] max-w-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
+                      titleClassName={`font-poppins text-base opt-md:text-[20px] font-medium text-black `}
                       iconContainerClassName={`pb-[15px]`}
                       onClick={() => setSelectedProduct(product)}
                     />
-                  </div>
                 ) : null
               )
           ) : (
@@ -90,6 +86,6 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
           )}
         </div>
       </SmallContainer>
-    </section>
+    </div>
   );
 };

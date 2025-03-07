@@ -139,20 +139,36 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
         },
         marquee: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(calc(-100% - var(--gap)))' },
+          from: {
+            transform: 'translateX(0)',
+          },
+          to: {
+            transform: 'translateX(calc(-100% - var(--gap)))',
+          },
         },
         'marquee-vertical': {
-          from: { transform: 'translateY(0)' },
-          to: { transform: 'translateY(calc(-100% - var(--gap)))' },
+          from: {
+            transform: 'translateY(0)',
+          },
+          to: {
+            transform: 'translateY(calc(-100% - var(--gap)))',
+          },
         },
         scroll: {
           to: {
@@ -209,15 +225,22 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
           },
         },
         whatsappFloatingPulse: {
-          '0%': { boxShadow: '0 0 0 0 rgba(37, 211, 101, 0.75)' },
-          '100%': { boxShadow: '0 0 0 5px rgba(37, 211, 101, 0)' },
+          '0%': {
+            boxShadow: '0 0 0 0 rgba(37, 211, 101, 0.75)',
+          },
+          '100%': {
+            boxShadow: '0 0 0 5px rgba(37, 211, 101, 0)',
+          },
         },
         skypeFloatingPulse: {
-          '0%': { boxShadow: '0 0 0 0 rgba(0, 175, 240, 0.75)' },
-          '100%': { boxShadow: '0 0 0 5px rgba(37, 211, 101, 0)' },
+          '0%': {
+            boxShadow: '0 0 0 0 rgba(0, 175, 240, 0.75)',
+          },
+          '100%': {
+            boxShadow: '0 0 0 5px rgba(37, 211, 101, 0)',
+          },
         },
       },
-
       animation: {
         whatsappFloatingPulse: 'whatsappFloatingPulse 1s infinite',
         skypeFloatingPulse: 'skypeFloatingPulse 1s infinite',
@@ -232,15 +255,16 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
         skeleton: 'skeletonWave 1.6s linear 0.5s infinite',
         'spinner-ease-spin': 'spinnerSpin 0.8s ease infinite',
         'spinner-linear-spin': 'spinnerSpin 0.8s linear infinite',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
       backgroundImage: {
         skeleton: '`linear-gradient(90deg,transparent,#ecebeb,transparent)`',
         'skeleton-dark':
           '`linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)`',
-        'hero-image-bhw': "url('/assets/images/hero_image_bhw.png')",
-        'footer-texture': "url('/img/footer-texture.png')",
+        'hero-image-bhw': 'url(`/assets/images/hero-image_bhw.png`)',
+        'footer-texture': 'url(`/img/footer-texture.png`)',
       },
-
       content: {
         underline: 'url("/public/underline.svg")',
       },
@@ -254,7 +278,6 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
       gridTemplateColumns: {
         '18': 'repeat(18, minmax(0, 1fr))',
       },
-
       height: {
         'custom-100p-300': 'calc(100% + 300px)',
       },

@@ -9,8 +9,9 @@ import TablePagination from '@core/components/table/pagination';
 import { cn } from '@core/utils/class-names';
 import { Input } from 'rizzui';
 import { PiMagnifyingGlassBold } from 'react-icons/pi';
+import { OrderType } from '@/types';
 
-export type OrdersDataType = (typeof orderData1)[number];
+export type OrdersDataType = OrderType;
 
 export default function RecentOrder({
   className,
@@ -19,7 +20,6 @@ export default function RecentOrder({
   className?: string;
   ordersData: any;
 }) {
-
   const { table, setData } = useTanStackTable<OrdersDataType>({
     tableData: ordersData,
     columnConfig: ordersColumns(false),
@@ -38,7 +38,6 @@ export default function RecentOrder({
       enableColumnResizing: false,
     },
   });
-
 
   return (
     <WidgetCard

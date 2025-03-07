@@ -108,21 +108,25 @@ export default function Filters<TData extends Record<string, any>>({
 function FilterElements<T extends Record<string, any>>({
   table,
 }: TableToolbarProps<T>) {
-  const priceFieldValue = (table.getColumn('amount')?.getFilterValue() ?? [
+  const priceFieldValue = (table.getColumn('totalPrice')?.getFilterValue() ?? [
     '',
     '',
   ]) as string[];
-  const createdDate =
-    table.getColumn('createdAt')?.getFilterValue() ?? ([null, null] as any);
-  const dueDate =
-    table.getColumn('updatedAt')?.getFilterValue() ?? ([null, null] as any);
+  const createdDate = (table.getColumn('createdAt')?.getFilterValue() ?? [
+    null,
+    null,
+  ]) as [Date | null, Date | null];
+  const dueDate = (table.getColumn('updatedAt')?.getFilterValue() ?? [
+    null,
+    null,
+  ]) as [Date | null, Date | null];
   const isFiltered =
     table.getState().globalFilter || table.getState().columnFilters.length > 0;
   return (
     <>
       <PriceField
         value={priceFieldValue}
-        onChange={(v) => table.getColumn('amount')?.setFilterValue(v)}
+        onChange={(v) => table.getColumn('totalPrice')?.setFilterValue(v)}
         label="Amount"
       />
       <DateFiled
@@ -130,10 +134,13 @@ function FilterElements<T extends Record<string, any>>({
         dateFormat={'dd-MMM-yyyy'}
         className="w-full"
         placeholderText="Select created date"
-        endDate={getDateRangeStateValues(createdDate[1])!}
-        selected={getDateRangeStateValues(createdDate[0])}
-        startDate={getDateRangeStateValues(createdDate[0])!}
-        onChange={(date) => table.getColumn('createdAt')?.setFilterValue(date)}
+        startDate={createdDate[0]!}
+        endDate={createdDate[1]!}
+        // selected={createdDate[0]}
+        onChange={(date) => {
+          table.getColumn('createdAt')?.setFilterValue(date);
+          console.log('Date : ', date);
+        }}
         inputProps={{
           label: 'Created Date',
         }}
@@ -143,12 +150,11 @@ function FilterElements<T extends Record<string, any>>({
         dateFormat={'dd-MMM-yyyy'}
         className="w-full"
         placeholderText="Select modified date"
-        endDate={getDateRangeStateValues(dueDate[1])!}
-        selected={getDateRangeStateValues(dueDate[0])}
-        startDate={getDateRangeStateValues(dueDate[0])!}
+        endDate={dueDate[1]!}
+        selected={dueDate[0]}
+        startDate={dueDate[0]!}
         onChange={(date) => table.getColumn('updatedAt')?.setFilterValue(date)}
         inputProps={{
-          label: 'Modified Date',
         }}
       />
       <StatusField

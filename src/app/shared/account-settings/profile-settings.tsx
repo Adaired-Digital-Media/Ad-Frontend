@@ -22,14 +22,23 @@ import FormFooter from '@core/components/form-footer';
 import UploadZone from '@core/ui/file-upload/upload-zone';
 
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import axios from 'axios';
 
 const QuillEditor = dynamic(() => import('@core/ui/quill-editor'), {
   ssr: false,
 });
 export default function ProfileSettingsView() {
   const { data: session } = useSession();
-
+  const [isLoading, setLoading] = useState(false);
   const [firstName, lastName] = session?.user?.name?.split(' ') || ['', ''];
+  const [reset, setReset] = useState({
+    first_name: firstName,
+    last_name: lastName,
+    username: session?.user?.userName,
+    email: session?.user?.email,
+    avatar: { name: '', url: session?.user?.image, size: 0 },
+  });
 
   const defaultValuesWithSession = {
     ...defaultValues,
@@ -40,8 +49,41 @@ export default function ProfileSettingsView() {
     avatar: { name: '', url: session?.user?.image || '', size: 0 },
   };
 
-  const onSubmit: SubmitHandler<ProfileFormTypes> = (data) => {
-    toast.success(<Text as="b">Profile successfully updated!</Text>);
+  const onSubmit: SubmitHandler<ProfileFormTypes> = async (data) => {
+    setLoading(true);
+    toast
+      .promise(
+        axios.patch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/user/update`,
+          {
+            name: data.first_name + ' ' + data.last_name,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${session?.user?.accessToken}`,
+            },
+          }
+        ),
+        {
+          loading: 'Updating name...',
+          success: 'Name updated successfully',
+          error: 'Failed to update name',
+        }
+      )
+      .then((response) => {
+        setReset((prevState) => ({
+          ...prevState,
+          first_name: response.data.name.split(' ')[0],
+          last_name: response.data.name.split(' ')[1],
+        }));
+      })
+      .catch((error) => {
+        console.error('Error updating password:', error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -138,6 +180,7 @@ export default function ProfileSettingsView() {
                 </FormGroup> */}
               </div>
               {/* <FormFooter
+                className=""
                 // isLoading={isLoading}
                 altBtnText="Cancel"
                 submitBtnText="Save"

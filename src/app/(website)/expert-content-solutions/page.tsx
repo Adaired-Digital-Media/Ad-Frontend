@@ -26,12 +26,12 @@ const Landing = async () => {
   );
 
   const products: Product[] = fetchProductCategory.data.data.products || [];
-  
+
   return (
     <>
       <HeroSection />
       <StandOutSection />
-      <ProductSection products={products}/>
+      <ProductSection products={products} />
       <ApproachSection />
       <SurferSEOSection />
       <ContactUsSection />
@@ -58,7 +58,7 @@ const HeroSection = () => {
           `absolute left-0 top-0 h-[calc(100%-41px)] w-[calc(100%-15px)] rounded-br-[150px] bg-[#FFF9F1] sm:h-[calc(100%-45px)] opt-md:hidden`
         )}
       ></div>
-      <SmallContainer className="relative z-[2] grid !py-0 3xl:pb-0 3xl:pt-14">
+      <SmallContainer className="relative z-[2] grid !pb-0 opt-md:!pt-0 3xl:!pb-0 3xl:!pt-14">
         <div
           className={cn(
             `absolute bottom-1/2 left-[calc(100%-400px)] hidden h-[calc(100%+145px)] w-full translate-y-1/2 rounded-tl-[250px] bg-[#FFDCB2] opt-md:block xl:h-[calc(100%+105px)] 2xl:h-full`
@@ -74,7 +74,7 @@ const HeroSection = () => {
             `relative z-[2] m-0 grid-cols-1 place-items-center gap-5 md:gap-10 opt-md:grid-cols-2 opt-md:gap-0`
           )}
         >
-          <div className={cn(`w-full xl:py-28`)}>
+          <div className={cn(`w-full xl:pt-14 xl:pb-28`)}>
             <h1
               className={cn(
                 `font-poppins font-bold text-black lg:text-[38px] lg:leading-[52px] xl:text-[42px] xl:leading-[58px]`
@@ -87,7 +87,7 @@ const HeroSection = () => {
             </p>
             <div
               className={cn(
-                `flex flex-col gap-5 pt-5 sm:flex-row sm:items-center sm:gap-0 sm:space-x-10 md:pt-10`
+                `flex flex-col gap-5 pt-5 sm:flex-row sm:items-center sm:gap-0 sm:gap-x-5 xl:pt-10 lg:gap-x-10`
               )}
             >
               <Link href={HeroSectionDetails.buttonLink || ''}>
@@ -127,7 +127,7 @@ const HeroSection = () => {
           </div>
           <div
             className={cn(
-              `w-full scale-[0.99] opt-md:scale-[1.25] lg:pt-16 xl:scale-[1.18] xl:pt-10 2xl:scale-100 3xl:-mr-20 4xl:-mr-32`
+              `w-full origin-top transform xl:scale-[1.01] 3xl:-mr-20 4xl:-mr-32`
             )}
           >
             <CldImage
@@ -136,10 +136,8 @@ const HeroSection = () => {
               width={718}
               height={630}
               quality={100}
-              loading="eager"
               priority
               className={cn(`object-contain`)}
-              // sizes="(min-width: 808px) 50vw, 100vw"
             />
           </div>
         </TwoColumnGrid>
@@ -149,7 +147,7 @@ const HeroSection = () => {
 };
 const StandOutSection = () => {
   return (
-    <SmallContainer id="standoutSection" className="py-0">
+    <SmallContainer id="standoutSection">
       <TwoColumnGrid
         className={cn(`grid-cols-1 gap-10 opt-md:grid-cols-2 opt-md:gap-10`)}
       >
@@ -192,19 +190,19 @@ const StandOutSection = () => {
                 icon={`/assets/icons/boxTick.svg`}
                 title={text}
                 isSvg={true}
-                containerClassName={`p-0 `}
+                containerClassName={`p-0`}
                 titleClassName={`font-nunito font-semibold text-base `}
               />
             ))}
           </div>
-        </div>{' '}
-      </TwoColumnGrid>{' '}
+        </div>
+      </TwoColumnGrid>
     </SmallContainer>
   );
 };
 const ApproachSection = () => {
   return (
-    <SmallContainer id="approachSection" className="py-0">
+    <SmallContainer id="approachSection">
       <>
         <h2
           className={cn(
@@ -303,7 +301,7 @@ const SurferSEOSection = () => {
 };
 const ContactUsSection = () => {
   return (
-    <SmallContainer id="contact" className="py-0">
+    <SmallContainer id="contact">
       <TwoColumnGrid
         className={cn(
           `grid-cols-1 place-items-center gap-10 opt-md:grid-cols-2 opt-md:gap-x-20`
