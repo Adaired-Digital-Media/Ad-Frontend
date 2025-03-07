@@ -5,10 +5,9 @@ import Table from '@core/components/table';
 import { CustomExpandedComponent } from '@core/components/table/custom/expanded-row';
 import { useTanStackTable } from '@core/components/table/custom/use-TanStack-Table';
 import TablePagination from '@core/components/table/pagination';
-import { OrdersDataType } from '@/app/shared/ecommerce/dashboard/recent-order';
 import Filters from './filters';
 import { TableVariantProps } from 'rizzui';
-
+import { OrderType } from '@/types';
 
 export default function OrderTable({
   className,
@@ -23,9 +22,7 @@ export default function OrderTable({
   variant?: TableVariantProps;
   orderData: any;
 }) {
-
-
-  const { table, setData } = useTanStackTable<OrdersDataType>({
+  const { table, setData } = useTanStackTable<OrderType>({
     tableData: orderData,
     columnConfig: ordersColumns(),
     options: {
@@ -35,15 +32,14 @@ export default function OrderTable({
           pageSize: 10,
         },
       },
-      meta: {
-        handleDeleteRow: (row: OrdersDataType) => {
-          setData((prev) => prev.filter((r) => r._id !== row._id));
-        },
-      },
+      // meta: {
+      //   handleDeleteRow: (row: OrdersDataType) => {
+      //     setData((prev) => prev.filter((r) => r._id !== row._id));
+      //   },
+      // },
       enableColumnResizing: false,
     },
   });
-
   return (
     <div className={className}>
       {!hideFilters && <Filters table={table} />}

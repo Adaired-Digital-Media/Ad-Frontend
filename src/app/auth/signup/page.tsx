@@ -20,24 +20,7 @@ export default function SignUp() {
           </span>
         </>
       }
-      description="By signing up, you will gain access to exclusive content, special offers, and be the first to hear about exciting news and updates."
-      bannerTitle="The simplest way to manage your workspace."
-      bannerDescription=""
-      isSocialLoginActive={true}
-      pageImage={
-        <div className="relative mx-auto aspect-[4/3.37] w-[500px] xl:w-[620px] 2xl:w-[820px]">
-          {/* <Image
-            src={
-              'https://isomorphic-furyroad.s3.amazonaws.com/public/auth/sign-up.webp'
-            }
-            alt="Sign Up Thumbnail"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw"
-            className="object-cover"
-          /> */}
-        </div>
-      }
+      isSocialLoginActive={false}
     >
       <SignUpForm />
     </AuthWrapper>

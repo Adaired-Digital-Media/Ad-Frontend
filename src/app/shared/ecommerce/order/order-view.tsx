@@ -4,10 +4,10 @@ import Image from 'next/image';
 import { useAtomValue } from 'jotai';
 import isEmpty from 'lodash/isEmpty';
 import { PiCheckBold } from 'react-icons/pi';
-// import OrderViewProducts from '@/app/shared/ecommerce/order/order-products/order-view-products';
+import OrderViewProducts from '@/app/shared/ecommerce/order/order-products/order-view-products';
 import { useCart } from '@/store/quick-cart/cart.context';
 import { Title, Text } from 'rizzui';
-import {cn} from '@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { toCurrency } from '@core/utils/to-currency';
 import { formatDate } from '@core/utils/format-date';
 import usePrice from '@core/hooks/use-price';
@@ -20,7 +20,7 @@ const orderStatus = [
   { id: 5, label: 'Order Completed' },
 ];
 
-const transitions = [
+const Images = [
   {
     id: 1,
     paymentMethod: {
@@ -28,7 +28,6 @@ const transitions = [
       image:
         'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/master.png',
     },
-    price: '$1575.00',
   },
   {
     id: 2,
@@ -37,7 +36,6 @@ const transitions = [
       image:
         'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/paypal.png',
     },
-    price: '$75.00',
   },
   {
     id: 2,
@@ -46,7 +44,6 @@ const transitions = [
       image:
         'https://isomorphic-furyroad.s3.amazonaws.com/public/payment/stripe.png',
     },
-    price: '$375.00',
   },
 ];
 
@@ -83,7 +80,13 @@ function WidgetCard({
   );
 }
 
-export default function OrderView() {
+export default function OrderView({
+  order,
+  session,
+}: {
+  order: any;
+  session: any;
+}) {
   // const { items, total, totalItems } = useCart();
   // const { price: subtotal } = usePrice(
   //   items && {
@@ -96,67 +99,90 @@ export default function OrderView() {
   // const orderNote = useAtomValue(orderNoteAtom);
   // const billingAddress = useAtomValue(billingAddressAtom);
   // const shippingAddress = useAtomValue(shippingAddressAtom);
+
+  // Find the matching payment method image
+  const matchedPayment = Images.find(
+    (image) => image.paymentMethod.name === order.paymentMethod
+  );
+  const paymentImage =
+    matchedPayment?.paymentMethod.image || '/default-payment.png';
+  const paymentName =
+    matchedPayment?.paymentMethod.name || order.paymentMethod || 'Unknown';
   return (
     <div className="@container">
       <div className="flex flex-wrap justify-center border-b border-t border-gray-300 py-4 font-medium text-gray-700 @5xl:justify-start">
         <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
-          {/* October 22, 2022 at 10:30 pm */}
-          {formatDate(new Date(), 'MMMM D, YYYY')} at{' '}
-          {formatDate(new Date(), 'h:mm A')}
+          {/* March 07, 2025 at 10:30 am */}
+          {formatDate(order.createdAt, 'MMMM D, YYYY')} at{' '}
+          {formatDate(order.createdAt, 'h:mm A')}
         </span>
         <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
-          7 Items
+          <span className="font-bold"> {order?.totalQuantity} </span> Items
         </span>
         <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
-          Total 7
+          Total :{' '}
+          <span className="font-bold">{toCurrency(order.discountedPrice)}</span>
         </span>
-        <span className="my-2 ms-5 rounded-3xl border-r border-muted bg-green-lighter px-2.5 py-1 text-xs text-green-dark first:ps-0 last:border-r-0">
-          Paid
+
+        <span
+          className={cn(
+            `my-2 ms-5 rounded-3xl border-r border-muted bg-green-lighter px-2.5 py-1 text-xs text-green-dark first:ps-0 last:border-r-0`
+          )}
+        >
+          {order?.paymentStatus}
         </span>
       </div>
       <div className="items-start pt-10 @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
         <div className="space-y-7 @5xl:col-span-8 @5xl:space-y-10 @6xl:col-span-7">
-          {/* {orderNote && (
-            <div className="">
-              <span className="mb-1.5 block text-sm font-medium text-gray-700">
-                Notes About Order
-              </span>
-              <div className="rounded-xl border border-muted px-5 py-3 text-sm leading-[1.85]">
-                {orderNote}
-              </div>
-            </div>
-          )} */}
-
           <div className="pb-5">
-            {/* <OrderViewProducts /> */}
+            <OrderViewProducts order={order}/>
             <div className="border-t border-muted pt-7 @5xl:mt-3">
               <div className="ms-auto max-w-lg space-y-6">
                 <div className="flex justify-between font-medium">
-                  Subtotal <span>7</span>
+                  Subtotal <span>{toCurrency(order.discountedPrice)}</span>
                 </div>
                 <div className="flex justify-between font-medium">
-                  Store Credit <span>{toCurrency(0)}</span>
-                </div>
-                <div className="flex justify-between font-medium">
-                  Subtotal <span>{toCurrency(0)}</span>
+                  Discount <span>{toCurrency(0)}</span>
                 </div>
                 <div className="flex justify-between border-t border-muted pt-5 text-base font-semibold">
-                  Total <span>7</span>
+                  Total <span>{toCurrency(order.discountedPrice)}</span>
                 </div>
               </div>
             </div>
           </div>
+          {order.paymentStatus === 'Paid' && (
+            <div className="">
+              <Title
+                as="h3"
+                className="mb-3.5 text-base font-semibold @5xl:mb-5 @7xl:text-lg"
+              >
+                Transactions
+              </Title>
 
-          <div className="">
-            <Title
-              as="h3"
-              className="mb-3.5 text-base font-semibold @5xl:mb-5 @7xl:text-lg"
-            >
-              Transactions
-            </Title>
-
-            <div className="space-y-4">
-              {transitions.map((item) => (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between rounded-lg border border-gray-100 px-5 py-5 font-medium shadow-sm transition-shadow @5xl:px-7">
+                  <div className="flex w-1/3 items-center">
+                    <div className="shrink-0">
+                      <Image
+                        src={paymentImage}
+                        alt={order?.paymentMethod}
+                        height={60}
+                        width={60}
+                        className="object-contain"
+                      />
+                    </div>
+                    <div className="flex flex-col ps-4">
+                      <Text as="span" className="font-lexend text-gray-700">
+                        Payment
+                      </Text>
+                      <span className="pt-1 text-[13px] font-normal text-gray-500">
+                        Via {paymentName}
+                      </span>
+                    </div>
+                    <div className="w-1/3 text-end">{order.discountedPrice}</div>
+                  </div>
+                </div>
+                {/* {transitions.map((item) => (
                 <div
                   key={item.paymentMethod.name}
                   className="flex items-center justify-between rounded-lg border border-gray-100 px-5 py-5 font-medium shadow-sm transition-shadow @5xl:px-7"
@@ -183,34 +209,10 @@ export default function OrderView() {
 
                   <div className="w-1/3 text-end">{item.price}</div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="">
-            <div className="mb-3.5 @5xl:mb-5">
-              <Title as="h3" className="text-base font-semibold @7xl:text-lg">
-                Balance
-              </Title>
-            </div>
-            <div className="space-y-6 rounded-xl border border-muted px-5 py-6 @5xl:space-y-7 @5xl:p-7">
-              <div className="flex justify-between font-medium">
-                Total Order <span>$5275.00</span>
-              </div>
-              <div className="flex justify-between font-medium">
-                Total Return <span>$350.00</span>
-              </div>
-              <div className="flex justify-between font-medium">
-                Paid By Customer <span>$3000.00</span>
-              </div>
-              <div className="flex justify-between font-medium">
-                Refunded <span>$350.00</span>
-              </div>
-              <div className="flex justify-between font-medium">
-                Balance <span>$4975.00</span>
+              ))} */}
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="space-y-7 pt-8 @container @5xl:col-span-4 @5xl:space-y-10 @5xl:pt-0 @6xl:col-span-3">
           <WidgetCard
@@ -251,59 +253,27 @@ export default function OrderView() {
                 alt="avatar"
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw"
-                src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatar.png"
+                src={
+                  session.user.image ||
+                  'https://isomorphic-furyroad.s3.amazonaws.com/public/avatar.png'
+                }
               />
             </div>
-            <div className="ps-4 @5xl:ps-6">
+            <div className="flex flex-col justify-center ps-4 @5xl:ps-6">
               <Title
                 as="h3"
                 className="mb-2.5 text-base font-semibold @7xl:text-lg"
               >
-                Leslie Alexander
+                {session.user.name}
               </Title>
               <Text as="p" className="mb-2 break-all last:mb-0">
-                nevaeh.simmons@example.com
+                {session.user.email}
               </Text>
-              <Text as="p" className="mb-2 last:mb-0">
-                (316) 555-0116
-              </Text>
+              {/* <Text as="p" className="mb-2 last:mb-0">
+              {session.user.contact}
+              </Text> */}
             </div>
           </WidgetCard>
-
-          {/* <WidgetCard
-            title="Shipping Address"
-            childrenWrapperClass="@5xl:py-6 py-5"
-          >
-            <Title
-              as="h3"
-              className="mb-2.5 text-base font-semibold @7xl:text-lg"
-            >
-              {billingAddress?.customerName}
-            </Title>
-            <Text as="p" className="mb-2 leading-loose last:mb-0">
-              {billingAddress?.street}, {billingAddress?.city},{' '}
-              {billingAddress?.state}, {billingAddress?.zip},{' '}
-              {billingAddress?.country}
-            </Text>
-          </WidgetCard>
-          {!isEmpty(shippingAddress) && (
-            <WidgetCard
-              title="Billing Address"
-              childrenWrapperClass="@5xl:py-6 py-5"
-            >
-              <Title
-                as="h3"
-                className="mb-2.5 text-base font-semibold @7xl:text-lg"
-              >
-                {shippingAddress?.customerName}
-              </Title>
-              <Text as="p" className="mb-2 leading-loose last:mb-0">
-                {shippingAddress?.street}, {shippingAddress?.city},{' '}
-                {shippingAddress?.state}, {shippingAddress?.zip},{' '}
-                {shippingAddress?.country}
-              </Text>
-            </WidgetCard>
-          )} */}
         </div>
       </div>
     </div>

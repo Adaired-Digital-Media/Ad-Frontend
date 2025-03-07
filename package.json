@@ -2,7 +2,7 @@
   "name": "ad-front",
   "version": "0.1.0",
   "private": true,
-  "type":"module",
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
@@ -15,6 +15,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@floating-ui/react": "^0.26.25",
     "@headlessui/react": "^2.2.0",
+    "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "@stripe/react-stripe-js": "^3.0.0",

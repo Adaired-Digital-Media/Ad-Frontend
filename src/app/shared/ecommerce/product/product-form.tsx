@@ -58,21 +58,28 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
 
   const watchedFields = watch();
 
-  // Fetch all products if contentProductsAtom is empty
+  // Fetch products and set to localStorage if not already present
   useEffect(() => {
-    const fetchAllProducts = async () => {
+    const fetchAndStoreProducts = async () => {
       try {
         setIsLoading(true);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product`
-        ); 
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
         const productsData = await response.json();
-        setAllProducts(productsData.data);
-        if (!product && productsData.length > 0) {
-          setProduct(productsData[0]);
+        const fetchedProducts = productsData.data;
+
+        setAllProducts(fetchedProducts);
+        setProduct(fetchedProducts[0]);
+
+        // Set first product as selected if none is set
+        if (!product && fetchedProducts.length > 0) {
+          const firstProduct = fetchedProducts[0];
+          localStorage.setItem('selectedProduct', JSON.stringify(firstProduct));
+          setProduct(firstProduct);
         }
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -81,12 +88,14 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
       }
     };
 
-    if (!Array.isArray(allProducts) || allProducts.length === 0) {
-      fetchAllProducts();
-    } else {
-      setIsLoading(false);
+    // Check localStorage on mount
+    const storedAllProducts = localStorage.getItem('allProducts');
+    const storedSelectedProduct = localStorage.getItem('selectedProduct');
+
+    if (!storedAllProducts && !storedSelectedProduct) {
+      fetchAndStoreProducts();
     }
-  }, [allProducts, setAllProducts, setProduct, product]);
+  }, [setAllProducts, setProduct, product]);
 
   const calculateTotalPrice = useCallback(() => {
     if (product?.pricingType === 'perWord') {
@@ -145,31 +154,39 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
+    let hasFetched = false; 
     const fetchForm = async () => {
-      const formRes = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product?.formId}`
-      );
-      const form = await formRes.json();
-      setForm(form);
-      setIsLoading(false);
+      if (!product?.formId) {
+        console.warn('No formId provided for product:', product);
+        setIsLoading(false);
+        return;
+      }
+
+      if (hasFetched) return; 
+
+      try {
+        const formRes = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product.formId}`
+        );
+        if (!formRes.ok) {
+          throw new Error(`Failed to fetch form: ${formRes.status} ${formRes.statusText}`);
+        }
+        const form = await formRes.json();
+        setForm(form);
+        hasFetched = true;
+      } catch (error) {
+        console.error('Error fetching form:', error);
+        setForm(undefined);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    let timeoutId: NodeJS.Timeout;
-
-    if (product?.formId) {
-      // Set default product after 0.5s if still loading
-      timeoutId = setTimeout(() => {
-        if (!form && allProducts.length > 0) {
-          setProduct(allProducts[0]);
-        }
-      }, 500);
-
+    if (product && product?.formId && !hasFetched) {
       fetchForm();
     }
-    return () => clearTimeout(timeoutId);
-  }, [product, allProducts, setProduct]);
+  }, [product]); 
 
   useEffect(() => {
     if (!isEditMode && product && form) {
@@ -190,13 +207,6 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
       });
     }
   }, [isEditMode, productToEdit, reset]);
-
-  // Initial product setup
-  useEffect(() => {
-    if (!product && allProducts.length > 0) {
-      setProduct(allProducts[0]);
-    }
-  }, [product, allProducts, setProduct]);
 
   if (isLoading || !product || !form) {
     return <ProductFormSkeleton />;
@@ -221,7 +231,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
           {/* Header */}
           <div
             className={cn(
-              `flex flex-col items-center justify-between gap-5 rounded-tl-[15px] rounded-tr-[15px] bg-black px-10 py-5 xs:flex-row xs:gap-0`
+              `flex flex-col items-center justify-between gap-5 rounded-tl-[15px] rounded-tr-[15px] bg-black px-5 sm:px-10 py-5 xs:flex-row xs:gap-0`
             )}
           >
             <Title
@@ -245,7 +255,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
           {/* Product Details */}
           <div
             className={cn(
-              `rounded-bl-[15px] rounded-br-[15px] border border-t-0 border-[#DBDBDB] p-10 pt-5`
+              `rounded-bl-[15px] rounded-br-[15px] border border-t-0 border-[#DBDBDB] p-5 xs:p-8 sm:p-10 pt-5`
             )}
           >
             <div
@@ -420,7 +430,6 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
                   textClassName="text-white"
                   type="submit"
                 />
-
               </div>
             </div>
           </div>

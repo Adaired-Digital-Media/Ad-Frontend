@@ -57,7 +57,7 @@ const IconBox: FC<IIconBox> = ({
     <>
       <div
         role="button"
-        onClick={handleClick}
+        onClick={boxLink ? handleClick : undefined}
         className={cn(`${containerClassName}`)}
         {...rest}
       >
@@ -69,7 +69,7 @@ const IconBox: FC<IIconBox> = ({
               alt="icon"
               height={32}
               width={32}
-              className={cn(`h-full w-full ${iconClassName}`)}
+              className={cn(`min-w-[50px] min-h-[50px] h-full w-full shrink-0 ${iconClassName}`)}
             />
           ) : isSvg ? (
             <Image
@@ -77,12 +77,12 @@ const IconBox: FC<IIconBox> = ({
               alt="icon"
               height={32}
               width={32}
-              className={cn(`h-full w-full ${iconClassName}`)}
+              className={cn(`min-w-[50px] min-h-[50px] h-full w-full shrink-0 ${iconClassName}`)}
             />
           ) : (
             <Icon
               icon={icon}
-              className={cn(`h-full w-full ${iconClassName}`)}
+              className={cn(`h-full w-full shrink-0 ${iconClassName}`)}
             />
           )}
         </div>

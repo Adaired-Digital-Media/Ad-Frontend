@@ -14,11 +14,13 @@ export default function OrderProducts({
   className,
   itemClassName,
   showControls,
+  onClick,
 }: {
   items: CartItem[];
   className?: string;
   itemClassName?: string;
   showControls?: boolean;
+  onClick: () => void;
 }) {
   if (!items.length) {
     return (
@@ -29,7 +31,10 @@ export default function OrderProducts({
   }
 
   return (
-    <SimpleBar className={cn('h-[calc(100vh_-_170px)] pb-3', className)}>
+    <SimpleBar
+      className={cn('h-[calc(100vh_-_170px)] pb-3', className)}
+      onClick={onClick}
+    >
       <div className={cn('grid gap-3.5')}>
         {items.map((item) => {
           return (

@@ -9,6 +9,7 @@ import { Form } from '@core/ui/rizzui-ui/form';
 import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/validators/login.schema';
 import { usePathname } from 'next/navigation';
+import { useMedia } from '@core/hooks/use-media';
 
 const initialValues: LoginSchema = {
   email: '',
@@ -18,8 +19,10 @@ const initialValues: LoginSchema = {
 
 export default function SignInForm() {
   const pathname = usePathname();
+  const isMedium = useMedia('(max-width: 1200px)', false);
 
   const onSubmit: SubmitHandler<LoginSchema> = (data) => {
+    console.log('User Data : ', data);
     signIn('credentials', {
       ...data,
     });
@@ -32,7 +35,7 @@ export default function SignInForm() {
         resetValues={initialValues}
         onSubmit={onSubmit}
         useFormProps={{
-          mode: 'onChange',
+          // mode: 'onChange',
           defaultValues: initialValues,
         }}
       >
@@ -43,7 +46,7 @@ export default function SignInForm() {
           <div className="space-y-5">
             <Input
               type="email"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
               label="Email"
               placeholder="Enter your email"
               className="[&>label>span]:font-medium"
@@ -54,7 +57,7 @@ export default function SignInForm() {
             <Password
               label="Password"
               placeholder="Enter your password"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
               className="[&>label>span]:font-medium"
               inputClassName="text-sm"
               {...register('password')}
@@ -67,19 +70,18 @@ export default function SignInForm() {
                 variant="flat"
                 className="[&>label>span]:font-medium"
               />
-              {/* <Link
-                // href={routes.auth.forgotPassword1}
-                href={''}
+              <Link
+                href={routes.auth.forgotPassword}
                 className="h-auto p-0 text-sm font-semibold text-blue underline transition-colors hover:text-gray-900 hover:no-underline"
               >
                 Forget Password?
-              </Link> */}
+              </Link>
             </div>
             <Button
               isLoading={isSubmitting || isLoading || isSubmitSuccessful}
               className="w-full"
               type="submit"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
             >
               <span>Sign in</span>{' '}
               <PiArrowRightBold className="ms-2 mt-0.5 h-6 w-6" />

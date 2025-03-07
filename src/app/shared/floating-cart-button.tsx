@@ -15,8 +15,8 @@ export default function FloatingCartButton({
 }: FloatingCartProps) {
   const { products } = useCart();
   const formattedCartCount = products?.length
-    ? products.length.toString().padStart(2, '0')
-    : '00';
+    ? products.length.toString()
+    : '0';
   return (
     <button
       className={cn(

@@ -5,6 +5,7 @@ import { cn } from '@core/utils/class-names';
 import SimpleBar from '@core/ui/simplebar';
 import Logo from '@core/components/logo';
 import { SidebarMenu } from './sidebar-menu';
+import { routes } from '@/config/routes';
 
 export default function Sidebar({ className }: { className?: string }) {
   return (
@@ -16,7 +17,7 @@ export default function Sidebar({ className }: { className?: string }) {
     >
       <div className="sticky top-0 z-40 bg-gray-0/10 px-6 pb-5 pt-5 dark:bg-gray-100/5 2xl:px-8 2xl:pt-6">
         <Link
-          href={'/'}
+          href={routes.eCommerce.home}
           aria-label="Site Logo"
           className="text-gray-800 hover:text-gray-900"
         >

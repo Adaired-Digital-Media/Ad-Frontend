@@ -10,6 +10,8 @@ import { Form } from '@core/ui/rizzui-ui/form';
 import { routes } from '@/config/routes';
 import { SignUpSchema, signUpSchema } from '@/validators/signup.schema';
 import { PhoneNumber } from '@/@core/ui/rizzui-ui/phone-input';
+import { useMedia } from '@core/hooks/use-media';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   firstName: '',
@@ -23,29 +25,61 @@ const initialValues = {
 
 export default function SignUpForm() {
   const { push } = useRouter();
+  const isMedium = useMedia('(max-width: 1200px)', false);
   const [reset, setReset] = useState({});
 
-  const onSubmit: SubmitHandler<SignUpSchema> = async (data) => {
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/auth/register`,
-        {
-          name: `${data.firstName} ${data.lastName || ''}`,
-          email: data.email,
-          password: data.password,
-          contact: data.phoneNumber,
-        }
-      );
-      if (response.status !== 201) {
-        throw new Error('Failed to register user');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    push(routes.auth.signIn);
-    setReset({ ...initialValues, isAgreed: false });
-  };
+  // const onSubmit: SubmitHandler<SignUpSchema> = async (data) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/auth/register`,
+  //       {
+  //         name: `${data.firstName} ${data.lastName || ''}`,
+  //         email: data.email,
+  //         password: data.password,
+  //         contact: data.phoneNumber,
+  //       }
+  //     );
+  //     if (response.status !== 201) {
+  //       throw new Error('Failed to register user');
+  //     } else if (response.status === 201) {
+  //       toast.success(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   push(routes.auth.signIn);
+  //   setReset({ ...initialValues, isAgreed: false });
+  // };
 
+  const onSubmit: SubmitHandler<SignUpSchema> = async (data) => {
+    const registerPromise = axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/auth/register`,
+      {
+        name: `${data.firstName} ${data.lastName || ''}`,
+        email: data.email,
+        password: data.password,
+        contact: data.phoneNumber,
+      }
+    );
+
+    try {
+      await toast.promise(registerPromise, {
+        loading: 'Registering your account...',
+        success: (response) => {
+          return 'Registration successful. Please log in now.';
+        },
+        error: (error) => {
+          return error.message || 'Failed to register user';
+        },
+      });
+
+      // On success (HTTP 201), redirect to sign-in page and reset form
+      push(routes.auth.signIn);
+      setReset({ ...initialValues, isAgreed: false });
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
+  };
   return (
     <>
       <Form<SignUpSchema>
@@ -60,7 +94,7 @@ export default function SignUpForm() {
           <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5">
             <Input
               type="text"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
               label="First Name"
               placeholder="Enter your first name"
               className="[&>label>span]:font-medium"
@@ -70,7 +104,7 @@ export default function SignUpForm() {
             />
             <Input
               type="text"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
               label="Last Name"
               placeholder="Enter your last name"
               className="[&>label>span]:font-medium"
@@ -80,7 +114,7 @@ export default function SignUpForm() {
             />
             <Input
               type="email"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
               label="Email"
               className="col-span-2 [&>label>span]:font-medium"
               inputClassName="text-sm"
@@ -91,7 +125,7 @@ export default function SignUpForm() {
             <Password
               label="Password"
               placeholder="Enter your password"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
               className="[&>label>span]:font-medium"
               inputClassName="text-sm"
               {...register('password')}
@@ -100,7 +134,7 @@ export default function SignUpForm() {
             <Password
               label="Confirm Password"
               placeholder="Enter confirm password"
-              size="lg"
+              size={isMedium ? 'lg' : 'xl'}
               className="[&>label>span]:font-medium"
               inputClassName="text-sm"
               {...register('confirmPassword')}
@@ -114,7 +148,7 @@ export default function SignUpForm() {
                 <PhoneNumber
                   {...field}
                   country="us"
-                  size="lg"
+                  size={isMedium ? 'lg' : 'xl'}
                   label="Phone Number"
                   preferredCountries={['us']}
                   onChange={(value) => field.onChange(value)}
@@ -132,14 +166,14 @@ export default function SignUpForm() {
                   <>
                     By signing up you have agreed to our{' '}
                     <Link
-                      href={routes.homeWebsite.TermsNConditions}
+                      href={routes.termsNconditions}
                       className="font-medium text-blue transition-colors hover:underline"
                     >
                       Terms
                     </Link>{' '}
                     &{' '}
                     <Link
-                      href={routes.homeWebsite.PrivacyPolicy}
+                      href={routes.privacyPolicy}
                       className="font-medium text-blue transition-colors hover:underline"
                     >
                       Privacy Policy

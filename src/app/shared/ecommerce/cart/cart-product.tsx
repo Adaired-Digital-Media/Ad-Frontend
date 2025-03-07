@@ -47,15 +47,23 @@ function CartProduct({ product }: { product: CartItem }) {
         </div>
 
         <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-3 sm:mt-4 sm:gap-x-8">
-          <li className="flex items-center gap-3 text-gray-500">
-            <span>Price / Unit :</span>
-            <span className="text-gray-1000">
-              {toCurrency(product?.product?.pricePerUnit)}
+          <li className="flex items-end gap-2 text-gray-500">
+            <span>Price :</span>
+            <span className="text-sm font-bold text-gray-1000">
+              {toCurrency(product?.product?.pricePerUnit)} / 100 words
             </span>
           </li>
-          <li className="flex items-center gap-3 text-gray-500">
+          <li className="flex items-end gap-2 text-gray-500">
             <span>Quantity :</span>
-            <span className="text-gray-1000">{product?.quantity}</span>
+            <span className="text-sm font-bold text-gray-1000">
+              {product?.quantity}
+            </span>
+          </li>
+          <li className="flex items-end gap-2 text-gray-500">
+            <span>Word Count :</span>
+            <span className="text-sm font-bold text-gray-1000">
+              {product?.wordCount} each
+            </span>
           </li>
         </ul>
 

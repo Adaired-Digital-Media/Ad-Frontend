@@ -8,6 +8,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { PhoneNumber } from '@core/ui/rizzui-ui/phone-input';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import { usePathname } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 const schema = z.object({
   gRecaptchaToken: z.string(),
@@ -27,6 +29,7 @@ type SchemaType = z.infer<typeof schema>;
 export const EcomPageForm = () => {
   const { executeRecaptcha } = useReCaptcha();
   const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
 
   const {
     control,
@@ -48,18 +51,43 @@ export const EcomPageForm = () => {
   });
 
   const onSubmit = async (data: SchemaType) => {
+    setLoading(true);
     const token = await executeRecaptcha('ecom_page_form');
     if (token) {
       data.gRecaptchaToken = token;
       reset();
       try {
-        const response = await fetch('/api/zoho/leadRegister', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
+        // const response = await fetch('/api/zoho/leadRegister', {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify(data),
+        // });
+        toast(
+          (t) => (
+            <div
+              className={cn(
+                `flex flex-col items-center justify-center p-1 text-center`
+              )}
+            >
+              <h4 className={cn(`font-dm font-medium text-gray-900`)}>
+                Thanks for reaching out!
+              </h4>
+              <p className={cn(`mt-1 text-sm text-gray-500`)}>
+                We'll be in touch shortly.
+              </p>
+            </div>
+          ),
+          // bg-[#1C5B98]
+          {
+            style: {
+              border: '1px solid #1C5B98',
+
+            },
+          }
+        );
+        setLoading(false);
       } catch (error) {
         throw new Error('Failed to send data to Zoho CRM');
       }
@@ -116,6 +144,7 @@ export const EcomPageForm = () => {
 
         <div className="pt-4">
           <Button
+            isLoading={loading}
             type="submit"
             className="w-full rounded-full bg-[#F39019] px-6 py-6 font-poppins text-lg text-white"
           >

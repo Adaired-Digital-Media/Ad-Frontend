@@ -25,7 +25,7 @@ export type Product = {
   featuredImage: string;
   name: string;
   description: string;
-  category: string;
+  category: ProductCategory;
   subCategory: any;
   minimumQuantity?: number;
   minimumWords?: number;
@@ -51,22 +51,46 @@ export type Product = {
 };
 
 export interface ProductCategory {
-  _id: string;
-  userId: string;
-  name: string;
-  description: string;
-  parentCategory: string | null;
-  children: ProductCategory[] | string[];
-  products: Product[] | string[];
-  slug: string;
-  image: string;
-  metaTitle: string;
-  metaDescription: string;
-  canonicalLink: string;
-  status: 'Active' | 'Inactive';
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  _id?: string;
+  name?: string;
+  description?: string;
+  parentCategory?: string | null;
+  children?: string[];
+  products?: string[];
+  slug?: string;
+  image?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  canonicalLink?: string;
+  status?: 'Active' | 'Inactive';
+  createdBy?: string;
+  updatedBy?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
+}
+
+export interface OrderType {
+  _id?: string;
+  userId?: string;
+  orderNumber?: string;
+  products?: Product[];
+  totalQuantity?: number;
+  totalPrice?: number;
+  discountedPrice?: number;
+  couponId?: string;
+  couponDiscount?: number;
+  paymentId?: string;
+  invoiceId?: string;
+  zohoInvoiceId?: string;
+  paymentUrl?: string;
+  status: 'Pending' | 'Processing' | 'Confirmed' | 'Completed' | 'Cancelled';
+  paymentStatus: 'Unpaid' | 'Paid' | 'Refunded' | 'Failed';
+  paymentMethod: 'Razorpay' | 'Stripe';
+  paymentDate?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
 }
 
 export interface Coupon {

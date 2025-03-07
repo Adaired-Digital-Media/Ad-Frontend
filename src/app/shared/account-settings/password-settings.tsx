@@ -14,7 +14,9 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-export default function PasswordSettingsView({}: {}) {
+export default function PasswordSettingsView(
+  // { session }: { session: any }
+) {
   const [isLoading, setLoading] = useState(false);
   const [reset, setReset] = useState({});
   const { data: session } = useSession();
@@ -65,7 +67,7 @@ export default function PasswordSettingsView({}: {}) {
         onSubmit={onSubmit}
         className="@container"
         useFormProps={{
-          mode: 'onChange',
+          // mode: 'onChange',
         }}
       >
         {({ register, control, formState: { errors }, getValues }) => {

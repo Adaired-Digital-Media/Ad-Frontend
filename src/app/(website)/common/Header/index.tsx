@@ -74,7 +74,7 @@ const Navbar = () => {
           <header className="relative flex items-center bg-white">
             <WrapperComponent
               className={cn(
-                `${pathname.startsWith('/expert-content-solutions') ? 'py-0 xl:py-0 2xl:py-0 3xl:py-0' : ''}`
+                `${pathname.startsWith('/expert-content-solutions') ? '!py-0 xl:!py-0 2xl:!py-0 3xl:!py-0' : ''}`
               )}
             >
               <div className="relative">

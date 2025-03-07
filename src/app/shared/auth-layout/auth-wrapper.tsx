@@ -1,138 +1,173 @@
 'use client';
-
-import Link from 'next/link';
 import logoImg from '@public/logo-primary.svg';
+import Link from 'next/link';
+import { routes } from '@/config/routes';
 import Image from 'next/image';
-import { Button, Title, Text } from 'rizzui';
-import { PiAppleLogoFill, PiArrowLeftBold } from 'react-icons/pi';
+import { usePathname } from 'next/navigation';
+import { Button, Title } from 'rizzui';
+import { cn } from '@core/utils/class-names';
+import { PiArrowLineRight, PiUserCirclePlus } from 'react-icons/pi';
 import { FcGoogle } from 'react-icons/fc';
 import OrSeparation from '@/app/shared/auth-layout/or-separation';
-import toast from 'react-hot-toast';
-
+import { siteConfig } from '@/config/site.config';
 import { signIn } from 'next-auth/react';
-import { routes } from '@/config/routes';
+// import { BsFacebook } from "react-icons/bs";
+
+function AuthNavLink({
+  href,
+  children,
+}: React.PropsWithChildren<{
+  href: string;
+}>) {
+  const pathname = usePathname();
+  function isActive(href: string) {
+    if (pathname === href) {
+      return true;
+    }
+    return false;
+  }
+
+  return (
+    <Link
+      href={href}
+      className={cn(
+        'inline-flex items-center gap-x-1 rounded-3xl p-2 py-1 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4 md:py-2.5 [&>svg]:w-4 [&>svg]:text-gray-500',
+        isActive(href) ? 'bg-gray-100 text-gray-900 [&>svg]:text-gray-900' : ' '
+      )}
+    >
+      {children}
+    </Link>
+  );
+}
 
 export default function AuthWrapper({
   children,
   title,
-  bannerTitle,
-  bannerDescription,
-  description,
-  pageImage,
   isSocialLoginActive = false,
+  isSignIn = false,
+  className = '',
 }: {
   children: React.ReactNode;
   title: React.ReactNode;
-  description?: string;
-  bannerTitle?: string;
-  bannerDescription?: string;
-  pageImage?: React.ReactNode;
   isSocialLoginActive?: boolean;
   isSignIn?: boolean;
+  className?: string;
 }) {
-  function handleSignIn() {
-    toast.error(
-      <Text>
-        This is only demo purpose, click on the{' '}
-        <Text as="b" className="font-semibold text-gray-900">
-          Sign In
-        </Text>{' '}
-        button to login.
-      </Text>
-    );
-  }
-
-  const loginWithGoogle = () => {
-    signIn('google');
-  };
   return (
-    <>
-      <Link
-        href={routes.eCommerce.home}
-        className="sticky start-0 top-0 z-20 flex items-center justify-center bg-blue p-3.5 text-sm font-medium text-white md:p-4 lg:hidden"
-      >
-        <PiArrowLeftBold />
-        <Text className="ms-1 font-lexend">Back to home</Text>
-      </Link>
+    <div className="flex min-h-screen w-full flex-col justify-between">
+      <AuthHeader />
 
-      <div className="min-h-screen justify-between gap-x-8 px-4 py-8 pt-10 md:pt-12 lg:flex lg:p-6 xl:gap-x-10 xl:p-7 2xl:p-10 2xl:pt-10 [&>div]:min-h-[calc(100vh-80px)]">
-        <div className="relative flex w-full items-center justify-center lg:w-5/12 2xl:justify-end 2xl:pe-24">
-          <div className="w-full max-w-sm md:max-w-md lg:py-7 lg:ps-3 lg:pt-16 2xl:w-[630px] 2xl:max-w-none 2xl:ps-20 2xl:pt-7">
-            <Link
-              href={routes.eCommerce.home}
-              className="absolute -top-4 start-0 hidden p-3 text-gray-500 hover:text-gray-700 lg:flex lg:items-center 2xl:-top-7 2xl:ps-20"
+      <div className="flex w-full flex-col justify-center px-5">
+        <div
+          className={cn(
+            'mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2',
+            className
+          )}
+        >
+          <div className="flex flex-col items-center">
+            {/* <Link href={"/"} className="mb-7 inline-block max-w-[64px] lg:mb-9">
+              <Image src={logoImg} alt={siteConfig.title} />
+            </Link> */}
+            <Title
+              as="h2"
+              className="mb-7 text-center text-[28px] font-bold leading-snug md:text-3xl md:!leading-normal lg:mb-10 lg:text-4xl"
             >
-              <PiArrowLeftBold />
-              <b className="ms-1 font-medium">Back to home</b>
-            </Link>
-            <div className="mb-7 px-6 pt-3 text-center md:pt-0 lg:px-0 lg:text-start xl:mb-8 2xl:mb-10">
-              <Link
-                href={'/'}
-                className="mb-6 inline-flex max-w-[168px] xl:mb-8"
-              >
-                <Image src={logoImg} alt="Isomorphic" />
-              </Link>
-              <Title
-                as="h2"
-                className="mb-5 text-[26px] leading-snug md:text-3xl md:!leading-normal lg:mb-7 lg:pe-16 lg:text-[28px] xl:text-3xl 2xl:pe-8 2xl:text-4xl"
-              >
-                {title}
-              </Title>
-              <Text className="leading-[1.85] text-gray-700 md:leading-loose lg:pe-8 2xl:pe-14">
-                {description}
-              </Text>
-            </div>
-            {/* {isSocialLoginActive && (
-              <>
-                <div className="grid grid-cols-1 gap-4 pb-5 md:grid-cols-2 md:pb-6 xl:gap-5 xl:pb-7">
-                  <Button
-                    onClick={() =>
-                      // it should be signIn('apple')
-                      handleSignIn()
-                    }
-                    variant="outline"
-                    className="h-11 w-full"
-                  >
-                    <PiAppleLogoFill className="me-2 h-4 w-4 shrink-0" />
-                    <span className="truncate">Signin With Apple</span>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      // it should be signIn('google')
-                      // handleSignIn()
-                      loginWithGoogle()
-                    }
-                    className="h-11 w-full"
-                  >
-                    <FcGoogle className="me-2 h-4 w-4 shrink-0" />
-                    <span className="truncate">Signin With Google</span>
-                  </Button>
-                </div>
-                <OrSeparation title="OR" className="mb-5 2xl:mb-7" isCenter />
-              </>
-            )} */}
+              {title}
+            </Title>
+          </div>
+          {isSocialLoginActive && (
+            <>
+              <div className="flex flex-col gap-4 pb-6 md:flex-row md:gap-6 xl:pb-7">
+                <Button
+                  variant="outline"
+                  className="h-11 w-full"
+                  onClick={() => signIn('google')}
+                >
+                  <FcGoogle className="me-2 h-4 w-4 shrink-0" />
+                  <span className="truncate">Signin with Google</span>
+                </Button>
+                {/* <Button variant="outline" className="h-11 w-full">
+                  <BsFacebook className="me-2 h-4 w-4 shrink-0 md:h-5 md:w-5" />
+                  <span className="truncate">Signin with Facebook</span>
+                </Button> */}
+              </div>
+              <OrSeparation
+                title={`Or, Sign ${isSignIn ? 'in' : 'up'} with your email`}
+                isCenter
+                className="mb-5 2xl:mb-7"
+              />
+            </>
+          )}
 
-            {children}
-          </div>
-        </div>
-        <div className="hidden w-7/12 items-center justify-center rounded-[20px] bg-gray-50 px-6 lg:flex xl:justify-start 2xl:px-16 dark:bg-gray-100/40">
-          <div className="pb-8 pt-10 text-center xl:pt-16 2xl:block 2xl:w-[1063px]">
-            <div className="mx-auto mb-10 max-w-sm pt-2 2xl:max-w-lg">
-              <Title
-                as="h2"
-                className="mb-5 font-semibold !leading-normal lg:text-[26px] 2xl:px-10 2xl:text-[32px]"
-              >
-                {bannerTitle}
-              </Title>
-              <Text className="leading-[1.85] text-gray-700 md:leading-loose 2xl:px-6">
-                {bannerDescription}
-              </Text>
-            </div>
-            {pageImage}
-          </div>
+          {children}
         </div>
       </div>
-    </>
+
+      <AuthFooter />
+    </div>
+  );
+}
+
+function AuthHeader() {
+  return (
+    <header className="flex items-center justify-between p-4 lg:px-16 lg:py-6 2xl:px-24">
+      <Link href={routes.eCommerce.home} className="w-1/3 sm:max-w-[168px]">
+        <Image
+          src={logoImg}
+          alt={siteConfig.title}
+          priority
+          className="w-3/4 sm:w-full"
+        />
+      </Link>
+      <div className="flex items-center space-x-2 md:space-x-4">
+        <AuthNavLink href={routes.auth.signIn}>
+          <PiArrowLineRight className="h-4 w-4" />
+          <span>Login</span>
+        </AuthNavLink>
+        <AuthNavLink href={routes.auth.signUp}>
+          <PiUserCirclePlus className="h-4 w-4" />
+          <span>Sign Up</span>
+        </AuthNavLink>
+      </div>
+    </header>
+  );
+}
+
+const footerMenu = [
+  {
+    name: 'Privacy',
+    href: routes.termsNconditions,
+  },
+  {
+    name: 'Terms',
+    href: routes.privacyPolicy,
+  },
+];
+
+function AuthFooter() {
+  return (
+    <footer className="flex flex-col-reverse items-center justify-between px-4 py-5 lg:flex-row lg:px-16 lg:py-6 2xl:px-24 2xl:py-10">
+      <div className="text-center leading-relaxed text-gray-500 lg:text-start">
+        © Copyright {new Date().getFullYear()}. Developed by{' '}
+        <Link
+          href={'http://www.adaired.com'}
+          className="font-medium transition-colors hover:text-primary"
+        >
+          Adaired Digital Media
+        </Link>
+        , all rights reserved.
+      </div>
+      <div className="-mx-2.5 flex items-center justify-end pb-3 font-medium text-gray-700 lg:w-1/2 lg:pb-0">
+        {footerMenu.map((item) => (
+          <Link
+            key={item.name}
+            href={item.href}
+            className="px-2.5 py-1.5 transition-colors hover:text-primary"
+          >
+            {item.name}
+          </Link>
+        ))}
+      </div>
+    </footer>
   );
 }

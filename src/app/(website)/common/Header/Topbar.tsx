@@ -21,7 +21,7 @@ const Topbar = ({ className, session, pathname }: Props) => {
     <div className={cn(`flex h-10 items-center bg-[#EEEEEE] ${className}`)}>
       <WrapperComponent
         className={cn(
-          `flex items-center justify-center gap-2 py-0 sm:justify-end xl:py-0 2xl:py-0 3xl:py-0`
+          `flex items-center justify-center gap-2 !py-0 sm:justify-end xl:!py-0 2xl:!py-0 3xl:!py-0`
         )}
       >
         <div>
