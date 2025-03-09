@@ -78,7 +78,6 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
         // Set first product as selected if none is set
         if (!product && fetchedProducts.length > 0) {
           const firstProduct = fetchedProducts[0];
-          localStorage.setItem('selectedProduct', JSON.stringify(firstProduct));
           setProduct(firstProduct);
         }
       } catch (error) {
@@ -89,8 +88,8 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
     };
 
     // Check localStorage on mount
-    const storedAllProducts = localStorage.getItem('allProducts');
-    const storedSelectedProduct = localStorage.getItem('selectedProduct');
+    const storedAllProducts = localStorage.getItem('contentProductsAtom');
+    const storedSelectedProduct = localStorage.getItem('selectedContentProductAtom');
 
     if (!storedAllProducts && !storedSelectedProduct) {
       fetchAndStoreProducts();
