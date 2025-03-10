@@ -33,7 +33,7 @@ export default function OrderProducts({
   return (
     <SimpleBar
       className={cn('h-[calc(100vh_-_170px)] pb-3', className)}
-      onClick={onClick}
+      onClick={onClick && onClick}
     >
       <div className={cn('grid gap-3.5')}>
         {items.map((item) => {

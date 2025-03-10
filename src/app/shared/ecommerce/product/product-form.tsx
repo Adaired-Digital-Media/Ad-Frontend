@@ -38,7 +38,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
   const [allProducts, setAllProducts] = useAtom(contentProductsAtom);
   const [form, setForm] = useState<DynamicFormTypes>();
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const productToEdit = products.find((product) => product._id === productId);
 
