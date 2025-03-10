@@ -33,9 +33,7 @@ export default function CartPageWrapper() {
           />
         </SmallWidthContainer>
       </div>
-      <SmallWidthContainer className={cn(`!pt-0`)}>
-        <CartTemplate />
-      </SmallWidthContainer>
+      <CartTemplate />
     </>
   );
 }

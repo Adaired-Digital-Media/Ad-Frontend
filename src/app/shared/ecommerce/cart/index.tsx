@@ -170,7 +170,7 @@ export default function CartPageWrapper() {
           isDashboard={isDashboard}
         />
       )}
-      <TagName className="@container">
+      <TagName className="@container xl:min-h-full">
         <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
           <div
             className={cn(

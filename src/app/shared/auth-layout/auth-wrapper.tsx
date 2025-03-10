@@ -146,7 +146,7 @@ const footerMenu = [
 
 function AuthFooter() {
   return (
-    <footer className="flex flex-col-reverse items-center justify-between px-4 py-5 lg:flex-row lg:px-16 lg:py-6 2xl:px-24 2xl:py-10">
+    <footer className="flex flex-col-reverse items-center justify-center px-4 py-5 lg:flex-row lg:px-16 lg:py-6 2xl:px-24 2xl:py-10">
       <div className="text-center leading-relaxed text-gray-500 lg:text-start">
         © Copyright {new Date().getFullYear()}. Developed by{' '}
         <Link
@@ -157,7 +157,7 @@ function AuthFooter() {
         </Link>
         , all rights reserved.
       </div>
-      <div className="-mx-2.5 flex items-center justify-end pb-3 font-medium text-gray-700 lg:w-1/2 lg:pb-0">
+      {/* <div className="-mx-2.5 flex items-center justify-end pb-3 font-medium text-gray-700 lg:w-1/2 lg:pb-0">
         {footerMenu.map((item) => (
           <Link
             key={item.name}
@@ -167,7 +167,7 @@ function AuthFooter() {
             {item.name}
           </Link>
         ))}
-      </div>
+      </div> */}
     </footer>
   );
 }

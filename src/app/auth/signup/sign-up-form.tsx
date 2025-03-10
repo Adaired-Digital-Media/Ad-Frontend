@@ -5,13 +5,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Controller, SubmitHandler } from 'react-hook-form';
 import { PiArrowRightBold } from 'react-icons/pi';
-import { Password, Checkbox, Button, Input, Text } from 'rizzui';
+import { Password, Checkbox, Button, Input, Text, Title } from 'rizzui';
 import { Form } from '@core/ui/rizzui-ui/form';
 import { routes } from '@/config/routes';
 import { SignUpSchema, signUpSchema } from '@/validators/signup.schema';
 import { PhoneNumber } from '@/@core/ui/rizzui-ui/phone-input';
 import { useMedia } from '@core/hooks/use-media';
 import toast from 'react-hot-toast';
+import { cn } from '@/@core/utils/class-names';
 
 const initialValues = {
   firstName: '',
@@ -92,71 +93,128 @@ export default function SignUpForm() {
       >
         {({ register, control, formState: { errors, isSubmitting } }) => (
           <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5">
-            <Input
-              type="text"
-              size={isMedium ? 'lg' : 'xl'}
-              label="First Name"
-              placeholder="Enter your first name"
-              className="[&>label>span]:font-medium"
-              inputClassName="text-sm"
-              {...register('firstName')}
-              error={errors.firstName?.message}
-            />
-            <Input
-              type="text"
-              size={isMedium ? 'lg' : 'xl'}
-              label="Last Name"
-              placeholder="Enter your last name"
-              className="[&>label>span]:font-medium"
-              inputClassName="text-sm"
-              {...register('lastName')}
-              error={errors.lastName?.message}
-            />
-            <Input
-              type="email"
-              size={isMedium ? 'lg' : 'xl'}
-              label="Email"
-              className="col-span-2 [&>label>span]:font-medium"
-              inputClassName="text-sm"
-              placeholder="Enter your email"
-              {...register('email')}
-              error={errors.email?.message}
-            />
-            <Password
-              label="Password"
-              placeholder="Enter your password"
-              size={isMedium ? 'lg' : 'xl'}
-              className="[&>label>span]:font-medium"
-              inputClassName="text-sm"
-              {...register('password')}
-              error={errors.password?.message}
-            />
-            <Password
-              label="Confirm Password"
-              placeholder="Enter confirm password"
-              size={isMedium ? 'lg' : 'xl'}
-              className="[&>label>span]:font-medium"
-              inputClassName="text-sm"
-              {...register('confirmPassword')}
-              error={errors.confirmPassword?.message}
-            />
+            <div>
+              <Title
+                className={cn(
+                  `block font-poppins text-[16px] font-semibold text-[#515151]`
+                )}
+              >
+                First Name
+                <span className="text-red-500"> *</span>
+              </Title>
+              <Input
+                type="text"
+                size={isMedium ? 'lg' : 'xl'}
+                placeholder="Enter your first name"
+                className="[&>label>span]:font-medium"
+                inputClassName="text-sm"
+                {...register('firstName')}
+                error={errors.firstName?.message}
+                required
+              />
+            </div>
 
-            <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ field }) => (
-                <PhoneNumber
-                  {...field}
-                  country="us"
-                  size={isMedium ? 'lg' : 'xl'}
-                  label="Phone Number"
-                  preferredCountries={['us']}
-                  onChange={(value) => field.onChange(value)}
-                  error={errors.phoneNumber?.message}
-                  className="col-span-2"
-                />
-              )}
-            />
+            <div>
+              <Title
+                className={cn(
+                  `block font-poppins text-[16px] font-semibold text-[#515151]`
+                )}
+              >
+                Last Name
+              </Title>
+              <Input
+                type="text"
+                size={isMedium ? 'lg' : 'xl'}
+                placeholder="Enter your last name"
+                className="[&>label>span]:font-medium"
+                inputClassName="text-sm"
+                {...register('lastName')}
+                error={errors.lastName?.message}
+              />
+            </div>
+
+            <div className="col-span-2 [&>label>span]:font-medium">
+              <Title
+                className={cn(
+                  `block font-poppins text-[16px] font-semibold text-[#515151]`
+                )}
+              >
+                Email
+                <span className="text-red-500"> *</span>
+              </Title>
+              <Input
+                type="email"
+                size={isMedium ? 'lg' : 'xl'}
+                inputClassName="text-sm"
+                placeholder="Enter your email"
+                {...register('email')}
+                error={errors.email?.message}
+              />
+            </div>
+
+            <div>
+              <Title
+                className={cn(
+                  `block font-poppins text-[16px] font-semibold text-[#515151]`
+                )}
+              >
+                Password
+                <span className="text-red-500"> *</span>
+              </Title>
+              <Password
+                placeholder="Enter your password"
+                size={isMedium ? 'lg' : 'xl'}
+                className="[&>label>span]:font-medium"
+                inputClassName="text-sm"
+                {...register('password')}
+                error={errors.password?.message}
+              />
+            </div>
+            <div>
+              <Title
+                className={cn(
+                  `block font-poppins text-[16px] font-semibold text-[#515151]`
+                )}
+              >
+                Confirm Password
+                <span className="text-red-500"> *</span>
+              </Title>
+              <Password
+                placeholder="Enter confirm password"
+                size={isMedium ? 'lg' : 'xl'}
+                className="[&>label>span]:font-medium"
+                inputClassName="text-sm"
+                {...register('confirmPassword')}
+                error={errors.confirmPassword?.message}
+              />
+            </div>
+
+            <div className="col-span-2">
+              <Title
+                className={cn(
+                  `block font-poppins text-[16px] font-semibold text-[#515151]`
+                )}
+              >
+                Phone Number
+                <span className="text-red-500"> *</span>
+              </Title>
+              <Controller
+                name="phoneNumber"
+                control={control}
+                render={({ field }) => (
+                  <PhoneNumber
+                    {...field}
+                    country="us"
+                    size={isMedium ? 'lg' : 'xl'}
+                    onChange={(value) => {
+                      console.log(value)
+                      field.onChange(value);
+                    }}
+                    error={errors.phoneNumber?.message}
+                  />
+                )}
+              />
+            </div>
 
             <div className="col-span-2 flex items-start">
               <Checkbox

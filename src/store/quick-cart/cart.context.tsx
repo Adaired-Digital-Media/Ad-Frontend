@@ -79,6 +79,7 @@ export function CartProvider({
   // ******************** Fetch User Cart if User is Logged in *************************
   useEffect(() => {
     if (session?.user?.accessToken) {
+      console.log("Session : ", session)
       const fetchUserCart = async () => {
         try {
           const response = await axios.get(
@@ -92,6 +93,7 @@ export function CartProvider({
 
           if (response.status === 200) {
             const { cart } = response.data;
+            console.log("Cart : ", cart)
             const backendCartItems = cart.products || [];
             dispatch({ type: 'INITIALIZE_CART', payload: backendCartItems });
           }

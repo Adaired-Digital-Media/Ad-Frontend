@@ -53,6 +53,7 @@ export default function SignInForm() {
               inputClassName="text-sm"
               {...register('email')}
               error={errors.email?.message}
+              required
             />
             <Password
               label="Password"
