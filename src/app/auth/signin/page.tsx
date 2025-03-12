@@ -2,6 +2,7 @@ import SignInForm from './sign-in-form';
 import AuthWrapper from '@/app/shared/auth-layout/auth-wrapper';
 import UnderlineShape from '@core/components/shape/underline';
 import { metaObject } from '@/config/site.config';
+import { Suspense } from 'react';
 
 export const metadata = {
   ...metaObject('Sign In'),
@@ -22,7 +23,9 @@ export default function SignIn() {
       }
       isSocialLoginActive={false}
     >
-      <SignInForm />
+      <Suspense>
+        <SignInForm />
+      </Suspense>
     </AuthWrapper>
   );
 }
