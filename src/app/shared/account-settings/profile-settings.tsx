@@ -1,33 +1,22 @@
 'use client';
 
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import { SubmitHandler, Controller } from 'react-hook-form';
 import { PiEnvelopeSimple, PiSealCheckFill } from 'react-icons/pi';
 import { Form } from '@core/ui/rizzui-ui/form';
 import { Button, Title, Text, Input, Checkbox, Select } from 'rizzui';
 import { cn } from '@core/utils/class-names';
-import { routes } from '@/config/routes';
 import toast from 'react-hot-toast';
-import AvatarUpload from '@core/ui/file-upload/avatar-upload';
 import {
   defaultValues,
   profileFormSchema,
   ProfileFormTypes,
 } from '@/validators/profile-settings.schema';
-import { roles } from '@/data/forms/my-details';
 import FormGroup from '@/app/shared/form-group';
-import Link from 'next/link';
-import FormFooter from '@core/components/form-footer';
-import UploadZone from '@core/ui/file-upload/upload-zone';
 
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import axios from 'axios';
-
-const QuillEditor = dynamic(() => import('@core/ui/quill-editor'), {
-  ssr: false,
-});
 export default function ProfileSettingsView() {
   const { data: session } = useSession();
   const [isLoading, setLoading] = useState(false);
