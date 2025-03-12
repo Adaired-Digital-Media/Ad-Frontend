@@ -8,11 +8,11 @@ export default function WebsiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className='flex flex-col min-h-dvh'>
       <Navbar />
-      <main id="main">{children}</main>
+      <main id="main" className='flex-1'>{children}</main>
       <LenisPrevent />
       <Footer />
-    </>
+    </div>
   );
 }

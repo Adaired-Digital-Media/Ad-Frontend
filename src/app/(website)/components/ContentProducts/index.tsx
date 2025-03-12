@@ -14,10 +14,12 @@ import {
   selectedContentProductAtom,
 } from '@/store/atoms/selectedContentProductAtom';
 import { useEffect } from 'react';
+import { useMedia } from '@core/hooks/use-media';
 
 export const ProductSection = ({ products }: { products: Product[] }) => {
   const [, setSelectedProduct] = useAtom(selectedContentProductAtom);
   const [, setAllProducts] = useAtom(contentProductsAtom);
+  const isMedium = useMedia('(max-width: 1200px)', false);
 
   useEffect(() => {
     if (products) {
@@ -47,10 +49,8 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
             // `grid gap-x-4 gap-y-4 xs:grid-cols-2 md:grid-cols-3 opt-md:grid-cols-4 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px] mx-auto`
 
             `flex flex-wrap justify-center gap-x-4 gap-y-4`,
-            // `xs:[&>*]:w-full`, // 1 columns
             `xs:[&>*]:w-[calc(50%-0.5rem)]`, // 2 columns
             `md:[&>*]:w-[calc(33.333%-0.667rem)]`, // 3 columns
-            `opt-md:[&>*]:w-[calc(25%-0.75rem)]`, // 4 columns (custom breakpoint)
             `lg:[&>*]:w-[calc(25%-1.125rem)]`, // 4 columns
             `xl:[&>*]:w-[calc(25%-2rem)]`, // 4 columns with larger gaps
             `transition-all lg:gap-x-6 lg:gap-y-6 xl:gap-x-[42px] xl:gap-y-[42px]`
@@ -61,21 +61,22 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
               .filter((product) => product.status === 'Active')
               .map((product) =>
                 typeof product === 'object' ? (
-                    <IconBox
-                      key={product._id}
-                      icon={product.featuredImage}
-                      isSvg={true}
-                      isFromCloudinary={true}
-                      title={product.name}
-                      buttonText={'Order Now'}
-                      boxLink={routes.eCommerce.contentProductForm}
-                      buttonLink={routes.eCommerce.contentProductForm}
-                      buttonClassName={`bg-[#424242] rounded-full mt-4 xs:mt-4 sm:mt-5 opt-md:mt-10 lg:mt-[55px] opt-md:hidden opt-md:group-hover:block mx-auto`}
-                      containerClassName={`text-center p-5 sm:p-3 md:p-5 lg:p-[30px] rounded-[20px] bg-white aspect-square w-auto w-full h-full max-h-[286px] max-w-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
-                      titleClassName={`font-poppins text-base opt-md:text-[20px] font-medium text-black `}
-                      iconContainerClassName={`pb-[15px]`}
-                      onClick={() => setSelectedProduct(product)}
-                    />
+                  <IconBox
+                    key={product._id}
+                    icon={product.featuredImage}
+                    isSvg={true}
+                    isFromCloudinary={true}
+                    title={product.name}
+                    buttonText={'Order Now'}
+                    boxLink={routes.eCommerce.contentProductForm}
+                    buttonLink={routes.eCommerce.contentProductForm}
+                    buttonClassName={`bg-[#424242] rounded-full mt-4 xs:mt-4 sm:mt-5 opt-md:mt-8 xl:mt-[55px] block xl:hidden xl:group-hover:block mx-auto`}
+                    containerClassName={`text-center p-5 sm:p-3 md:p-5 xl:p-[30px] rounded-[20px] bg-white aspect-square w-auto w-full h-full max-h-[286px] max-w-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
+                    titleClassName={`font-poppins text-base opt-md:text-lg 2xl:text-[20px] font-medium text-black `}
+                    iconContainerClassName={`pb-[15px]`}
+                    btnSize={isMedium ? 'sm' : 'md'}
+                    onClick={() => setSelectedProduct(product)}
+                  />
                 ) : null
               )
           ) : (

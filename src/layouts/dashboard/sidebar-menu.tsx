@@ -103,7 +103,7 @@ export function SidebarMenu() {
                   <Link
                     href={item?.href}
                     className={cn(
-                      'group relative mx-3 my-0.5 flex items-center justify-between rounded-md px-3 py-2 font-medium capitalize lg:my-1 2xl:mx-5 2xl:my-2',
+                      'group relative mx-3 my-0.5 flex items-center justify-between rounded-md px-3 py-2 font-bold capitalize lg:my-1 2xl:mx-5 2xl:my-2',
                       isActive
                         ? 'before:top-2/5 text-primary before:absolute before:-start-3 before:block before:h-4/5 before:w-1 before:rounded-ee-md before:rounded-se-md before:bg-primary 2xl:before:-start-5'
                         : 'text-gray-700 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-700/90'

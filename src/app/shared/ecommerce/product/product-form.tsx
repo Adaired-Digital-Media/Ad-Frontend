@@ -48,7 +48,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
     : undefined;
 
   const methods = useForm<FieldValues>({
-    mode: 'onChange',
+    // mode: 'onChange',
     resolver: formSchema ? zodResolver(formSchema) : undefined,
   });
 
@@ -89,7 +89,9 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
 
     // Check localStorage on mount
     const storedAllProducts = localStorage.getItem('contentProductsAtom');
-    const storedSelectedProduct = localStorage.getItem('selectedContentProductAtom');
+    const storedSelectedProduct = localStorage.getItem(
+      'selectedContentProductAtom'
+    );
 
     if (!storedAllProducts && !storedSelectedProduct) {
       fetchAndStoreProducts();
@@ -154,7 +156,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
     }
   };
   useEffect(() => {
-    let hasFetched = false; 
+    let hasFetched = false;
     const fetchForm = async () => {
       if (!product?.formId) {
         console.warn('No formId provided for product:', product);
@@ -162,14 +164,16 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
         return;
       }
 
-      if (hasFetched) return; 
+      if (hasFetched) return;
 
       try {
         const formRes = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/form/read-form?formId=${product.formId}`
         );
         if (!formRes.ok) {
-          throw new Error(`Failed to fetch form: ${formRes.status} ${formRes.statusText}`);
+          throw new Error(
+            `Failed to fetch form: ${formRes.status} ${formRes.statusText}`
+          );
         }
         const form = await formRes.json();
         setForm(form);
@@ -185,7 +189,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
     if (product && product?.formId && !hasFetched) {
       fetchForm();
     }
-  }, [product]); 
+  }, [product]);
 
   useEffect(() => {
     if (!isEditMode && product && form) {
@@ -230,7 +234,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
           {/* Header */}
           <div
             className={cn(
-              `flex flex-col items-center justify-between gap-5 rounded-tl-[15px] rounded-tr-[15px] bg-black px-5 sm:px-10 py-5 xs:flex-row xs:gap-0`
+              `flex flex-col items-center justify-between gap-5 rounded-tl-[15px] rounded-tr-[15px] bg-black px-5 py-5 xs:flex-row xs:gap-0 sm:px-10`
             )}
           >
             <Title
@@ -254,7 +258,7 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
           {/* Product Details */}
           <div
             className={cn(
-              `rounded-bl-[15px] rounded-br-[15px] border border-t-0 border-[#DBDBDB] p-5 xs:p-8 sm:p-10 pt-5`
+              `rounded-bl-[15px] rounded-br-[15px] border border-t-0 border-[#DBDBDB] p-5 pt-5 xs:p-8 sm:p-10`
             )}
           >
             <div
@@ -330,6 +334,10 @@ export const ProductForm = ({ isEditMode, productId }: ProductFormProps) => {
                         placeholder={field.placeholder}
                         {...register(field.name)}
                         className={cn(`w-full`)}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          e.target.value = value.trimStart();
+                        }}
                         textareaClassName={cn(`text-base`)}
                         variant="flat"
                         required={field.required}

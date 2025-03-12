@@ -1,5 +1,4 @@
 import SmallWidthContainer from '@web-components/SmallWidthContainer';
-import { cn } from '@core/utils/class-names';
 import PageHeader from '@/app/shared/page-header';
 import { routes } from '@/config/routes';
 import CartTemplate from '@/app/shared/ecommerce/cart';
@@ -33,9 +32,7 @@ export default function CartPageWrapper() {
           />
         </SmallWidthContainer>
       </div>
-      <SmallWidthContainer className={cn(`!pt-0`)}>
-        <CartTemplate />
-      </SmallWidthContainer>
+      <CartTemplate />
     </>
   );
 }

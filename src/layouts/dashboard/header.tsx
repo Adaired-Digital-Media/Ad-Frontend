@@ -7,6 +7,8 @@ import Logo from '@core/components/logo';
 import HeaderMenuRight from '@/layouts/header-menu-right';
 import StickyHeader from '@/layouts/sticky-header';
 import SearchWidget from '@/app/shared/search/search';
+import { routes } from '@/config/routes';
+import Image from 'next/image';
 
 export default function Header() {
   return (
@@ -16,11 +18,18 @@ export default function Header() {
           view={<Sidebar className="static w-full 2xl:w-full" />}
         />
         <Link
-          href={'/userDashboard'}
+          href={routes.root.bhwHome}
           aria-label="Site Logo"
           className="me-4 w-9 shrink-0 text-gray-800 hover:text-gray-900 lg:me-5 xl:hidden"
         >
-          <Logo iconOnly />
+          <Image
+            src="/logo-plane-primary.svg"
+            alt="Adaired Logo"
+            width={60}
+            height={60}
+            priority
+            className=""
+          />
         </Link>
         <SearchWidget />
       </div>

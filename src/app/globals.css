@@ -1612,3 +1612,7 @@ div[style='z-index: 1000001;'],
 .no-visible-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.override-chatbot-z-index {
+  z-index: 2247483648;
+}

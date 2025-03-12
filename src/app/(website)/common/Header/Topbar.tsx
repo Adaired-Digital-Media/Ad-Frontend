@@ -71,7 +71,7 @@ const Topbar = ({ className, session, pathname }: Props) => {
           </Link>
         </div>
 
-        {session && <UserAvatarIcon session={session} />}
+        {session && isLandingPage && <UserAvatarIcon session={session} />}
       </WrapperComponent>
     </div>
   );

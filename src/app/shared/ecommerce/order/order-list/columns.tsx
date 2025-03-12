@@ -16,13 +16,13 @@ const columnHelper = createColumnHelper<OrderType>();
 
 export const ordersColumns = (expanded: boolean = true) => {
   const columns = [
-    columnHelper.display({
+    columnHelper.accessor('orderNumber', {
       id: 'orderNumber',
       size: 120,
       header: 'Order No.',
       cell: ({ row }) => <>{row.original.orderNumber}</>,
     }),
-    columnHelper.display({
+    columnHelper.accessor('totalQuantity', {
       id: 'items',
       size: 120,
       header: 'Items',

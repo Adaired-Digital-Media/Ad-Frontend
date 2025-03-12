@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Form } from '@core/ui/rizzui-ui/form';
-import { Button, Password, Title, Text } from 'rizzui';
+import { Button, Password } from 'rizzui';
 import { ProfileHeader } from '@/app/shared/account-settings/profile-settings';
 import HorizontalFormBlockWrapper from '@/app/shared/account-settings/horiozontal-block';
 import {
@@ -14,9 +14,7 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-export default function PasswordSettingsView(
-  // { session }: { session: any }
-) {
+export default function PasswordSettingsView() {
   const [isLoading, setLoading] = useState(false);
   const [reset, setReset] = useState({});
   const { data: session } = useSession();
@@ -40,8 +38,12 @@ export default function PasswordSettingsView(
         ),
         {
           loading: 'Updating password...',
-          success: 'Password updated successfully',
-          error: 'Failed to update password',
+          success: (response) => {
+            return response.data.message;
+          },
+          error: (error) => {
+            return error.response.data.message;
+          },
         }
       )
       .then(() => {
@@ -66,9 +68,11 @@ export default function PasswordSettingsView(
         resetValues={reset}
         onSubmit={onSubmit}
         className="@container"
-        useFormProps={{
-          // mode: 'onChange',
-        }}
+        useFormProps={
+          {
+            // mode: 'onChange',
+          }
+        }
       >
         {({ register, control, formState: { errors }, getValues }) => {
           return (

@@ -71,7 +71,7 @@ function CartProduct({ product }: { product: CartItem }) {
           <QuantityInput product={product} />
           <div className="flex items-center gap-4">
             <RemoveItem
-              cartItemId={product?._id ?? ''}
+              cartItemId={product?._id}
               placement="bottom-end"
             />
           </div>

@@ -63,6 +63,15 @@ export const generateFormSchema = (
       }
     }
 
+    // Apply whitespace check for text/textarea, regardless of required
+    if (field.type === "textarea" || field.type === "text") {
+      fieldSchema = (fieldSchema as z.ZodString)
+        .trim() // Trim leading/trailing spaces during parsing
+        .refine((value) => value === "" || value === value.trimStart(), {
+          message: `${field.label} cannot start with whitespace`,
+        });
+    }
+
     schema[field.name] = fieldSchema;
   });
 

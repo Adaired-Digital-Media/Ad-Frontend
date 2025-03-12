@@ -25,6 +25,7 @@ interface IIconBox {
   buttonClassName?: string;
   containerClassName?: string;
   onClick?: () => void;
+  btnSize?: 'md' | 'sm' | 'lg' | 'xl' | undefined;
 }
 
 const IconBox: FC<IIconBox> = ({
@@ -44,6 +45,7 @@ const IconBox: FC<IIconBox> = ({
   buttonClassName,
   containerClassName,
   onClick,
+  btnSize = 'md',
   ...rest
 }) => {
   const router = useRouter();
@@ -69,7 +71,9 @@ const IconBox: FC<IIconBox> = ({
               alt="icon"
               height={32}
               width={32}
-              className={cn(`min-w-[50px] min-h-[50px] h-full w-full shrink-0 ${iconClassName}`)}
+              className={cn(
+                `h-full min-h-[50px] w-full min-w-[50px] shrink-0 ${iconClassName}`
+              )}
             />
           ) : isSvg ? (
             <Image
@@ -77,7 +81,9 @@ const IconBox: FC<IIconBox> = ({
               alt="icon"
               height={32}
               width={32}
-              className={cn(`min-w-[50px] min-h-[50px] h-full w-full shrink-0 ${iconClassName}`)}
+              className={cn(
+                `h-full min-h-[50px] w-full min-w-[50px] shrink-0 ${iconClassName}`
+              )}
             />
           ) : (
             <Icon
@@ -93,7 +99,11 @@ const IconBox: FC<IIconBox> = ({
           )}
           {buttonText && (
             <Link href={buttonLink || ''} target={target}>
-              <Button className={cn(`${buttonClassName}`)} type="button">
+              <Button
+                className={cn(`${buttonClassName}`)}
+                type="button"
+                size={btnSize}
+              >
                 {buttonText}
               </Button>
             </Link>

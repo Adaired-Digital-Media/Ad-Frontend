@@ -152,6 +152,7 @@ export default async function RootLayout({
           id="zsiqscript"
           src="https://salesiq.zohopublic.com/widget?wc=siq7daf32053a2c9ad94317715612d7eb575af5e85bd3e25754067471d73684b3b9"
           strategy="lazyOnload"
+          
         />
       </body>
     </html>
