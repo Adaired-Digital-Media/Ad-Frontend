@@ -66,6 +66,7 @@ export default function Filters<TData extends Record<string, any>>({
         isOpen={openDrawer}
         drawerTitle="Table Filters"
         setOpenDrawer={setOpenDrawer}
+        
       >
         <div className="grid grid-cols-1 gap-6">
           <FilterElements table={table} />
@@ -155,6 +156,7 @@ function FilterElements<T extends Record<string, any>>({
         startDate={dueDate[0]!}
         onChange={(date) => table.getColumn('updatedAt')?.setFilterValue(date)}
         inputProps={{
+          label: 'Modified Date',
         }}
       />
       <StatusField

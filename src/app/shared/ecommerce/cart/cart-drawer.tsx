@@ -43,7 +43,7 @@ export default function CartDrawer() {
         onClose={() => setOpenDrawer(false)}
         overlayClassName="dark:bg-opacity-40 dark:backdrop-blur-md"
         containerClassName="dark:bg-gray-100 max-h-dvh"
-        className="z-[2247483648] m"
+        className="z-[2247483648]"
       >
         <CartDrawerView
           setOpenDrawer={setOpenDrawer}

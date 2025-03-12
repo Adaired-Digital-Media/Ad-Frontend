@@ -29,7 +29,7 @@ export function FilterDrawerView({
       onClose={() => setOpenDrawer(false)}
       overlayClassName="dark:bg-opacity-40 dark:backdrop-blur-md"
       containerClassName="dark:bg-gray-100"
-      className="z-[9999]"
+      className="override-chatbot-z-index"
     >
       <div className="flex h-full flex-col p-5">
         <div className="-mx-5 mb-6 flex items-center justify-between border-b border-muted px-5 pb-4">
@@ -52,7 +52,7 @@ export function FilterDrawerView({
         <Button
           size="lg"
           onClick={() => setOpenDrawer(false)}
-          className="mt-5 h-11 w-full text-sm"
+          className="mt-5 h-11 w-full text-sm sm:hidden"
         >
           Show Results
         </Button>

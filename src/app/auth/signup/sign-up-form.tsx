@@ -219,7 +219,7 @@ export default function SignUpForm() {
             <div className="col-span-2 flex items-start">
               <Checkbox
                 {...register('isAgreed')}
-                className="[&>label>span]:font-medium [&>label]:items-start"
+                className="[&>label>span]:font-medium [&>label]:items-center"
                 label={
                   <>
                     By signing up you have agreed to our{' '}

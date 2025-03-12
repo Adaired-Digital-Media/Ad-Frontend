@@ -170,7 +170,7 @@ export default function CartPageWrapper() {
           isDashboard={isDashboard}
         />
       )}
-      <TagName className="@container xl:min-h-full">
+      <TagName className="@container min-h">
         <div className="mx-auto w-full max-w-[1536px] items-start @5xl:grid @5xl:grid-cols-12 @5xl:gap-7 @6xl:grid-cols-10 @7xl:gap-10">
           <div
             className={cn(
@@ -178,8 +178,8 @@ export default function CartPageWrapper() {
             )}
           >
             {products.length &&
-              products.map((item, idx) => (
-                <CartProduct key={idx} product={item} />
+              products.map((item) => (
+                <CartProduct key={item._id} product={item} />
               ))}
           </div>
 
@@ -189,6 +189,7 @@ export default function CartPageWrapper() {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               session={session}
+              pathname={pathname}
             />
           </div>
         </div>
@@ -203,6 +204,7 @@ function CartCalculations({
   isLoading,
   session,
   setIsLoading,
+  pathname,
 }: any) {
   const router = useRouter();
   const { products } = useCart();
@@ -253,7 +255,8 @@ function CartCalculations({
             rounded="pill"
             onClick={() => {
               setIsLoading(true);
-              router.push(routes.auth.signIn);
+              // router.push(routes.auth.signIn + `?callbackUrl=${routes.eCommerce.cart}`);
+              router.push(`${routes.auth.signIn}?callbackUrl=${encodeURIComponent(pathname)}`);
             }}
             className="w-full"
             isLoading={isLoading}

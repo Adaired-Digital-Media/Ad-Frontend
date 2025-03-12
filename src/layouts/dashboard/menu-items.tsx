@@ -10,6 +10,11 @@ import {
 
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
+  // label start
+  {
+    name: 'Main Menu',
+  },
+  // label end
   {
     name: 'Visit Website',
     href: routes?.userDashboard?.website,

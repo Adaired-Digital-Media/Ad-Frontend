@@ -7,7 +7,7 @@ import axios from 'axios';
 
 // Function to determine if a route is restricted for logged-in users
 const isAuthRoute = (pathname: string) => {
-  const authRoutePatterns = [/\/auth\/signIn/, /\/auth\/signUp/];
+  const authRoutePatterns = [/\/auth\/signin/, /\/auth\/signup/];
   return authRoutePatterns.some((pattern) => pattern.test(pathname));
 };
 
@@ -36,10 +36,8 @@ export default {
           }
           return { accessToken, ...user };
         } catch (err: any) {
-          if (err instanceof Error) {
-            // Return `null` to indicate that the credentials are invalid
-            return null;
-          }
+          console.log('Error : ', err.response.data.message);
+          return null;
         }
       },
     }),
@@ -97,17 +95,13 @@ export default {
 
       if (parsedUrl.searchParams.has('callbackUrl')) {
         const callbackUrl = parsedUrl.searchParams.get('callbackUrl')!;
-        return callbackUrl.startsWith(baseUrl)
-          ? callbackUrl
-          : `${baseUrl}${callbackUrl}`;
+        console.log("Callback Url : " , callbackUrl);
+        const fullCallbackUrl = new URL(callbackUrl, baseUrl).toString();
+        return fullCallbackUrl.startsWith(baseUrl)
+          ? fullCallbackUrl
+          : `${baseUrl}${callbackUrl.startsWith('/') ? callbackUrl : '/' + callbackUrl}`;
       }
-
-      // if (parsedUrl.origin === baseUrl) {
-      //   // if (parsedUrl.pathname === '/expert-content-solutions/cart') {
-      //   //   return `${baseUrl}/expert-content-solutions/cart`;
-      //   // }
-      //   return `${baseUrl}/expert-content-solutions`;
-      // }
+      console.log("Redirecting to default:", `${baseUrl}/expert-content-solutions`);
       return `${baseUrl}/expert-content-solutions`;
     },
   },

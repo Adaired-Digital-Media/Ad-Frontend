@@ -2,17 +2,14 @@
 import { Dropdown, Text, Avatar } from 'rizzui';
 import { cn } from '@core/utils/class-names';
 import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { routes } from '@/config/routes';
 export default function UserAvatarIcon({ session }: { session: any }) {
-  const router = useRouter();
-
   const [firstName, lastName] = session?.user?.name?.split(' ') || ['', ''];
   const initials =
     `${firstName?.charAt(0)}${lastName?.charAt(0) || ''}`.toUpperCase();
   return (
-    <div>
+    <>
       <Dropdown placement="bottom-end">
         <Dropdown.Trigger>
           <Avatar
@@ -38,6 +35,11 @@ export default function UserAvatarIcon({ session }: { session: any }) {
             </span>
           </Dropdown.Item>
           <div className="mb-2 mt-3 pt-2">
+            <Link href={routes.eCommerce.cart}>
+              <Dropdown.Item className="hover:bg-gray-900 hover:text-gray-50">
+                Cart
+              </Dropdown.Item>
+            </Link>
             <Link href={routes.userDashboard.dashboard}>
               <Dropdown.Item className="hover:bg-gray-900 hover:text-gray-50">
                 Dashboard
@@ -54,6 +56,6 @@ export default function UserAvatarIcon({ session }: { session: any }) {
           </div>
         </Dropdown.Menu>
       </Dropdown>
-    </div>
+    </>
   );
 }
