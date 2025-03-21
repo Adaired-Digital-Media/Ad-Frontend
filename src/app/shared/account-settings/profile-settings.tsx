@@ -13,12 +13,11 @@ import {
   ProfileFormTypes,
 } from '@/validators/profile-settings.schema';
 import FormGroup from '@/app/shared/form-group';
-
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import axios from 'axios';
-export default function ProfileSettingsView() {
-  const { data: session } = useSession();
+import { Session } from 'next-auth';
+
+export default function ProfileSettingsView({ session }: { session: Session }) {
   const [isLoading, setLoading] = useState(false);
   const [firstName, lastName] = session?.user?.name?.split(' ') || ['', ''];
   const [reset, setReset] = useState({
@@ -195,11 +194,12 @@ export function ProfileHeader({
     >
       <div className="relative z-10 mx-auto flex w-full max-w-screen-2xl flex-wrap items-end justify-start gap-6 border-b border-dashed border-muted pb-10">
         <div className="relative -top-1/3 aspect-square w-[110px] overflow-hidden rounded-full border-[6px] border-white bg-gray-100 shadow-profilePic @2xl:w-[130px] @5xl:-top-2/3 @5xl:w-[150px] dark:border-gray-50 3xl:w-[200px]">
-          <Image
-            src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-11.webp"
+          <img
+            src={`https://api.dicebear.com/9.x/initials/svg?seed=${title}`}
             alt="profile-pic"
-            fill
             className="auto"
+            // src={`https://isomorphic-furyroad.s3.amazonaws.com/public/avatars-blur/avatar-01.webp`}
+            // fill
           />
         </div>
         <div>

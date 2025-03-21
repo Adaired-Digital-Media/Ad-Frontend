@@ -1,9 +1,10 @@
 import { z } from 'zod';
+import { validateEmail, validatePassword } from './common-rules';
 
 // form zod validation schema
 export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
+  email: validateEmail,
+  password: validatePassword,
   rememberMe: z.boolean().optional(),
 });
 

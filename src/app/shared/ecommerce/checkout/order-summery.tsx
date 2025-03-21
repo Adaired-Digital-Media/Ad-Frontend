@@ -39,7 +39,7 @@ export default function OrderSummery({
           {products.length > 0 ? (
             <Button
               title={'View Cart'}
-              className="flex w-full justify-center bg-black"
+              className="flex w-full justify-center bg-black hover:bg-black"
               textClassName="text-white"
               svgInnerClassName="!text-black"
               svgClassName="bg-white"

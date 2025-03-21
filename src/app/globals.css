@@ -1616,3 +1616,12 @@ div[style='z-index: 1000001;'],
 .override-chatbot-z-index {
   z-index: 2247483648;
 }
+
+
+html {
+  --cursor-color: #1a5a97
+}
+
+html.dark-mode {
+  --cursor-color: #fff
+}

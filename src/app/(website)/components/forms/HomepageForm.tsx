@@ -182,7 +182,7 @@ const HomepageForm = () => {
 
         <Button
           title="Send Your Enquiry"
-          className="mt-5 bg-white text-black"
+          className="mt-5 bg-white text-black border border-gray-200"
           svgClassName="bg-[#F89520]"
           type="submit"
         />

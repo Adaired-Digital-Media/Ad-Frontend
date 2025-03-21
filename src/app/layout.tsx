@@ -7,6 +7,7 @@ import NextProgress from '@core/components/next-progress';
 import { ReCaptchaProvider } from 'next-recaptcha-v3';
 import GlobalDrawer from '@/app/shared/drawer-views/container';
 import GlobalModal from '@/app/shared/modal-views/container';
+import AnimatedCursor from 'react-animated-cursor';
 
 // styles
 import '@/app/globals.css';
@@ -129,10 +130,38 @@ export default async function RootLayout({
           poppins.variable,
           `font-nunito antialiased`
         )}
-        id='root'
+        id="root"
       >
         <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
           <NextProgress />
+          <AnimatedCursor
+            innerSize={10}
+            outerSize={30}
+            color="26, 90, 151"
+            outerAlpha={0.2}
+            innerScale={0.7}
+            outerScale={1.7}
+            clickables={[
+              'a',
+              'input[type="text"]',
+              'input[type="email"]',
+              'input[type="number"]',
+              'input[type="submit"]',
+              'input[type="image"]',
+              'label[for]',
+              'select',
+              'textarea',
+              'button',
+              '.link',
+            ]}
+            innerStyle={{
+              zIndex: 99999,
+            }}
+            outerStyle={{
+              zIndex: 99999,
+            }}
+            showSystemCursor
+          />
           {children}
           <Toaster />
           <GlobalDrawer />
@@ -152,7 +181,6 @@ export default async function RootLayout({
           id="zsiqscript"
           src="https://salesiq.zohopublic.com/widget?wc=siq7daf32053a2c9ad94317715612d7eb575af5e85bd3e25754067471d73684b3b9"
           strategy="lazyOnload"
-          
         />
       </body>
     </html>

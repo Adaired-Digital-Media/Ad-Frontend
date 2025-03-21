@@ -68,8 +68,10 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
                     isFromCloudinary={true}
                     title={product.name}
                     buttonText={'Order Now'}
-                    boxLink={routes.eCommerce.contentProductForm}
-                    buttonLink={routes.eCommerce.contentProductForm}
+                    boxLink={routes.eCommerce.contentProductForm(product.slug)}
+                    buttonLink={routes.eCommerce.contentProductForm(
+                      product.slug
+                    )}
                     buttonClassName={`bg-[#424242] rounded-full mt-4 xs:mt-4 sm:mt-5 opt-md:mt-8 xl:mt-[55px] block xl:hidden xl:group-hover:block mx-auto`}
                     containerClassName={`text-center p-5 sm:p-3 md:p-5 xl:p-[30px] rounded-[20px] bg-white aspect-square w-auto w-full h-full max-h-[286px] max-w-[286px] flex flex-col items-center justify-center hover:shadow-4xl transition-all duration-300 group`}
                     titleClassName={`font-poppins text-base opt-md:text-lg 2xl:text-[20px] font-medium text-black `}

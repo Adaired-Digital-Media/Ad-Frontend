@@ -199,7 +199,8 @@ const ContactPageForm = () => {
         /> */}
         <Button
           title="Send Your Inquiry"
-          className="mt-20 flex w-full items-center justify-center bg-white pl-0 pr-0 text-black hover:pl-0 hover:pr-0"
+          // className="mt-20 flex w-full items-center justify-center bg-white pl-0 pr-0 text-black hover:pl-0 hover:pr-0"
+          className="w-full items-center justify-center border border-gray-200 bg-white pl-0 pr-0 hover:pl-0 hover:pr-0"
           svgClassName="bg-[#F89520]  "
           type="submit"
         />

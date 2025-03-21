@@ -46,7 +46,7 @@ const BlogCards: React.FC = async () => {
       <MaxWidthWrapper className="flex items-center justify-center">
         <Button
           title="View More"
-          className="bg-white text-black mt-5"
+          className="bg-white text-black mt-5 border border-gray-200"
           svgClassName="bg-[#F89520]"
           type="button"
           navigateTo={`/blog`}

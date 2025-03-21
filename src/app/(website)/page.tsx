@@ -151,7 +151,7 @@ const About = () => {
 
           <Button
             title={btnText}
-            className="mt-5 bg-white text-black"
+            className="mt-5 bg-white text-black border border-gray-200"
             svgClassName="bg-[#F89520]"
             type="button"
             navigateTo={btnHref}
@@ -266,7 +266,7 @@ const Growth = () => {
           </p>
           <Button
             title={btnText}
-            className="mt-5 bg-white text-black"
+            className="mt-5 bg-white text-black border border-gray-200"
             svgClassName="bg-[#F89520]"
             type="button"
             navigateTo={btnHref}

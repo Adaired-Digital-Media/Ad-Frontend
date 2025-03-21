@@ -29,7 +29,7 @@ function CartProduct({ product }: { product: CartItem }) {
           >
             <Link
               href={{
-                pathname: routes?.eCommerce?.contentProductEditForm,
+                pathname: routes?.eCommerce?.contentProductEditForm(product.product.slug),
                 query: { id: product._id },
               }}
             >

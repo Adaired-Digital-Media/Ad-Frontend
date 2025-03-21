@@ -4,9 +4,7 @@ import { Button } from 'rizzui';
 import PageHeader from '@/app/shared/page-header';
 import OrdersTable from '@/app/shared/ecommerce/order/order-list/table';
 import { PiShoppingCart } from 'react-icons/pi';
-import { orderData } from '@/data/order-data';
 import { metaObject } from '@/config/site.config';
-import ExportButton from '@/app/shared/export-button';
 import { auth } from '@/auth';
 import axios from 'axios';
 
@@ -22,7 +20,7 @@ const pageHeader = {
       name: 'Dashboard',
     },
     {
-      href: routes.eCommerce.orders,
+      href: routes.userDashboard.orders,
       name: 'Orders',
     },
     {
