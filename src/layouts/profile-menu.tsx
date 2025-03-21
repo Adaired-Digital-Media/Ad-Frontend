@@ -18,6 +18,7 @@ export default function ProfileMenu({
   username?: boolean;
 }) {
   const { data: session } = useSession();
+  const [firstName, lastName] = session?.user?.name?.split(' ') || ['', ''];
   return (
     <ProfileMenuPopover>
       <Popover.Trigger>
@@ -29,7 +30,7 @@ export default function ProfileMenu({
         >
           <Avatar
             src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-11.webp"
-            name="John Doe"
+            name={firstName + ' ' + lastName}
             className={cn('!h-9 w-9 sm:!h-10 sm:!w-10', avatarClassName)}
           />
           {/* {!!username && (
@@ -89,7 +90,10 @@ function DropdownMenu({ name, email }: { name?: string; email?: string }) {
           <Title as="h6" className="font-semibold">
             {name}
           </Title>
-          <Text className="text-gray-600">{email}</Text>
+          <Text className="text-gray-600">
+            {' '}
+            {((email ?? '').length > 25) ? `${(email ?? '').slice(0, 20)}...` : email}
+          </Text>
         </div>
       </div>
       <div className="grid px-3.5 py-3.5 font-medium text-gray-700">
@@ -107,7 +111,11 @@ function DropdownMenu({ name, email }: { name?: string; email?: string }) {
         <Button
           className="h-auto w-full justify-start p-0 font-medium text-gray-700 outline-none focus-within:text-gray-600 hover:text-gray-900 focus-visible:ring-0"
           variant="text"
-          onClick={() => signOut()}
+          onClick={() =>
+            signOut({
+              callbackUrl: routes.auth.signIn,
+            })
+          }
         >
           Sign Out
         </Button>

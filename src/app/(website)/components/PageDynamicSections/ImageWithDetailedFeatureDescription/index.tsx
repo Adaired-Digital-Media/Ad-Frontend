@@ -8,7 +8,7 @@ import parse, {
   DOMNode,
 } from "html-react-parser";
 import Button from "@web-components/Button";
-import { Icons } from "@web-components/Icons";
+
 
 type ImageWithDetailedFeatureDescriptionProps = {
   colorScheme: string;
@@ -101,7 +101,7 @@ const ImageWithDetailedFeatureDescription = ({
         <div>
           <Button
             title={data.buttonInnerText}
-            className="hover:pl-0 hover:pr-0 text-sm md:text-lg"
+            className="bg-white hover:bg-white border border-gray-200"
             svgClassName="bg-[#F89520]"
             type="button"
             navigateTo={data.buttonLink || ""}

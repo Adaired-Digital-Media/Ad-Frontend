@@ -9,7 +9,7 @@ const EcomFooter = () => {
     <footer className={cn(`bg-[#1C5B98]`)}>
       <SmallWidthContainer className="flex flex-col py-4 xl:py-4 2xl:py-10 3xl:py-10">
         <div className="flex flex-col items-center justify-start gap-10 sm:flex-row sm:gap-0">
-          <div className="flex w-full sm:w-auto flex-col justify-center pr-0 sm:pr-10 md:pr-24">
+          <div className="flex w-full sm:w-auto flex-col justify-center pr-0 sm:pr-10 md:pr-20 opt-md:pr-24">
             <CldImage
               src="Footer_Logo_pGEMx"
               alt="Footer Logo"
@@ -24,7 +24,7 @@ const EcomFooter = () => {
           </div>
           <Separator orientation="vertical" className="hidden h-20 sm:block" />
           <div className="w-full sm:w-auto sm:ml-auto">
-            <ul className="flex flex-col items-center gap-2 font-poppins  text-white sm:inline-flex sm:flex-row md:gap-5 text-base">
+            <ul className="flex flex-col items-center gap-3 font-poppins  text-white sm:inline-flex sm:flex-row md:gap-5 text-base">
               <Link href="/expert-content-solutions">
                 <li>Home</li>
               </Link>

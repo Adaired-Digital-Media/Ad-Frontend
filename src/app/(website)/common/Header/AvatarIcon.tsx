@@ -49,7 +49,9 @@ export default function UserAvatarIcon({ session }: { session: any }) {
           <div className="mt-2 pt-2">
             <Dropdown.Item
               className="hover:bg-gray-900 hover:text-gray-50"
-              onClick={() => signOut()}
+              onClick={() => signOut({
+                callbackUrl: routes.auth.signIn,
+              })}
             >
               Sign Out
             </Dropdown.Item>

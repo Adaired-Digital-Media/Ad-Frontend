@@ -1,4 +1,3 @@
-// import './src/env.mjs';
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
@@ -72,7 +71,24 @@ const nextConfig = {
         port: "",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        port: "",
+        pathname: "**",
+      },
     ],
+  },
+  async redirects() {
+    // const dynamicRedirects = await fetchRedirects();
+    return [
+      {
+        source: '/expert-content-solutions/products/form',
+        destination: '/expert-content-solutions/products/website-content/form',
+        permanent: true,
+      },
+      // ...dynamicRedirects, // Spread the dynamic redirects from API
+    ];
   },
   reactStrictMode: true,
   transpilePackages: ['core'],

@@ -31,7 +31,7 @@ export const generateFormSchema = (
               : `Minimum purchase is ${product.minimumWords} words for this product.`
           );
         break;
-    
+
       case 'text':
         fieldSchema = z
           .string({
@@ -39,15 +39,14 @@ export const generateFormSchema = (
           })
           .max(500, `${field.label} cannot exceed 500 characters`);
         break;
-    
+
       case 'select':
         fieldSchema = z.union([z.string(), z.number()]); // Allow both string and number for select
         break;
-    
+
       default:
         fieldSchema = z.string();
     }
-    
 
     if (field.required) {
       if (field.type === 'number') {
@@ -64,10 +63,10 @@ export const generateFormSchema = (
     }
 
     // Apply whitespace check for text/textarea, regardless of required
-    if (field.type === "textarea" || field.type === "text") {
+    if (field.type === 'textarea' || field.type === 'text') {
       fieldSchema = (fieldSchema as z.ZodString)
         .trim() // Trim leading/trailing spaces during parsing
-        .refine((value) => value === "" || value === value.trimStart(), {
+        .refine((value) => value === '' || value === value.trimStart(), {
           message: `${field.label} cannot start with whitespace`,
         });
     }
@@ -78,16 +77,24 @@ export const generateFormSchema = (
   return z.object(schema);
 };
 
-
 export interface DynamicFormTypes {
-    form: {
-      fields: {
-        name: string;
-        label: string;
-        placeholder: string;
-        type: string;
-        required: boolean;
-        options: any[];
-      }[];
+  form: {
+    _id?: string;
+    productType?: string;
+    fields: {
+      name: string;
+      label: string;
+      placeholder: string;
+      type: string;
+      required: boolean;
+      options: any[];
+    }[];
+    createdBy?: {
+      email: string;
+      isAdmin: boolean;
+      name: string;
+      role: string;
+      _id: string;
     };
-  }
+  };
+}
