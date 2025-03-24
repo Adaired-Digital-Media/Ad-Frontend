@@ -10,8 +10,3 @@ export const selectedContentProductFormAtom = atomWithStorage(
   'selectedContentProductFormAtom',
   {}
 );
-
-export const contentProductsAtom = atomWithStorage<Product[]>(
-  'contentProductsAtom',
-  []
-);

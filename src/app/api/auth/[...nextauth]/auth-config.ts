@@ -28,9 +28,7 @@ export default {
               password: credentials?.password,
             }
           );
-
           const { accessToken, user } = res.data;
-
           if (!accessToken || !user) {
             throw new Error('Invalid credentials.');
           }
@@ -42,22 +40,23 @@ export default {
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+    maxAge: 24 * 60 * 60,
+  },
   callbacks: {
     async authorized({ request: { nextUrl }, auth }) {
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
 
       // Redirect logged-in users away from auth routes
-      if (isAuthRoute(pathname)) {
-        if (isLoggedIn) {
-          // Redirect to homepage
-          return Response.redirect(new URL(routes.eCommerce.home, nextUrl));
-        }
-        return true; // Allow access to auth routes if not logged in
+      if (isAuthRoute(pathname) && isLoggedIn) {
+        console.log(
+          `Authorized: Redirecting from ${pathname} to ${routes.eCommerce.home}`
+        );
+        return Response.redirect(new URL(routes.eCommerce.home, nextUrl));
       }
-
-      // Allow access to private routes for logged-in users
-      return isLoggedIn;
+      return true; // Allow all other routes; middleware handles dashboard protection
     },
     async jwt({ token, user, trigger, session }) {
       if (user) {
@@ -95,14 +94,12 @@ export default {
 
       if (parsedUrl.searchParams.has('callbackUrl')) {
         const callbackUrl = parsedUrl.searchParams.get('callbackUrl')!;
-        console.log("Callback Url : " , callbackUrl);
         const fullCallbackUrl = new URL(callbackUrl, baseUrl).toString();
         return fullCallbackUrl.startsWith(baseUrl)
           ? fullCallbackUrl
           : `${baseUrl}${callbackUrl.startsWith('/') ? callbackUrl : '/' + callbackUrl}`;
       }
-      console.log("Redirecting to default:", `${baseUrl}/expert-content-solutions`);
-      return `${baseUrl}/expert-content-solutions`;
+      return url;
     },
   },
   pages: {
