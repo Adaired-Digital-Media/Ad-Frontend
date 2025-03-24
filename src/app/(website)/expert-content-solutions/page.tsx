@@ -20,6 +20,7 @@ import { FAQSection } from '@web-components/eComFaqSection';
 import { EcomPageForm } from '../components/forms/EcomForm';
 import CldImage from '@web-components/CloudinaryImageComponent';
 import { ProductSection } from '@web-components/ContentProducts';
+
 const Landing = async () => {
   const fetchProductCategory = await axios.get(
     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/category/read-category?identifier=content-writing&products=true`
@@ -74,7 +75,7 @@ const HeroSection = () => {
             `relative z-[2] m-0 grid-cols-1 place-items-center gap-5 md:gap-10 opt-md:grid-cols-2 opt-md:gap-0`
           )}
         >
-          <div className={cn(`w-full xl:pt-14 xl:pb-28`)}>
+          <div className={cn(`w-full xl:pb-28 xl:pt-14`)}>
             <h1
               className={cn(
                 `font-poppins font-bold text-black lg:text-[38px] lg:leading-[52px] xl:text-[42px] xl:leading-[58px]`
@@ -87,7 +88,7 @@ const HeroSection = () => {
             </p>
             <div
               className={cn(
-                `flex flex-col gap-5 pt-5 sm:flex-row sm:items-center sm:gap-0 sm:gap-x-5 xl:pt-10 lg:gap-x-10`
+                `flex flex-col gap-5 pt-5 sm:flex-row sm:items-center sm:gap-0 sm:gap-x-5 lg:gap-x-10 xl:pt-10`
               )}
             >
               <Link href={HeroSectionDetails.buttonLink || ''}>

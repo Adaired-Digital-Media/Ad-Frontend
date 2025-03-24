@@ -24,7 +24,7 @@ type FormValues = {
 
 export default function CartPageWrapper() {
   const pathname = usePathname();
-  const { products } = useCart();
+  const { products, isSyncing = false } = useCart();
   const router = useRouter();
 
   const { data: session } = useSession();
@@ -125,23 +125,47 @@ export default function CartPageWrapper() {
     }
   };
 
-  // Handle the state change for loaded products
-  useEffect(() => {
-    if (products.length > 0) {
-      setAreProductsLoaded(true);
-    } else {
-      setAreProductsLoaded(false);
-      const timer = setTimeout(() => {
-        if (products.length === 0) {
-          setAreProductsLoaded(true);
-        }
-      }, 1000);
-      // Cleanup the timeout when the component is unmounted or cartItems changes
-      return () => clearTimeout(timer);
-    }
-  }, [products]);
+  // // Handle the state change for loaded products
+  // useEffect(() => {
+  //   if (products.length > 0) {
+  //     setAreProductsLoaded(true);
+  //   } else {
+  //     setAreProductsLoaded(false);
+  //     const timer = setTimeout(() => {
+  //       if (products.length === 0) {
+  //         setAreProductsLoaded(true);
+  //       }
+  //     }, 1000);
+  //     // Cleanup the timeout when the component is unmounted or cartItems changes
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [products]);
 
-  if (!areProductsLoaded) {
+
+  // Handle loading state with isSyncing to prevent flickering
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isSyncing) {
+      console.log('Cart is syncing, showing skeleton');
+      setAreProductsLoaded(false); // Show skeleton during sync
+    } else if (products.length > 0) {
+      console.log('Products loaded:', products);
+      setAreProductsLoaded(true); // Products are ready
+    } else {
+      console.log('No products, delaying empty state');
+      setAreProductsLoaded(false);
+      timer = setTimeout(() => {
+        if (products.length === 0) {
+          console.log('Confirmed empty cart, showing empty state');
+          setAreProductsLoaded(true); // Empty cart confirmed
+        }
+      }, 1000); // Delay to avoid flash
+    }
+    return () => clearTimeout(timer);
+  }, [products, isSyncing]);
+
+
+  if (!areProductsLoaded || isSyncing) {
     return (
       <TagName className="@container">
         <CartTemplateSkeleton />
@@ -149,7 +173,7 @@ export default function CartPageWrapper() {
     );
   }
 
-  if (products.length <= 0 && areProductsLoaded) {
+  if (products.length <= 0) {
     return (
       <TagName className="@container">
         <Empty

@@ -49,7 +49,7 @@ export default function OrderSummery({
           ) : (
             <Button
               title="Back to Store"
-              className="flex w-full justify-center bg-black"
+              className="flex w-full justify-center bg-black hover:bg-black"
               textClassName="text-white"
               svgInnerClassName="!text-black"
               svgClassName="bg-white"

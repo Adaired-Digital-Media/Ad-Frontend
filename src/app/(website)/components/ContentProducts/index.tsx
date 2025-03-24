@@ -9,23 +9,27 @@ import IconList from '@core/components/iconList';
 import { ProductSectionDetails } from '@core/data/website/Landingpage';
 import parse from 'html-react-parser';
 import { useAtom } from 'jotai';
-import {
-  contentProductsAtom,
-  selectedContentProductAtom,
-} from '@/store/atoms/selectedContentProductAtom';
+import { selectedContentProductAtom } from '@/store/atoms/selectedContentProductAtom';
 import { useEffect } from 'react';
 import { useMedia } from '@core/hooks/use-media';
 
 export const ProductSection = ({ products }: { products: Product[] }) => {
-  const [, setSelectedProduct] = useAtom(selectedContentProductAtom);
-  const [, setAllProducts] = useAtom(contentProductsAtom);
+  const [selectedProduct, setSelectedProduct] = useAtom(
+    selectedContentProductAtom
+  );
   const isMedium = useMedia('(max-width: 1200px)', false);
 
+  // Debug atom value and validate persistence
   useEffect(() => {
-    if (products) {
-      setAllProducts(products);
+    // Validate if stored product still exists in products list
+    if (
+      selectedProduct &&
+      !products.find((p) => p._id === selectedProduct._id)
+    ) {
+      console.log('Selected product is stale, resetting to null');
+      setSelectedProduct(products[0]);
     }
-  }, []);
+  }, [selectedProduct, products, setSelectedProduct]);
 
   return (
     <div className={cn(`bg-[#F6FBFF]`)} id="products">
