@@ -26,7 +26,6 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
       selectedProduct &&
       !products.find((p) => p._id === selectedProduct._id)
     ) {
-      console.log('Selected product is stale, resetting to null');
       setSelectedProduct(products[0]);
     }
   }, [selectedProduct, products, setSelectedProduct]);

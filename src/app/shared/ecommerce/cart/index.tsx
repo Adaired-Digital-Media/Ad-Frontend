@@ -146,20 +146,16 @@ export default function CartPageWrapper() {
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isSyncing) {
-      console.log('Cart is syncing, showing skeleton');
-      setAreProductsLoaded(false); // Show skeleton during sync
+      setAreProductsLoaded(false); 
     } else if (products.length > 0) {
-      console.log('Products loaded:', products);
-      setAreProductsLoaded(true); // Products are ready
+      setAreProductsLoaded(true); 
     } else {
-      console.log('No products, delaying empty state');
       setAreProductsLoaded(false);
       timer = setTimeout(() => {
         if (products.length === 0) {
-          console.log('Confirmed empty cart, showing empty state');
-          setAreProductsLoaded(true); // Empty cart confirmed
+          setAreProductsLoaded(true); 
         }
-      }, 1000); // Delay to avoid flash
+      }, 1000); 
     }
     return () => clearTimeout(timer);
   }, [products, isSyncing]);
@@ -358,8 +354,6 @@ function CheckCoupon({
         totalQuantity,
       },
     };
-
-    console.log('Payload being sent:', JSON.stringify(payload, null, 2));
 
     try {
       const response = await axios.post(

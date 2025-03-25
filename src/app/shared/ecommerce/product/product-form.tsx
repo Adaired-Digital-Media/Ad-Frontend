@@ -150,15 +150,13 @@ export const ProductForm = ({
   // Handle back button to redirect to /expert-content-solutions
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
-      console.log('Popstate fired, state:', event.state);
-      console.log('Current URL:', window.location.pathname);
+
       // Redirect to /expert-content-solutions on back
       router.push('/expert-content-solutions');
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => {
-      console.log('Cleaning up popstate listener');
       window.removeEventListener('popstate', handlePopState);
     };
   }, [router]);

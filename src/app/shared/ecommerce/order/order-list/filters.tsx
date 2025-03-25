@@ -140,7 +140,6 @@ function FilterElements<T extends Record<string, any>>({
         // selected={createdDate[0]}
         onChange={(date) => {
           table.getColumn('createdAt')?.setFilterValue(date);
-          console.log('Date : ', date);
         }}
         inputProps={{
           label: 'Created Date',
