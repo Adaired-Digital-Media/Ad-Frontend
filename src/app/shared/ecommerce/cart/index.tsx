@@ -117,49 +117,31 @@ export default function CartPageWrapper() {
           sessionId: order.sessionId,
         });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error(error.response.data.message);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // // Handle the state change for loaded products
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     setAreProductsLoaded(true);
-  //   } else {
-  //     setAreProductsLoaded(false);
-  //     const timer = setTimeout(() => {
-  //       if (products.length === 0) {
-  //         setAreProductsLoaded(true);
-  //       }
-  //     }, 1000);
-  //     // Cleanup the timeout when the component is unmounted or cartItems changes
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [products]);
-
-
   // Handle loading state with isSyncing to prevent flickering
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isSyncing) {
-      setAreProductsLoaded(false); 
+      setAreProductsLoaded(false);
     } else if (products.length > 0) {
-      setAreProductsLoaded(true); 
+      setAreProductsLoaded(true);
     } else {
       setAreProductsLoaded(false);
       timer = setTimeout(() => {
         if (products.length === 0) {
-          setAreProductsLoaded(true); 
+          setAreProductsLoaded(true);
         }
-      }, 1000); 
+      }, 1000);
     }
     return () => clearTimeout(timer);
   }, [products, isSyncing]);
-
 
   if (!areProductsLoaded || isSyncing) {
     return (
@@ -335,10 +317,12 @@ function CheckCoupon({
   }) => void;
 }) {
   const [reset, setReset] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(
     null
   );
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setIsLoading(true);
     // Calculate totalPrice and totalQuantity from cartData
     const totalPrice = cartData.reduce(
       (acc: number, item: any) => acc + (item.totalPrice ?? 0),
@@ -357,7 +341,7 @@ function CheckCoupon({
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/orders/calculate-coupon-discount`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/coupons/apply`,
         payload
       );
       if (response.status === 200) {
@@ -367,11 +351,13 @@ function CheckCoupon({
           originalTotal: response.data.originalTotal,
           couponDiscount: response.data.couponDiscount,
           finalPrice: response.data.finalPrice,
-          couponCode: payload.code || undefined, // Pass the coupon code
+          couponCode: payload.code || undefined,
         });
         toast.success('Coupon applied successfully');
+        setIsLoading(false);
       }
     } catch (error: any) {
+      setIsLoading(false);
       toast.error(
         'Failed to apply coupon: ' +
           (error.response?.data?.message || 'Unknown error')
@@ -404,6 +390,7 @@ function CheckCoupon({
               type="submit"
               className="ms-3"
               disabled={watch('couponCode') ? false : true}
+              isLoading={isLoading}
             >
               Apply
             </Button>

@@ -124,7 +124,7 @@ export default function OrderView({
         </span>
         <span className="my-2 border-r border-muted px-5 py-0.5 first:ps-0 last:border-r-0">
           Total :{' '}
-          <span className="font-bold">{toCurrency(order.discountedPrice)}</span>
+          <span className="font-bold">{toCurrency(order.finalPrice)}</span>
         </span>
 
         <span
