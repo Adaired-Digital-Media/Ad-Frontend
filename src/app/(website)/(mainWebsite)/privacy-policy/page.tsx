@@ -1,9 +1,16 @@
-import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
-import PageBanner from "@web-components/PageBanner";
-import Link from "next/link";
-import React, { FC } from "react";
+import { siteConfig } from '@/config/site.config';
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
+import PageBanner from '@web-components/PageBanner';
+import Link from 'next/link';
+import React, { FC } from 'react';
 
 interface IProps {}
+
+export const metadata = {
+  title: 'Privacy Policy | How Adaired Protects Your Data',
+  description:
+    'Read Adaired’s Privacy Policy to understand how we collect, use, and protect your personal information while providing our services.',
+};
 
 const Privacy: FC<IProps> = (props) => {
   return (
@@ -19,7 +26,7 @@ const Privacy: FC<IProps> = (props) => {
           </p>
 
           <div className="space-y-1">
-            <h3 className="text-lg sm:text-xl lg:text-2xl ">
+            <h3 className="text-lg sm:text-xl lg:text-2xl">
               Our Commitment to You
             </h3>
             <p>
@@ -32,7 +39,7 @@ const Privacy: FC<IProps> = (props) => {
             <h3 className="text-lg sm:text-xl lg:text-2xl">
               What Information We Collect
             </h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Personal Details:</strong> We only collect your name,
                 email address, and message when you provide them voluntarily.
@@ -49,7 +56,7 @@ const Privacy: FC<IProps> = (props) => {
             <h3 className="text-lg sm:text-xl lg:text-2xl">
               How We Use Your Information
             </h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Communication:</strong>
                 Your information is used to respond to inquiries and improve
@@ -110,14 +117,14 @@ const Privacy: FC<IProps> = (props) => {
             <p>
               <strong> Tel:</strong>
               <Link href="tel:+91-8907400008">
-                {" "}
+                {' '}
                 <strong>+91-8907400008</strong>
               </Link>
             </p>
             <p>
               <strong>Email:</strong>
               <Link href="mailto:info@adaired.com">
-                {" "}
+                {' '}
                 <strong>info@adaired.com</strong>
               </Link>
             </p>
