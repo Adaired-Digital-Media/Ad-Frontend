@@ -335,18 +335,17 @@ export const useCart = () => {
 };
 
 const useLocalStorage = (key: string, initialValue: string) => {
-  const [storedValue, setStoredValue] = useState<string>(initialValue);
-  useEffect(() => {
+  const [storedValue, setStoredValue] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       try {
-        const item = window.localStorage.getItem(key);
-        setStoredValue(item ?? initialValue);
+        return window.localStorage.getItem(key) ?? initialValue;
       } catch (error) {
-        console.error('Error reading localStorage:', error);
-        setStoredValue(initialValue);
+        console.error('Error reading localStorage on init:', error);
+        return initialValue;
       }
     }
-  }, [key, initialValue]);
+    return initialValue;
+  });
 
   const setValue = (value: string) => {
     try {
@@ -414,6 +413,8 @@ export function CartProvider({
   );
 
   const [isSyncing, setIsSyncing] = useState(false);
+  const [hasFetchedCart, setHasFetchedCart] = useState(false);
+  const [hasSyncedCart, setHasSyncedCart] = useState(false);
 
   const {
     handleApiError,
@@ -422,9 +423,6 @@ export function CartProvider({
     removeCartItemFromBackend,
     emptyCartInBackend,
   } = useCartAPI();
-
-  const hasSyncedCart = useRef(false);
-  const hasFetchedCart = useRef(false); // Track fetch to avoid overlap
 
   // Save cart to localStorage for guest users
   useEffect(() => {
@@ -435,10 +433,9 @@ export function CartProvider({
 
   // Fetch user cart if logged in (runs once)
   useEffect(() => {
-    if (session?.user?.accessToken && !hasFetchedCart.current) {
+    if (session?.user?.accessToken && !hasFetchedCart) {
       const fetchUserCart = async () => {
         try {
-          console.log('Fetching user cart from backend');
           const response = await axios.get(
             `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/get-user-cart`,
             {
@@ -448,69 +445,62 @@ export function CartProvider({
           if (response.status === 200) {
             const { cart } = response.data;
             const backendCartItems = cart.products || [];
-            console.log('Fetched cart:', backendCartItems);
             dispatch({ type: 'INITIALIZE_CART', payload: backendCartItems });
-            hasFetchedCart.current = true;
+            setHasFetchedCart(true);
           }
         } catch (error) {
-          handleApiError(error);
+          console.error('Fetch error:', error);
         }
       };
       fetchUserCart();
     }
-  }, [session?.user?.accessToken]);
+  }, [session?.user?.accessToken, hasFetchedCart]);
 
   // Sync local cart with backend on login
   useEffect(() => {
-    console.log('Sync useEffect triggered', {
-      accessToken: session?.user?.accessToken,
-      hasSyncedCart: hasSyncedCart.current,
-      hasFetchedCart: hasFetchedCart.current,
-    });
-
     if (
       session?.user?.accessToken &&
-      !hasSyncedCart.current &&
-      hasFetchedCart.current
+      hasFetchedCart &&
+      !hasSyncedCart &&
+      !isSyncing
     ) {
-      console.log('Starting sync process');
       setIsSyncing(true);
-      hasSyncedCart.current = true;
+      setHasSyncedCart(true);
       const syncCart = async () => {
         try {
           const migratedCart = migrateCartData(savedCart);
           const hasSavedItems = migratedCart.products.length > 0;
           if (hasSavedItems) {
-            console.log('Syncing local cart:', migratedCart.products);
-            const uniqueItems = deduplicateCartItems(migratedCart.products);
-            console.log('Deduplicated local items:', uniqueItems);
+            const itemsToSync = migratedCart.products;
             const backendCartItems = await sendCartToBackend(
-              uniqueItems,
+              itemsToSync,
               `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/add-product-or-sync-cart`
             );
-            console.log('Synced cart from backend:', backendCartItems.products);
             dispatch({
               type: 'INITIALIZE_CART',
               payload: backendCartItems.products,
             });
             saveCart(JSON.stringify(initialState));
           } else {
-            console.log('No local items to sync');
+            console.warn('No local items to sync');
           }
         } catch (error) {
           console.error('Sync error:', error);
           handleApiError(error);
-          hasSyncedCart.current = false; // Allow retry on error
+          setHasSyncedCart(false); // Retry on failure
         } finally {
           setIsSyncing(false);
         }
       };
       syncCart();
+      return () => {
+        console.log('Sync effect cleanup');
+      };
     } else {
       console.log('Sync skipped', {
         accessToken: !!session?.user?.accessToken,
-        hasSyncedCart: hasSyncedCart.current,
-        hasFetchedCart: hasFetchedCart.current,
+        hasSyncedCart,
+        hasFetchedCart,
       });
     }
   }, [
@@ -518,6 +508,8 @@ export function CartProvider({
     savedCart,
     sendCartToBackend,
     handleApiError,
+    hasFetchedCart,
+    hasSyncedCart,
   ]);
 
   const addItemToCart = useCallback(
@@ -525,12 +517,10 @@ export function CartProvider({
       const updatedItem = { ...item };
       if (session) {
         try {
-          console.log('Adding item to backend:', updatedItem);
           const response = await sendCartToBackend(
             [updatedItem],
             `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/add-product-or-sync-cart`
           );
-          console.log('Backend response after add:', response?.products);
           dispatch({ type: 'INITIALIZE_CART', payload: response?.products });
         } catch (error) {
           dispatch({ type: 'REMOVE_ITEM', cartItemId: updatedItem._id });

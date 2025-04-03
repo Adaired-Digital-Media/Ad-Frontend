@@ -34,7 +34,7 @@ export default {
           }
           return { accessToken, ...user };
         } catch (err: any) {
-          console.log('Error : ', err.response.data.message);
+          console.error('Error : ', err.response.data.message);
           return null;
         }
       },
@@ -51,9 +51,6 @@ export default {
 
       // Redirect logged-in users away from auth routes
       if (isAuthRoute(pathname) && isLoggedIn) {
-        console.log(
-          `Authorized: Redirecting from ${pathname} to ${routes.eCommerce.home}`
-        );
         return Response.redirect(new URL(routes.eCommerce.home, nextUrl));
       }
       return true; // Allow all other routes; middleware handles dashboard protection

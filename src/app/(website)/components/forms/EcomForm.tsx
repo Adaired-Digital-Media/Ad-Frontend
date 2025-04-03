@@ -41,7 +41,7 @@ export const EcomPageForm = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       gRecaptchaToken: '',
-      formId: 'Ecommerce Page Form',
+      formId: 'BHW Contact Form',
       formUrl: `${process.env.NEXT_PUBLIC_SITE_URI}${pathname}`,
       name: '',
       email: '',
@@ -51,19 +51,21 @@ export const EcomPageForm = () => {
   });
 
   const onSubmit = async (data: SchemaType) => {
+    console.log(data)
     setLoading(true);
-    const token = await executeRecaptcha('ecom_page_form');
+    const token = await executeRecaptcha('bhw_contact_form');
     if (token) {
       data.gRecaptchaToken = token;
       reset();
       try {
-        // const response = await fetch('/api/zoho/leadRegister', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify(data),
-        // });
+        const response = await fetch('/api/formMailer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        console.log(response)
         toast(
           (t) => (
             <div

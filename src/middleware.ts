@@ -6,7 +6,7 @@ import { routes } from './config/routes';
 // Cache session for the request
 const getSession = async (req: NextRequest) => {
   if (!(req as any).__session) {
-    console.log('Fetching session for:', req.nextUrl.pathname);
+
     (req as any).__session = await auth();
   }
   return (req as any).__session;
@@ -14,7 +14,6 @@ const getSession = async (req: NextRequest) => {
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  console.log(`Middleware invoked for: ${pathname}`);
 
   // Early return for non-matching routes
   const authRoutes = [routes.auth.signIn, routes.auth.signUp];
@@ -25,8 +24,7 @@ export async function middleware(req: NextRequest) {
 
   // Skip if not an auth or dashboard route
   if (!isAuthRoute && !isProtectedRoute) {
-    console.log(`Skipping middleware (not auth or dashboard): ${pathname}`);
-    return NextResponse.next();
+   return NextResponse.next();
   }
 
   // Skip middleware for API routes and static assets
@@ -35,8 +33,6 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith('/_next/') ||
     pathname === '/favicon.ico'
   ) {
-    5;
-    console.log(`Skipping middleware for: ${pathname}`);
     return NextResponse.next();
   }
 
@@ -47,15 +43,11 @@ export async function middleware(req: NextRequest) {
   // Prevent redirect loops
   const isRedirected = req.headers.get('x-redirected') === 'true';
   if (isRedirected) {
-    console.log(`Already redirected, skipping: ${pathname}`);
     return NextResponse.next();
   }
 
   // Redirect logged-in users away from auth routes
   if (isAuthRoute && token) {
-    console.log(
-      `Redirecting from auth route ${pathname} to ${routes.eCommerce.home}`
-    );
     const response = NextResponse.redirect(
       new URL(routes.eCommerce.home, req.url)
     );
@@ -65,9 +57,7 @@ export async function middleware(req: NextRequest) {
 
   // Protect all routes under /dashboard
   if (isProtectedRoute && !token) {
-    console.log(
-      `Redirecting from protected route ${pathname} to ${routes.auth.signIn}`
-    );
+
     const response = NextResponse.redirect(
       new URL(routes.auth.signIn, req.url)
     );
@@ -75,7 +65,6 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
-  console.log(`Proceeding with request: ${pathname}`);
   return NextResponse.next();
 }
 

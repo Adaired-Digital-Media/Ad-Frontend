@@ -117,53 +117,31 @@ export default function CartPageWrapper() {
           sessionId: order.sessionId,
         });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error(error.response.data.message);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // // Handle the state change for loaded products
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     setAreProductsLoaded(true);
-  //   } else {
-  //     setAreProductsLoaded(false);
-  //     const timer = setTimeout(() => {
-  //       if (products.length === 0) {
-  //         setAreProductsLoaded(true);
-  //       }
-  //     }, 1000);
-  //     // Cleanup the timeout when the component is unmounted or cartItems changes
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [products]);
-
-
   // Handle loading state with isSyncing to prevent flickering
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isSyncing) {
-      console.log('Cart is syncing, showing skeleton');
-      setAreProductsLoaded(false); // Show skeleton during sync
+      setAreProductsLoaded(false);
     } else if (products.length > 0) {
-      console.log('Products loaded:', products);
-      setAreProductsLoaded(true); // Products are ready
+      setAreProductsLoaded(true);
     } else {
-      console.log('No products, delaying empty state');
       setAreProductsLoaded(false);
       timer = setTimeout(() => {
         if (products.length === 0) {
-          console.log('Confirmed empty cart, showing empty state');
-          setAreProductsLoaded(true); // Empty cart confirmed
+          setAreProductsLoaded(true);
         }
-      }, 1000); // Delay to avoid flash
+      }, 1000);
     }
     return () => clearTimeout(timer);
   }, [products, isSyncing]);
-
 
   if (!areProductsLoaded || isSyncing) {
     return (
@@ -339,10 +317,12 @@ function CheckCoupon({
   }) => void;
 }) {
   const [reset, setReset] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(
     null
   );
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    setIsLoading(true);
     // Calculate totalPrice and totalQuantity from cartData
     const totalPrice = cartData.reduce(
       (acc: number, item: any) => acc + (item.totalPrice ?? 0),
@@ -359,11 +339,9 @@ function CheckCoupon({
       },
     };
 
-    console.log('Payload being sent:', JSON.stringify(payload, null, 2));
-
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/orders/calculate-coupon-discount`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/coupons/apply`,
         payload
       );
       if (response.status === 200) {
@@ -373,11 +351,13 @@ function CheckCoupon({
           originalTotal: response.data.originalTotal,
           couponDiscount: response.data.couponDiscount,
           finalPrice: response.data.finalPrice,
-          couponCode: payload.code || undefined, // Pass the coupon code
+          couponCode: payload.code || undefined,
         });
         toast.success('Coupon applied successfully');
+        setIsLoading(false);
       }
     } catch (error: any) {
+      setIsLoading(false);
       toast.error(
         'Failed to apply coupon: ' +
           (error.response?.data?.message || 'Unknown error')
@@ -410,6 +390,7 @@ function CheckCoupon({
               type="submit"
               className="ms-3"
               disabled={watch('couponCode') ? false : true}
+              isLoading={isLoading}
             >
               Apply
             </Button>
