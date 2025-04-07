@@ -26,10 +26,24 @@ export default function CartPageWrapper() {
   const pathname = usePathname();
   const { products, isSyncing = false } = useCart();
   const router = useRouter();
-
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [areProductsLoaded, setAreProductsLoaded] = useState(false);
+  const [couponData, setCouponData] = useState<{
+    originalTotal?: number;
+    couponDiscount?: number;
+    finalPrice?: number;
+    couponCode?: string;
+    appliedTo?: string;
+    productDiscounts?: { [key: string]: number };
+  }>({
+    originalTotal: undefined,
+    couponDiscount: 0,
+    finalPrice: undefined,
+    couponCode: undefined,
+    appliedTo: undefined,
+    productDiscounts: {},
+  });
 
   const isDashboard = pathname.includes('/dashboard');
   const TagName = !isDashboard ? SmallWidthContainer : 'div';
@@ -181,7 +195,11 @@ export default function CartPageWrapper() {
           >
             {products.length &&
               products.map((item) => (
-                <CartProduct key={item._id} product={item} />
+                <CartProduct
+                  key={item._id}
+                  product={item}
+                  couponData={couponData}
+                />
               ))}
           </div>
 
@@ -192,6 +210,8 @@ export default function CartPageWrapper() {
               setIsLoading={setIsLoading}
               session={session}
               pathname={pathname}
+              couponData={couponData}
+              setCouponData={setCouponData}
             />
           </div>
         </div>
@@ -207,26 +227,17 @@ function CartCalculations({
   session,
   setIsLoading,
   pathname,
+  couponData,
+  setCouponData,
 }: any) {
   const router = useRouter();
   const { products } = useCart();
-  const [couponData, setCouponData] = useState<{
-    originalTotal?: number;
-    couponDiscount?: number;
-    finalPrice?: number;
-    couponCode?: string;
-  }>({});
 
-  // Calculate total price dynamically from products if no coupon is applied
   const total = products.reduce((acc, item) => acc + (item.totalPrice ?? 0), 0);
-
-  // Use finalPrice if coupon is applied, otherwise use total
-  const displayTotal =
-    couponData.finalPrice !== undefined ? couponData.finalPrice : total;
-  const originalPrice =
-    couponData.originalTotal !== undefined ? couponData.originalTotal : null;
-  const discountPrice =
-    couponData.couponDiscount !== undefined ? couponData.couponDiscount : 0;
+  const displayTotal = couponData.finalPrice ?? total; // Use nullish coalescing to avoid undefined
+  const originalPrice = couponData.originalTotal ?? null;
+  const discountPrice = couponData.couponDiscount ?? 0;
+  const productDiscounts = couponData.productDiscounts ?? {};
 
   const onCheckoutClick = () => {
     handleSubmit(couponData.couponCode);
@@ -240,16 +251,36 @@ function CartCalculations({
         Order Summary
       </Title>
       <div className="mt-6 grid grid-cols-1 gap-4 @md:gap-6">
-        {products.map((item) => (
-          <div key={item?._id} className="flex items-center justify-between">
-            <Title as="h3" className="mb-1 text-base font-semibold">
-              {item?.product?.name}
-            </Title>
-            <div className="text-right">
-              {toCurrency(item?.totalPrice as number)}
+        {products.map((item) => {
+          const productDiscount =
+            productDiscounts[item?.product?._id as string] || 0;
+          const discountedPrice =
+            productDiscount > 0
+              ? (item.totalPrice as number) - productDiscount
+              : item.totalPrice;
+
+          return (
+            <div key={item?._id} className="flex items-center justify-between">
+              <Title as="h3" className="mb-1 text-base font-semibold">
+                {item?.product?.name}
+              </Title>
+              <div className="text-right">
+                {productDiscount > 0 ? (
+                  <>
+                    <span className="text-gray-900">
+                      {toCurrency(discountedPrice as number)}
+                    </span>
+                    <del className="ps-1.5 text-[13px] font-normal text-gray-500">
+                      {toCurrency(item.totalPrice as number)}
+                    </del>
+                  </>
+                ) : (
+                  toCurrency(item.totalPrice as number)
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         <CheckCoupon cartData={products} onCouponApplied={setCouponData} />
 
@@ -314,13 +345,13 @@ function CheckCoupon({
     couponDiscount?: number;
     finalPrice?: number;
     couponCode?: string;
+    appliedTo?: string;
+    productDiscounts?: { [key: string]: number };
   }) => void;
 }) {
   const [reset, setReset] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(
-    null
-  );
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setIsLoading(true);
     // Calculate totalPrice and totalQuantity from cartData
@@ -346,22 +377,28 @@ function CheckCoupon({
       );
       if (response.status === 200) {
         setReset(response.data);
-        setAppliedCouponCode(data.couponCode);
+        console.log({
+          originalTotal: response.data.originalTotal,
+          couponDiscount: response.data.couponDiscount,
+          finalPrice: response.data.finalPrice,
+          couponCode: payload.code || undefined,
+          appliedTo: response.data.appliedTo,
+          productDiscounts: response.data.productDiscounts,
+        });
         onCouponApplied({
           originalTotal: response.data.originalTotal,
           couponDiscount: response.data.couponDiscount,
           finalPrice: response.data.finalPrice,
           couponCode: payload.code || undefined,
+          appliedTo: response.data.appliedTo,
+          productDiscounts: response.data.productDiscounts,
         });
         toast.success('Coupon applied successfully');
         setIsLoading(false);
       }
     } catch (error: any) {
       setIsLoading(false);
-      toast.error(
-        'Failed to apply coupon: ' +
-          (error.response?.data?.message || 'Unknown error')
-      );
+      toast.error(error.response?.data?.message || 'Unknown error');
     }
   };
 
