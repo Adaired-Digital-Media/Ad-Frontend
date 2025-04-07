@@ -8,7 +8,20 @@ import QuantityInput from './quantity-input';
 import RemoveItem from './remove-item';
 import { routes } from '@/config/routes';
 
-function CartProduct({ product }: { product: CartItem }) {
+function CartProduct({
+  product,
+  couponData,
+}: {
+  product: CartItem;
+  couponData?: any;
+}) {
+  console.log('Coupon Data : ', couponData);
+
+  // Get the discount for this product from productDiscounts, if it exists
+  const productDiscount =
+    couponData?.productDiscounts?.[product?.product?._id] || 0;
+  // Calculate the discounted price
+  const discountedPrice = (product.totalPrice as number) - productDiscount;
   return (
     <div className="grid grid-cols-12 items-start gap-4 border-b border-muted py-6 first:pt-0 sm:flex sm:gap-6 2xl:py-8">
       <figure className="col-span-4 sm:max-w-[180px]">
@@ -29,7 +42,9 @@ function CartProduct({ product }: { product: CartItem }) {
           >
             <Link
               href={{
-                pathname: routes?.eCommerce?.contentProductEditForm(product.product.slug),
+                pathname: routes?.eCommerce?.contentProductEditForm(
+                  product.product.slug
+                ),
                 query: { id: product._id },
               }}
             >
@@ -41,7 +56,19 @@ function CartProduct({ product }: { product: CartItem }) {
               Total :
             </span>{' '}
             <span className="inline-block text-sm font-semibold text-gray-1000 sm:font-medium md:text-base 3xl:text-lg">
-              {toCurrency(product?.totalPrice as number)}
+              {/* {toCurrency(product?.totalPrice as number)} */}
+              {productDiscount > 0 ? (
+                <>
+                  <span className="text-gray-900">
+                    {toCurrency(discountedPrice as number)}
+                  </span>
+                  <del className="ps-1.5 text-[13px] font-normal text-gray-500">
+                    {toCurrency(product.totalPrice as number)}
+                  </del>
+                </>
+              ) : (
+                toCurrency(product.totalPrice as number)
+              )}
             </span>
           </div>
         </div>
@@ -70,10 +97,7 @@ function CartProduct({ product }: { product: CartItem }) {
         <div className="mt-3 hidden items-center justify-between xs:flex sm:mt-6">
           <QuantityInput product={product} />
           <div className="flex items-center gap-4">
-            <RemoveItem
-              cartItemId={product?._id}
-              placement="bottom-end"
-            />
+            <RemoveItem cartItemId={product?._id} placement="bottom-end" />
           </div>
         </div>
       </div>
