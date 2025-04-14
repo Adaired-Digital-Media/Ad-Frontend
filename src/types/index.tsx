@@ -1,6 +1,18 @@
 import { routes } from '@/config/routes';
 import { CouponType } from '../@core/config/enums';
 
+export type BackendErrorResponse = {
+  message: string;
+  errors?: Array<{
+    type: string;
+    value: string;
+    msg: string;
+    path: string;
+    location: string;
+  }>;
+};
+
+
 export type HeaderItems = (typeof routes.websiteNav)[number];
 
 export type CartItem = {
