@@ -18,6 +18,7 @@ import PageHeader from '@/app/shared/page-header';
 import CartProduct from './cart-product';
 import { CartTemplateSkeleton } from '@/app/(website)/components/Skeletons/CartTemplateSkeleton';
 import toast from 'react-hot-toast';
+import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 type FormValues = {
   couponCode: string;
 };
@@ -335,6 +336,64 @@ function CartCalculations({
   );
 }
 
+function generateCouponMessage(couponDetails: any, discount: number): string[] {
+  const messages: string[] = [];
+
+  // Applicability
+  if (couponDetails.couponApplicableOn === 'allProducts') {
+    messages.push('Applies to all products in your cart.');
+  } 
+
+  if (
+    couponDetails.couponApplicableOn === 'specificProducts' &&
+    couponDetails.specificProducts?.length
+  ) {
+    messages.push(
+      `Applies to: ${couponDetails.specificProducts.map((p: any) => p.name).join(', ')}.`
+    );
+  }
+
+  // Discount
+  if (couponDetails.discountType === 'percentage') {
+    let discountMsg = `Offers ${couponDetails.discountValue}% off`;
+    if (couponDetails.maxDiscountAmount) {
+      discountMsg += `, up to ${toCurrency(couponDetails.maxDiscountAmount)}.`;
+    } else {
+      discountMsg += '.';
+    }
+    messages.push(discountMsg);
+  } else if (couponDetails.discountType === 'flat') {
+    messages.push(
+      `Offers a flat discount of ${toCurrency(couponDetails.discountValue)}.`
+    );
+  }
+
+  // Current Discount
+  messages.push(`You saved ${toCurrency(discount)} on this order.`);
+
+  // Conditions
+  if (
+    couponDetails.couponType === 'quantityBased' &&
+    couponDetails.minQuantity
+  ) {
+    messages.push(
+      `Requires a minimum of ${couponDetails.minQuantity} item${couponDetails.minQuantity > 1 ? 's' : ''}.`
+    );
+  }
+  if (couponDetails.minOrderAmount) {
+    messages.push(
+      `Requires a minimum order of ${toCurrency(couponDetails.minOrderAmount)}.`
+    );
+  }
+  if (couponDetails.maxWordCount) {
+    messages.push(
+      `Applicable for items up to ${couponDetails.maxWordCount} words.`
+    );
+  }
+
+  return messages;
+}
+
 function CheckCoupon({
   cartData,
   onCouponApplied,
@@ -351,10 +410,14 @@ function CheckCoupon({
 }) {
   const [reset, setReset] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code?: string;
+    discount?: number;
+    details?: any;
+  } | null>(null);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setIsLoading(true);
-    // Calculate totalPrice and totalQuantity from cartData
     const totalPrice = cartData.reduce(
       (acc: number, item: any) => acc + (item.totalPrice ?? 0),
       0
@@ -376,14 +439,11 @@ function CheckCoupon({
         payload
       );
       if (response.status === 200) {
-        setReset(response.data);
-        console.log({
-          originalTotal: response.data.originalTotal,
-          couponDiscount: response.data.couponDiscount,
-          finalPrice: response.data.finalPrice,
-          couponCode: payload.code || undefined,
-          appliedTo: response.data.appliedTo,
-          productDiscounts: response.data.productDiscounts,
+        setReset({ couponCode: '' });
+        setAppliedCoupon({
+          code: payload.code,
+          discount: response.data.couponDiscount,
+          details: response.data.couponDetails,
         });
         onCouponApplied({
           originalTotal: response.data.originalTotal,
@@ -402,38 +462,82 @@ function CheckCoupon({
     }
   };
 
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setReset({ couponCode: '' });
+    onCouponApplied({
+      originalTotal: undefined,
+      couponDiscount: 0,
+      finalPrice: undefined,
+      couponCode: undefined,
+      appliedTo: undefined,
+      productDiscounts: {},
+    });
+    toast.success('Coupon removed');
+  };
+
   return (
-    <Form<FormValues>
-      resetValues={reset}
-      onSubmit={onSubmit}
-      useFormProps={{
-        defaultValues: { couponCode: '' },
-      }}
-      className="w-full"
-    >
-      {({ register, formState: { errors }, watch }) => (
-        <>
-          <div className="relative flex items-end">
-            <Input
-              type="text"
-              placeholder="Enter coupon code"
-              inputClassName="text-sm"
-              className="w-full"
-              label={<Text>Do you have a promo code?</Text>}
-              {...register('couponCode')}
-              error={errors.couponCode?.message}
-            />
-            <Button
-              type="submit"
-              className="ms-3"
-              disabled={watch('couponCode') ? false : true}
-              isLoading={isLoading}
+    <>
+      <Form<FormValues>
+        resetValues={reset}
+        onSubmit={onSubmit}
+        useFormProps={{
+          defaultValues: { couponCode: '' },
+        }}
+        className="w-full"
+      >
+        {({ register, formState: { errors }, watch }) => (
+          <>
+            <div className="relative flex items-end">
+              <Input
+                type="text"
+                placeholder="Enter coupon code"
+                inputClassName="text-sm"
+                className="w-full"
+                label={<Text>Do you have a promo code?</Text>}
+                {...register('couponCode')}
+                error={errors.couponCode?.message}
+              />
+              <Button
+                type="submit"
+                className="ms-3"
+                disabled={watch('couponCode') ? false : true}
+                isLoading={isLoading}
+              >
+                Apply
+              </Button>
+            </div>
+          </>
+        )}
+      </Form>
+
+      {appliedCoupon && (
+        <div className="mt-4 rounded-lg border border-green-200 bg-green-50 p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <PiCheckCircleDuotone className="mr-2 h-5 w-5 text-green-600" />
+              <Text className="font-semibold text-green-800">
+                Coupon Applied: {appliedCoupon.code}
+              </Text>
+            </div>
+            <button
+              onClick={handleRemoveCoupon}
+              className="text-red-600 hover:text-red-800"
+              aria-label="Remove coupon"
             >
-              Apply
-            </Button>
+              <PiXCircleDuotone className="h-5 w-5" />
+            </button>
           </div>
-        </>
+          <ul className="mt-2 list-disc pl-5 text-sm text-gray-700">
+            {generateCouponMessage(
+              appliedCoupon.details,
+              appliedCoupon.discount || 0
+            ).map((msg, index) => (
+              <li key={index}>{msg}</li>
+            ))}
+          </ul>
+        </div>
       )}
-    </Form>
+    </>
   );
 }

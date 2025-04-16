@@ -274,22 +274,22 @@ export const ContactSectionData = {
       text: 'info@adaired.com',
     },
     {
-      href: 'skype:live:.cid.46cf67c456a5bb0c?chat',
-      imageSrc: '/assets/images/skype.svg',
-      alt: 'Skype Logo',
-      text: 'Adaired Digital',
-    },
-    {
       href: 'https://api.whatsapp.com/send?phone=918907400008',
       imageSrc: '/assets/images/whatsapp.svg',
       alt: 'Whatsapp Logo',
-      text: '+91 890-740-0008',
+      text: 'Adaired Digital',
     },
-    {
-      href: 'https://telegram.me/adaired',
-      imageSrc: '/assets/images/telegram.svg',
-      alt: 'Telegram Logo',
-      text: 'Adaired Digital Media',
-    },
+    // {
+    //   href: 'skype:live:.cid.46cf67c456a5bb0c?chat',
+    //   imageSrc: '/assets/images/skype.svg',
+    //   alt: 'Skype Logo',
+    //   text: 'Adaired Digital',
+    // },
+    // {
+    //   href: 'https://telegram.me/adaired',
+    //   imageSrc: '/assets/images/telegram.svg',
+    //   alt: 'Telegram Logo',
+    //   text: 'Adaired Digital Media',
+    // },
   ],
 };
