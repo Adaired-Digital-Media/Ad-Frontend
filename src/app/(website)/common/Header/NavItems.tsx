@@ -1,11 +1,24 @@
 'use client';
 import Link from 'next/link';
-import { useState, useCallback, useMemo } from 'react';
-import { HeaderItems } from '@/types';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { routes } from '@/config/routes';
 import { cn } from '@core/utils/class-names';
 import { Icons } from '@/app/(website)/components/Icons';
 import { usePathname } from 'next/navigation';
+import { Separator } from '@/@core/ui/shadcn-ui/separator';
+import axios from 'axios';
+import CldImage from '../../components/CloudinaryImageComponent';
+
+// Define TypeScript interface for blog data
+interface BlogPost {
+  _id: string;
+  postTitle: string;
+  metaDescription: string;
+  featuredImage: string;
+  slug: string;
+  createdAt: string;
+  tags?: string;
+}
 
 const NavItems = () => {
   const pathname = usePathname();
@@ -13,10 +26,10 @@ const NavItems = () => {
 
   const isLandingPage = pathname.startsWith('/expert-content-solutions');
 
-  // Memoize the navigation items based on the current pathname to avoid recalculating on every render
+  // Memoize navigation items
   const navItems = useMemo(() => {
     return isLandingPage ? routes.ecommerceNav : routes.websiteNav;
-  }, [pathname]);
+  }, [isLandingPage]);
 
   const handleSetActive = useCallback((idx: number) => {
     setActiveIndex(idx);
@@ -34,12 +47,11 @@ const NavItems = () => {
           handleSetActive={handleSetActive}
         />
       ))}
-
-      {!pathname.startsWith('/expert-content-solutions') && (
+      {!isLandingPage && (
         <div className={cn('flex items-center')}>
           <Link
             href="/contact"
-            className="relative font-nunito text-lg font-semibold after:absolute after:bottom-[-5px] after:left-0 after:h-[3px] after:w-[100%] after:rounded-2xl after:bg-[#FB9100] after:transition-all after:content-[''] hover:after:w-[100%]"
+            className="relative font-nunito text-lg font-semibold after:absolute after:bottom-[-5px] after:left-0 after:h-[3px] after:w-full after:rounded-2xl after:bg-[#FB9100] after:transition-all hover:after:w-full"
           >
             Book demo
           </Link>
@@ -48,8 +60,6 @@ const NavItems = () => {
     </div>
   );
 };
-
-export default NavItems;
 
 const Item = ({
   navitems,
@@ -65,12 +75,30 @@ const Item = ({
   handleSetActive: (idx: number) => void;
 }) => {
   const [submenuClicked, setSubmenuClicked] = useState(false);
+  const [blog, setBlog] = useState<BlogPost | null>(null);
 
-  const handleSubmenuClick = useCallback(() => {
-    setSubmenuClicked((prevState) => !prevState);
+  // Fetch latest blog post
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const res = await axios.get<BlogPost[]>(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog?limit=1&skip=0`
+        );
+        if (res.status === 200 && res.data.length > 0) {
+          setBlog(res.data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching blog:', error);
+      }
+    };
+    fetchBlog();
   }, []);
 
-  const OnMouseEnter = useCallback(() => {
+  const handleSubmenuClick = useCallback(() => {
+    setSubmenuClicked((prev) => !prev);
+  }, []);
+
+  const onMouseEnter = useCallback(() => {
     setSubmenuClicked(false);
   }, []);
 
@@ -79,13 +107,13 @@ const Item = ({
       return (
         <div
           className={cn(
-            'pointer-events-none absolute inset-x-0 left-0 top-full origin-top scale-y-0 rounded-bl-lg rounded-br-lg bg-white text-muted-foreground shadow-lg transition-all duration-300',
+            'pointer-events-none absolute inset-x-0 top-full origin-top scale-y-0 rounded-bl-lg rounded-br-lg bg-white text-muted-foreground shadow-lg transition-all duration-300',
             submenuClicked
               ? ''
               : 'group-hover:pointer-events-auto group-hover:scale-y-100'
           )}
         >
-          <div className="mx-auto p-4">
+          <div className="relative mx-auto p-4 px-5">
             <div className="flex rounded-bl-lg rounded-br-lg">
               <div className="5xl:gap-6 grid grid-cols-3 gap-3 xl:w-9/12">
                 {navitems.subItems.map((subItem: any) => (
@@ -110,7 +138,7 @@ const Item = ({
                             >
                               <div className="flex items-center gap-2 text-gray-400 transition-all duration-300 group-hover/subMenu:text-[#FB9100]">
                                 <div className="h-[13px] w-[13px] rounded-sm bg-[#ddd]" />
-                                <span className="flex text-base">
+                                <span className="text-base">
                                   {subSubItem.name}
                                 </span>
                               </div>
@@ -123,7 +151,63 @@ const Item = ({
                   </div>
                 ))}
               </div>
-              <div className="hidden w-3/12 flex-none xl:flex"></div>
+              <Separator orientation="vertical" className="h-auto w-0.5" />
+              <div className="w-3/12 flex-none xl:flex">
+                <div className="p-4">
+                  <h3 className="mb-4 font-nunito text-lg font-semibold text-gray-900">
+                    What's New
+                  </h3>
+                  {blog && (
+                    <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-purple-200/20 to-transparent shadow-lg">
+                      <Link
+                        href={`/blog/${blog.slug}`}
+                        className="block"
+                        onClick={handleSubmenuClick}
+                      >
+                        <CldImage
+                          src={blog.featuredImage}
+                          alt={blog.postTitle}
+                          width={208}
+                          height={208}
+                          quality={100}
+                          className="w-full object-cover"
+                        />
+                        <div className="p-4">
+                          <div className="mb-2">
+                            <span className="inline-block rounded-full bg-[#A100A1] px-3 py-1 text-xs font-medium text-white">
+                              Search Engine Optimization
+                            </span>
+                          </div>
+                          <h4 className="mb-4 font-nunito text-lg font-medium text-gray-900">
+                            {blog.postTitle}
+                          </h4>
+                          <div className="flex justify-between text-xs text-gray-600">
+                            <span>By Adaired Team | 3 min read</span>
+                            <span>
+                              {new Date(blog.createdAt)
+                                .toLocaleDateString('en-GB', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric',
+                                })
+                                .replace(/ /g, ' ')}
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  )}
+                  <div className="mt-4">
+                    <Link
+                      href="/blog"
+                      className="inline-block rounded-lg bg-[#FB9100] px-4 py-2 font-nunito text-sm font-semibold text-white transition-all duration-200 hover:scale-105 hover:bg-[#E07B00]"
+                      onClick={handleSubmenuClick}
+                    >
+                      See More
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -158,18 +242,17 @@ const Item = ({
     }
 
     return null;
-  }, [submenuClicked, navitems.subItems, navitems.childrens]);
+  }, [submenuClicked, navitems.subItems, navitems.childrens, blog]);
 
   return (
-    <div className={cn('flex justify-center')} onMouseEnter={OnMouseEnter}>
+    <div className={cn('flex justify-center')} onMouseEnter={onMouseEnter}>
       <div className={cn('group flex items-center')}>
         <Link
           className={cn(
-            'relative flex h-20 items-center gap-1 px-2 font-nunito text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-[0%] after:bg-[#aaa] after:transition-all after:duration-300 after:content-[""] hover:after:w-[100%]',
-            activeIndex === index && isLandingPage ? '' : '',
-            isLandingPage ? 'text-[17px] font-medium font-poppins' : ''
+            'relative flex h-20 items-center gap-1 px-2 font-nunito text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 after:bg-[#aaa] after:transition-all after:duration-300 hover:after:w-full',
+            isLandingPage ? 'font-poppins text-[17px] font-medium' : ''
           )}
-          href={navitems.href || ''}
+          href={navitems.href || '#'}
           onClick={() => handleSetActive(index)}
         >
           {navitems.label}
@@ -184,3 +267,5 @@ const Item = ({
     </div>
   );
 };
+
+export default NavItems;
