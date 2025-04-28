@@ -29,18 +29,18 @@ export default function SignInForm() {
 
   useEffect(() => {
     const errorParam = searchParams.get('error');
-    if (errorParam !== error) {
+    if (errorParam) {
       setError(errorParam);
-      router.push(routes.auth.signIn);
     }
   }, [searchParams]);
 
   useEffect(() => {
     if (error === 'CredentialsSignin') {
-      toast.error('Invalid credentials!', { duration: 7000 });
+      router.replace(routes.auth.signIn);
       setError(null);
+      toast.error('Invalid credentials!');
     }
-  }, [error]);
+  }, [error, router]);
 
   const onSubmit: SubmitHandler<LoginSchema> = (data) => {
     signIn('credentials', {
