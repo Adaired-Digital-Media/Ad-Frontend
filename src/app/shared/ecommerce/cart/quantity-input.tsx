@@ -9,7 +9,7 @@ interface QuantityInputProps {
 }
 
 const QuantityInput: React.FC<QuantityInputProps> = ({ product }) => {
-  const { updateCartItem, removeCartItem } = useCart();
+  const { updateCartItem, removeCartItem, products } = useCart();
   const isFreeProduct = product?.product?.slug.includes('free');
 
   // States to track the action and debounced quantity

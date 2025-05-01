@@ -496,12 +496,6 @@ export function CartProvider({
       return () => {
         console.log('Sync effect cleanup');
       };
-    } else {
-      console.log('Sync skipped', {
-        accessToken: !!session?.user?.accessToken,
-        hasSyncedCart,
-        hasFetchedCart,
-      });
     }
   }, [
     session?.user?.accessToken,

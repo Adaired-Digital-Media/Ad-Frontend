@@ -235,7 +235,7 @@ function CartCalculations({
   const { products } = useCart();
 
   const total = products.reduce((acc, item) => acc + (item.totalPrice ?? 0), 0);
-  const displayTotal = couponData.finalPrice ?? total; // Use nullish coalescing to avoid undefined
+  const displayTotal = Math.max(couponData.finalPrice ?? total, 0);
   const originalPrice = couponData.originalTotal ?? null;
   const discountPrice = couponData.couponDiscount ?? 0;
   const productDiscounts = couponData.productDiscounts ?? {};
@@ -255,9 +255,9 @@ function CartCalculations({
         {products.map((item) => {
           const productDiscount =
             productDiscounts[item?.product?._id as string] || 0;
-          const discountedPrice =
+            const discountedPrice =
             productDiscount > 0
-              ? (item.totalPrice as number) - productDiscount
+              ? Math.max((item.totalPrice as number) - productDiscount, 0)
               : item.totalPrice;
 
           return (
@@ -283,7 +283,11 @@ function CartCalculations({
           );
         })}
 
-        <CheckCoupon cartData={products} onCouponApplied={setCouponData} />
+        <CheckCoupon
+          cartData={products}
+          onCouponApplied={setCouponData}
+          couponData={couponData}
+        />
 
         <div className="mt-3 border-t border-muted py-4 font-semibold text-gray-1000">
           {/* <div className="flex items-center justify-between">
@@ -342,7 +346,7 @@ function generateCouponMessage(couponDetails: any, discount: number): string[] {
   // Applicability
   if (couponDetails.couponApplicableOn === 'allProducts') {
     messages.push('Applies to all products in your cart.');
-  } 
+  }
 
   if (
     couponDetails.couponApplicableOn === 'specificProducts' &&
@@ -397,6 +401,7 @@ function generateCouponMessage(couponDetails: any, discount: number): string[] {
 function CheckCoupon({
   cartData,
   onCouponApplied,
+  couponData,
 }: {
   cartData: any;
   onCouponApplied: (data: {
@@ -407,6 +412,7 @@ function CheckCoupon({
     appliedTo?: string;
     productDiscounts?: { [key: string]: number };
   }) => void;
+  couponData: any;
 }) {
   const [reset, setReset] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -475,6 +481,64 @@ function CheckCoupon({
     });
     toast.success('Coupon removed');
   };
+
+  // Function to revalidate coupon
+  const revalidateCoupon = async () => {
+    if (!couponData?.couponCode) return;
+
+    try {
+      const totalPrice = cartData.reduce(
+        (acc: number, item: any) => acc + (item.totalPrice ?? 0),
+        0
+      );
+      const totalQuantity = cartData.length;
+
+      const payload = {
+        code: couponData.couponCode,
+        localCart: {
+          products: cartData,
+          totalPrice,
+          totalQuantity,
+        },
+      };
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/coupons/apply`,
+        payload
+      );
+
+      if (response.status === 200) {
+        onCouponApplied({
+          originalTotal: response.data.originalTotal,
+          couponDiscount: response.data.couponDiscount,
+          finalPrice: response.data.finalPrice,
+          couponCode: couponData.couponCode,
+          appliedTo: response.data.appliedTo,
+          productDiscounts: response.data.productDiscounts,
+        });
+      }
+    } catch (error: any) {
+      // Remove coupon if validation fails
+      setAppliedCoupon(null);
+      setReset({ couponCode: '' });
+      onCouponApplied({
+        originalTotal: undefined,
+        couponDiscount: 0,
+        finalPrice: undefined,
+        couponCode: undefined,
+        appliedTo: undefined,
+        productDiscounts: {},
+      });
+      toast.error('Coupon no longer valid with current cart');
+    }
+  };
+
+  // Revalidate coupon when cartData changes
+  useEffect(() => {
+    if (couponData?.couponCode) {
+      revalidateCoupon();
+    }
+  }, [cartData]);
 
   return (
     <>
