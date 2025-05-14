@@ -166,7 +166,7 @@ export default function CartPageWrapper() {
     );
   }
 
-  if (products.length <= 0) {
+  if (areProductsLoaded && !isSyncing && products.length <= 0) {
     return (
       <TagName className="@container">
         <Empty
@@ -255,7 +255,7 @@ function CartCalculations({
         {products.map((item) => {
           const productDiscount =
             productDiscounts[item?.product?._id as string] || 0;
-            const discountedPrice =
+          const discountedPrice =
             productDiscount > 0
               ? Math.max((item.totalPrice as number) - productDiscount, 0)
               : item.totalPrice;
@@ -507,6 +507,7 @@ function CheckCoupon({
         payload
       );
 
+      console.log('Revalidated Coupon:', response.data);
       if (response.status === 200) {
         onCouponApplied({
           originalTotal: response.data.originalTotal,
@@ -518,20 +519,79 @@ function CheckCoupon({
         });
       }
     } catch (error: any) {
-      // Remove coupon if validation fails
-      setAppliedCoupon(null);
-      setReset({ couponCode: '' });
-      onCouponApplied({
-        originalTotal: undefined,
-        couponDiscount: 0,
-        finalPrice: undefined,
-        couponCode: undefined,
-        appliedTo: undefined,
-        productDiscounts: {},
-      });
-      toast.error('Coupon no longer valid with current cart');
+      const errorMessage = error.response?.data?.message || 'Unknown error';
+      if (
+        errorMessage.includes('Invalid or expired coupon') ||
+        errorMessage.includes('Minimum order amount')
+      ) {
+        setAppliedCoupon(null);
+        setReset({ couponCode: '' });
+        onCouponApplied({
+          originalTotal: undefined,
+          couponDiscount: 0,
+          finalPrice: undefined,
+          couponCode: undefined,
+          appliedTo: undefined,
+          productDiscounts: {},
+        });
+        toast.error('Coupon no longer valid with current cart');
+      } else {
+        console.warn(
+          'Revalidation failed, preserving existing coupon data:',
+          errorMessage
+        );
+      }
     }
   };
+  // const revalidateCoupon = async () => {
+  //   if (!couponData?.couponCode) return;
+
+  //   try {
+  //     const totalPrice = cartData.reduce(
+  //       (acc: number, item: any) => acc + (item.totalPrice ?? 0),
+  //       0
+  //     );
+  //     const totalQuantity = cartData.length;
+
+  //     const payload = {
+  //       code: couponData.couponCode,
+  //       localCart: {
+  //         products: cartData,
+  //         totalPrice,
+  //         totalQuantity,
+  //       },
+  //     };
+
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/coupons/apply`,
+  //       payload
+  //     );
+
+  //     if (response.status === 200) {
+  //       onCouponApplied({
+  //         originalTotal: response.data.originalTotal,
+  //         couponDiscount: response.data.couponDiscount,
+  //         finalPrice: response.data.finalPrice,
+  //         couponCode: couponData.couponCode,
+  //         appliedTo: response.data.appliedTo,
+  //         productDiscounts: response.data.productDiscounts,
+  //       });
+  //     }
+  //   } catch (error: any) {
+  //     // Remove coupon if validation fails
+  //     setAppliedCoupon(null);
+  //     setReset({ couponCode: '' });
+  //     onCouponApplied({
+  //       originalTotal: undefined,
+  //       couponDiscount: 0,
+  //       finalPrice: undefined,
+  //       couponCode: undefined,
+  //       appliedTo: undefined,
+  //       productDiscounts: {},
+  //     });
+  //     toast.error('Coupon no longer valid with current cart');
+  //   }
+  // };
 
   // Revalidate coupon when cartData changes
   useEffect(() => {
@@ -595,7 +655,7 @@ function CheckCoupon({
           <ul className="mt-2 list-disc pl-5 text-sm text-gray-700">
             {generateCouponMessage(
               appliedCoupon.details,
-              appliedCoupon.discount || 0
+              couponData.couponDiscount || 0
             ).map((msg, index) => (
               <li key={index}>{msg}</li>
             ))}
