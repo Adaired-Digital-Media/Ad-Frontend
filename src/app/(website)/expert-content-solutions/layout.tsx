@@ -21,7 +21,7 @@ export default function Ecommercelayout({
       <CartProvider>
         <SkypeFloatingIcon
           className="bottom-20"
-          skypeID="https://join.skype.com/invite/yMb2lmQ0Vs5i"
+          skypeID="https://teams.live.com/l/invite/FEAiHSAKe2uSNPyRwE"
         />
         <WhatsappFloatingIcon phoneNumber="918907400008" />
         {children}

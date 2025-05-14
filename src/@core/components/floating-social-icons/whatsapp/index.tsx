@@ -2,7 +2,6 @@ import React from 'react';
 import Whatsapp from '@core/components/icons/whatsapp';
 import { cn } from '@/@core/utils/class-names';
 import Link from 'next/link';
-import { SlSocialSkype } from 'react-icons/sl';
 type Props = {
   phoneNumber?: string;
   className?: string;

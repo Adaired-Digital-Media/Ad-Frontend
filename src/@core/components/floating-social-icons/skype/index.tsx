@@ -9,7 +9,7 @@ type Props = {
 };
 
 const SkypeFloatingIcon = ({
-  skypeID = 'skype:live:.cid.46cf67c456a5bb0c?chat',
+  skypeID = 'https://teams.live.com/l/invite/FEAiHSAKe2uSNPyRwE',
   className,
   buttonClassName,
 }: Props) => {
@@ -17,7 +17,7 @@ const SkypeFloatingIcon = ({
     <Link href={skypeID} target="_blank" className="relative  z-[99999]">
       <div
         className={cn(
-          `w-15 h-15 after:animate-skypeFloatingPulse scale-[0.85] sm:scale-100 fixed bottom-5 left-5 z-[9998] flex cursor-pointer select-none items-center justify-center rounded-full bg-[#00AFF0] shadow-lg after:absolute after:h-[55px] after:w-[55px] after:rounded-full after:border-inherit after:shadow-lg after:content-[''] ${className}`
+          `w-15 h-15 after:animate-skypeFloatingPulse scale-[0.85] sm:scale-100 fixed bottom-5 left-5 z-[9998] flex cursor-pointer select-none items-center justify-center rounded-full bg-[#dde0ff] shadow-lg after:absolute after:h-[55px] after:w-[55px] after:rounded-full after:border-inherit after:shadow-lg after:content-[''] ${className}`
         )}
         aria-hidden="true"
       >

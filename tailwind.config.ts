@@ -234,7 +234,7 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
         },
         skypeFloatingPulse: {
           '0%': {
-            boxShadow: '0 0 0 0 rgba(0, 175, 240, 0.75)',
+            boxShadow: '0 0 0 0 rgba(225, 217, 255)',
           },
           '100%': {
             boxShadow: '0 0 0 5px rgba(37, 211, 101, 0)',

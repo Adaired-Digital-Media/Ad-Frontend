@@ -10,6 +10,11 @@
         "source": "/services/web-designing-and-development",
         "destination": "/services/web-design-and-development-services",
         "permanent": true
+      },
+      {
+        "source": "/admin",
+        "destination": "https://ad-admin-five.vercel.app",
+        "permanent": true
       }
     ]
   }
