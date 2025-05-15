@@ -5,6 +5,8 @@ import Link from 'next/link';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
 import UserAvatarIcon from './AvatarIcon';
 import SmallWidthContainer from '@web-components/SmallWidthContainer';
+import { PiPhonePlusDuotone } from 'react-icons/pi';
+import Image from 'next/image';
 
 type Props = {
   className: string;
@@ -25,7 +27,7 @@ const Topbar = ({ className, session, pathname }: Props) => {
         )}
       >
         <div>
-          <Link
+          {/* <Link
             href="tel:+12052736006"
             className={cn(`flex items-center gap-1 sm:gap-2`)}
           >
@@ -43,23 +45,31 @@ const Topbar = ({ className, session, pathname }: Props) => {
             >
               +1 (205) 273-6006
             </p>
-          </Link>
+          </Link> */}
         </div>
-        <Separator
+        {/* <Separator
           orientation="vertical"
           className={cn(`h-6 w-0.5 bg-[#D9D9D9]`)}
-        />
+        /> */}
         <div>
           <Link
-            href="tel:+918907400008"
+            href="https://api.whatsapp.com/send/?phone=918907400008"
             className={cn(`flex items-center gap-1 sm:gap-2`)}
           >
-            <CldImage
+            <Image
+              src={'/assets/icons/WhatsApp.svg'}
+              alt="whatsapp icon"
+              width={30}
+              height={30}
+              className='bg-transparent'
+            />
+
+            {/* <CldImage
               src="Static Website Images/Indian_Flag_ncjo16"
               alt="Indian Flag"
               width={20}
               height={20}
-            />
+            /> */}
             <p
               className={cn(
                 `text-xs sm:text-base`,
