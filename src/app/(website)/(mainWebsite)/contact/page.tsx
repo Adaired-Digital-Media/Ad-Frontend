@@ -84,9 +84,9 @@ const ContactDetails = () => {
           <Icons.Phone className="h-12 w-12 flex-none rounded border p-2 text-[#1b5b97]" />
           <div>
             <p>Need assistance? Call us at</p>
-            <Link href="tel:+1 (205) 273-6006" className="block font-semibold">
+            {/* <Link href="tel:+1 (205) 273-6006" className="block font-semibold">
               +1 (205) 273-6006
-            </Link>
+            </Link> */}
             <Link href="tel:+91-8907200008" className="block font-semibold">
               +91-8907200008
             </Link>
