@@ -304,6 +304,7 @@ export const routes = {
     reviews: '/expert-content-solutions/reviews',
     checkout: '/expert-content-solutions/checkout',
     trackingId: (id: string) => `/expert-content-solutions/tracking/${id}`,
+    thankyouPage : '/expert-content-solutions/thankyou'
   },
   userDashboard: {
     website: '/expert-content-solutions',
