@@ -240,25 +240,25 @@ export const EcomPageForm = () => {
       }
 
       reset();
-      toast.success(
-        <div
-          className={cn(
-            'flex flex-col items-center justify-center p-1 text-center'
-          )}
-        >
-          <h4 className={cn('font-dm font-medium text-gray-900')}>
-            Thanks for reaching out!
-          </h4>
-          <p className={cn('mt-1 text-sm text-gray-500')}>
-            We'll be in touch shortly.
-          </p>
-        </div>,
-        {
-          style: {
-            border: '1px solid #1C5B98',
-          },
-        }
-      );
+      // toast.success(
+      //   <div
+      //     className={cn(
+      //       'flex flex-col items-center justify-center p-1 text-center'
+      //     )}
+      //   >
+      //     <h4 className={cn('font-dm font-medium text-gray-900')}>
+      //       Thanks for reaching out!
+      //     </h4>
+      //     <p className={cn('mt-1 text-sm text-gray-500')}>
+      //       We'll be in touch shortly.
+      //     </p>
+      //   </div>,
+      //   {
+      //     style: {
+      //       border: '1px solid #1C5B98',
+      //     },
+      //   }
+      // );
 
       router.push(routes.eCommerce.thankyouPage);
     } catch (error) {
