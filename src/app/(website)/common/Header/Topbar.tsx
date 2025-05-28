@@ -5,8 +5,7 @@ import Link from 'next/link';
 import CldImage from '@/app/(website)/components/CloudinaryImageComponent';
 import UserAvatarIcon from './AvatarIcon';
 import SmallWidthContainer from '@web-components/SmallWidthContainer';
-import { PiPhonePlusDuotone } from 'react-icons/pi';
-import Image from 'next/image';
+import { PiPhoneCallFill } from 'react-icons/pi';
 
 type Props = {
   className: string;
@@ -53,23 +52,10 @@ const Topbar = ({ className, session, pathname }: Props) => {
         /> */}
         <div>
           <Link
-            href="https://api.whatsapp.com/send/?phone=918907400008"
+            href="tel:+918907400008"
             className={cn(`flex items-center gap-1 sm:gap-2`)}
           >
-            <Image
-              src={'/assets/icons/WhatsApp.svg'}
-              alt="whatsapp icon"
-              width={30}
-              height={30}
-              className='bg-transparent'
-            />
-
-            {/* <CldImage
-              src="Static Website Images/Indian_Flag_ncjo16"
-              alt="Indian Flag"
-              width={20}
-              height={20}
-            /> */}
+            <PiPhoneCallFill className={cn('h-5 w-5')} />
             <p
               className={cn(
                 `text-xs sm:text-base`,

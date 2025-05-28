@@ -60,7 +60,7 @@ export default function OrderProducts({
                     <Title as="h3" className="mb-1 text-base font-semibold">
                       <Link
                         href={{
-                          pathname: routes?.eCommerce?.contentProductEditForm(item.product.slug),
+                          pathname: routes?.eCommerce?.contentProductForm(item.product.slug),
                           query: { id: item._id },
                         }}
                       >

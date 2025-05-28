@@ -1,7 +1,7 @@
 export const routes = {
   auth: {
-    signUp: '/auth/signup',
-    signIn: '/auth/signin',
+    signUp: '/auth/sign-up',
+    signIn: '/auth/sign-in',
     forgotPassword: '/auth/forgot-password',
     error: '/auth/error',
   },
@@ -289,21 +289,8 @@ export const routes = {
     cart: '/expert-content-solutions/cart',
     contentProductForm: (slug: string) =>
       `/expert-content-solutions/products/${slug}/form`,
-    contentProductEditForm: (slug: string) =>
-      `/expert-content-solutions/products/${slug}/form`,
-    ediProduct: (slug: string) =>
-      `/expert-content-solutions/products/${slug}/edit`,
-    categories: '/expert-content-solutions/categories',
-    createCategory: '/expert-content-solutions/categories/create',
-    editCategory: (id: string) =>
-      `/expert-content-solutions/categories/${id}/edit`,
     orders: '/expert-content-solutions/orders',
-    createOrder: '/expert-content-solutions/orders/create',
-    orderDetails: (id: string) => `/dashboard/orders/${id}`,
-    editOrder: (id: string) => `/expert-content-solutions/orders/${id}/edit`,
-    reviews: '/expert-content-solutions/reviews',
-    checkout: '/expert-content-solutions/checkout',
-    trackingId: (id: string) => `/expert-content-solutions/tracking/${id}`,
+    orderDetails: (id: string) => `/dashboard/shop/orders/order-details?orderNumber=${id}`,
     thankyouPage : '/expert-content-solutions/thankyou'
   },
   userDashboard: {
@@ -317,6 +304,7 @@ export const routes = {
     inbox: (tickedId: string) =>
       `/dashboard/support/inbox?tkt=${tickedId}`,
     invoices: '/dashboard/invoices',
+    invoiceDetails: (id: string) => `/dashboard/invoices/details?invoiceNumber=${id}`,
   },
   termsNconditions: 'https://www.adaired.com/terms-and-conditions',
   privacyPolicy: 'https://www.adaired.com/privacy-policy',

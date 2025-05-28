@@ -43,7 +43,7 @@ function CartProduct({
           >
             <Link
               href={{
-                pathname: routes?.eCommerce?.contentProductEditForm(
+                pathname: routes?.eCommerce?.contentProductForm(
                   product.product.slug
                 ),
                 query: { id: product._id },

@@ -142,3 +142,202 @@ export type TanTableProductsDataType = {
   pricePerUnit: string;
   totalPrice: string;
 };
+
+// ***************************************************************
+
+export interface UserTypes {
+  _id?: string;
+  image?: string | null;
+  name: string;
+  userName?: string;
+  email: string;
+  password?: string | null;
+  contact?: string | null;
+  isAdmin?: boolean;
+  role: string | RoleTypes;
+  googleId?: string;
+  orderHistory?: OrderHistoryItem[];
+  cart?: string;
+  wishlist?: WishlistItem[];
+  status?: string;
+  isVerifiedUser?: boolean;
+  refreshToken?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface OrderHistoryItem {
+  orderId: string;
+  date?: string | Date;
+}
+
+export interface WishlistItem {
+  productId: string;
+  dateAdded?: string | Date;
+}
+
+export interface RoleTypes {
+  _id?: string;
+  name: string;
+  description: string;
+  status: boolean;
+  permissions: PermissionTypes[];
+  users: UserTypes[];
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+
+export interface PermissionTypes {
+  module: string;
+  permissions: number[];
+}
+
+export interface PermissionModule {
+  _id?: string;
+  name: string;
+  value: string;
+  status: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+export const PERMISSIONS = {
+  Create: 0,
+  Read: 1,
+  Update: 2,
+  Delete: 3,
+};
+
+export const roleActions = [
+  {
+    id: 1,
+    name: "Add User",
+  },
+  {
+    id: 2,
+    name: "Rename",
+  },
+  {
+    id: 3,
+    name: "Remove Role",
+  },
+];
+
+export type ProductType = {
+  _id?: string;
+  featuredImage: string;
+  name: string;
+  description: string;
+  category: ProductCategoryType;
+  subCategory: any;
+  minimumQuantity?: number;
+  minimumWords?: number;
+  slug: string;
+  pricePerUnit: number;
+  pricingType: string;
+  stock: number;
+  images: string[];
+  tags?: string[];
+  priority?: number;
+  keywords?: string[];
+  formId?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  canonicalLink?: string;
+  status: string;
+  isFreeProduct: boolean;
+  createBy?: string;
+  updateBy?: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export interface ProductCategoryType {
+  _id?: string;
+  name: string;
+  description?: string;
+  parentCategory?: string | null;
+  children?: string[];
+  products?: string[];
+  slug?: string;
+  image?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  canonicalLink?: string;
+  status?: "Active" | "Inactive";
+  createdBy?: string;
+  updatedBy?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
+}
+
+export interface OrderType {
+  _id?: string;
+  userId?: UserTypes;
+  orderNumber?: string;
+  products: ProductType[];
+  totalQuantity: number;
+  totalPrice: number;
+  couponDiscount: number;
+  finalPrice: number;
+  couponId?: string | null;
+  paymentId: string;
+  invoiceId: string;
+  zohoInvoiceId: string;
+  paymentUrl: string;
+  status: "Pending" | "Processing" | "Confirmed" | "Cancelled" | "Completed";
+  paymentStatus: "Unpaid" | "Paid" | "Refunded" | "Failed";
+  paymentMethod: "Razorpay" | "Stripe";
+  paymentDate: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
+}
+
+export interface InvoiceTypes {
+  _id: string;
+  invoiceNumber: string;
+  orderId: OrderType;
+  userId?: UserTypes;
+  totalAmount: number;
+  discountAmount: number;
+  finalAmount: number;
+  status: "Unpaid" | "Paid" | "Overdue" | "Cancelled";
+  dueDate: Date;
+  issuedDate: Date;
+  paymentMethod: "Razorpay" | "Stripe" | "Manual";
+  paymentId: string | null;
+  zohoInvoiceId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface InvoiceStats {
+  newInvoices: {
+    count: number;
+    percentageChange: number;
+    trend: "increased" | "decreased" | "unchanged";
+  };
+  totalAmount: {
+    total: number;
+    percentageChange: number;
+    trend: "increased" | "decreased" | "unchanged";
+  };
+  finalAmount: {
+    total: number;
+    percentageChange: number;
+    trend: "increased" | "decreased" | "unchanged";
+  };
+  allInvoices: number;
+  paidInvoices: number;
+  overdueInvoices: number;
+  dailyInvoices: number;
+  chartData: {
+    newInvoices: { day: string; invoices: number; date: string }[];
+    totalAmount: { day: string; total: number; date: string }[];
+    finalAmount: { day: string; final: number; date: string }[];
+  };
+}

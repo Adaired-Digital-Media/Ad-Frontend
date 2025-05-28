@@ -20,10 +20,24 @@ async function fetchOrder(orderNumber: string) {
   return data;
 }
 
-export default async function OrderDetailsPage({ params }: any) {
+interface OrderDetailsPageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function OrderDetailsPage({
+  searchParams,
+}: OrderDetailsPageProps) {
   const session = await auth();
+  if (!session) {
+    throw new Error('User session is not available.');
+  }
+
+  const orderNumber = Array.isArray(searchParams.orderNumber)
+    ? searchParams.orderNumber[0]
+    : searchParams.orderNumber || '';
+
   const pageHeader = {
-    title: `Order #${params.id}`,
+    title: `Order #${orderNumber}`,
     breadcrumb: [
       {
         href: routes.userDashboard.dashboard,
@@ -34,12 +48,12 @@ export default async function OrderDetailsPage({ params }: any) {
         name: 'Orders',
       },
       {
-        name: params.id,
+        name: orderNumber,
       },
     ],
   };
 
-  const order = await fetchOrder(params.id);
+  const order = await fetchOrder(orderNumber);
 
   return (
     <>
@@ -47,16 +61,7 @@ export default async function OrderDetailsPage({ params }: any) {
         title={pageHeader.title}
         breadcrumb={pageHeader.breadcrumb}
         isDashboard
-      >
-        {/* <Link
-          href={routes.eCommerce.editOrder(params.id)}
-          className="mt-4 w-full @lg:mt-0 @lg:w-auto"
-        >
-          <Button as="span" className="w-full @lg:w-auto">
-            Edit Order
-          </Button>
-        </Link> */}
-      </PageHeader>
+      />
       <OrderView order={order} session={session} />
     </>
   );

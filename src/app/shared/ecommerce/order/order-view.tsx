@@ -1,16 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { useAtomValue } from 'jotai';
-import isEmpty from 'lodash/isEmpty';
 import { PiCheckBold } from 'react-icons/pi';
 import OrderViewProducts from '@/app/shared/ecommerce/order/order-products/order-view-products';
-import { useCart } from '@/store/quick-cart/cart.context';
 import { Title, Text, Avatar } from 'rizzui';
 import { cn } from '@core/utils/class-names';
 import { toCurrency } from '@core/utils/to-currency';
 import { formatDate } from '@core/utils/format-date';
-import usePrice from '@core/hooks/use-price';
+import { Session } from "next-auth";
 
 const orderStatus = [
   { id: 'Pending', label: 'Order Pending' },
@@ -45,8 +42,6 @@ const Images = [
     },
   },
 ];
-
-const currentOrderStatus = 3;
 
 function WidgetCard({
   title,
@@ -84,21 +79,8 @@ export default function OrderView({
   session,
 }: {
   order: any;
-  session: any;
+  session: Session;
 }) {
-  // const { items, total, totalItems } = useCart();
-  // const { price: subtotal } = usePrice(
-  //   items && {
-  //     amount: total,
-  //   }
-  // );
-  // const { price: totalPrice } = usePrice({
-  //   amount: total,
-  // });
-  // const orderNote = useAtomValue(orderNoteAtom);
-  // const billingAddress = useAtomValue(billingAddressAtom);
-  // const shippingAddress = useAtomValue(shippingAddressAtom);
-
   // Find the matching payment method image
   const matchedPayment = Images.find(
     (image) => image.paymentMethod.name === order.paymentMethod
@@ -193,34 +175,6 @@ export default function OrderView({
                     </div>
                   </div>
                 </div>
-                {/* {transitions.map((item) => (
-                <div
-                  key={item.paymentMethod.name}
-                  className="flex items-center justify-between rounded-lg border border-gray-100 px-5 py-5 font-medium shadow-sm transition-shadow @5xl:px-7"
-                >
-                  <div className="flex w-1/3 items-center">
-                    <div className="shrink-0">
-                      <Image
-                        src={item.paymentMethod.image}
-                        alt={item.paymentMethod.name}
-                        height={60}
-                        width={60}
-                        className="object-contain"
-                      />
-                    </div>
-                    <div className="flex flex-col ps-4">
-                      <Text as="span" className="font-lexend text-gray-700">
-                        Payment
-                      </Text>
-                      <span className="pt-1 text-[13px] font-normal text-gray-500">
-                        Via {item.paymentMethod.name}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="w-1/3 text-end">{item.price}</div>
-                </div>
-              ))} */}
               </div>
             </div>
           )}
@@ -261,10 +215,10 @@ export default function OrderView({
           >
             <div className="relative flex aspect-square h-16 w-16 shrink-0 items-center justify-center @5xl:h-20 @5xl:w-20">
               <Avatar
-                name={session?.user?.name}
+                name={session?.user?.name || order?.userId?.name}
                 className=""
                 size="xl"
-                src={session.user.image}
+                src={session.user.image || order?.userId?.image}
               />
             </div>
             <div className="flex flex-col justify-center ps-4 @5xl:ps-6">
