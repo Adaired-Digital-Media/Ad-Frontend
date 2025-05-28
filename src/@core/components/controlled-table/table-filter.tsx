@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { PiMagnifyingGlassBold, PiFunnel, PiXBold } from 'react-icons/pi';
 import { Button, ActionIcon, Input, Title } from 'rizzui';
-import {cn} from '@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import { useMedia } from '@core/hooks/use-media';
 import { ToggleColumns } from '@core/components/legacy-table';
 const Drawer = dynamic(() => import('rizzui').then((module) => module.Drawer), {
@@ -16,11 +16,13 @@ export function FilterDrawerView({
   drawerTitle,
   setOpenDrawer,
   children,
+  onApplyFilters,
 }: React.PropsWithChildren<{
   drawerTitle?: string;
   hasSearched?: boolean;
   setOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen?: boolean;
+  onApplyFilters?: () => void;
 }>) {
   return (
     <Drawer
@@ -51,8 +53,11 @@ export function FilterDrawerView({
         </div>
         <Button
           size="lg"
-          onClick={() => setOpenDrawer(false)}
-          className="mt-5 h-11 w-full text-sm sm:hidden"
+          onClick={() => {
+            onApplyFilters?.();
+            setOpenDrawer(false);
+          }}
+          className="mt-5 h-11 w-full text-sm"
         >
           Show Results
         </Button>

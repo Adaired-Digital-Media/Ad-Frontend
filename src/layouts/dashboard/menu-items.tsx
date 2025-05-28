@@ -7,6 +7,7 @@ import {
   PiShapesDuotone,
   PiInvoiceDuotone,
   PiTicketDuotone,
+  PiCurrencyDollarDuotone,
 } from 'react-icons/pi';
 
 // Note: do not add href in the label object, it is rendering as label
@@ -53,6 +54,12 @@ export const menuItems = [
     name: 'Orders',
     href: routes?.userDashboard.orders,
     icon: <PiShoppingBagDuotone />,
+  },
+  {
+    name: 'Invoices',
+    href: routes.userDashboard.invoices,
+    icon: <PiCurrencyDollarDuotone />,
+    badge: '',
   },
   {
     name: 'Support',
