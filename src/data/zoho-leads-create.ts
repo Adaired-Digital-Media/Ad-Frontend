@@ -34,7 +34,6 @@ export const salutation = [
   
   export const agent = [
     { label: "Company", value: "Company" },
-    { label: "Narender", value: "Narender" },
     { label: "Sonu", value: "Sonu" },
     { label: "Tawheed", value: "Tawheed" },
   ];
