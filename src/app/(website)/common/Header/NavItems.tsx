@@ -9,20 +9,30 @@ import { Separator } from '@/@core/ui/shadcn-ui/separator';
 import axios from 'axios';
 import CldImage from '../../components/CloudinaryImageComponent';
 
-// Define TypeScript interface for blog data
-interface BlogPost {
-  _id: string;
-  postTitle: string;
-  metaDescription: string;
-  featuredImage: string;
+// Type definitions
+interface NavItem {
+  label: string;
+  href: string;
+  subItems?: Array<{
+    name: string;
+    href: string;
+    subItems?: Array<{ name: string; href: string }>;
+  }>;
+  childrens?: Array<{ name: string; href: string }>;
+}
+
+interface Blog {
   slug: string;
+  postTitle: string;
+  featuredImage: string;
   createdAt: string;
-  tags?: string;
+  category?: { name: string };
 }
 
 const NavItems = () => {
   const pathname = usePathname();
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [blog, setBlog] = useState<Blog | null>(null);
 
   const isLandingPage = pathname.startsWith('/expert-content-solutions');
 
@@ -30,6 +40,25 @@ const NavItems = () => {
   const navItems = useMemo(() => {
     return isLandingPage ? routes.ecommerceNav : routes.websiteNav;
   }, [isLandingPage]);
+
+  // Fetch blog with Next.js fetch and caching
+  useMemo(() => {
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?slug=local-seo-agency-usa-for-multi-location`,
+          { next: { revalidate: 3600 } } // Cache for 1 hour
+        );
+        const data = await res.json();
+        if (res.ok && data.data?.[0]) {
+          setBlog(data.data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching blog:', error);
+      }
+    };
+    fetchBlog();
+  }, []);
 
   const handleSetActive = useCallback((idx: number) => {
     setActiveIndex(idx);
@@ -45,6 +74,7 @@ const NavItems = () => {
           index={idx}
           isLandingPage={isLandingPage}
           handleSetActive={handleSetActive}
+          blog={blog}
         />
       ))}
       {!isLandingPage && (
@@ -67,32 +97,16 @@ const Item = ({
   index,
   isLandingPage,
   handleSetActive,
+  blog,
 }: {
   navitems: any;
   activeIndex: number;
   index: number;
   isLandingPage: boolean;
   handleSetActive: (idx: number) => void;
+  blog: Blog | null;
 }) => {
   const [submenuClicked, setSubmenuClicked] = useState(false);
-  const [blog, setBlog] = useState<BlogPost | null>(null);
-
-  // Fetch latest blog post
-  useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const res = await axios.get<BlogPost[]>(
-          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog?limit=1&skip=0`
-        );
-        if (res.status === 200 && res.data.length > 0) {
-          setBlog(res.data[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching blog:', error);
-      }
-    };
-    fetchBlog();
-  }, []);
 
   const handleSubmenuClick = useCallback(() => {
     setSubmenuClicked((prev) => !prev);
@@ -175,7 +189,8 @@ const Item = ({
                         <div className="p-4">
                           <div className="mb-2">
                             <span className="inline-block rounded-full bg-[#A100A1] px-3 py-1 text-xs font-medium text-white">
-                              Search Engine Optimization
+                              {blog?.category?.name ??
+                                'Search Engine Optimization'}
                             </span>
                           </div>
                           <h4 className="mb-4 font-nunito text-lg font-medium text-gray-900">
@@ -184,7 +199,7 @@ const Item = ({
                           <div className="flex justify-between text-xs text-gray-600">
                             <span>By Adaired Team | 3 min read</span>
                             <span>
-                              {new Date(blog.createdAt)
+                              {new Date(blog?.createdAt)
                                 .toLocaleDateString('en-GB', {
                                   day: 'numeric',
                                   month: 'long',

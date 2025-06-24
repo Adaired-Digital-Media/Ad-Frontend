@@ -1,16 +1,17 @@
-import React from "react";
-import MaxWidthWrapper from "@web-components/MaxWidthWrapper";
-import Image from "next/image";
-import parse, { domToReact, Element, DOMNode } from "html-react-parser";
-import PageBanner from "@web-components/PageBanner";
-import PopularPosts from "@web-components/PopularPosts";
-import type { Metadata } from "next";
-import { parseStyleString } from "@core/utils/parseStyleString";
-import { formatDate } from "@core/utils/format-date";
+import React from 'react';
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
+import Image from 'next/image';
+import parse, { domToReact, Element, DOMNode } from 'html-react-parser';
+import PageBanner from '@web-components/PageBanner';
+import PopularPosts from '@web-components/PopularPosts';
+import type { Metadata } from 'next';
+import { parseStyleString } from '@core/utils/parseStyleString';
+import { formatDate } from '@core/utils/format-date';
+import Head from 'next/head';
 
 async function getBlogs({ params }: { params: { slug: string } }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog/${params.slug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?slug=${params.slug}`
   );
   const data = await res.json();
   return data;
@@ -21,30 +22,46 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const data = await getBlogs({ params });
+  const { data } = await getBlogs({ params });
+  const blog = data[0];
+
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
-    title: data.metaTitle
-      ? data.metaTitle
-      : `Read Our Blog for Helpful Tips and Ideas | Adaired`,
-    description: data.metaDescription
-      ? data.metaDescription
-      : `Get easy-to-understand tips and new ideas from Adaired’s blogs. From practical tips to interesting ideas, there is something for everyone. Start exploring today!`,
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SITE_URI || 'https://adaired.com'
+    ),
+    title: blog?.seo?.metaTitle || blog?.postTitle,
+    description: blog?.seo?.metaDescription,
+    keywords: blog?.seo?.keywords,
     alternates: {
-      canonical: `/blog/${params.slug}`,
+      canonical: blog?.seo?.canonicalLink || `/blog/${params?.slug}`,
     },
-    robots: {
-      index: true,
-      follow: true,
+    robots: blog?.seo?.robotsText ?? 'index, follow',
+    openGraph: {
+      title: blog?.seo?.openGraph?.title || blog?.seo?.metaTitle,
+      description:
+        blog?.seo?.openGraph?.description || blog?.seo?.metaDescription,
+      images: blog?.seo?.openGraph?.image || blog?.featuredImage,
+      url: blog?.seo?.openGraph?.url || `/blog/${params?.slug}`,
+      siteName: blog?.seo?.openGraph?.siteName || 'Adaired',
+      type: blog?.seo?.openGraph?.type || 'website',
+    },
+    twitter: {
+      card: blog?.seo?.twitterCard?.cardType || 'summary_large_image',
+      site: blog?.seo?.twitterCard?.site,
+      creator: blog?.seo?.twitterCard?.creator,
+      title: blog?.seo?.twitterCard?.title || blog?.seo?.metaTitle,
+      description:
+        blog?.seo?.twitterCard?.description || blog?.seo?.metaDescription,
+      images: blog?.seo?.twitterCard?.image || blog?.featuredImage,
     },
   };
 }
 
 export async function generateStaticParams() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read`
   ).then((res) => res.json());
-  const blogs = res;
+  const blogs = res.data;
   return blogs.map((blog: any) => ({
     slug: blog.slug.toString(),
   }));
@@ -57,71 +74,106 @@ interface BlogProps {
 }
 
 const Blog: React.FC<BlogProps> = async ({ params }) => {
-  const data = await getBlogs({ params });
+  const { data } = await getBlogs({ params });
+  const blog = data[0];
 
-  const contentWithClass = parse(data.postDescription, {
+  const contentWithClass = parse(blog.postDescription, {
     replace: (domNode) => {
-      if (
-        domNode instanceof Element &&
-        /^(h[1-6]|ol|ul)$/.test(domNode.tagName)
-      ) {
-        const children = Array.from(domNode.children) as DOMNode[];
+      if (domNode instanceof Element) {
+        const { tagName, attribs, children } = domNode;
+        const supportedTags = /^(h[1-6]|ol|ul|p|blockquote)$/;
 
-        let additionalClasses = "font-nunito";
+        if (supportedTags.test(tagName)) {
+          let additionalClasses = 'font-nunito';
 
-        if (domNode.tagName === "h2") {
-          additionalClasses += " text-2xl md:text-3xl";
-        } else if (domNode.tagName === "h3") {
-          additionalClasses += " text-xl md:text-2xl";
-        } else if (domNode.tagName === "ol") {
-          additionalClasses += " p-4 ml-2 list-decimal";
-        } else if (domNode.tagName === "ul") {
-          additionalClasses += " p-4 ml-2 list-disc";
+          switch (tagName) {
+            case 'h1':
+            case 'h2':
+              additionalClasses += ' text-2xl md:text-3xl font-bold my-4';
+              break;
+            case 'h3':
+              additionalClasses += ' text-xl md:text-2xl font-semibold my-3';
+              break;
+            case 'ol':
+              additionalClasses += ' pl-6 my-2 list-decimal';
+              break;
+            case 'ul':
+              additionalClasses += ' pl-6 my-2 list-disc';
+              break;
+            case 'p':
+              additionalClasses += ' my-2';
+              break;
+            case 'blockquote':
+              additionalClasses += ' border-l-4 pl-4 my-2 italic';
+              break;
+          }
+
+          const { className, style, ...otherAttribs } = attribs;
+          const styleObject =
+            typeof style === 'string' ? parseStyleString(style) : style;
+
+          return React.createElement(
+            tagName,
+            {
+              ...otherAttribs,
+              className: `${className || ''} ${additionalClasses}`.trim(),
+              style: styleObject,
+            },
+            domToReact(children as DOMNode[])
+          );
         }
-
-        const { className, style, ...otherAttribs } = domNode.attribs;
-
-        // Convert string style to object
-        const styleObject = typeof style === 'string' ? parseStyleString(style) : style;
-        
-        return React.createElement(
-          domNode.tagName,
-          {
-            ...otherAttribs,
-            className: `${className || ""} ${additionalClasses}`.trim(),
-            style: styleObject, 
-          },
-          domToReact(children)
-        );
       }
     },
   });
 
   return (
     <>
+      <Head>
+        {/* Only include tags not supported by generateMetadata */}
+        {blog?.seo?.schemaOrg && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: blog?.seo?.schemaOrg }}
+          />
+        )}
+        {blog?.seo?.headerScript && (
+          <script
+            dangerouslySetInnerHTML={{ __html: blog?.seo?.headerScript }}
+          />
+        )}
+      </Head>
       <PageBanner title="Blog" />
       <MaxWidthWrapper className="flex gap-10 py-6 lg:py-12">
-        <div className="border p-10 w-[70%]">
-          <div>
+        <div className="w-full border p-6 lg:w-[70%] lg:p-10">
+          <div className="relative">
             <Image
-              src={data.featuredImage}
+              src={blog.featuredImage}
               height={560}
               width={1000}
-              alt={data.title}
+              alt={blog.postTitle}
+              priority
             />
           </div>
-          <h1 className="text-[1.688rem] py-4 font-nunito text-3xl md:text-4xl font-bold">
-            {data.postTitle}
+          <h1 className="py-4 font-nunito text-2xl font-bold md:text-3xl lg:text-4xl">
+            {blog.postTitle}
           </h1>
-          <p className="font-nunito pb-2">{formatDate(data.createdAt)}</p>
-          <div>{contentWithClass}</div>
+          <p className="pb-2 font-nunito text-gray-600">
+            {formatDate(blog.createdAt)}
+          </p>
+          <div className="prose max-w-none">{contentWithClass}</div>
         </div>
-        <aside className="w-[30%] relative">
+        <aside className="hidden w-[30%] lg:block">
           <div className="sticky top-24">
             <PopularPosts />
           </div>
         </aside>
       </MaxWidthWrapper>
+      {blog?.seo?.bodyScript && (
+        <script dangerouslySetInnerHTML={{ __html: blog?.seo?.bodyScript }} />
+      )}
+      {blog?.seo?.footerScript && (
+        <script dangerouslySetInnerHTML={{ __html: blog?.seo?.footerScript }} />
+      )}
     </>
   );
 };

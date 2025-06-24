@@ -176,7 +176,7 @@ function CaseStudyCard({
           <Button
             title="View Case Study"
             className="mt-5 bg-white text-black"
-            svgClassName="bg-[#F89520] group-hover/btn:right-[10.2rem]"
+            svgClassName="bg-[#F89520]"
             type="button"
             navigateTo={`/case-studies/${slug}`}
           />

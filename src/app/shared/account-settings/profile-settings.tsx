@@ -97,7 +97,7 @@ export default function ProfileSettingsView({ session }: { session: Session }) {
             <>
               <ProfileHeader
                 title={session?.user?.name || 'Your Profile'}
-                description="Update your photo and Username."
+                description={session?.user?.email || ''}
               ></ProfileHeader>
 
               <div className="mx-auto mb-10 grid w-full max-w-screen-2xl gap-7 divide-y divide-dashed divide-gray-200 @2xl:gap-9 @3xl:gap-11">

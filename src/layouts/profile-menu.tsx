@@ -29,7 +29,7 @@ export default function ProfileMenu({
           )}
         >
           <Avatar
-            src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-11.webp"
+            src={`https://api.dicebear.com/9.x/initials/svg?seed=${firstName + ' ' + lastName} `}
             name={firstName + ' ' + lastName}
             className={cn('!h-9 w-9 sm:!h-10 sm:!w-10', avatarClassName)}
           />
@@ -83,7 +83,7 @@ function DropdownMenu({ name, email }: { name?: string; email?: string }) {
     <div className="w-64 text-left rtl:text-right">
       <div className="flex items-center border-b border-gray-300 px-6 pb-5 pt-6">
         <Avatar
-          src="https://isomorphic-furyroad.s3.amazonaws.com/public/avatars/avatar-11.webp"
+          src={`https://api.dicebear.com/9.x/initials/svg?seed=${name} `}
           name="Albert Flores"
         />
         <div className="ms-3">
@@ -92,7 +92,9 @@ function DropdownMenu({ name, email }: { name?: string; email?: string }) {
           </Title>
           <Text className="text-gray-600">
             {' '}
-            {((email ?? '').length > 25) ? `${(email ?? '').slice(0, 20)}...` : email}
+            {(email ?? '').length > 25
+              ? `${(email ?? '').slice(0, 20)}...`
+              : email}
           </Text>
         </div>
       </div>
