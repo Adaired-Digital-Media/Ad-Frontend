@@ -1,9 +1,9 @@
 'use client';
+
 import { FC, useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { calculateReadingTime } from '@core/utils/calculateReadingTime';
 import { formatDate } from '@core/utils/format-date';
-import { cn } from '@core/utils/class-names';
 import Button from '@web-components/Button';
 import {
   Card,
@@ -23,20 +23,13 @@ interface Blog {
   postTitle: string;
   postDescription: string;
   featuredImage: string;
+  excerpt:string;
   createdAt: string;
 }
 
 interface IProps {
   data: Blog[];
 }
-
-// Utility to extract plain text excerpt
-const getExcerpt = (html: string, maxLength: number = 150): string => {
-  const div = document.createElement('div');
-  div.innerHTML = html;
-  const text = div.textContent || div.innerText || '';
-  return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
-};
 
 const BlogWPagination: FC<IProps> = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,7 +75,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                   <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
                 </h2>
                 <p className="mt-2 line-clamp-2 font-nunito text-gray-600">
-                  {getExcerpt(blog.postDescription)}
+                {blog.excerpt}
                 </p>
                 <Button
                   title="Read Blog"
@@ -113,7 +106,7 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
               </CardHeader>
               <CardContent className="p-4 pt-0">
                 <p className="line-clamp-3 font-nunito text-gray-600">
-                  {getExcerpt(blog.postDescription)}
+                 {blog.excerpt}
                 </p>
               </CardContent>
               <CardFooter className="flex justify-between p-4 pt-0">

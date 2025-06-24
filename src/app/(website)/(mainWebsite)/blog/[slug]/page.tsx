@@ -57,14 +57,36 @@ export async function generateMetadata({
   };
 }
 
+// export async function generateStaticParams() {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read`
+//   ).then((res) => res.json());
+//   const blogs = res.data.data;
+//   return blogs.map((blog: any) => ({
+//     slug: blog.slug.toString(),
+//   }));
+// }
+
 export async function generateStaticParams() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read`
-  ).then((res) => res.json());
-  const blogs = res.data;
-  return blogs.map((blog: any) => ({
-    slug: blog.slug.toString(),
-  }));
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read`
+    );
+
+    if (!res.ok) {
+      console.error(`HTTP error! Status: ${res.status}, ${await res.text()}`);
+      throw new Error(`Failed to fetch blog slugs: ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    const blogs = data.data || []; // Fallback if data.data is missing
+    return blogs.map((blog: any) => ({
+      slug: blog.slug.toString(),
+    }));
+  } catch (error) {
+    console.error('Error in generateStaticParams:', error);
+    return []; // Fallback to empty array to allow build to proceed
+  }
 }
 
 interface BlogProps {
