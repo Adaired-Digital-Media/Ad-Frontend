@@ -56,7 +56,7 @@ export function CustomExpandedComponent<TData extends Record<string, any>>(
               </Text>
               <Text className="text-gray-500">
                 Word Count :{' '}
-                <span className="font-bold">{product.quantity}</span>
+                <span className="font-bold">{product.wordCount}</span>
               </Text>
             </div>
             <Text className="text-gray-500">

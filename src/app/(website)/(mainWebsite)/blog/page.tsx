@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 async function getBlogs() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/readBlog?limit=10000`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?status=publish`
   );
   const data = await res.json();
   return data;
@@ -32,12 +32,12 @@ const Blog = async () => {
       <MaxWidthWrapper className="py-6 lg:py-12">
         <div className="flex flex-col xl:flex-row gap-10">
           <div className="xl:w-[70%]">
-            <BlogWPagination data={data} />
+            <BlogWPagination data={data.data} />
           </div>
 
-          <aside className="xl:w-[30%] relative mt-10">
+          <aside className="xl:w-[30%] relative">
             <div className="sticky top-24">
-              <PopularPosts />
+              <PopularPosts data={data.data}/>
             </div>
           </aside>
         </div>

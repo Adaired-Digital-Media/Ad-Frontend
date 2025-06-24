@@ -13,149 +13,141 @@ import {
   CardTitle,
 } from '@core/ui/shadcn-ui/card';
 import { Separator } from '@core/ui/shadcn-ui/separator';
-import parse from 'html-react-parser';
 import Link from 'next/link';
 import Pagination from '@core/ui/rizzui-ui/pagination';
 
-interface IProps {
-  data: any;
+// Type definitions
+interface Blog {
+  _id: string;
+  slug: string;
+  postTitle: string;
+  postDescription: string;
+  featuredImage: string;
+  createdAt: string;
 }
+
+interface IProps {
+  data: Blog[];
+}
+
+// Utility to extract plain text excerpt
+const getExcerpt = (html: string, maxLength: number = 150): string => {
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  const text = div.textContent || div.innerText || '';
+  return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+};
 
 const BlogWPagination: FC<IProps> = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const blogsPerPage = 6;
 
-  const [blogsPerPage] = useState(6);
+  // Memoize current blogs to prevent unnecessary slicing
+  const currentBlogs = useMemo(() => {
+    const indexOfLastBlog = currentPage * blogsPerPage;
+    const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+    return data.slice(indexOfFirstBlog, indexOfLastBlog);
+  }, [data, currentPage]);
 
-  // Filter and sort the blogs by date
-  const sortedBlogs = useMemo(() => {
-    const publishedBlogs = data.filter(
-      (blog: any) => blog.status === 'publish'
-    );
-    return publishedBlogs.sort(
-      (a: any, b: any) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
-  }, [data]);
-
-  const indexOfLastBlog = currentPage * blogsPerPage;
-  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = sortedBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
-
-  const totalPages = Math.ceil(sortedBlogs.length / blogsPerPage);
-
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  // Scroll to top whenever the currentPage changes
+  // Scroll to top on page change
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
   return (
-    <>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 xl:gap-0">
-        {currentBlogs.map((blog: any) => {
-          return (
-            <>
-              <figure
-                className="mb-10 hidden rounded-lg border p-10 first:mt-10 xl:flex"
-                key={blog.postTitle}
-              >
-                <div className="w-[45%] shrink-0">
-                  <Link href={`/blog/${blog.slug}`}>
-                    <Image
-                      src={blog.featuredImage}
-                      height={400}
-                      width={800}
-                      alt={blog.postTitle || 'Blog Image'}
-                      className="-ml-14 rounded-lg"
-                    />
-                  </Link>
-                </div>
-                <div className="w-[55%] shrink-0">
-                  <div className="flex items-center justify-between">
-                    <p className="mb-1 text-sm text-gray-500 lg:text-base">
-                      {formatDate(blog.createdAt)}
-                    </p>
-                    <p className="mb-1 text-sm text-gray-500 lg:text-base">
-                      {calculateReadingTime(blog.postDescription) +
-                        ' min read '}
-                    </p>
-                  </div>
-                  <div>
-                    <h2 className="mb-1 font-nunito font-semibold lg:text-2xl">
-                      <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
-                    </h2>
-                    <span className="line-clamp-2 font-nunito">
-                      {parse(blog.postDescription)}
-                    </span>
-                  </div>
-                  <div>
-                    <Button
-                      title="Read Blog"
-                      svgClassName="bg-[#F89520] "
-                      className="mt-4 border-none bg-white text-black"
-                      type="button"
-                      navigateTo={`/blog/${blog.slug}`}
-                    />
-                  </div>
-                </div>
-              </figure>
-
-              <Card className="xl:hidden" key={blog.slug}>
-                <CardHeader className="p-4">
-                  <div className="mb-4">
-                    <Link href={`/blog/${blog.slug}`}>
-                      <Image
-                        src={blog.featuredImage}
-                        alt={blog.postTitle || 'Blog Image'}
-                        height={400}
-                        width={800}
-                        style={{ objectFit: 'cover' }}
-                      />
-                    </Link>
-                  </div>
-                  <CardTitle className="line-clamp-2 font-nunito text-2xl">
-                    <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 pt-0 text-left font-nunito text-lg">
-                  <div className="line-clamp-3">
-                    {parse(blog.postDescription)}
-                  </div>
-                </CardContent>
-                <div className="p-4">
-                  <Button
-                    title="Read More"
-                    className="border-none bg-white text-black"
-                    svgClassName="bg-[#F89520] right-2.5 group-hover/btn:right-28"
-                    type="button"
-                    navigateTo={`/blog/${blog.slug}`}
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 xl:gap-0">
+        {currentBlogs.map((blog) => (
+          <article key={blog._id} className="first:mt-10 xl:first:mt-0">
+            {/* Desktop Layout (xl and above) */}
+            <div className="mb-10 hidden rounded-lg border p-10 xl:flex">
+              <div className="w-[45%] shrink-0">
+                <Link href={`/blog/${blog.slug}`}>
+                  <Image
+                    src={blog.featuredImage}
+                    height={400}
+                    width={800}
+                    alt={blog.postTitle}
+                    sizes="(max-width: 1280px) 45vw, 360px"
+                    className="-ml-14 rounded-lg object-cover"
                   />
+                </Link>
+              </div>
+              <div className="w-[55%] pl-6">
+                <div className="flex items-center justify-between text-sm text-gray-500">
+                  <span>{formatDate(new Date(blog.createdAt))}</span>
+                  <span>{`${calculateReadingTime(blog.postDescription)} min read`}</span>
                 </div>
-                <Separator className="mx-auto w-[90%]" />
-                <CardFooter className="justify-between pt-6">
-                  <p>{formatDate(blog.createdAt)}</p>
-                  <p>
-                    {calculateReadingTime(blog.postDescription) + ' min read '}
-                  </p>
-                </CardFooter>
-              </Card>
-            </>
-          );
-        })}
+                <h2 className="mt-2 font-nunito text-2xl font-semibold">
+                  <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
+                </h2>
+                <p className="mt-2 line-clamp-2 font-nunito text-gray-600">
+                  {getExcerpt(blog.postDescription)}
+                </p>
+                <Button
+                  title="Read Blog"
+                  className="mt-4 border-none bg-white text-black"
+                  svgClassName="bg-[#F89520]"
+                  type="button"
+                  navigateTo={`/blog/${blog.slug}`}
+                />
+              </div>
+            </div>
+
+            {/* Mobile/Tablet Layout (below xl) */}
+            <Card className="xl:hidden">
+              <CardHeader className="p-4">
+                <Link href={`/blog/${blog.slug}`}>
+                  <Image
+                    src={blog.featuredImage}
+                    alt={blog.postTitle}
+                    height={400}
+                    width={800}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="rounded-t-lg object-cover"
+                  />
+                </Link>
+                <CardTitle className="mt-4 font-nunito text-xl">
+                  <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 pt-0">
+                <p className="line-clamp-3 font-nunito text-gray-600">
+                  {getExcerpt(blog.postDescription)}
+                </p>
+              </CardContent>
+              <CardFooter className="flex justify-between p-4 pt-0">
+                <Button
+                  title="Read More"
+                  className="border-none bg-white text-black"
+                  svgClassName="bg-[#F89520] right-2.5 group-hover/btn:right-28"
+                  type="button"
+                  navigateTo={`/blog/${blog.slug}`}
+                />
+                <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <span>{formatDate(new Date(blog.createdAt))}</span>
+                  <span>{`${calculateReadingTime(blog.postDescription)} min read`}</span>
+                </div>
+              </CardFooter>
+              <Separator className="mx-auto w-[90%]" />
+            </Card>
+          </article>
+        ))}
       </div>
 
-      <div className={cn(`flex items-center justify-center`)}>
-        <Pagination
-          total={sortedBlogs.length}
-          defaultCurrent={currentPage}
-          onChange={paginate}
-          pageSize={blogsPerPage}
-          nextIcon="Next"
-          prevIcon="Previous"
-        />
-      </div>
-    </>
+      {data.length > blogsPerPage && (
+        <div className="flex justify-center">
+          <Pagination
+            total={data.length}
+            current={currentPage}
+            onChange={setCurrentPage}
+            pageSize={blogsPerPage}
+            nextIcon="Next"
+            prevIcon="Previous"
+          />
+        </div>
+      )}
+    </div>
   );
 };
 
