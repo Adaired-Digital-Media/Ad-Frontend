@@ -13,11 +13,10 @@ export default function NotFound() {
           <Image
             src={'/logo-primary.svg'}
             alt={'Logo'}
-            className="dark:invert"
+            className="dark:invert object-contain"
             priority
             width="150"
             height="78"
-            objectFit="contain"
           />
         </Link>
       </div>

@@ -6,7 +6,7 @@ import BlogWPagination from '@web-components/BlogWithPagination';
 import type { Metadata } from 'next';
 
 // Server-safe excerpt function
-const getExcerpt = (html: string, maxLength: number = 150): string => {
+export const getExcerpt = (html: string, maxLength: number = 150): string => {
   const text = html.replace(/<[^>]+>/g, ' '); // Strip HTML tags
   return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 };
@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.adaired.com/blog',
   },
-  metadataBase: new URL("https://www.adaired.com"), 
 };
 
 async function getBlogs() {
@@ -50,7 +49,7 @@ const Blog = async () => {
 
           <aside className="relative xl:w-[30%]">
             <div className="sticky top-24">
-              <PopularPosts data={data.data} />
+              <PopularPosts />
             </div>
           </aside>
         </div>

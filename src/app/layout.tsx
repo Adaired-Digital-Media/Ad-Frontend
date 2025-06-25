@@ -14,6 +14,7 @@ import '@/app/globals.css';
 export const metadata = {
   title: siteConfig.title,
   description: siteConfig.description,
+    metadataBase: new URL('https://adaired.com'),
 };
 
 // Google Analytics configuration
