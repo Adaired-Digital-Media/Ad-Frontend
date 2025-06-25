@@ -25,7 +25,7 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
     fontFamily: {
       inter: ['var(--font-inter)'],
       lexend: ['var(--font-lexend)'],
-      nunito: ['var(--font-nunito)'],
+      nunito: ['var(--font-nunito)', 'sans-serif'],
       baby: ['var(--font-baby)'],
       dm: ['var(--font-dm)'],
       poppins: ['var(--font-poppins)'],

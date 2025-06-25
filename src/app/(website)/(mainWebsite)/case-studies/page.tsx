@@ -1,17 +1,17 @@
-import PageBanner from "@web-components/PageBanner";
-import { ProcessSection } from "../about/page";
-import TestimonialSlider from "@web-components/TestimonialSlider";
-import BlogCards from "@web-components/BlogCard/BlogCards";
-import CaseStudyCards from "@web-components/CaseStudyCards";
-import { Suspense } from "react";
-import type { Metadata } from "next";
+import PageBanner from '@web-components/PageBanner';
+import { getBlogsData, ProcessSection } from '../about/page';
+import TestimonialSlider from '@web-components/TestimonialSlider';
+import BlogCards from '@web-components/BlogCard/BlogCards';
+import CaseStudyCards from '@web-components/CaseStudyCards';
+import { Suspense } from 'react';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Adaired Case Studies: See How We Help Businesses Thrive",
+  title: 'Adaired Case Studies: See How We Help Businesses Thrive',
   description:
-    "Discover how Adaired transformed businesses like yours with simple, engaging case studies highlighting real success. Know how we can support your goals now!",
+    'Discover how Adaired transformed businesses like yours with simple, engaging case studies highlighting real success. Know how we can support your goals now!',
   alternates: {
-    canonical: "https://www.daired.com/case-studies",
+    canonical: 'https://www.adaired.com/case-studies',
   },
 };
 async function getCaseStudyCategories() {
@@ -33,6 +33,7 @@ async function getCaseStudies() {
 const CaseStudies = async () => {
   const categories = await getCaseStudyCategories();
   const caseStudies = await getCaseStudies();
+  const blogs = await getBlogsData();
   return (
     <>
       <PageBanner title="Case Studies" />
@@ -41,7 +42,7 @@ const CaseStudies = async () => {
       </Suspense>
       <ProcessSection />
       <TestimonialSlider />
-      <BlogCards />
+      <BlogCards blogs={blogs}/>
     </>
   );
 };
