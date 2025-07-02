@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+import { MetadataRoute } from 'next';
 
 const robots = async () => {
   const siteUrl: string | undefined = process.env.NEXT_PUBLIC_SITE_URI;
@@ -6,24 +6,21 @@ const robots = async () => {
   const metaRobots: MetadataRoute.Robots = {
     rules: [
       {
-        userAgent: "*",
-        allow: "/",
+        userAgent: '*',
+        allow: '/',
         disallow: [
-          "/_next/",
-          "/dashboard",
-          "/tag/*",
-          "/author/*",
-          "/category/*",
-          "/?*",
-          "/page/*"
-        ]
+          '/_next/',
+          '/admin',
+          'admin-dashboard',
+          '/tag/*',
+          '/author/*',
+          '/category/*',
+          '/?*',
+          '/page/*',
+        ],
       },
-      {
-        userAgent: "ChatGPT-user",
-        disallow: "/"
-      }
     ],
-    sitemap: `${siteUrl}/sitemap.xml`
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 
   return metaRobots;

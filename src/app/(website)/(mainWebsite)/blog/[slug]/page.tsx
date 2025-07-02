@@ -79,13 +79,13 @@ export async function generateStaticParams() {
     }
 
     const data = await res.json();
-    const blogs = data.data || []; // Fallback if data.data is missing
+    const blogs = data.data || [];
     return blogs.map((blog: any) => ({
       slug: blog.slug.toString(),
     }));
   } catch (error) {
     console.error('Error in generateStaticParams:', error);
-    return []; // Fallback to empty array to allow build to proceed
+    return [];
   }
 }
 
@@ -95,7 +95,7 @@ interface BlogProps {
   };
 }
 
-const Blog: React.FC<BlogProps> = async ({ params }) => {
+const Blog = async ({ params }: BlogProps) => {
   const { data } = await getBlogs({ params });
   const blog = data[0];
 
