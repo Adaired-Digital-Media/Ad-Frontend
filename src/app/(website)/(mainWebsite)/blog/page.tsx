@@ -49,7 +49,7 @@ const Blog = async () => {
 
           <aside className="relative xl:w-[30%]">
             <div className="sticky top-24">
-              <PopularPosts />
+              <PopularPosts initialData={data.data.slice(0, 5)} />
             </div>
           </aside>
         </div>
