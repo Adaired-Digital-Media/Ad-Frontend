@@ -46,8 +46,8 @@ export async function generateMetadata({
       canonical: `/case-studies/${params.slug}`,
     },
     robots: {
-      index: true,
-      follow: true,
+      index: false,
+      follow: false,
     },
   };
 }
