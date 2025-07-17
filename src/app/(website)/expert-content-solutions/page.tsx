@@ -26,8 +26,6 @@ const Landing = async () => {
     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product`
   );
 
-  console.log("Products", products.data)
-
   // const products: Product[] = fetchProductCategory.data.data.products || [];
 
   return (
