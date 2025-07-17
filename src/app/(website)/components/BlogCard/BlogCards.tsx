@@ -3,17 +3,7 @@ import BlogCard from '@web-components/BlogCard/BlogCard';
 import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
 import Button from '@web-components/Button';
 
-// export async function getBlogsData() {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=3`
-//   );
-//   const data = await res.json();
-//   return data;
-// }
-
 const BlogCards = ({ blogs }: { blogs: any }) => {
-  // const data = await getBlogsData();
-
   return (
     <section className="py-3 md:py-12">
       <MaxWidthWrapper className="text-center">

@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { Separator } from '@/@core/ui/shadcn-ui/separator';
 import axios from 'axios';
 import CldImage from '../../components/CloudinaryImageComponent';
+import { calculateReadingTime } from '@/@core/utils/calculateReadingTime';
 
 // Type definitions
 interface NavItem {
@@ -24,6 +25,7 @@ interface NavItem {
 interface Blog {
   slug: string;
   postTitle: string;
+  postDescription: string;
   featuredImage: string;
   createdAt: string;
   category?: { name: string };
@@ -36,18 +38,15 @@ const NavItems = () => {
 
   const isLandingPage = pathname.startsWith('/expert-content-solutions');
 
-  // Memoize navigation items
   const navItems = useMemo(() => {
     return isLandingPage ? routes.ecommerceNav : routes.websiteNav;
   }, [isLandingPage]);
-
-  // Fetch blog with Next.js fetch and caching
   useMemo(() => {
     const fetchBlog = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?slug=local-seo-agency-usa-for-multi-location`,
-          { next: { revalidate: 3600 } } // Cache for 1 hour
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?status=publish&limit=1`,
+          { next: { revalidate: 3600 } }
         );
         const data = await res.json();
         if (res.ok && data.data?.[0]) {
@@ -197,7 +196,11 @@ const Item = ({
                             {blog.postTitle}
                           </h4>
                           <div className="flex justify-between text-xs text-gray-600">
-                            <span>By Adaired Team | 3 min read</span>
+                            <span>
+                              By Adaired Team |{' '}
+                              {calculateReadingTime(blog.postDescription)} min
+                              read
+                            </span>
                             <span>
                               {new Date(blog?.createdAt)
                                 .toLocaleDateString('en-GB', {
