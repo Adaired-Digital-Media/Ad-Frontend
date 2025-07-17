@@ -52,17 +52,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         fetch(`${backendApiUri}/service/getServices`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          cache: 'no-store', // Ensure fresh data
         }),
         fetch(`${oldApiUri}/api/v1/case-studies/all`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          cache: 'no-store',
         }),
         fetch(`${backendApiUri}/blog/read?status=publish`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
-          cache: 'no-store',
         }),
       ]);
 

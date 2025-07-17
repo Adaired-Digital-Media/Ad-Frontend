@@ -61,7 +61,7 @@ export const ProductSection = ({ products }: { products: Product[] }) => {
         >
           {products.length > 0 ? (
             products
-              .filter((product) => product.status === 'Active')
+              .filter((product) => product.status === 'active')
               .map((product) =>
                 typeof product === 'object' ? (
                   <IconBox
