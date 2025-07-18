@@ -21,7 +21,8 @@ export default function SignIn() {
           continue.
         </>
       }
-      isSocialLoginActive={false}
+      isSignIn
+      isSocialLoginActive={true}
     >
       <Suspense>
         <SignInForm />

@@ -20,7 +20,7 @@ export default function SignUp() {
           </span>
         </>
       }
-      isSocialLoginActive={false}
+      isSocialLoginActive={true}
     >
       <SignUpForm />
     </AuthWrapper>
