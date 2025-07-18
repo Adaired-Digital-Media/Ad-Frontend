@@ -8,22 +8,20 @@ import { Checkbox, Password, Button, Input, Text, Title, cn } from 'rizzui';
 import { Form } from '@core/ui/rizzui-ui/form';
 import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/validators/login.schema';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useMedia } from '@core/hooks/use-media';
 import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 
 const initialValues: LoginSchema = {
-  email: '',
-  password: '',
-  rememberMe: true,
+  identifier: "",
+  password: "",
+  rememberMe: false,
 };
 
 export default function SignInForm() {
-  const pathname = usePathname();
   const router = useRouter();
   const isMedium = useMedia('(max-width: 1200px)', false);
-
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
 
@@ -33,12 +31,21 @@ export default function SignInForm() {
       setError(errorParam);
     }
   }, [searchParams]);
-
   useEffect(() => {
-    if (error === 'CredentialsSignin') {
+    if (error) {
       router.replace(routes.auth.signIn);
       setError(null);
-      toast.error('Invalid credentials!');
+      if (error === "CredentialsSignin") {
+        toast.error("Invalid username or password!");
+      } else if (error === "GoogleAuthFailed") {
+        toast.error("Google authentication failed. Please try again.");
+      } else if (error === "AccessDenied") {
+        toast.error(
+          "Access denied. You may not have permission to access this resource."
+        );
+      } else {
+        toast.error("An error occurred during sign-in. Please try again.");
+      }
     }
   }, [error, router]);
 
@@ -77,8 +84,8 @@ export default function SignInForm() {
               placeholder="Enter your email"
               className="[&>label>span]:font-poppins [&>label>span]:text-[16px] [&>label>span]:font-semibold [&>label>span]:text-[#515151]"
               inputClassName="text-sm"
-              {...register('email')}
-              error={errors.email?.message}
+              {...register("identifier")}
+              error={errors.identifier?.message}
               required
             />
 

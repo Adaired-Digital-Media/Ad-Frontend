@@ -1,29 +1,27 @@
 import { MetadataRoute } from 'next';
 
-const robots = async () => {
+const robots = async (): Promise<MetadataRoute.Robots> => {
   const siteUrl: string | undefined = process.env.NEXT_PUBLIC_SITE_URI;
 
-  const metaRobots: MetadataRoute.Robots = {
+  return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
         disallow: [
-          '/_next/',
           '/admin',
-          'admin-dashboard',
+          '/admin-dashboard',
           '/tag/*',
           '/author/*',
           '/category/*',
           '/?*',
           '/page/*',
+          '/api'
         ],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
   };
-
-  return metaRobots;
 };
 
 export default robots;

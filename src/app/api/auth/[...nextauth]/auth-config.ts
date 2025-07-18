@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { routes } from '@/config/routes';
-import { NextAuthConfig } from 'next-auth';
+import {
+  NextAuthConfig,
+  Role,
+  Session,
+  User,
+} from 'next-auth';
 import Google from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
-import axios from 'axios';
+import { JWT } from 'next-auth/jwt';
+import { decodeJwt } from 'jose';
 
 // Function to determine if a route is restricted for logged-in users
 const isAuthRoute = (pathname: string) => {
@@ -11,25 +17,56 @@ const isAuthRoute = (pathname: string) => {
   return authRoutePatterns.some((pattern) => pattern.test(pathname));
 };
 
+
+interface AuthToken extends JWT {
+  _id: string;
+  image?: string;
+  name?: string;
+  userName?: string;
+  email: string;
+  contact?: string;
+  isAdmin: boolean;
+  userStatus: boolean;
+  isVerifiedUser?: boolean;
+  role?: Role;
+  accessToken?: string;
+  expiresAt?: string;
+}
+
 export default {
   providers: [
-    Google,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.AUTH_GOOGLE_CLIENT_SECRET as string,
+    }),
     Credentials({
       credentials: {
-        email: { label: 'Email', type: 'email' },
+        identifier: { label: 'Email or Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials) => {
         try {
-          const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/auth/login`,
-            {
-              email: credentials?.email,
-              password: credentials?.password,
-            }
-          );
+          const apiUri = process.env.NEXT_PUBLIC_BACKEND_API_URI;
+          if (!apiUri) {
+            throw new Error('Backend API URI is not defined.');
+          }
 
-          const { accessToken, user, expiresAt } = res.data;
+          const response = await fetch(`${apiUri}/auth/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              identifier: credentials?.identifier,
+              password: credentials?.password,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Login failed: ${response.statusText}`);
+          }
+
+          const { accessToken, user, expiresAt } = await response.json();
 
           if (!accessToken || !user) {
             throw new Error('Invalid credentials.');
@@ -41,30 +78,128 @@ export default {
             new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
           return { accessToken, expiresAt: tokenExpiresAt, ...user };
-        } catch (err: any) {
-          console.error('Error : ', err.response.data.message);
+        } catch (err) {
+          console.error('Authorize error:', err);
           return null;
         }
       },
     }),
   ],
-  session: {
-    strategy: 'jwt',
-    maxAge: 24 * 60 * 60,
-    updateAge: 1 * 60 * 1000,
-  },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === 'google') {
+        try {
+          const apiUri = process.env.NEXT_PUBLIC_BACKEND_API_URI;
+          if (!apiUri) {
+            throw new Error('Backend API URI is not defined.');
+          }
+
+          const decoded = decodeJwt(account.id_token as string);
+          const googleId = decoded.sub;
+
+          // Attempt to login with Google ID
+          const loginResponse = await fetch(`${apiUri}/auth/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              googleId,
+            }),
+          });
+
+          if (loginResponse.ok) {
+            // User exists, login successful
+            const {
+              accessToken,
+              user: existingUser,
+              expiresAt,
+            } = await loginResponse.json();
+            user._id = existingUser._id;
+            user.accessToken = accessToken;
+            user.expiresAt =
+              expiresAt ||
+              new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+            user.userName = existingUser.userName;
+            user.contact = existingUser.contact;
+            user.isAdmin = existingUser.isAdmin;
+            user.userStatus = existingUser.userStatus;
+            user.isVerifiedUser = existingUser.isVerifiedUser;
+            user.role = existingUser.role;
+            user.image = existingUser.image || user.image;
+            user.name = existingUser.name || user.name;
+            return true;
+          }
+
+          // User doesn't exist, proceed with registration
+          const registerResponse = await fetch(`${apiUri}/auth/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              googleId,
+              image: user.image,
+              name: user.name,
+              email: user.email,
+            }),
+          });
+
+          if (!registerResponse.ok) {
+            throw new Error(
+              `Registration failed: ${registerResponse.statusText}`
+            );
+          }
+
+          const {
+            accessToken,
+            user: newUser,
+            expiresAt,
+          } = await registerResponse.json();
+          user._id = newUser._id;
+          user.accessToken = accessToken;
+          user.expiresAt =
+            expiresAt ||
+            new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+          user.userName = newUser.userName;
+          user.contact = newUser.contact;
+          user.isAdmin = newUser.isAdmin;
+          user.userStatus = newUser.userStatus;
+          user.isVerifiedUser = newUser.isVerifiedUser;
+          user.role = newUser.role;
+          user.image = newUser.image || user.image;
+          user.name = newUser.name || user.name;
+          return true;
+        } catch (error) {
+          console.error('Failed to process Google user:', error);
+          return false;
+        }
+      }
+      return true;
+    },
     async authorized({ request: { nextUrl }, auth }) {
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
 
-      // Redirect logged-in users away from auth routes
-      if (isAuthRoute(pathname) && isLoggedIn) {
-        return Response.redirect(new URL(routes.eCommerce.home, nextUrl));
+      if (isAuthRoute(pathname)) {
+        if (isLoggedIn) {
+          return Response.redirect(new URL(routes.eCommerce.home, nextUrl));
+        }
+        return true;
       }
-      return true; // Allow all other routes; middleware handles dashboard protection
+      return isLoggedIn;
     },
-    async jwt({ token, user, trigger, session }) {
+    async jwt({
+      token,
+      user,
+      trigger,
+      session,
+    }: {
+      token: AuthToken;
+      user?: User;
+      trigger?: 'signIn' | 'signUp' | 'update';
+      session?: Session;
+    }) {
       if (user) {
         token._id = user._id;
         token.name = user.name || '';
@@ -113,7 +248,13 @@ export default {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({
+      session,
+      token,
+    }: {
+      session: Session;
+      token: AuthToken;
+    }) {
       if (!token || !token.expiresAt || typeof token.expiresAt !== 'string') {
         // Invalidate session
         session.expires = new Date(0).toISOString() as any;
@@ -156,7 +297,7 @@ export default {
         role: token.role,
         accessToken: token.accessToken as string,
       };
-      
+
       return session;
     },
     async redirect({ url, baseUrl }) {
@@ -175,5 +316,10 @@ export default {
   pages: {
     signIn: routes.auth.signIn,
     error: routes.auth.error,
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 24 * 60 * 60,
+    updateAge: 1 * 60 * 1000,
   },
 } satisfies NextAuthConfig;
