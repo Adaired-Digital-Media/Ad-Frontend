@@ -12,7 +12,6 @@ const StatCards = ({
   className?: string;
   initialStats: any;
 }) => {
-    console.log("initialStats", initialStats);
   const ticketStats = [
     {
       id: 1,

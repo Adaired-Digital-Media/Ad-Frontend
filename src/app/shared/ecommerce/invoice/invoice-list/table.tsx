@@ -79,7 +79,7 @@ export default function InvoiceTable({
           });
         } catch (error) {
           toast.error("Failed to fetch invoices");
-          console.log("Failed to fetch invoices : ", error);
+          console.error("Failed to fetch invoices : ", error);
         }
       };
       fetchCoupons();

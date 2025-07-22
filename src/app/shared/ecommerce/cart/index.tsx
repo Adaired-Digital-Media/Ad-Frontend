@@ -507,7 +507,6 @@ function CheckCoupon({
         payload
       );
 
-      console.log('Revalidated Coupon:', response.data);
       if (response.status === 200) {
         onCouponApplied({
           originalTotal: response.data.originalTotal,
