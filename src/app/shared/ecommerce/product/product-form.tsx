@@ -7,7 +7,7 @@ import {
   FieldValues,
   Controller,
 } from 'react-hook-form';
-import { Select, Input, Title, Textarea } from 'rizzui';
+import { Select, Textarea, Title } from 'rizzui';
 import { cn } from '@core/utils/class-names';
 import Button from '@web-components/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,17 +16,46 @@ import { useEffect, useCallback, useState } from 'react';
 import { generateCartProduct } from '@/store/quick-cart/generate-cart-product';
 import { useCart } from '@/store/quick-cart/cart.context';
 import { routes } from '@/config/routes';
-import {
-  DynamicFormTypes,
-  generateFormSchema,
-} from '@core/utils/generate-form-schema';
 import { useAtom } from 'jotai';
-import {
-  selectedContentProductAtom,
-} from '@/store/atoms/selectedContentProductAtom';
+import { selectedContentProductAtom } from '@/store/atoms/selectedContentProductAtom';
 import ProductFormSkeleton from '@/app/(website)/components/Skeletons/ProductFormSkeleton';
 import { useRouter } from 'next/navigation';
+import { z } from 'zod';
 import { Product } from '@/types';
+// Define types based on JSON structure
+interface FormField {
+  _id: string;
+  name: string;
+  label: string;
+  inputType: 'select' | 'textarea';
+  inputMinLength?: number | null;
+  inputMaxLength?: number | null;
+  inputPlaceholder?: string | null;
+  inputValidationPattern?: string | null;
+  inputRequired: boolean;
+  customClassName?: string | null;
+  multipleOptions?: { value: string; name: string; _id: string }[];
+}
+
+interface DynamicFormTypes {
+  form: {
+    _id: string;
+    title: string;
+    fields: { field: FormField; fieldOrder: number; _id: string }[];
+    status: string;
+    createdBy: {
+      _id: string;
+      name: string;
+      email: string;
+      isAdmin: boolean;
+      role: string | null;
+    };
+    updatedBy: string | null;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+}
 
 interface ProductFormProps {
   isEditMode?: boolean;
@@ -34,6 +63,33 @@ interface ProductFormProps {
   initialForm: DynamicFormTypes | null;
   initialSelectedProduct: Product;
 }
+
+// Placeholder for generateFormSchema (adjust based on your implementation)
+const generateFormSchema = (
+  fields: { field: FormField }[],
+  product: Product
+) => {
+  const shape: Record<string, z.ZodTypeAny> = {};
+  fields.forEach(({ field }) => {
+    if (field.inputType === 'select') {
+      shape[field.name] = z
+        .string({
+          required_error: `${field.label} is required`,
+        })
+        .refine(
+          (val) => field.multipleOptions?.some((opt) => opt.value === val),
+          { message: `Invalid ${field.label.toLowerCase()} selection` }
+        );
+    } else if (field.inputType === 'textarea') {
+      shape[field.name] = z
+        .string({ required_error: `${field.label} is required` })
+        .min(field.inputMinLength || 1, `${field.label} is too short`)
+        .optional()
+        .or(z.literal(''));
+    }
+  });
+  return z.object(shape);
+};
 
 export const ProductForm = ({
   isEditMode,
@@ -57,12 +113,16 @@ export const ProductForm = ({
     setForm(initialForm);
   }, [initialSelectedProduct, initialForm, setProduct]);
 
-  const formSchema = product
-    ? generateFormSchema(form?.form?.fields ?? [], product)
-    : undefined;
+  const formSchema =
+    product && form ? generateFormSchema(form.form.fields, product) : undefined;
 
   const methods = useForm<FieldValues>({
     resolver: formSchema ? zodResolver(formSchema) : undefined,
+    defaultValues: {
+      wordCount: product?.minimumWords || "100",
+      quantity: product?.minimumQuantity || "1",
+      additionalInfo: '',
+    },
   });
 
   const { control, handleSubmit, formState, watch, reset, register } = methods;
@@ -116,14 +176,12 @@ export const ProductForm = ({
       setIsLoading(true);
       setProduct(selectedProduct);
 
-      // Update URL without adding to history stack
       window.history.replaceState(
         { productId: selectedProduct._id },
         '',
         `/expert-content-solutions/products/${selectedProduct.slug}/form`
       );
 
-      // Fetch form only if it’s different from the current form
       if (
         selectedProduct.formId &&
         selectedProduct.formId !== form?.form?._id
@@ -147,11 +205,8 @@ export const ProductForm = ({
     }
   };
 
-  // Handle back button to redirect to /expert-content-solutions
   useEffect(() => {
-    const handlePopState = (event: PopStateEvent) => {
-
-      // Redirect to /expert-content-solutions on back
+    const handlePopState = () => {
       router.push('/expert-content-solutions');
     };
 
@@ -164,8 +219,8 @@ export const ProductForm = ({
   useEffect(() => {
     if (!isEditMode && product && form) {
       reset({
-        wordCount: product?.minimumWords,
-        quantity: product?.minimumQuantity,
+        wordCount: product?.minimumWords || '100',
+        quantity: product?.minimumQuantity || '1',
         additionalInfo: '',
       });
     }
@@ -185,14 +240,10 @@ export const ProductForm = ({
     return <ProductFormSkeleton />;
   }
 
-  // if (!product || !form) {
-  //   return <div>Product or form data unavailable. Please try again.</div>;
-  // }
-
   const ErrorMessage = ({ name, errors }: { name: string; errors: any }) => {
     if (errors[name]) {
       return (
-        <p className="mt-1 text-sm text-red-500">{'This field is required'}</p>
+        <p className="mt-1 text-sm text-red-500">{errors[name].message}</p>
       );
     }
     return null;
@@ -272,7 +323,7 @@ export const ProductForm = ({
                     `font-nunito text-lg font-semibold text-[#515151]`
                   )}
                 >
-                  Total Cost :{' '}
+                  Total Cost:{' '}
                   <span
                     className={cn(
                       `font-nunito text-[22px] font-bold text-[#18AA15]`
@@ -286,21 +337,23 @@ export const ProductForm = ({
 
             {/* Dynamic Form Fields */}
             <div className="mt-5 space-y-6">
-              {form?.form?.fields.map((field) => (
-                <div key={field.name} className="flex-1">
+              {form?.form?.fields.map(({ field }) => (
+                <div key={field._id} className="flex-1">
                   <Title
                     className={cn(
                       `mb-2 block font-poppins text-[16px] font-semibold text-[#515151]`
                     )}
                   >
                     {field.label}
-                    {field.required && <span className="text-red-500"> *</span>}
+                    {field.inputRequired && (
+                      <span className="text-red-500"> *</span>
+                    )}
                   </Title>
 
-                  {field.type === 'textarea' && (
+                  {field.inputType === 'textarea' && (
                     <>
                       <Textarea
-                        placeholder={field.placeholder}
+                        placeholder={field.inputPlaceholder || ''}
                         {...register(field.name)}
                         className={cn(`w-full`)}
                         onChange={(e) => {
@@ -309,7 +362,7 @@ export const ProductForm = ({
                         }}
                         textareaClassName={cn(`text-base`)}
                         variant="flat"
-                        required={field.required}
+                        required={field.inputRequired}
                         disabled={
                           (field.name === 'quantity' ||
                             field.name === 'wordCount') &&
@@ -320,22 +373,27 @@ export const ProductForm = ({
                     </>
                   )}
 
-                  {field.type === 'select' && (
+                  {field.inputType === 'select' && (
                     <>
                       <Controller
                         name={field.name}
                         control={control}
                         render={({ field: { onChange, value } }) => (
                           <Select
-                            options={field.options || []}
-                            placeholder={field.placeholder}
-                            value={
-                              field.options?.find(
-                                (option) => option.value === value
-                              ) || ''
+                            options={
+                              field.multipleOptions?.map((opt) => ({
+                                value: opt.value,
+                                label: opt.name,
+                              })) || []
                             }
-                            onChange={(selectedOption: { value: number }) =>
-                              onChange(selectedOption.value)
+                            placeholder={field.inputPlaceholder || ''}
+                            value={
+                              field.multipleOptions?.find(
+                                (option) => option.value === value
+                              ) || null
+                            }
+                            onChange={(selectedOption: any) =>
+                              onChange(selectedOption?.value || '')
                             }
                             className={cn(`w-full`)}
                             variant="flat"
@@ -346,46 +404,6 @@ export const ProductForm = ({
                             }
                           />
                         )}
-                      />
-                      <ErrorMessage name={field.name} errors={errors} />
-                    </>
-                  )}
-
-                  {field.type !== 'textarea' && field.type !== 'select' && (
-                    <>
-                      <Input
-                        type={
-                          field.type as
-                            | 'number'
-                            | 'search'
-                            | 'text'
-                            | 'time'
-                            | 'tel'
-                            | 'url'
-                            | 'email'
-                            | 'date'
-                            | 'week'
-                            | 'month'
-                            | 'datetime-local'
-                            | undefined
-                        }
-                        placeholder={field.placeholder}
-                        {...register(
-                          field.name as
-                            | 'wordCount'
-                            | 'quantity'
-                            | 'additionalInfo',
-                          { valueAsNumber: field.type === 'number' }
-                        )}
-                        className={cn(`w-full`)}
-                        variant="flat"
-                        inputClassName={cn(`bg-[#FAFAFA]`)}
-                        required={field.required}
-                        disabled={
-                          (field.name === 'quantity' ||
-                            field.name === 'wordCount') &&
-                          product?.isFreeProduct
-                        }
                       />
                       <ErrorMessage name={field.name} errors={errors} />
                     </>

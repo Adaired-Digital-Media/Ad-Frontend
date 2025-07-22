@@ -65,7 +65,7 @@ export default function TicketsTable({
             table.resetRowSelection();
           } catch (error) {
             toast.error("Failed to delete tickets");
-            console.log("Error Occurred : ", error);
+            console.error("Error Occurred : ", error);
           }
         },
       } as TicketsTableMeta<Ticket>,
@@ -84,7 +84,7 @@ export default function TicketsTable({
           });
         } catch (error) {
           toast.error("Failed to fetch tickets");
-          console.log("Failed to fetch tickets : ", error);
+          console.error("Failed to fetch tickets : ", error);
         }
       };
       fetchTickets();
