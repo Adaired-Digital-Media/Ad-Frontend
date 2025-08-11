@@ -11,7 +11,7 @@ const OrderSummery = dynamic(
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API_URI || '';
 
 async function fetchProducts() {
-  const response = await fetch(`${API_BASE_URL}/product/read-product`, {
+  const response = await fetch(`${API_BASE_URL}/product/read-product?status=active`, {
     cache: 'no-store',
   });
   if (!response.ok) throw new Error('Failed to fetch products');

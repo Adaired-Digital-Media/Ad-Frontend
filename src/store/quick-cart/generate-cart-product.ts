@@ -1,4 +1,4 @@
-import { Product } from '@/types';
+import { Product, CartItem } from '@/types';
 import { FieldValues } from 'react-hook-form';
 
 export function generateCartProduct({
@@ -9,14 +9,13 @@ export function generateCartProduct({
   product: Product;
   data: FieldValues;
   price: number;
-}) {
-
+}): CartItem {
   return {
     _id: crypto.randomUUID(),
-    product: product,
-    wordCount: data?.wordCount,
-    quantity: data?.quantity,
-    additionalInfo: data?.additionalInfo,
+    product,
+    wordCount: Number(data?.wordCount) || 0,
+    quantity: Number(data?.quantity) || 1,
+    additionalInfo: data?.additionalInfo || '',
     totalPrice: price,
   };
 }

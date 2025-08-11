@@ -23,10 +23,8 @@ import { ProductSection } from '@web-components/ContentProducts';
 
 const Landing = async () => {
   const products = await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product?status=active`
   );
-
-  // const products: Product[] = fetchProductCategory.data.data.products || [];
 
   return (
     <>

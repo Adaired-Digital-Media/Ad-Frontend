@@ -12,17 +12,7 @@ export type BackendErrorResponse = {
   }>;
 };
 
-
 export type HeaderItems = (typeof routes.websiteNav)[number];
-
-export type CartItem = {
-  _id: string;
-  product: Product;
-  wordCount?: number;
-  quantity: number;
-  additionalInfo?: string;
-  totalPrice?: number;
-};
 
 export type UpdateCartItem = {
   cartItemId: string;
@@ -212,3 +202,14 @@ export interface ProductFormField {
 export interface ProductFormData {
   [key: string]: string | number;
 }
+
+// ************ cart.types.ts **********
+
+export type CartItem = {
+  _id: string;
+  product: Product;
+  wordCount?: number;
+  quantity: number;
+  additionalInfo?: string;
+  totalPrice?: number;
+};

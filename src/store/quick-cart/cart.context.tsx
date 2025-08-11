@@ -1,299 +1,4 @@
-// 'use client';
-
-// import {
-//   useMemo,
-//   useReducer,
-//   useContext,
-//   createContext,
-//   useCallback,
-//   useEffect,
-//   useRef,
-//   useState,
-// } from 'react';
-// import { cartReducer, State, initialState } from './cart.reducer';
-// import { useLocalStorage } from '@core/hooks/use-local-storage';
-// import { CART_KEY } from '@/config/constants';
-// import { CartItem as Item } from '@/types';
-// import { useSession } from 'next-auth/react';
-// import { useCartAPI } from '@core/hooks/useCartAPI';
-// import axios from 'axios';
-// import toast from 'react-hot-toast';
-
-// interface CartProviderState extends State {
-//   addItemToCart: (cartItem: Item) => void;
-//   updateCartItem: (
-//     cartItemId: string,
-//     updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' }
-//   ) => void;
-//   removeCartItem: (cartItemId: string) => void;
-//   emptyCart: () => void;
-// }
-
-// const cartContext = createContext<CartProviderState | null>(null);
-// cartContext.displayName = 'CartContext';
-
-// export const useCart = () => {
-//   const context = useContext(cartContext);
-//   if (!context) {
-//     throw new Error('useCart must be used within a CartProvider');
-//   }
-//   return context;
-// };
-
-// export function CartProvider({
-//   cartKey = CART_KEY,
-//   children,
-//   ...props
-// }: {
-//   cartKey?: string;
-//   children: React.ReactNode;
-// }) {
-//   const { data: session } = useSession();
-//   const [savedCart, saveCart] = useLocalStorage(
-//     cartKey ?? CART_KEY,
-//     JSON.stringify(initialState)
-//   );
-//   const [state, dispatch] = useReducer<React.Reducer<State, any>>(
-//     cartReducer,
-//     JSON.parse(savedCart || JSON.stringify(initialState))
-//   );
-
-//   const {
-//     handleApiError,
-//     sendCartToBackend,
-//     updateCartItemInBackend,
-//     removeCartItemFromBackend,
-//     emptyCartInBackend,
-//   } = useCartAPI();
-
-//   // Ref to track if the cart has been synced with the backend
-//   const hasSyncedCart = useRef(false);
-
-//   // ******************** Save Cart to Local Storage (Guest Users) *********************
-//   useEffect(() => {
-//     if (!session) {
-//       saveCart(JSON.stringify(state));
-//     }
-//   }, [state, session, saveCart]);
-
-//   // ******************** Fetch User Cart if User is Logged in *************************
-//   useEffect(() => {
-//     if (session?.user?.accessToken) {
-//       const fetchUserCart = async () => {
-//         try {
-//           const response = await axios.get(
-//             `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/get-user-cart`,
-//             {
-//               headers: {
-//                 Authorization: `Bearer ${session.user.accessToken}`,
-//               },
-//             }
-//           );
-
-//           if (response.status === 200) {
-//             const { cart } = response.data;
-//             const backendCartItems = cart.products || [];
-//             dispatch({ type: 'INITIALIZE_CART', payload: backendCartItems });
-//           }
-//         } catch (error) {
-//           handleApiError(error);
-//         }
-//       };
-//       fetchUserCart();
-//     }
-//   }, [session]);
-
-//   // ******************** Sync Local Cart (Logged-In Users) *********************
-//   useEffect(() => {
-//     if (session?.user?.accessToken && !hasSyncedCart.current) {
-//       const syncCart = async () => {
-//         try {
-//           const savedCartFromStorage = JSON.parse(savedCart || '{}');
-//           const hasSavedItems = savedCartFromStorage?.products?.length > 0;
-
-//           if (hasSavedItems) {
-//             const backendCartItems = await sendCartToBackend(
-//               savedCartFromStorage?.products,
-//               `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/add-product-or-sync-cart`
-//             );
-//             dispatch({
-//               type: 'INITIALIZE_CART',
-//               payload: backendCartItems.products,
-//             });
-//           }
-//           hasSyncedCart.current = true;
-//           saveCart(JSON.stringify(initialState));
-//         } catch (error) {
-//           handleApiError(error);
-//         }
-//       };
-
-//       syncCart();
-//     }
-//   }, [session]);
-
-//   // ******************** Add Item to Cart *********************
-//   const addItemToCart = useCallback(
-//     async (item: Item) => {
-//       const updatedItem = { ...item };
-
-//       if (session) {
-//         try {
-//           // Sync with the backend
-//           const response = await sendCartToBackend(
-//             [updatedItem],
-//             `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/add-product-or-sync-cart`
-//           );
-//           // Update the local state with the response from the backend
-//           dispatch({ type: 'INITIALIZE_CART', payload: response?.products });
-//         } catch (error) {
-//           // Rollback the local state if the API call fails
-//           dispatch({ type: 'REMOVE_ITEM', cartItemId: updatedItem._id });
-//           handleApiError(error);
-//         }
-//       } else {
-//         // Optimistically update the local state
-//         dispatch({ type: 'ADD_ITEM', item: updatedItem });
-//         toast.success('Product added successfully');
-//       }
-//     },
-//     [session, sendCartToBackend, handleApiError]
-//   );
-
-//   // ******************** Update Cart Item *********************
-//   const [updatedItem, setUpdatedItem] = useState<Item | null>(null);
-
-//   useEffect(() => {
-//     if (updatedItem) {
-//       updateCartItemInBackend({
-//         cartItemId: updatedItem._id,
-//         quantity: updatedItem.quantity,
-//         wordCount: updatedItem.wordCount,
-//         additionalInfo: updatedItem.additionalInfo,
-//         totalPrice: updatedItem.totalPrice,
-//       }).catch((error) => {
-//         handleApiError(error);
-//       });
-//     }
-//   }, [updatedItem]);
-
-//   const updateCartItem = useCallback(
-//     async (
-//       cartItemId: string,
-//       updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' }
-//     ) => {
-//       const originalItem = state.products.find(
-//         (item) => item._id === cartItemId
-//       );
-
-//       if (originalItem) {
-//         const hasChanges = Object.keys(updates).some((key) => {
-//           return updates[key as keyof Item] !== originalItem[key as keyof Item];
-//         });
-
-//         if (!hasChanges) {
-//           toast.success('No changes made!');
-//           return;
-//         }
-
-//         dispatch({
-//           type: 'UPDATE_ITEM',
-//           cartItemId,
-//           updates,
-//           callback: (newState: State) => {
-//             const updatedItem = newState.products.find(
-//               (item) => item._id === cartItemId
-//             );
-
-//             if (session) {
-//               if (updatedItem && updatedItem !== originalItem) {
-//                 setUpdatedItem(updatedItem);
-//               }
-//             } else {
-//               if (updatedItem) {
-//                 toast.success('Product updated successfully', {
-//                   id: `update-${cartItemId}`,
-//                 });
-//               }
-//             }
-//           },
-//         });
-//       } else {
-//         toast.error('Item not found in cart', {
-//           id: `notfound-${cartItemId}`,
-//         });
-//       }
-//     },
-//     [session?.user?.accessToken, state.products]
-//   );
-
-//   const removeCartItem = useCallback(
-//     async (cartItemId: string) => {
-//       if (session) {
-//         try {
-//           // Sync with the backend
-//           const response = await removeCartItemFromBackend(cartItemId);
-//           // Update the local state with the response from the backend
-//           dispatch({ type: 'INITIALIZE_CART', payload: response?.products });
-//         } catch (error) {
-//           // Rollback the local state if the API call fails
-//           const removedItem = state.products.find(
-//             (item) => item._id === cartItemId
-//           );
-//           if (removedItem) {
-//             dispatch({ type: 'ADD_ITEM', item: removedItem });
-//           }
-//           handleApiError(error);
-//         }
-//       } else {
-//         // Optimistically update the local state
-//         dispatch({ type: 'REMOVE_ITEM', cartItemId: cartItemId });
-//         toast.success('Product removed successfully');
-//       }
-//     },
-//     [session, removeCartItemFromBackend, state.products, handleApiError]
-//   );
-
-//   // ******************** Empty Cart *********************
-//   const emptyCart = useCallback(async () => {
-//     if (session) {
-//       try {
-//         // Sync with the backend
-//         const response = await emptyCartInBackend();
-//         // Update the local state with the response from the backend
-//         dispatch({ type: 'INITIALIZE_CART', payload: response?.products });
-//       } catch (error) {
-//         // Rollback the local state if the API call fails
-//         dispatch({ type: 'INITIALIZE_CART', payload: state.products });
-//         handleApiError(error);
-//       }
-//     } else {
-//       // Optimistically update the local state
-//       dispatch({ type: 'EMPTY_CART' });
-//     }
-//   }, [session, emptyCartInBackend, state.products, handleApiError]);
-
-//   // ******************** Memoized Context Value *********************
-//   const value = useMemo(
-//     () => ({
-//       ...state,
-//       addItemToCart,
-//       updateCartItem,
-//       removeCartItem,
-//       emptyCart,
-//     }),
-//     [state, addItemToCart, updateCartItem, removeCartItem, emptyCart]
-//   );
-
-//   return (
-//     <cartContext.Provider value={value} {...props}>
-//       {children}
-//     </cartContext.Provider>
-//   );
-// }
-
 'use client';
-
 import {
   useMemo,
   useReducer,
@@ -311,6 +16,7 @@ import { useCartAPI } from '@core/hooks/useCartAPI';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { CART_KEY } from '@/config/constants';
+import { debounce } from 'lodash';
 
 interface CartProviderState extends State {
   addItemToCart: (cartItem: Item) => void;
@@ -323,7 +29,14 @@ interface CartProviderState extends State {
   isSyncing?: boolean;
 }
 
-const cartContext = createContext<CartProviderState | null>(null);
+const cartContext = createContext<CartProviderState>({
+  ...initialState,
+  addItemToCart: () => {},
+  updateCartItem: () => {},
+  removeCartItem: () => {},
+  emptyCart: () => {},
+  isSyncing: false,
+});
 cartContext.displayName = 'CartContext';
 
 export const useCart = () => {
@@ -334,20 +47,22 @@ export const useCart = () => {
   return context;
 };
 
-const useLocalStorage = (key: string, initialValue: string) => {
+const useLocalStorage = (
+  key: string,
+  initialValue: string
+): [string, (value: string) => void] => {
   const [storedValue, setStoredValue] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        return window.localStorage.getItem(key) ?? initialValue;
-      } catch (error) {
-        console.error('Error reading localStorage on init:', error);
-        return initialValue;
-      }
+    try {
+      return typeof window !== 'undefined'
+        ? (window.localStorage.getItem(key) ?? initialValue)
+        : initialValue;
+    } catch (error) {
+      console.error('Error reading localStorage:', error);
+      return initialValue;
     }
-    return initialValue;
   });
 
-  const setValue = (value: string) => {
+  const setValue = debounce((value: string) => {
     try {
       setStoredValue(value);
       if (typeof window !== 'undefined') {
@@ -356,7 +71,7 @@ const useLocalStorage = (key: string, initialValue: string) => {
     } catch (error) {
       console.error('Error writing to localStorage:', error);
     }
-  };
+  }, 300);
 
   return [storedValue, setValue] as const;
 };
@@ -377,27 +92,9 @@ const migrateCartData = (storedData: string): State => {
   }
 };
 
-// Deduplicate cart items by _id, summing quantities
-const deduplicateCartItems = (items: Item[]): Item[] => {
-  const seen = new Map<string, Item>();
-  items.forEach((item) => {
-    if (seen.has(item._id)) {
-      const existing = seen.get(item._id)!;
-      seen.set(item._id, {
-        ...existing,
-        quantity: existing.quantity + item.quantity,
-      });
-    } else {
-      seen.set(item._id, { ...item });
-    }
-  });
-  return Array.from(seen.values());
-};
-
 export function CartProvider({
   cartKey = CART_KEY,
   children,
-  ...props
 }: {
   cartKey?: string;
   children: React.ReactNode;
@@ -411,10 +108,9 @@ export function CartProvider({
     cartReducer,
     migrateCartData(savedCart)
   );
-
   const [isSyncing, setIsSyncing] = useState(false);
-  const [hasFetchedCart, setHasFetchedCart] = useState(false);
-  const [hasSyncedCart, setHasSyncedCart] = useState(false);
+  const hasInitializedRef = useRef(false);
+  const syncLockRef = useRef(false);
 
   const {
     handleApiError,
@@ -424,125 +120,155 @@ export function CartProvider({
     emptyCartInBackend,
   } = useCartAPI();
 
-  // Save cart to localStorage for guest users
   useEffect(() => {
     if (!session) {
       saveCart(JSON.stringify(state));
     }
   }, [state, session, saveCart]);
 
-  // Fetch user cart if logged in (runs once)
   useEffect(() => {
-    if (session?.user?.accessToken && !hasFetchedCart) {
-      const fetchUserCart = async () => {
-        try {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/get-user-cart`,
-            {
-              headers: { Authorization: `Bearer ${session.user.accessToken}` },
-            }
-          );
-          if (response.status === 200) {
-            const { cart } = response.data;
-            const backendCartItems = cart.products || [];
-            dispatch({ type: 'INITIALIZE_CART', payload: backendCartItems });
-            setHasFetchedCart(true);
-          }
-        } catch (error) {
-          console.error('Fetch error:', error);
-        }
-      };
-      fetchUserCart();
+    if (!session?.user?.accessToken) {
+      hasInitializedRef.current = false;
+      syncLockRef.current = false;
+      return;
     }
-  }, [session?.user?.accessToken, hasFetchedCart]);
 
-  // Sync local cart with backend on login
-  useEffect(() => {
     if (
       session?.user?.accessToken &&
-      hasFetchedCart &&
-      !hasSyncedCart &&
-      !isSyncing
+      !hasInitializedRef.current &&
+      !syncLockRef.current
     ) {
-      setIsSyncing(true);
-      setHasSyncedCart(true);
-      const syncCart = async () => {
+      hasInitializedRef.current = true;
+      syncLockRef.current = true; // Lock to prevent multiple syncs
+      const initializeCart = async () => {
+        setIsSyncing(true);
         try {
-          const migratedCart = migrateCartData(savedCart);
-          const hasSavedItems = migratedCart.products.length > 0;
-          if (hasSavedItems) {
-            const itemsToSync = migratedCart.products;
-            const backendCartItems = await sendCartToBackend(
-              itemsToSync,
-              `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/add-product-or-sync-cart`
-            );
-            dispatch({
-              type: 'INITIALIZE_CART',
-              payload: backendCartItems.products,
-            });
+          const localItems = migrateCartData(savedCart).products;
+
+          // Fetch user cart and sync local cart in parallel
+          const [fetchResponse, syncResponse] = await Promise.all([
+            axios
+              .get(
+                `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/get-user-cart`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${session.user.accessToken}`,
+                  },
+                }
+              )
+              .catch((error) => {
+                console.error('Fetch error:', error);
+                handleApiError(error);
+                return { status: 500, data: { cart: { products: [] } } };
+              }),
+            localItems.length > 0
+              ? sendCartToBackend(
+                  localItems,
+                  `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/add-product-or-sync-cart`
+                ).catch((error) => {
+                  console.error('Sync error:', error);
+                  handleApiError(error);
+                  return { products: [] };
+                })
+              : Promise.resolve({ products: [] }),
+          ]);
+
+          // Combine fetched and synced cart items without deduplication
+          const fetchedItems =
+            fetchResponse.status === 200
+              ? fetchResponse.data.cart.products || []
+              : [];
+          const syncedItems = syncResponse.products || [];
+          const mergedItems = [...fetchedItems, ...syncedItems];
+
+          // Update state with merged cart
+          dispatch({
+            type: 'INITIALIZE_CART',
+            payload: mergedItems,
+          });
+
+          // Clear local storage after successful sync
+          if (localItems.length > 0) {
             saveCart(JSON.stringify(initialState));
-          } else {
-            console.warn('No local items to sync');
           }
         } catch (error) {
-          console.error('Sync error:', error);
+          console.error('Initialization error:', error);
           handleApiError(error);
-          setHasSyncedCart(false); // Retry on failure
         } finally {
           setIsSyncing(false);
+          syncLockRef.current = false; // Release lock
         }
       };
-      syncCart();
-      return () => {
-        console.log('Sync effect cleanup');
-      };
+      initializeCart();
     }
-  }, [
-    session?.user?.accessToken,
-    savedCart,
-    sendCartToBackend,
-    handleApiError,
-    hasFetchedCart,
-    hasSyncedCart,
-  ]);
+  }, [session?.user?.accessToken]);
 
   const addItemToCart = useCallback(
     async (item: Item) => {
-      const updatedItem = { ...item };
-      if (session) {
-        try {
+      try {
+        if (session) {
           const response = await sendCartToBackend(
-            [updatedItem],
+            [item],
             `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/cart/add-product-or-sync-cart`
           );
           dispatch({ type: 'INITIALIZE_CART', payload: response?.products });
-        } catch (error) {
-          dispatch({ type: 'REMOVE_ITEM', cartItemId: updatedItem._id });
-          handleApiError(error);
+        } else {
+          dispatch({ type: 'ADD_ITEM', item });
+          toast.success('Product added successfully');
         }
-      } else {
-        dispatch({ type: 'ADD_ITEM', item: updatedItem });
-        toast.success('Product added successfully');
+      } catch (error) {
+        dispatch({ type: 'REMOVE_ITEM', cartItemId: item._id });
+        handleApiError(error);
       }
     },
     [session, sendCartToBackend, handleApiError]
   );
 
-  const [updatedItem, setUpdatedItem] = useState<Item | null>(null);
-
-  useEffect(() => {
-    if (updatedItem && session) {
-      updateCartItemInBackend({
-        cartItemId: updatedItem._id,
-        quantity: updatedItem.quantity,
-        wordCount: updatedItem.wordCount,
-        additionalInfo: updatedItem.additionalInfo,
-        totalPrice: updatedItem.totalPrice,
-      }).catch((error) => {
-        handleApiError(error);
-      });
-    }
-  }, [updatedItem, session]);
+  // const updateCartItem = useCallback(
+  //   async (
+  //     cartItemId: string,
+  //     updates: Partial<Item> & { action?: 'INCREMENT' | 'DECREMENT' }
+  //   ) => {
+  //     const originalItem = state.products.find(
+  //       (item) => item._id === cartItemId
+  //     );
+  //     if (!originalItem) {
+  //       toast.error('Item not found in cart', { id: `notfound-${cartItemId}` });
+  //       return;
+  //     }
+  //     const hasChanges = Object.keys(updates).some(
+  //       (key) => updates[key as keyof Item] !== originalItem[key as keyof Item]
+  //     );
+  //     if (!hasChanges) {
+  //       toast.success('No changes made!');
+  //       return;
+  //     }
+  //     dispatch({
+  //       type: 'UPDATE_ITEM',
+  //       cartItemId,
+  //       updates,
+  //       callback: (newState: State) => {
+  //         const updatedItem = newState.products.find(
+  //           (item) => item._id === cartItemId
+  //         );
+  //         if (session && updatedItem) {
+  //           updateCartItemInBackend({
+  //             cartItemId,
+  //             quantity: updatedItem.quantity,
+  //             wordCount: updatedItem.wordCount,
+  //             additionalInfo: updatedItem.additionalInfo,
+  //             totalPrice: updatedItem.totalPrice,
+  //           }).catch((error) => handleApiError(error));
+  //         } else if (updatedItem) {
+  //           toast.success('Product updated successfully', {
+  //             id: `update-${cartItemId}`,
+  //           });
+  //         }
+  //       },
+  //     });
+  //   },
+  //   [session, state.products, updateCartItemInBackend, handleApiError]
+  // );
 
   const updateCartItem = useCallback(
     async (
@@ -552,73 +278,95 @@ export function CartProvider({
       const originalItem = state.products.find(
         (item) => item._id === cartItemId
       );
-      if (originalItem) {
-        const hasChanges = Object.keys(updates).some(
-          (key) =>
-            updates[key as keyof Item] !== originalItem[key as keyof Item]
-        );
-        if (!hasChanges) {
-          toast.success('No changes made!');
-          return;
-        }
-        dispatch({
-          type: 'UPDATE_ITEM',
-          cartItemId,
-          updates,
-          callback: (newState: State) => {
-            const updatedItem = newState.products.find(
-              (item) => item._id === cartItemId
-            );
-            if (session && updatedItem && updatedItem !== originalItem) {
-              setUpdatedItem(updatedItem);
-            } else if (updatedItem) {
-              toast.success('Product updated successfully', {
-                id: `update-${cartItemId}`,
-              });
-            }
-          },
-        });
-      } else {
+      if (!originalItem) {
         toast.error('Item not found in cart', { id: `notfound-${cartItemId}` });
+        return;
+      }
+
+      const hasChanges = Object.keys(updates).some(
+        (key) => updates[key as keyof Item] !== originalItem[key as keyof Item]
+      );
+
+      if (!hasChanges && !updates.action) {
+        toast.success('No changes made!');
+        return;
+      }
+
+      // Optimistically update local state first
+      dispatch({
+        type: 'UPDATE_ITEM',
+        cartItemId,
+        updates,
+      });
+
+      console.log('Original Item Quantity :', typeof(originalItem.quantity));
+      // Backend update (run only once here, not in reducer)
+      const updatedItem = {
+        ...originalItem,
+        ...updates,
+        quantity:
+          updates.action === 'INCREMENT'
+            ? originalItem.quantity + 1
+            : updates.action === 'DECREMENT'
+              ? originalItem.quantity - 1
+              : (updates.quantity ?? originalItem.quantity),
+      };
+
+      if (session) {
+        try {
+          await updateCartItemInBackend({
+            cartItemId,
+            quantity: updatedItem.quantity,
+            wordCount: updatedItem.wordCount,
+            additionalInfo: updatedItem.additionalInfo,
+            totalPrice: updatedItem.totalPrice,
+          });
+        } catch (err) {
+          handleApiError(err);
+        }
+      } else {
+        toast.success('Product updated successfully', {
+          id: `update-${cartItemId}`,
+        });
       }
     },
-    [session, state.products]
+    [session, state.products, updateCartItemInBackend, handleApiError]
   );
 
   const removeCartItem = useCallback(
     async (cartItemId: string) => {
-      if (session) {
-        try {
+      try {
+        if (session) {
           const response = await removeCartItemFromBackend(cartItemId);
           dispatch({ type: 'INITIALIZE_CART', payload: response?.products });
-        } catch (error) {
-          const removedItem = state.products.find(
-            (item) => item._id === cartItemId
-          );
-          if (removedItem) {
-            dispatch({ type: 'ADD_ITEM', item: removedItem });
-          }
-          handleApiError(error);
+        } else {
+          dispatch({ type: 'REMOVE_ITEM', cartItemId });
+          toast.success('Product removed successfully');
         }
-      } else {
-        dispatch({ type: 'REMOVE_ITEM', cartItemId: cartItemId });
-        toast.success('Product removed successfully');
+      } catch (error) {
+        const removedItem = state.products.find(
+          (item) => item._id === cartItemId
+        );
+        if (removedItem) {
+          dispatch({ type: 'ADD_ITEM', item: removedItem });
+        }
+        handleApiError(error);
       }
     },
     [session, removeCartItemFromBackend, state.products, handleApiError]
   );
 
   const emptyCart = useCallback(async () => {
-    if (session) {
-      try {
+    try {
+      if (session) {
         const response = await emptyCartInBackend();
         dispatch({ type: 'INITIALIZE_CART', payload: response?.products });
-      } catch (error) {
-        dispatch({ type: 'INITIALIZE_CART', payload: state.products });
-        handleApiError(error);
+      } else {
+        dispatch({ type: 'EMPTY_CART' });
       }
-    } else {
-      dispatch({ type: 'EMPTY_CART' });
+    } catch (error) {
+      dispatch({ type: 'INITIALIZE_CART', payload: state.products });
+      handleApiError(error);
     }
   }, [session, emptyCartInBackend, state.products, handleApiError]);
 
@@ -634,9 +382,5 @@ export function CartProvider({
     [state, addItemToCart, updateCartItem, removeCartItem, emptyCart, isSyncing]
   );
 
-  return (
-    <cartContext.Provider value={value} {...props}>
-      {children}
-    </cartContext.Provider>
-  );
+  return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 }

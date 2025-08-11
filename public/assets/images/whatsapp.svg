@@ -8,12 +8,12 @@
 </g>
 <defs>
 <linearGradient id="paint0_linear_9_709" x1="23.0002" y1="38.7564" x2="23.0002" y2="7.24613" gradientUnits="userSpaceOnUse">
-<stop stop-color="#20B038"/>
-<stop offset="1" stop-color="#60D66A"/>
+<stop stopColor="#20B038"/>
+<stop offset="1" stopColor="#60D66A"/>
 </linearGradient>
 <linearGradient id="paint1_linear_9_709" x1="23.0001" y1="39.3229" x2="23.0001" y2="6.67773" gradientUnits="userSpaceOnUse">
-<stop stop-color="#F9F9F9"/>
-<stop offset="1" stop-color="white"/>
+<stop stopColor="#F9F9F9"/>
+<stop offset="1" stopColor="white"/>
 </linearGradient>
 <clipPath id="clip0_9_709">
 <rect width="32.6452" height="32.6452" fill="white" transform="translate(6.67749 6.67773)"/>

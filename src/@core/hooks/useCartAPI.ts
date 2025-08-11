@@ -60,6 +60,7 @@ export const useCartAPI = () => {
           }
         );
         if (response.status === 200) {
+
           toast.success(response.data.message);
           return response.data.cart;
         }

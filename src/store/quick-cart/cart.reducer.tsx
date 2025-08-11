@@ -1,3 +1,4 @@
+
 import { CartItem as Item } from '@/types';
 import { addItem, updateItem, removeItem, emptyCart } from './cart.utils';
 
@@ -21,59 +22,41 @@ export const initialState: State = {
   products: [],
 };
 
-const updateItemTotalPrice = (items: Item[]) => {
-  return items.map((item) => ({
-    ...item,
-    totalPrice: item.wordCount
-      ? (item.wordCount / 100) * item.product.pricePerUnit * item.quantity
-      : item.product.pricePerUnit * item.quantity,
-  }));
+const calculateTotalPrice = (item: Item): number => {
+  const price = item.wordCount
+    ? (item.wordCount / 100) * item.product.pricePerUnit * item.quantity
+    : item.product.pricePerUnit * item.quantity;
+  return Math.round(price * 100) / 100;
 };
 
 export function cartReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'ADD_ITEM': {
-      const items = addItem(state.products, action.item);
-      const updatedItems = updateItemTotalPrice(items);
-      return {
-        ...state,
-        products: updatedItems,
-      };
+      const newItem = { ...action.item, totalPrice: calculateTotalPrice(action.item) };
+      return { ...state, products: addItem(state.products, newItem) };
     }
     case 'INITIALIZE_CART': {
-      const updatedItems = updateItemTotalPrice(action.payload);
-      return {
-        ...state,
-        products: updatedItems,
-      };
+      const updatedProducts = action.payload.map((item) => ({
+        ...item,
+        totalPrice: calculateTotalPrice(item),
+      }));
+      return { ...state, products: updatedProducts };
     }
     case 'UPDATE_ITEM': {
-      const items = updateItem(
-        state.products,
-        action.cartItemId,
-        action.updates
-      );
-      const updatedItems = updateItemTotalPrice(items);
-      const newState = { ...state, products: updatedItems };
-      // Execute the callback (if provided) with the new state
-      if (action.callback) {
-        action.callback(newState);
-      }
+      const updatedProducts = updateItem(state.products, action.cartItemId, action.updates);
+      const newProducts = updatedProducts.map((item) => ({
+        ...item,
+        totalPrice: calculateTotalPrice(item),
+      }));
+      const newState = { ...state, products: newProducts };
+      action.callback?.(newState);
       return newState;
     }
     case 'REMOVE_ITEM': {
-      const items = removeItem(state.products, action.cartItemId);
-      const updatedItems = updateItemTotalPrice(items);
-      return {
-        ...state,
-        products: updatedItems,
-      };
+      return { ...state, products: removeItem(state.products, action.cartItemId) };
     }
     case 'EMPTY_CART': {
-      return {
-        ...state,
-        products: emptyCart(),
-      };
+      return { ...state, products: emptyCart() };
     }
     default:
       return state;

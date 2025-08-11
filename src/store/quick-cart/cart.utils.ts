@@ -16,22 +16,11 @@ export function updateItem(
   return cartItems.map((item) => {
     if (item._id === cartItemId) {
       let newQuantity = item.quantity;
-
-      // Update quantity based on action
       if (updates.action) {
-        newQuantity =
-          updates.action === 'INCREMENT'
-            ? item.quantity + 1
-            : Math.max(item.quantity - 1, 0);
+        newQuantity = updates.action === 'INCREMENT' ? item.quantity + 1 : Math.max(item.quantity - 1, 0);
       }
-
       const { action, ...otherUpdates } = updates;
-
-      return {
-        ...item,
-        ...otherUpdates,
-        quantity: otherUpdates.quantity ?? newQuantity, 
-      };
+      return { ...item, ...otherUpdates, quantity: otherUpdates.quantity ?? newQuantity };
     }
     return item;
   });

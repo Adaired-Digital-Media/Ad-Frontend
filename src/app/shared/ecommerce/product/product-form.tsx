@@ -22,6 +22,7 @@ import ProductFormSkeleton from '@/app/(website)/components/Skeletons/ProductFor
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 import { Product } from '@/types';
+
 // Define types based on JSON structure
 interface FormField {
   _id: string;
@@ -43,17 +44,6 @@ interface DynamicFormTypes {
     title: string;
     fields: { field: FormField; fieldOrder: number; _id: string }[];
     status: string;
-    createdBy: {
-      _id: string;
-      name: string;
-      email: string;
-      isAdmin: boolean;
-      role: string | null;
-    };
-    updatedBy: string | null;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
   };
 }
 
@@ -63,6 +53,12 @@ interface ProductFormProps {
   initialForm: DynamicFormTypes | null;
   initialSelectedProduct: Product;
 }
+
+// Helper function to safely convert to string
+const safeStringValue = (value: any, fallback: string): string => {
+  if (value === null || value === undefined) return fallback;
+  return String(value);
+};
 
 // Placeholder for generateFormSchema (adjust based on your implementation)
 const generateFormSchema = (
@@ -81,11 +77,27 @@ const generateFormSchema = (
           { message: `Invalid ${field.label.toLowerCase()} selection` }
         );
     } else if (field.inputType === 'textarea') {
-      shape[field.name] = z
-        .string({ required_error: `${field.label} is required` })
-        .min(field.inputMinLength || 1, `${field.label} is too short`)
-        .optional()
-        .or(z.literal(''));
+      if (field.inputRequired) {
+        // Required field
+        let schema = z.string({
+          required_error: `${field.label} is required`,
+        });
+        
+        if (field.inputMinLength && field.inputMinLength > 0) {
+          schema = schema.min(field.inputMinLength, `${field.label} is too short`);
+        }
+        
+        shape[field.name] = schema;
+      } else {
+        // Optional field - can be empty string or undefined
+        let schema = z.string();
+        
+        if (field.inputMinLength && field.inputMinLength > 0) {
+          schema = schema.min(field.inputMinLength, `${field.label} is too short`);
+        }
+        
+        shape[field.name] = schema.optional().or(z.literal(''));
+      }
     }
   });
   return z.object(shape);
@@ -116,13 +128,18 @@ export const ProductForm = ({
   const formSchema =
     product && form ? generateFormSchema(form.form.fields, product) : undefined;
 
+  // Create default values with proper string conversion
+  const createDefaultValues = useCallback(() => {
+    return {
+      wordCount: safeStringValue(product?.minimumWords, "100"),
+      quantity: safeStringValue(product?.minimumQuantity, "1"),
+      additionalInfo: '',
+    };
+  }, [product]);
+
   const methods = useForm<FieldValues>({
     resolver: formSchema ? zodResolver(formSchema) : undefined,
-    defaultValues: {
-      wordCount: product?.minimumWords || "100",
-      quantity: product?.minimumQuantity || "1",
-      additionalInfo: '',
-    },
+    defaultValues: createDefaultValues(),
   });
 
   const { control, handleSubmit, formState, watch, reset, register } = methods;
@@ -132,13 +149,13 @@ export const ProductForm = ({
 
   const calculateTotalPrice = useCallback(() => {
     if (product?.pricingType === 'perWord') {
-      const words = parseInt(watchedFields?.wordCount || '0');
-      const quantity = parseInt(watchedFields?.quantity || '1');
+      const words = parseInt(watchedFields?.wordCount || '0', 10);
+      const quantity = parseInt(watchedFields?.quantity || '1', 10);
       const pricePerUnit = product.pricePerUnit;
       let totalPrice = (words / 100) * pricePerUnit * quantity;
       return Math.round(totalPrice * 100) / 100;
     } else if (product?.pricingType === 'perQuantity') {
-      const quantity = parseInt(watchedFields?.quantity || '1');
+      const quantity = parseInt(watchedFields?.quantity || '1', 10);
       let totalPrice = product?.pricePerUnit * quantity;
       return Math.round(totalPrice * 100) / 100;
     }
@@ -160,11 +177,38 @@ export const ProductForm = ({
     setLoading(false);
   };
 
+  // const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  //   if (isEditMode && productToEdit) {
+  //     console.log("Updated Data : ", data)
+  //     updateCartItem(productToEdit._id, data);
+  //   } else {
+  //     console.log("Added Data : ", data)
+  //     addToCart(data);
+  //   }
+  // };
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    if (isEditMode && productToEdit) {
-      updateCartItem(productToEdit._id, data);
-    } else {
-      addToCart(data);
+    setIsLoading(true);
+    try {
+      if (!product) return;
+
+      // Normalize data to ensure wordCount and quantity are numbers
+      const normalizedData = {
+        ...data,
+        wordCount: Number(data.wordCount) || 0,
+        quantity: Number(data.quantity) || 1,
+      };
+
+      if (isEditMode && productToEdit) {
+        console.log('Updated Data: ', normalizedData);
+        updateCartItem(productToEdit._id, normalizedData);
+      } else {
+        addToCart(normalizedData);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -216,22 +260,24 @@ export const ProductForm = ({
     };
   }, [router]);
 
+  // Reset form when product changes (non-edit mode)
   useEffect(() => {
     if (!isEditMode && product && form) {
       reset({
-        wordCount: product?.minimumWords || '100',
-        quantity: product?.minimumQuantity || '1',
+        wordCount: safeStringValue(product?.minimumWords, "100"),
+        quantity: safeStringValue(product?.minimumQuantity, "1"),
         additionalInfo: '',
       });
     }
   }, [isEditMode, product, form, reset]);
 
+  // Reset form when in edit mode
   useEffect(() => {
     if (isEditMode && productToEdit) {
       reset({
-        wordCount: productToEdit.wordCount,
-        quantity: productToEdit.quantity,
-        additionalInfo: productToEdit.additionalInfo,
+        wordCount: safeStringValue(productToEdit.wordCount, "100"),
+        quantity: safeStringValue(productToEdit.quantity, "1"),
+        additionalInfo: productToEdit.additionalInfo || '',
       });
     }
   }, [isEditMode, productToEdit, reset]);
