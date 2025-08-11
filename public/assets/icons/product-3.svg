@@ -24,10 +24,10 @@
 </g>
 <defs>
 <linearGradient id="paint0_linear_1822_377" x1="41.3359" y1="53.6731" x2="65.9989" y2="53.6731" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FEC053"/>
-<stop offset="0.33" stop-color="#F2203E"/>
-<stop offset="0.65" stop-color="#B729A8"/>
-<stop offset="1" stop-color="#5342D6"/>
+<stop stopColor="#FEC053"/>
+<stop offset="0.33" stopColor="#F2203E"/>
+<stop offset="0.65" stopColor="#B729A8"/>
+<stop offset="1" stopColor="#5342D6"/>
 </linearGradient>
 <clipPath id="clip0_1822_377">
 <rect width="66" height="66" fill="white"/>
