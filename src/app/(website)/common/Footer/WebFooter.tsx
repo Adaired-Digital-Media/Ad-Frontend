@@ -169,7 +169,7 @@ const WebFooter = () => {
               </li>
               <li>
                 <Link
-                  href="https://career.adaired.com/jobs/Careers"
+                  href="/career"
                   className=""
                 >
                   Career

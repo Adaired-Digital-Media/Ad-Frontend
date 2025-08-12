@@ -126,7 +126,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 1,
       },
       {
-        url: `https://career.adaired.com/jobs/Careers`,
+        url: `${siteUri}/career`,
         lastModified: new Date('2024-06-24'),
         changeFrequency: 'monthly' as const,
         priority: 0.5,
