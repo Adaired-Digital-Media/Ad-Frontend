@@ -233,7 +233,7 @@ export const routes = {
       childrens: [
         {
           name: 'Career',
-          href: 'https://career.adaired.com/jobs/Careers',
+          href: '/career',
         },
         {
           name: 'Case Studies',
@@ -290,8 +290,9 @@ export const routes = {
     contentProductForm: (slug: string) =>
       `/expert-content-solutions/products/${slug}/form`,
     orders: '/expert-content-solutions/orders',
-    orderDetails: (id: string) => `/dashboard/shop/orders/order-details?orderNumber=${id}`,
-    thankyouPage : '/expert-content-solutions/thankyou'
+    orderDetails: (id: string) =>
+      `/dashboard/shop/orders/order-details?orderNumber=${id}`,
+    thankyouPage: '/expert-content-solutions/thankyou',
   },
   userDashboard: {
     website: '/expert-content-solutions',
@@ -301,10 +302,10 @@ export const routes = {
     cart: '/dashboard/shop/cart',
     orders: '/dashboard/shop/orders',
     tickets: '/dashboard/support/tickets',
-    inbox: (tickedId: string) =>
-      `/dashboard/support/inbox?tkt=${tickedId}`,
+    inbox: (tickedId: string) => `/dashboard/support/inbox?tkt=${tickedId}`,
     invoices: '/dashboard/invoices',
-    invoiceDetails: (id: string) => `/dashboard/invoices/details?invoiceNumber=${id}`,
+    invoiceDetails: (id: string) =>
+      `/dashboard/invoices/details?invoiceNumber=${id}`,
   },
   termsNconditions: 'https://www.adaired.com/terms-and-conditions',
   privacyPolicy: 'https://www.adaired.com/privacy-policy',
