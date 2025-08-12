@@ -1,4 +1,4 @@
-import { cn } from '../../../../@core/utils/class-names';
+import { cn } from '@core/utils/class-names';
 import React from 'react';
 
 const MaxWidthWrapper: React.FC<{
