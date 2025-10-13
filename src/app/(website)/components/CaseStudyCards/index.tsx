@@ -149,9 +149,9 @@ function CaseStudyCard({
           }}
         />
         <div className="py-2 lg:py-4">
-          <h3 className="my-1 text-center text-xl lg:my-4 lg:text-left lg:text-3xl">
+          <p className="my-1 text-center text-xl lg:my-4 lg:text-left lg:text-3xl">
             About the project
-          </h3>
+          </p>
           <p className="line-clamp-3 hyphens-auto text-justify text-base lg:hyphens-none lg:text-left lg:text-lg">
             {aboutProjectDescription}
           </p>

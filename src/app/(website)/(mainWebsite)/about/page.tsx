@@ -150,11 +150,11 @@ export const ProcessSection = () => {
     <section className="pb-20">
       <MaxWidthWrapper className="text-center">
         <div className="flex flex-col items-center">
-          <h5 className="relative inline px-4 font-nunito text-lg text-[#515151]">
+          <div className="relative inline px-4 font-nunito text-lg text-[#515151]">
             <div className="absolute left-full top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC]"></div>
             <div className="absolute right-full top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC]"></div>
             How We Work
-          </h5>
+          </div>
           <h2 className="py-1 text-[1.688rem] md:text-4xl">Our Process</h2>
           <p className="max-w-[900px] pb-10 text-base sm:text-lg">
             No need to settle for okay when we can serve you the best! Our

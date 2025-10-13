@@ -70,11 +70,11 @@ const TestimonialSlider = () => {
         <div
           className={`flex-1 pb-12 flex flex-col items-center text-center lg:text-left lg:items-start lg:pb-0`}
         >
-          <h3 className="inline font-nunito text-[#515151] relative lg:pl-20 text-lg">
+          <div className="inline font-nunito text-[#515151] relative lg:pl-20 text-lg">
             <div className="absolute top-1/2 -left-2/4 lg:left-0 transform -translate-y-1/2 bg-[#A7A9AC] h-px w-10 lg:w-16 "></div>
             <div className="lg:hidden absolute top-1/2 -right-2/4 transform -translate-y-1/2 bg-[#A7A9AC] h-px w-10 lg:w-16"></div>
             Not Convinced?
-          </h3>
+          </div>
           <h2 className="text-2xl md:text-3xl lg:text-4xl py-1">
             Check Out What Our Clients Want To Say!
           </h2>
