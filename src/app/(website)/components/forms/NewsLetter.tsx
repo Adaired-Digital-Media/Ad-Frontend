@@ -7,7 +7,8 @@ import { useReCaptcha } from 'next-recaptcha-v3';
 import toast from 'react-hot-toast';
 import { Button } from 'rizzui';
 import { TbArrowRightDashed } from 'react-icons/tb';
-
+import icon from '../../../../../public/assets/icons/share.png'
+import Image from 'next/image';
 const schema = z.object({
   gRecaptchaToken: z.string(),
   formId: z.string(),
@@ -59,17 +60,18 @@ const NewsLetter = () => {
         variant="flat"
         placeholder="Enter your email"
         {...register('email')}
-        inputClassName="!focus:bg-white !focus:border-0 !border-0 !ring-0 !bg-white relative h-12 w-full rounded-md p-2 text-black outline-none md:w-full"
+        inputClassName="!focus:bg-white !focus:border-0 !border-0 !ring-0 !bg-white relative h-12 w-full rounded-full px-4 p-2 text-black outline-none md:w-full"
         error={errors.email?.message}
       />
+      <Image src={icon} width={40} height={40} alt='"' className='absolute top-1 right-1   rounded-full bg-[#FB9100] p-2' />
 
-      <Button
+      {/* <Button
         type="submit"
-        className="absolute inset-y-1 right-1.5 rounded-bl-none rounded-tl-none bg-[#FB9100]"
+        className="absolute inset-y-1 right-1.5 rounded-full bg-[#FB9100]"
         aria-label="Subscribe to our newsletter"
       >
         <TbArrowRightDashed className="h-5 w-5" />
-      </Button>
+      </Button> */}
     </form>
   );
 };

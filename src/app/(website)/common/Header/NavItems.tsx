@@ -9,6 +9,8 @@ import { Separator } from '@/@core/ui/shadcn-ui/separator';
 import axios from 'axios';
 import CldImage from '../../components/CloudinaryImageComponent';
 import { calculateReadingTime } from '@/@core/utils/calculateReadingTime';
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
 
 // Type definitions
 interface NavItem {
@@ -76,13 +78,22 @@ const NavItems = () => {
           blog={blog}
         />
       ))}
+
       {!isLandingPage && (
         <div className={cn('flex items-center')}>
-          <Link
+          {/* <Link
             href="/contact"
             className="relative font-nunito text-lg font-semibold after:absolute after:bottom-[-5px] after:left-0 after:h-[3px] after:w-full after:rounded-2xl after:bg-[#FB9100] after:transition-all hover:after:w-full"
           >
             Book demo
+          </Link> */}
+          <Link
+            href="/contact"
+            className="flex my-auto gap- relative font-nunito text-xs font-normal bg-custom-gradient pl-[28px] pr-[20px] py-[11px] rounded-[60px] text-[#FFFFFF] "
+          >
+            <p className='my-auto'>Book A Demo</p>
+            <IoIosArrowRoundForward size={30} className="my-auto transform"
+              style={{ transform: 'rotate(310deg)' }} />
           </Link>
         </div>
       )}
@@ -133,10 +144,10 @@ const Item = ({
                   <div className="relative" key={subItem.name}>
                     <Link
                       href={subItem.href}
-                      className="5xl:pb-2 block pb-1.5 text-lg text-black transition-colors duration-200 hover:text-[#FB9100]"
+                      className="5xl:pb-2 block pb-1.5 font-nunito text-xs text-black transition-colors duration-200 hover:text-[#FB9100]"
                       onClick={handleSubmenuClick}
                     >
-                      <span className="text-lg font-semibold">
+                      <span className="text-xs font-semibold">
                         {subItem.name}
                       </span>
                     </Link>
@@ -151,7 +162,7 @@ const Item = ({
                             >
                               <div className="flex items-center gap-2 text-gray-400 transition-all duration-300 group-hover/subMenu:text-[#FB9100]">
                                 <div className="h-[13px] w-[13px] rounded-sm bg-[#ddd]" />
-                                <span className="text-base">
+                                <span className="text-xs font-nunito">
                                   {subSubItem.name}
                                 </span>
                               </div>
@@ -267,17 +278,19 @@ const Item = ({
       <div className={cn('group flex items-center')}>
         <Link
           className={cn(
-            'relative flex h-20 items-center gap-1 px-2 font-nunito text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 after:bg-[#aaa] after:transition-all after:duration-300 hover:after:w-full',
+            'relative flex h-20 items-center gap-1 px-2 font-nunito text-xs font-normal after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 after:bg-[#FB9100] after:transition-all after:duration-300 hover:after:w-full',
             isLandingPage ? 'font-poppins text-[17px] font-medium' : ''
           )}
+          style={{ color: '#000000' }}
           href={navitems.href || '#'}
           onClick={() => handleSetActive(index)}
         >
           {navitems.label}
           {(navitems.subItems || navitems.childrens) && (
-            <Icons.IcBaselineArrowDropDown
-              className={cn('h-4 w-4 transition-all group-hover:rotate-180')}
-            />
+            // <Icons.IcBaselineArrowDropDown
+            //   className={cn('h-4 w-4 transition-all group-hover:rotate-180')}
+            // />
+            <IoIosArrowDown className='my-auto' />
           )}
         </Link>
         {renderSubmenu}

@@ -52,7 +52,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Topbar
+      {/* <Topbar
         className={cn(
           isWindowScrollingUp || isAtTop
             ? 'origin-top scale-y-100'
@@ -60,7 +60,7 @@ const Navbar = () => {
         )}
         session={session}
         pathname={pathname}
-      />
+      /> */}
 
       <section
         className={cn(

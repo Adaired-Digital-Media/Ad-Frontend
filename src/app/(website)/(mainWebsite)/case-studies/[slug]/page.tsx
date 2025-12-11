@@ -10,9 +10,9 @@ import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/all`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/case-study/read`
   ).then((res) => res.json());
-  const CaseStudies = res.result;
+  const CaseStudies = res.data;
   return CaseStudies.map((CaseStudy: any) => ({
     slug: CaseStudy.slug.toString(),
   }));
@@ -20,10 +20,10 @@ export async function generateStaticParams() {
 
 async function getCaseStudyData({ slug }: { slug: string }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/${slug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/case-study/read?slug=${slug}`
   );
   const data = await res.json();
-  return data.result;
+  return data.data;
 }
 
 export async function generateMetadata({
@@ -54,7 +54,7 @@ export async function generateMetadata({
 
 async function fetchCaseStudyCategory({ slug }: { slug: string }) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies-category/getCaseStudiesCategory/${slug}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/case-study/category/read?slug=${slug}`,
     {
       method: 'GET',
     }
@@ -68,6 +68,8 @@ async function page({ params }: { params: { slug: string } }) {
   const caseStudyCategory = await fetchCaseStudyCategory({
     slug: caseStudyData.category,
   });
+
+  console.log(caseStudyCategory)
 
   return (
     <>
@@ -86,12 +88,12 @@ async function page({ params }: { params: { slug: string } }) {
         solutionsImage={caseStudyData.solutionsImage}
         challengesAndSolutions={caseStudyData.challengesAndSolutions}
       />
-      <TechnologiesUsedsection
+      {/* <TechnologiesUsedsection
         technologiesUsedTitle={caseStudyData.technologiesUsedTitle}
         technologiesUsedDescription={caseStudyData.technologiesUsedDescription}
         technologiesUsed={caseStudyData.technologiesUsed}
-        categoryData={caseStudyCategory.technologies}
-      />
+        // categoryData={caseStudyCategory.technologies}
+      /> */}
       <Goalssection
         goalsTitle={caseStudyData.goalsTitle}
         goalsDescription={caseStudyData.goalsDescription}
@@ -271,8 +273,8 @@ const Aboutsection = ({
 interface TechnologiesUsedsectionProps {
   technologiesUsedTitle: string;
   technologiesUsedDescription: string;
-  technologiesUsed: string[];
-  categoryData: any;
+  technologiesUsed?: string[];
+  categoryData?: any;
 }
 const TechnologiesUsedsection = ({
   technologiesUsedTitle,
@@ -292,7 +294,7 @@ const TechnologiesUsedsection = ({
           </p>
         </div>
         <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
-          {technologiesUsed.map((item) => {
+          {technologiesUsed?.map((item) => {
             const category = categoryData.find(
               (category: any) => category._id === item
             );

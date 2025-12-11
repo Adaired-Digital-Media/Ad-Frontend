@@ -3,6 +3,8 @@
 
 /* ***** ZOHO Recruit css starts ***** */
 @import url('https://static.zohocdn.com/recruit/embed_careers_site/css/v1.1/embed_jobs.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 
 .embed_jobs_head {
   background-color: transparent;
@@ -39,6 +41,7 @@
       - gray/natural colors for texts, borders and disabled elements.
       - If required we can use as background too.
     */
+    /* --font-family: 'Poppins', sans-serif; */
     /* For rgb(255 255 255 / <alpha-value>) = #ffffff */
     --gray-0: 255 255 255;
     /* For rgb(250 250 250 / <alpha-value>) = #fafafa */
@@ -1617,14 +1620,14 @@ div[style='z-index: 1000001;'],
   @apply -scale-x-100;
 }
 
-@layer base {
+/* @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
 
 .font-weight-inherit {
   font-weight: inherit;
