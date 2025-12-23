@@ -13,7 +13,8 @@ import { usePathname } from 'next/navigation';
 import { debounce } from 'lodash';
 import { useSession } from 'next-auth/react';
 import LandingPageMobileMenu from './Landing-mobile-menu';
-
+import logo from '../../../../../public/AdAired-Cap-Logo.png'
+import Image from 'next/image';
 const Navbar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
@@ -86,13 +87,14 @@ const Navbar = () => {
                     >
                       {/* <div className="relative h-[60px] w-[150px] md:h-[72px] lg:h-[80px] xl:h-[78px] aspect-auto"> */}
                       <div className="flex items-center justify-center">
-                        <CldImage
+                        {/* <CldImage
                           src="Static Website Images/adaired_logo.png"
                           alt="Brand Logo"
                           height={78}
                           width={150}
                           priority
-                        />
+                        /> */}
+                        <Image src={logo} width={150} height={78} alt='logo'/>
                       </div>
                     </Link>
                   </div>
