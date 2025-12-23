@@ -24,7 +24,7 @@ const EcomFooter = () => {
           </div>
           <Separator orientation="vertical" className="hidden h-20 sm:block" />
           <div className="w-full sm:w-auto sm:ml-auto">
-            <ul className="flex flex-col items-center gap-3 font-poppins  text-white sm:inline-flex sm:flex-row md:gap-5 text-4xl">
+            <ul className="flex flex-col items-center gap-3 font-poppins  text-white sm:inline-flex sm:flex-row md:gap-5 text-base">
               <Link href="/expert-content-solutions">
                 <li>Home</li>
               </Link>

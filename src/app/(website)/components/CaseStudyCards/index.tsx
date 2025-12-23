@@ -12,45 +12,68 @@ interface Technology {
   title: string;
 }
 
+interface Category {
+  categoryName: string;
+  slug: string;
+  technologies: Technology[];
+}
+
+interface CaseStudy {
+  colorScheme: string;
+  slug: string;
+  category: string;
+  caseStudyName: string;
+  caseStudyDescription: string;
+  cardImage: string;
+  aboutProjectDescription: string;
+  technologiesUsed: string[];
+}
+
 interface CaseStudyCardsProps {
-  categories: any;
-  caseStudies: any;
+  categories: Category[];
+  caseStudies: CaseStudy[];
 }
 function CaseStudyCards({ categories, caseStudies }: CaseStudyCardsProps) {
-  const [selectedCategory, setSelectedCategory] = useState(
-    categories?.[0]?._id || ''
-  );
-  const [filteredCaseStudies, setFilteredCaseStudies] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [filteredCaseStudies, setFilteredCaseStudies] =
+    useState<CaseStudy[]>(caseStudies);
 
   useEffect(() => {
-    if (!selectedCategory) return;
-    const filtered = caseStudies.filter(
-      (caseStudy: any) => caseStudy.category !== selectedCategory
-    );
-    setFilteredCaseStudies(filtered);
+    if (selectedCategory === 'all') {
+      setFilteredCaseStudies(caseStudies);
+    } else {
+      const filtered = caseStudies.filter(
+        (caseStudy) => caseStudy.category === selectedCategory
+      );
+      setFilteredCaseStudies(filtered);
+    }
   }, [selectedCategory, caseStudies]);
+
+  if (categories) {
+    categories.sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+  }
 
   return (
     <MaxWidthWrapper className="py-12 lg:py-24">
       <div className="mb-8 hidden md:block">
-        {categories.map((category: any) => (
+        {categories.map((category) => (
           <button
-            key={category._id}
+            key={category.slug}
             className={cn(
               'm-2 rounded-full border text-base md:p-3 md:px-8 lg:text-xl',
-              selectedCategory === category._id
+              selectedCategory === category.slug
                 ? 'bg-[#F89520] text-white'
                 : 'bg-white text-black'
             )}
             onClick={() => {
-              setSelectedCategory(category._id);
+              setSelectedCategory(category.slug);
             }}
           >
-            {category.name}
+            {category.categoryName}
           </button>
         ))}
       </div>
-      {/* <div className="block md:hidden">
+      <div className="block md:hidden">
         <h3>Filter:</h3>
         <Select
           value={selectedCategory}
@@ -65,9 +88,9 @@ function CaseStudyCards({ categories, caseStudies }: CaseStudyCardsProps) {
           ]}
           placeholder="Select Category"
         />
-      </div> */}
+      </div>
       <div>
-        {filteredCaseStudies.map((caseStudy: any) => (
+        {filteredCaseStudies.map((caseStudy) => (
           <CaseStudyCard
             category={caseStudy.category}
             categories={categories}
@@ -88,7 +111,7 @@ function CaseStudyCards({ categories, caseStudies }: CaseStudyCardsProps) {
 
 interface CaseStudyCardProps {
   category: string;
-  categories: any;
+  categories: Category[];
   colorScheme: string;
   slug: string;
   caseStudyName: string;
@@ -109,7 +132,7 @@ function CaseStudyCard({
   aboutProjectDescription,
   technologiesUsed,
 }: CaseStudyCardProps) {
-  const categoryData = categories.find((cat: any) => cat.slug === category);
+  const categoryData = categories.find((cat) => cat.slug === category);
 
   return (
     <div
@@ -136,7 +159,7 @@ function CaseStudyCard({
         <div className="grid grid-cols-3 gap-2 pb-4 lg:grid-cols-2 lg:gap-3 xl:grid-cols-3 xl:gap-5">
           {technologiesUsed.map((tech) => {
             const techData = categoryData?.technologies.find(
-              (t: any) => t._id === tech
+              (t) => t._id === tech
             );
             return techData ? (
               <p

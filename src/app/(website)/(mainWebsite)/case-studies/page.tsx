@@ -16,18 +16,18 @@ export const metadata: Metadata = {
 };
 async function getCaseStudyCategories() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/case-study/category/read`
+    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies-category/getCaseStudiesCategory/all`
   );
   const data = await res.json();
-  return data.data;
+  return data.result;
 }
 
 async function getCaseStudies() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/case-study/read`
+    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/all`
   );
   const data = await res.json();
-  return data.data;
+  return data.result;
 }
 
 const CaseStudies = async () => {

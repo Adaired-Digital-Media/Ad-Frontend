@@ -25,9 +25,7 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
     fontFamily: {
       inter: ['var(--font-inter)'],
       lexend: ['var(--font-lexend)'],
-      // nunito: ['var(--font-nunito)', 'sans-serif'],
-      nunito: ['var(--font-Poppins)', 'Poppins'],
-
+      nunito: ['var(--font-nunito)', 'sans-serif'],
       baby: ['var(--font-baby)'],
       dm: ['var(--font-dm)'],
       poppins: ['var(--font-poppins)'],
@@ -48,19 +46,6 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
       padding: '2rem',
     },
     extend: {
-      fontSize: {
-        xs: '16px',
-        sm:"18px",
-        md:"20px",
-        lg2:"48px"
-      },
-      fontWeight: {
-        light: '300',
-        normal: '400',
-        medium: '500',
-        semibold: '600',
-        bold: '700',
-      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -274,19 +259,12 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
       backgroundImage: {
-        'custom-gradient':
-          'linear-gradient(90deg, #1D78CE 0%, #1B5A96 33%, #1B5A96 66%, #1D78CE 100%)',
-        'footer-gradient': 'linear-gradient(90deg, #010204DB 0%, #1B5A96E0 100%)',
-
-        skeleton: 'linear-gradient(90deg, transparent, #ecebeb, transparent)',
+        skeleton: '`linear-gradient(90deg,transparent,#ecebeb,transparent)`',
         'skeleton-dark':
-          'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-
-        'hero-image-bhw': 'url("/assets/images/hero-image_bhw.png")',
-        'footer-texture': 'url("/img/footer-texture.png")',
+          '`linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)`',
+        'hero-image-bhw': 'url(`/assets/images/hero-image_bhw.png`)',
+        'footer-texture': 'url(`/img/footer-texture.png`)',
       },
-
-
       content: {
         underline: 'url("/public/underline.svg")',
       },

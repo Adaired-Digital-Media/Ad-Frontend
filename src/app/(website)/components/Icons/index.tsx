@@ -34,8 +34,8 @@ export const Icons = {
   Facebook: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1.25rem"
-      height="1.25rem"
+      width="1em"
+      height="1em"
       viewBox="0 0 24 24"
       {...props}
     >
@@ -73,8 +73,8 @@ export const Icons = {
   Instagram: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1.25rem"
-      height="1.25rem"
+      width="1em"
+      height="1em"
       viewBox="0 0 24 24"
       {...props}
     >
@@ -126,8 +126,8 @@ export const Icons = {
   Twitter: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1.25rem"
-      height="1.25rem"
+      width="1em"
+      height="1em"
       viewBox="0 0 24 24"
       {...props}
     >
@@ -186,8 +186,8 @@ export const Icons = {
   LinkedIn: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1.25rem"
-      height="1.25rem"
+      width="1em"
+      height="1em"
       viewBox="0 0 24 24"
       {...props}
     >
@@ -709,8 +709,8 @@ export const Icons = {
   CharmSquareTick: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1.25rem"
-      height="1.25rem"
+      width="1em"
+      height="1em"
       viewBox="0 0 16 16"
       {...props}
     >
@@ -729,8 +729,8 @@ export const Icons = {
   UpArrow: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1.25rem"
-      height="1.25rem"
+      width="1em"
+      height="1em"
       viewBox="0 0 512 512"
       {...props}
     >
@@ -747,8 +747,8 @@ export const Icons = {
   SimpleIcon: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="1.25rem"
-      height="1.25rem"
+      width="1em"
+      height="1em"
       viewBox="0 0 24 24"
       {...props}
     >
