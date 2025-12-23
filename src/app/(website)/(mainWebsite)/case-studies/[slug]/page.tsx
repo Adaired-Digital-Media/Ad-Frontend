@@ -7,15 +7,45 @@ import Image from 'next/image';
 import React from 'react';
 import parse from 'html-react-parser';
 import type { Metadata } from 'next';
-
+//update
+// export async function generateStaticParams() {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/all`
+//   ).then((res) => res.json());
+//   const CaseStudies = res.result;
+//   return CaseStudies.map((CaseStudy: any) => ({
+//     slug: CaseStudy.slug.toString(),
+//   }));
+// }
 export async function generateStaticParams() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/all`
-  ).then((res) => res.json());
-  const CaseStudies = res.result;
-  return CaseStudies.map((CaseStudy: any) => ({
-    slug: CaseStudy.slug.toString(),
-  }));
+  try {
+    const API_URL = process.env.OLD_API_URI;
+
+    if (!API_URL) {
+      console.warn("OLD_API_URI not defined at build time");
+      return [];
+    }
+
+    const res = await fetch(
+      `${API_URL}/api/v1/case-studies/all`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) {
+      console.error("Failed to fetch case studies:", res.status);
+      return [];
+    }
+
+    const data = await res.json();
+    const caseStudies = data?.result ?? [];
+
+    return caseStudies.map((cs: any) => ({
+      slug: String(cs.slug),
+    }));
+  } catch (error) {
+    console.error("generateStaticParams(case-studies) failed:", error);
+    return [];
+  }
 }
 
 async function getCaseStudyData({ slug }: { slug: string }) {

@@ -66,22 +66,52 @@ export async function generateMetadata({
 //     slug: blog.slug.toString(),
 //   }));
 // }
+//updated
+// export async function generateStaticParams() {
+//   try {
+//     const res = await fetch(
+//       `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read`
+//     );
+
+//     if (!res.ok) {
+//       console.error(`HTTP error! Status: ${res.status}, ${await res.text()}`);
+//       throw new Error(`Failed to fetch blog slugs: ${res.statusText}`);
+//     }
+
+//     const data = await res.json();
+//     const blogs = data.data || [];
+//     return blogs.map((blog: any) => ({
+//       slug: blog.slug.toString(),
+//     }));
+//   } catch (error) {
+//     console.error('Error in generateStaticParams:', error);
+//     return [];
+//   }
+// }
 
 export async function generateStaticParams() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read`
-    );
+    const API_URL = process.env.BACKEND_API_URI;
+
+    if (!API_URL) {
+      console.warn('BACKEND_API_URI not defined at build time');
+      return [];
+    }
+
+    const res = await fetch(`${API_URL}/blog/read`, {
+      cache: 'no-store',
+    });
 
     if (!res.ok) {
-      console.error(`HTTP error! Status: ${res.status}, ${await res.text()}`);
-      throw new Error(`Failed to fetch blog slugs: ${res.statusText}`);
+      console.error(`HTTP error! Status: ${res.status}, await res.text()`);
+      return [];
     }
 
     const data = await res.json();
-    const blogs = data.data || [];
+    const blogs = data?.data ?? [];
+
     return blogs.map((blog: any) => ({
-      slug: blog.slug.toString(),
+      slug: String(blog.slug),
     }));
   } catch (error) {
     console.error('Error in generateStaticParams:', error);

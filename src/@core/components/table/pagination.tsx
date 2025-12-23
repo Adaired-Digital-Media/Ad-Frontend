@@ -1,19 +1,27 @@
-import { type Table as ReactTableType } from "@tanstack/react-table";
-import { ActionIcon, Box, Flex, Grid, Select, SelectOption, Text } from "rizzui";
+import { type Table as ReactTableType } from '@tanstack/react-table';
+import {
+  ActionIcon,
+  Box,
+  Flex,
+  Grid,
+  Select,
+  SelectOption,
+  Text,
+} from 'rizzui';
 import {
   PiCaretLeftBold,
   PiCaretRightBold,
   PiCaretDoubleLeftBold,
   PiCaretDoubleRightBold,
-} from "react-icons/pi";
-import {cn} from "@core/utils/class-names";
+} from 'react-icons/pi';
+import { cn } from '@core/utils/class-names';
 
 const options = [
-  { value: 5, label: "5" },
-  { value: 10, label: "10" },
-  { value: 15, label: "15" },
-  { value: 20, label: "20" },
-  { value: 25, label: "25" },
+  { value: 5, label: '5' },
+  { value: 10, label: '10' },
+  { value: 15, label: '15' },
+  { value: 20, label: '20' },
+  { value: 25, label: '25' },
 ];
 
 export default function TablePagination<TData extends Record<string, any>>({
@@ -30,20 +38,20 @@ export default function TablePagination<TData extends Record<string, any>>({
       gap="6"
       align="center"
       justify="between"
-      className={cn("@container", className)}
+      className={cn('@container', className)}
     >
-      <Flex
-        align="center"
-        className="w-auto shrink-0"
-      >
-        <Text className="hidden font-normal text-gray-600 @md:block">Rows per page</Text>
+      <Flex align="center" className="w-auto shrink-0">
+        <Text className="hidden font-normal text-gray-600 @md:block">
+          Rows per page
+        </Text>
         <Select
           size="sm"
           variant="flat"
           options={options}
           className="w-12"
           value={table.getState().pagination.pageSize}
-          onChange={(v: SelectOption) => {
+          onChange={(value) => {
+            const v = value as SelectOption;
             table.setPageSize(Number(v.value));
           }}
           suffixClassName="[&>svg]:size-3"
@@ -52,25 +60,19 @@ export default function TablePagination<TData extends Record<string, any>>({
         />
       </Flex>
       {showSelectedCount && (
-        <Box className="hidden @2xl:block w-full">
+        <Box className="hidden w-full @2xl:block">
           <Text>
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
+            {table.getFilteredSelectedRowModel().rows.length} of{' '}
             {table.getFilteredRowModel().rows.length} row(s) selected.
           </Text>
         </Box>
       )}
-      <Flex
-        justify="end"
-        align="center"
-      >
+      <Flex justify="end" align="center">
         <Text className="hidden font-normal text-gray-600 @3xl:block">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
+          Page {table.getState().pagination.pageIndex + 1} of{' '}
           {table.getPageCount().toLocaleString()}
         </Text>
-        <Grid
-          gap="2"
-          columns="4"
-        >
+        <Grid gap="2" columns="4">
           <ActionIcon
             size="sm"
             rounded="lg"

@@ -16,12 +16,37 @@ export const metadata: Metadata = {
     canonical: 'https://www.adaired.com/about',
   },
 };
+// export async function getBlogsData() {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=3`,
+//     {
+//       cache: 'no-store', // IMPORTANT for runtime pages
+//     }
+//   );
+//   const data = await res.json();
+//   return data.data;
+// }
+
 export async function getBlogsData() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=3`
-  );
-  const data = await res.json();
-  return data.data;
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=3`,
+      {
+        cache: 'no-store', // IMPORTANT for runtime pages
+      }
+    );
+
+    if (!res.ok) {
+      console.error('Blog fetch failed:', res.status);
+      return [];
+    }
+
+    const data = await res.json();
+    return data?.data ?? [];
+  } catch (error) {
+    console.error('getBlogsData error:', error);
+    return [];
+  }
 }
 
 const About = async () => {

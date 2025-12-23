@@ -77,7 +77,8 @@ function CaseStudyCards({ categories, caseStudies }: CaseStudyCardsProps) {
         <h3>Filter:</h3>
         <Select
           value={selectedCategory}
-          onChange={(selectedOption: { value: string }) => {
+          onChange={(value) => {
+            const selectedOption = value as { value: string };
             setSelectedCategory(selectedOption.value);
           }}
           options={[

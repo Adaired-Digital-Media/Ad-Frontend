@@ -20,18 +20,48 @@ export const metadata: Metadata = {
   },
 };
 
+// async function getBlogs() {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?status=publish`
+//   );
+//   if (!res.ok) throw new Error(`Failed to fetch blogs: ${res.statusText}`);
+//   const data = await res.json();
+//   // Pre-compute excerpts on the server
+//   const blogsWithExcerpts = data.data.map((blog: any) => ({
+//     ...blog,
+//     excerpt: getExcerpt(blog.postDescription),
+//   }));
+//   return { ...data, data: blogsWithExcerpts };
+// }
 async function getBlogs() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?status=publish`
-  );
-  if (!res.ok) throw new Error(`Failed to fetch blogs: ${res.statusText}`);
-  const data = await res.json();
-  // Pre-compute excerpts on the server
-  const blogsWithExcerpts = data.data.map((blog: any) => ({
-    ...blog,
-    excerpt: getExcerpt(blog.postDescription),
-  }));
-  return { ...data, data: blogsWithExcerpts };
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?status=publish`,
+      {
+        cache: 'no-store', // important for dynamic content
+      }
+    );
+
+    if (!res.ok) {
+      console.error('Failed to fetch blogs:', res.status, res.statusText);
+      return { data: [] };
+    }
+
+    const data = await res.json();
+
+    const blogsWithExcerpts = (data?.data ?? []).map((blog: any) => ({
+      ...blog,
+      excerpt: getExcerpt(blog.postDescription),
+    }));
+
+    return {
+      ...data,
+      data: blogsWithExcerpts,
+    };
+  } catch (error) {
+    console.error('getBlogs error:', error);
+    return { data: [] };
+  }
 }
 
 const Blog = async () => {

@@ -4,6 +4,7 @@ import NavigationMenu from '@web-components/NavigationMenu';
 import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
 import PageBanner from '@web-components/PageBanner';
 import GetInTouchForm from '@web-components/forms/GetInTouchForm';
+import { notFound } from 'next/navigation';
 
 // Sections
 // import GetInTouchForm from "@/forms/GetInTouchForm";
@@ -19,12 +20,29 @@ import TwoColumnFeatureSection from '@web-components/PageDynamicSections/TwoColu
 import ServiceKeyFeaturesLayout from '@web-components/PageDynamicSections/ServiceKeyFeaturesLayout';
 import ImageWithDetailedFeatureDescription from '@web-components/PageDynamicSections/ImageWithDetailedFeatureDescription';
 
-const fetchservice = async (slug: string) => {
-  const result = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/service/getServices/${slug}`
-  );
-  const data = await result.json();
-  return data;
+const fetchService = async (slug: string) => {
+  try {
+    const API_URL = process.env.BACKEND_API_URI;
+
+    if (!API_URL) {
+      console.warn('BACKEND_API_URI not defined');
+      return null;
+    }
+
+    const res = await fetch(`${API_URL}/service/getServices/${slug}`, {
+      cache: 'force-cache',
+    });
+
+    if (!res.ok) {
+      console.error('Failed to fetch service:', res.status);
+      return null;
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error('fetchService error:', error);
+    return null;
+  }
 };
 
 export async function generateMetadata({
@@ -32,33 +50,56 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const c = await params;
-  const data = await fetchservice(c.slug);
+  const { slug } = params;
+
+  const data = await fetchService(slug);
 
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
-    title: data?.metaTitle ? data.metaTitle : data?.serviceName,
-    description: data?.metaDescription ? data.metaDescription : '',
+    metadataBase: new URL(process.env.SITE_URI ?? 'https://www.adaired.com'),
+
+    title: data?.metaTitle ?? data?.serviceName ?? 'Service | Adaired',
+
+    description: data?.metaDescription ?? '',
+
     alternates: {
-      canonical: `/services/${c.slug}`,
+      canonical: `/services/${slug}`,
     },
+
     robots: {
-      index: true,
+      index: !!data,
       follow: true,
     },
   };
 }
 
 export async function generateStaticParams() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/service/getServices`
-  );
-  const data = await res.json();
-  const newData = data;
-  return newData.map((service: any) => ({
-    slug: service.slug.toString(),
-  }));
+  try {
+    const API_URL = process.env.BACKEND_API_URI;
+
+    if (!API_URL) return [];
+
+    const res = await fetch(`${API_URL}/service/getServices`, {
+      cache: 'force-cache',
+    });
+
+    if (!res.ok) return [];
+
+    const json = await res.json();
+    const services = Array.isArray(json) ? json : json?.data;
+
+    if (!Array.isArray(services)) return [];
+
+    return services
+      .filter((s) => s?.slug)
+      .map((service: any) => ({
+        slug: String(service.slug),
+      }));
+  } catch (error) {
+    console.error('generateStaticParams error:', error);
+    return [];
+  }
 }
+
 interface ServiceProps {
   params: {
     slug: string;
@@ -66,8 +107,11 @@ interface ServiceProps {
 }
 
 const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
-  const c = await params;
-  const fetchedService = await fetchservice(c.slug);
+  const { slug } = params;
+  const fetchedService = await fetchService(slug);
+  if (!fetchedService) {
+    notFound(); // shows 404 page
+  }
   const { bodyData } = fetchedService;
 
   return (
