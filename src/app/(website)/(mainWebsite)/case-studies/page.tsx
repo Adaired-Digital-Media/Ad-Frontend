@@ -5,6 +5,7 @@ import BlogCards from '@web-components/BlogCard/BlogCards';
 import CaseStudyCards from '@web-components/CaseStudyCards';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
+import { BaseURL } from '@/baseUrl';
 
 export const metadata: Metadata = {
   title: 'Adaired Case Studies: See How We Help Businesses Thrive',
@@ -15,24 +16,27 @@ export const metadata: Metadata = {
   },
 };
 async function getCaseStudyCategories() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies-category/getCaseStudiesCategory/all`
-  );
+  const res = await fetch(`${BaseURL}/case-study/category/read`);
   const data = await res.json();
-  return data.result;
+  return data.data;
 }
+console.log('categories1211212', 'categories>>>>');
 
 async function getCaseStudies() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/all`
-  );
+  console.log('categories121', 'categories>>>>');
+
+  const res = await fetch(`${BaseURL}/case-study/read`);
   const data = await res.json();
-  return data.result;
+  return data.data;
 }
 
 const CaseStudies = async () => {
   const categories = await getCaseStudyCategories();
+  console.log(categories, 'categories>>>>');
+
   const caseStudies = await getCaseStudies();
+  console.log(caseStudies, 'caseStudies>>>>');
+
   const blogs = await getBlogsData();
   return (
     <>
@@ -42,7 +46,7 @@ const CaseStudies = async () => {
       </Suspense>
       <ProcessSection />
       <TestimonialSlider />
-      <BlogCards blogs={blogs}/>
+      <BlogCards blogs={blogs} />
     </>
   );
 };

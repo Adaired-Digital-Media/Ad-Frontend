@@ -4,6 +4,7 @@ import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
 import PopularPosts from '@web-components/PopularPosts';
 import BlogWPagination from '@web-components/BlogWithPagination';
 import type { Metadata } from 'next';
+import { BaseURL } from '@/baseUrl';
 
 // Server-safe excerpt function
 export const getExcerpt = (html: string, maxLength: number = 150): string => {
@@ -35,12 +36,9 @@ export const metadata: Metadata = {
 // }
 async function getBlogs() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?status=publish`,
-      {
-        cache: 'no-store', // important for dynamic content
-      }
-    );
+    const res = await fetch(`${BaseURL}/blog/read?status=publish`, {
+      cache: 'no-store', // important for dynamic content
+    });
 
     if (!res.ok) {
       console.error('Failed to fetch blogs:', res.status, res.statusText);

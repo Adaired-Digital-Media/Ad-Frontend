@@ -50,32 +50,33 @@ function CaseStudyCards({ categories, caseStudies }: CaseStudyCardsProps) {
   }, [selectedCategory, caseStudies]);
 
   if (categories) {
-    categories.sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+    categories?.sort((a, b) => a.categoryName.localeCompare(b.categoryName));
   }
 
   return (
     <MaxWidthWrapper className="py-12 lg:py-24">
       <div className="mb-8 hidden md:block">
-        {categories.map((category) => (
-          <button
-            key={category.slug}
-            className={cn(
-              'm-2 rounded-full border text-base md:p-3 md:px-8 lg:text-xl',
-              selectedCategory === category.slug
-                ? 'bg-[#F89520] text-white'
-                : 'bg-white text-black'
-            )}
-            onClick={() => {
-              setSelectedCategory(category.slug);
-            }}
-          >
-            {category.categoryName}
-          </button>
-        ))}
+        {/* {categories.length > 0 &&
+          categories?.map((category) => (
+            <button
+              key={category.slug}
+              className={cn(
+                'm-2 rounded-full border text-base md:p-3 md:px-8 lg:text-xl',
+                selectedCategory === category.slug
+                  ? 'bg-[#F89520] text-white'
+                  : 'bg-white text-black'
+              )}
+              onClick={() => {
+                setSelectedCategory(category.slug);
+              }}
+            >
+              {category.categoryName}
+            </button>
+          ))} */}
       </div>
       <div className="block md:hidden">
         <h3>Filter:</h3>
-        <Select
+        {/* <Select
           value={selectedCategory}
           onChange={(value) => {
             const selectedOption = value as { value: string };
@@ -88,23 +89,24 @@ function CaseStudyCards({ categories, caseStudies }: CaseStudyCardsProps) {
             })),
           ]}
           placeholder="Select Category"
-        />
+        /> */}
       </div>
       <div>
-        {filteredCaseStudies.map((caseStudy) => (
-          <CaseStudyCard
-            category={caseStudy.category}
-            categories={categories}
-            colorScheme={caseStudy.colorScheme}
-            key={caseStudy.slug}
-            slug={caseStudy.slug}
-            caseStudyName={caseStudy.caseStudyName}
-            caseStudyDescription={caseStudy.caseStudyDescription}
-            cardImage={caseStudy.cardImage}
-            aboutProjectDescription={caseStudy.aboutProjectDescription}
-            technologiesUsed={caseStudy.technologiesUsed}
-          />
-        ))}
+        {filteredCaseStudies?.length > 0 &&
+          filteredCaseStudies?.map((caseStudy) => (
+            <CaseStudyCard
+              category={caseStudy.category}
+              categories={categories}
+              colorScheme={caseStudy.colorScheme}
+              key={caseStudy.slug}
+              slug={caseStudy.slug}
+              caseStudyName={caseStudy.caseStudyName}
+              caseStudyDescription={caseStudy.caseStudyDescription}
+              cardImage={caseStudy.cardImage}
+              aboutProjectDescription={caseStudy.aboutProjectDescription}
+              technologiesUsed={caseStudy.technologiesUsed}
+            />
+          ))}
       </div>
     </MaxWidthWrapper>
   );
@@ -194,13 +196,13 @@ function CaseStudyCard({
         </div>
         <div className="flex-grow"></div>
         <div>
-          <Image
+          {/* <Image
             src={`${process.env.NEXT_PUBLIC_IMG_URL}${cardImage}`}
             alt="Case Study Card Image"
             height={400}
             width={600}
             className="rounded-lg object-cover"
-          />
+          /> */}
         </div>
       </div>
     </div>

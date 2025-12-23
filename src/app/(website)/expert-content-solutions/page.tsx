@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -21,16 +22,34 @@ import { EcomPageForm } from '../components/forms/EcomForm';
 import CldImage from '@web-components/CloudinaryImageComponent';
 import { ProductSection } from '@web-components/ContentProducts';
 
+async function getProducts() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product?status=active`,
+      { cache: 'no-store' }
+    );
+
+    if (!res.ok) {
+      console.error('Failed to fetch products:', res.status);
+      return [];
+    }
+
+    const data = await res.json();
+    return data?.data ?? [];
+  } catch (error) {
+    console.error('Product fetch error:', error);
+    return [];
+  }
+}
+
 const Landing = async () => {
-  const products = await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product?status=active`
-  );
+  const products = await getProducts();
 
   return (
     <>
       <HeroSection />
       <StandOutSection />
-      <ProductSection products={products.data.data} />
+      <ProductSection products={products} />
       <ApproachSection />
       <SurferSEOSection />
       <ContactUsSection />
@@ -38,7 +57,9 @@ const Landing = async () => {
     </>
   );
 };
+
 export default Landing;
+
 const HeroSection = () => {
   return (
     <div

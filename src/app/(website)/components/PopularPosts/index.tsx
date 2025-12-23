@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Skeleton, LineGroup } from '@/@core/ui/skeleton';
+import { BaseURL } from '@/baseUrl';
 
 interface BlogPost {
   _id: string;
@@ -24,9 +25,7 @@ export default function PopularPosts({ initialData }: PopularPostsProps) {
     if (!initialData) {
       const fetchPopularPosts = async () => {
         try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=5`
-          );
+          const res = await fetch(`${BaseURL}/blog/read?limit=6`);
           const data = await res.json();
           setPosts(data.data);
         } catch (error) {

@@ -7,6 +7,7 @@ import { Icons } from '@web-components/Icons';
 import Process from '@web-components/Timeline/Process';
 import type { Metadata } from 'next';
 import CldImage from '@web-components/CloudinaryImageComponent';
+import { BaseURL } from '@/baseUrl';
 
 export const metadata: Metadata = {
   title: 'Unveiling Adaired: Our History, Team, and Vision | Learn About Us',
@@ -29,13 +30,9 @@ export const metadata: Metadata = {
 
 export async function getBlogsData() {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=3`,
-      {
-        cache: 'no-store', // IMPORTANT for runtime pages
-      }
-    );
-
+    const res = await fetch(`${BaseURL}/blog/read?limit=3`, {
+      cache: 'no-store', // IMPORTANT for runtime pages
+    });
     if (!res.ok) {
       console.error('Blog fetch failed:', res.status);
       return [];
@@ -50,6 +47,7 @@ export async function getBlogsData() {
 }
 
 const About = async () => {
+  console.log('About');
   const blogs = await getBlogsData();
   return (
     <div>

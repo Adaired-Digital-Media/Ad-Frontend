@@ -19,25 +19,18 @@ import KeyFeatureCrossLayout from '@web-components/PageDynamicSections/KeyFeatur
 import TwoColumnFeatureSection from '@web-components/PageDynamicSections/TwoColumnFeatureSection';
 import ServiceKeyFeaturesLayout from '@web-components/PageDynamicSections/ServiceKeyFeaturesLayout';
 import ImageWithDetailedFeatureDescription from '@web-components/PageDynamicSections/ImageWithDetailedFeatureDescription';
+import { BaseURL } from '@/baseUrl';
 
 const fetchService = async (slug: string) => {
   try {
-    const API_URL = process.env.BACKEND_API_URI;
-
-    if (!API_URL) {
-      console.warn('BACKEND_API_URI not defined');
-      return null;
-    }
-
-    const res = await fetch(`${API_URL}/service/getServices/${slug}`, {
+    const res = await fetch(`${BaseURL}/service/getServices/${slug}`, {
       cache: 'force-cache',
     });
-
+    console.log(res, 'res12112');
     if (!res.ok) {
       console.error('Failed to fetch service:', res.status);
       return null;
     }
-
 
     return await res.json();
   } catch (error) {
@@ -75,13 +68,10 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   try {
-    const API_URL = process.env.BACKEND_API_URI;
-
-    if (!API_URL) return [];
-
-    const res = await fetch(`${API_URL}/service/getServices`, {
+    const res = await fetch(`${BaseURL}/service/getServices`, {
       cache: 'force-cache',
     });
+    console.log(res, 'res12112323');
 
     if (!res.ok) return [];
 
@@ -260,4 +250,3 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
 };
 
 export default ServicePage;
-//test

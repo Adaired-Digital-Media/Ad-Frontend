@@ -8,11 +8,10 @@ import type { Metadata } from 'next';
 import { parseStyleString } from '@core/utils/parseStyleString';
 import { formatDate } from '@core/utils/format-date';
 import Head from 'next/head';
+import { BaseURL } from '@/baseUrl';
 
 async function getBlogs({ params }: { params: { slug: string } }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?slug=${params.slug}`
-  );
+  const res = await fetch(`${BaseURL}/blog/read?slug=${params.slug}`);
   const data = await res.json();
   return data;
 }
@@ -91,14 +90,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   try {
-    const API_URL = process.env.BACKEND_API_URI;
-
-    if (!API_URL) {
-      console.warn('BACKEND_API_URI not defined at build time');
-      return [];
-    }
-
-    const res = await fetch(`${API_URL}/blog/read`, {
+    const res = await fetch(`${BaseURL}/blog/read`, {
       cache: 'no-store',
     });
 
