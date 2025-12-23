@@ -38,6 +38,7 @@ const fetchService = async (slug: string) => {
       return null;
     }
 
+
     return await res.json();
   } catch (error) {
     console.error('fetchService error:', error);
@@ -259,3 +260,4 @@ const ServicePage: React.FC<ServiceProps> = async ({ params }) => {
 };
 
 export default ServicePage;
+//test
