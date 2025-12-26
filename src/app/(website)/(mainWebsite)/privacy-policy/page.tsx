@@ -10,7 +10,9 @@ export const metadata = {
   title: 'Privacy Policy | How Adaired Protects Your Data',
   description:
     'Read Adaired’s Privacy Policy to understand how we collect, use, and protect your personal information while providing our services.',
-  canonical: 'canonical: https://www.adaired.com/privacy-policy',
+  alternates: {
+    canonical: 'canonical: https://www.adaired.com/privacy-policy',
+  },
 };
 
 const Privacy: FC<IProps> = (props) => {

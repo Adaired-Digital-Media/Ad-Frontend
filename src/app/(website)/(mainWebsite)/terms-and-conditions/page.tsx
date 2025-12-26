@@ -9,7 +9,9 @@ export const metadata = {
   title: 'Terms and Conditions | Adaired Digital Media',
   description:
     'Review Adaired’s Terms and Conditions to understand the guidelines and policies for using our services and website. Stay informed and protected.',
-  canonical: 'https://www.adaired.com/terms-and-conditions',
+  alternates: {
+    canonical: 'https://www.adaired.com/terms-and-conditions',
+  },
 };
 
 const Terms: FC<IProps> = (props) => {
