@@ -167,9 +167,9 @@ const Item = ({
               <Separator orientation="vertical" className="h-auto w-0.5" />
               <div className="w-3/12 flex-none xl:flex">
                 <div className="p-4">
-                  <h3 className="mb-4 font-nunito text-lg font-semibold text-gray-900">
+                  <p className="mb-4 font-nunito text-lg font-semibold text-gray-900">
                     What's New
-                  </h3>
+                  </p>
                   {blog && (
                     <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-purple-200/20 to-transparent shadow-lg">
                       <Link
@@ -192,9 +192,9 @@ const Item = ({
                                 'Search Engine Optimization'}
                             </span>
                           </div>
-                          <h4 className="mb-4 font-nunito text-lg font-medium text-gray-900">
+                          <p className="mb-4 font-nunito text-lg font-medium text-gray-900">
                             {blog.postTitle}
-                          </h4>
+                          </p>
                           <div className="flex justify-between text-xs text-gray-600">
                             <span>
                               By Adaired Team |{' '}
