@@ -65,7 +65,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       fetch(`${backendApiUri}/case-study/read`, { cache: 'no-store' }),
       fetch(`${backendApiUri}/blog/read?status=publish`, { cache: 'no-store' }),
     ]);
-
     // ---------------------
     // Parse safely
     // ---------------------
@@ -81,7 +80,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ? await blogsRes.json()
       : { success: false, message: '', data: [] };
 
-    const services = Array.isArray(servicesJson.data) ? servicesJson.data : [];
+    const services = Array.isArray(servicesJson) ? servicesJson : [];
 
     const caseStudies = Array.isArray(caseStudiesJson.data)
       ? caseStudiesJson.data
