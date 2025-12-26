@@ -1,7 +1,7 @@
-import MaxWidthWrapper from "@web-components/MaxWidthWrapper/";
-import PageBanner from "@web-components/PageBanner/";
-import Link from "next/link";
-import React, { FC } from "react";
+import MaxWidthWrapper from '@web-components/MaxWidthWrapper/';
+import PageBanner from '@web-components/PageBanner/';
+import Link from 'next/link';
+import React, { FC } from 'react';
 
 interface IProps {}
 
@@ -9,13 +9,14 @@ export const metadata = {
   title: 'Terms and Conditions | Adaired Digital Media',
   description:
     'Review Adaired’s Terms and Conditions to understand the guidelines and policies for using our services and website. Stay informed and protected.',
+  canonical: 'https://www.adaired.com/terms-and-conditions',
 };
 
 const Terms: FC<IProps> = (props) => {
   return (
     <>
       <PageBanner title="Terms and Conditions" />
-      <MaxWidthWrapper className="py-10 lg:py-16 ">
+      <MaxWidthWrapper className="py-10 lg:py-16">
         <div className="space-y-6">
           <p>
             At AdAired Digital Media, we value professionalism and transparency.
@@ -24,8 +25,8 @@ const Terms: FC<IProps> = (props) => {
           </p>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">The Contract</h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">The Contract</h2>
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Independent Contractor:</strong> Our relationship with
                 our clients is that of an independent contractor. This means
@@ -51,8 +52,8 @@ const Terms: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">Payment</h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">Payment</h2>
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Monthly Service Packages:</strong> Full payment is
                 required before the service can begin.
@@ -70,8 +71,8 @@ const Terms: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">Liability</h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">Liability</h2>
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Indirect Losses:</strong> AdAired Digital Media is not
                 liable for any indirect or consequential losses resulting from
@@ -94,8 +95,8 @@ const Terms: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">Waiver</h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">Waiver</h2>
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 Failure to enforce any provision of this contract does not waive
                 our right to do so in the future. Any waiver will be valid only
@@ -110,8 +111,8 @@ const Terms: FC<IProps> = (props) => {
             </ul>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">Disclaimer</h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">Disclaimer</h2>
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 By providing your phone number to Adaired Digital Media, you
                 consent to receive text messages at your wireless phone number
@@ -120,7 +121,7 @@ const Terms: FC<IProps> = (props) => {
               <li>
                 Message frequency may vary. You can opt out of receiving
                 messages at any time by replying &quot;STOP.&quot; For more
-                information on how your data will be handled, please visit our{" "}
+                information on how your data will be handled, please visit our{' '}
                 <Link href="/privacy-policy" className="text-blue-600/100">
                   <strong>Privacy Policy</strong>
                 </Link>
@@ -129,8 +130,8 @@ const Terms: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">Privacy Rights</h3>
-            <ul className="mx-4 my-1 px-1 list-disc">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">Privacy Rights</h2>
+            <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Confidentiality:</strong> Client information is kept
                 strictly confidential and only shared with employees who need it
@@ -151,7 +152,7 @@ const Terms: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">Amendments</h3>
+            <h2 className="text-lg sm:text-xl lg:text-2xl">Amendments</h2>
             <p className="mt-1">
               AdAired Digital Media reserves the right to change these terms and
               conditions at any time, including during an ongoing contract. If
@@ -159,9 +160,9 @@ const Terms: FC<IProps> = (props) => {
             </p>
           </div>
           <div className="space-y-1">
-            <h3 className="text-lg sm:text-xl lg:text-2xl">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">
               Contact Information
-            </h3>
+            </h2>
             <div className="space-y-2">
               <p>
                 For any questions or concerns regarding these terms and
@@ -170,14 +171,14 @@ const Terms: FC<IProps> = (props) => {
               <p>
                 <strong> Phone:</strong>
                 <Link href="tel:+91-8907400008">
-                  {" "}
+                  {' '}
                   <strong>+91-8907400008</strong>
                 </Link>
               </p>
               <p>
                 <strong>Email:</strong>
                 <Link href="mailto:info@adaired.com">
-                  {" "}
+                  {' '}
                   <strong>info@adaired.com</strong>
                 </Link>
               </p>

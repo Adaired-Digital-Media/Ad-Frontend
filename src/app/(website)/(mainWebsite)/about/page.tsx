@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     canonical: 'https://www.adaired.com/about',
   },
 };
+
 // export async function getBlogsData() {
 //   const res = await fetch(
 //     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=3`,

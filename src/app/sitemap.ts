@@ -1,7 +1,10 @@
 import { MetadataRoute } from 'next';
 import { DateComponent } from '@core/utils/dateComponent';
+import { BaseURL } from '@/baseUrl';
 
-// Define interfaces for type safety
+// =====================
+// Types
+// =====================
 interface Service {
   slug: string;
   updatedAt: string;
@@ -18,15 +21,22 @@ interface Blog {
   slug: string;
   updatedAt: string;
   status: string;
-  seo: any;
+  seo?: {
+    lastModified?: string;
+    changeFrequency?: MetadataRoute.Sitemap[number]['changeFrequency'];
+    priority?: number;
+  };
 }
 
-interface BlogResponse {
+interface ApiResponse<T> {
   success: boolean;
   message: string;
-  data: Blog[];
+  data: T[];
 }
-// Manual priority mapping for services
+
+// =====================
+// Manual priority mapping
+// =====================
 const manualPriorities: Record<string, number> = {
   'digital-marketing-company-usa': 1,
   'web-development-company-usa': 1,
@@ -34,126 +44,131 @@ const manualPriorities: Record<string, number> = {
   'digital-marketing-company-india': 1,
 };
 
+// =====================
+// Sitemap
+// =====================
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Validate environment variables
   const siteUri = process.env.NEXT_PUBLIC_SITE_URI;
-  const backendApiUri = process.env.NEXT_PUBLIC_BACKEND_API_URI;
-  const oldApiUri = process.env.NEXT_PUBLIC_OLD_API_URI;
+  const backendApiUri = BaseURL;
 
-  if (!siteUri || !backendApiUri || !oldApiUri) {
-    console.error('Missing environment variables for sitemap generation');
+  if (!siteUri || !backendApiUri) {
+    console.error('❌ Missing environment variables for sitemap generation');
     return [];
   }
 
   try {
-    // Fetch all data in parallel
-    const [servicesResponse, caseStudiesResponse, blogsResponse] =
-      await Promise.all([
-        fetch(`${backendApiUri}/service/getServices`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        }),
-        fetch(`${oldApiUri}/api/v1/case-studies/all`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        }),
-        fetch(`${backendApiUri}/blog/read?status=publish`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        }),
-      ]);
+    // ---------------------
+    // Fetch APIs in parallel
+    // ---------------------
+    const [servicesRes, caseStudiesRes, blogsRes] = await Promise.all([
+      fetch(`${backendApiUri}/service/getServices`, { cache: 'no-store' }),
+      fetch(`${backendApiUri}/case-study/read`, { cache: 'no-store' }),
+      fetch(`${backendApiUri}/blog/read?status=publish`, { cache: 'no-store' }),
+    ]);
 
-    // Check responses
-    if (!servicesResponse.ok)
-      throw new Error(`Services fetch failed: ${servicesResponse.statusText}`);
-    if (!caseStudiesResponse.ok)
-      throw new Error(
-        `Case studies fetch failed: ${caseStudiesResponse.statusText}`
-      );
-    if (!blogsResponse.ok)
-      throw new Error(`Blogs fetch failed: ${blogsResponse.statusText}`);
+    // ---------------------
+    // Parse safely
+    // ---------------------
+    const servicesJson: ApiResponse<Service> = servicesRes.ok
+      ? await servicesRes.json()
+      : { success: false, message: '', data: [] };
 
-    // Parse JSON
-    const services: Service[] = await servicesResponse.json();
-    const caseStudies: { result: CaseStudy[] } =
-      await caseStudiesResponse.json();
-    const blogs: BlogResponse = await blogsResponse.json();
+    const caseStudiesJson: ApiResponse<CaseStudy> = caseStudiesRes.ok
+      ? await caseStudiesRes.json()
+      : { success: false, message: '', data: [] };
 
-    // Service paths
+    const blogsJson: ApiResponse<Blog> = blogsRes.ok
+      ? await blogsRes.json()
+      : { success: false, message: '', data: [] };
+
+    const services = Array.isArray(servicesJson.data) ? servicesJson.data : [];
+
+    const caseStudies = Array.isArray(caseStudiesJson.data)
+      ? caseStudiesJson.data
+      : [];
+
+    const blogs = Array.isArray(blogsJson.data) ? blogsJson.data : [];
+
+    // ---------------------
+    // Dynamic paths
+    // ---------------------
     const servicePaths: MetadataRoute.Sitemap = services
       .filter((service) => service.status === 'publish')
       .map((service) => ({
         url: `${siteUri}/services/${service.slug}`,
         lastModified:
           DateComponent(service.updatedAt) || new Date(service.updatedAt),
-        changeFrequency: 'weekly' as const,
+        changeFrequency: 'weekly',
         priority: manualPriorities[service.slug] ?? 0.9,
       }));
 
-    // Case study paths
-    const caseStudiesPaths: MetadataRoute.Sitemap = caseStudies.result.map(
+    const caseStudyPaths: MetadataRoute.Sitemap = caseStudies.map(
       (caseStudy) => ({
         url: `${siteUri}/case-studies/${caseStudy.slug}`,
         lastModified:
           DateComponent(caseStudy.updatedAt) || new Date(caseStudy.updatedAt),
-        changeFrequency: 'monthly' as const,
+        changeFrequency: 'monthly',
         priority: 0.5,
       })
     );
 
-    // Blog paths
-    const blogPaths: MetadataRoute.Sitemap = blogs.data.map((blog) => ({
+    const blogPaths: MetadataRoute.Sitemap = blogs.map((blog) => ({
       url: `${siteUri}/blog/${blog.slug}`,
       lastModified: blog?.seo?.lastModified
-        ? DateComponent(blog?.seo?.lastModified)
+        ? DateComponent(blog.seo.lastModified)
         : DateComponent(blog.updatedAt) || new Date(blog.updatedAt),
-      changeFrequency: blog?.seo?.changeFrequency || ('weekly' as const),
-      priority: blog?.seo?.priority || 0.5,
+      changeFrequency: blog?.seo?.changeFrequency ?? 'weekly',
+      priority: blog?.seo?.priority ?? 0.5,
     }));
 
-    // Static routes
+    // ---------------------
+    // Static paths
+    // ---------------------
     const staticPaths: MetadataRoute.Sitemap = [
       {
         url: `${siteUri}/`,
         lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
+        changeFrequency: 'weekly',
         priority: 1,
       },
       {
         url: `${siteUri}/about`,
         lastModified: new Date('2024-06-24'),
-        changeFrequency: 'weekly' as const,
+        changeFrequency: 'weekly',
         priority: 1,
       },
       {
         url: `${siteUri}/career`,
         lastModified: new Date('2024-06-24'),
-        changeFrequency: 'monthly' as const,
+        changeFrequency: 'monthly',
         priority: 0.5,
       },
       {
         url: `${siteUri}/case-studies`,
         lastModified: new Date('2024-06-24'),
-        changeFrequency: 'weekly' as const,
+        changeFrequency: 'weekly',
         priority: 0.5,
       },
       {
         url: `${siteUri}/blog`,
         lastModified: new Date('2024-06-24'),
-        changeFrequency: 'weekly' as const,
+        changeFrequency: 'weekly',
         priority: 0.65,
       },
       {
         url: `${siteUri}/contact`,
         lastModified: new Date('2024-06-24'),
-        changeFrequency: 'weekly' as const,
+        changeFrequency: 'weekly',
         priority: 0.5,
       },
     ];
 
-    return [...staticPaths, ...servicePaths, ...caseStudiesPaths, ...blogPaths];
+    // ---------------------
+    // Final sitemap
+    // ---------------------
+    return [...staticPaths, ...servicePaths, ...caseStudyPaths, ...blogPaths];
   } catch (error) {
-    console.error('Error generating sitemap:', error);
+    console.error('❌ Error generating sitemap:', error);
     return [];
   }
 }

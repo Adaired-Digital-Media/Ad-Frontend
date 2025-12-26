@@ -20,11 +20,7 @@ async function getCaseStudyCategories() {
   const data = await res.json();
   return data.data;
 }
-console.log('categories1211212', 'categories>>>>');
-
 async function getCaseStudies() {
-  console.log('categories121', 'categories>>>>');
-
   const res = await fetch(`${BaseURL}/case-study/read`);
   const data = await res.json();
   return data.data;
@@ -32,10 +28,8 @@ async function getCaseStudies() {
 
 const CaseStudies = async () => {
   const categories = await getCaseStudyCategories();
-  console.log(categories, 'categories>>>>');
 
   const caseStudies = await getCaseStudies();
-  console.log(caseStudies, 'caseStudies>>>>');
 
   const blogs = await getBlogsData();
   return (

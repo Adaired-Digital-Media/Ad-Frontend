@@ -10,6 +10,7 @@ export const metadata = {
   title: 'Privacy Policy | How Adaired Protects Your Data',
   description:
     'Read Adaired’s Privacy Policy to understand how we collect, use, and protect your personal information while providing our services.',
+  canonical: 'canonical: https://www.adaired.com/privacy-policy',
 };
 
 const Privacy: FC<IProps> = (props) => {
@@ -26,9 +27,9 @@ const Privacy: FC<IProps> = (props) => {
           </p>
 
           <div className="space-y-1">
-            <h3 className="text-lg sm:text-xl lg:text-2xl">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">
               Our Commitment to You
-            </h3>
+            </h2>
             <p>
               We regularly update our website to improve the user experience and
               security. Any policy changes will be promptly communicated to you.
@@ -36,9 +37,9 @@ const Privacy: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">
               What Information We Collect
-            </h3>
+            </h2>
             <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Personal Details:</strong> We only collect your name,
@@ -53,9 +54,9 @@ const Privacy: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">
               How We Use Your Information
-            </h3>
+            </h2>
             <ul className="mx-4 my-1 list-disc px-1">
               <li>
                 <strong>Communication:</strong>
@@ -71,18 +72,18 @@ const Privacy: FC<IProps> = (props) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">
               Who Collects Your Information?
-            </h3>
+            </h2>
             <p>
               The AdAired Digital Media team collects your information when you
               interact with our website.
             </p>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">
               Do we share your information?
-            </h3>
+            </h2>
             <p>
               We do not share your information with third parties or affiliates
               for marketing or promotional purposes. This excludes text
@@ -91,9 +92,9 @@ const Privacy: FC<IProps> = (props) => {
             </p>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">
+            <h2 className="text-lg sm:text-xl lg:text-2xl">
               Cookies and Tracking
-            </h3>
+            </h2>
             <p>
               We may use cookies and other technologies to learn about your
               preferences and improve your overall experience. These cookies may
@@ -102,7 +103,7 @@ const Privacy: FC<IProps> = (props) => {
             </p>
           </div>
           <div>
-            <h3 className="text-lg sm:text-xl lg:text-2xl">Contact Us</h3>
+            <h2 className="text-lg sm:text-xl lg:text-2xl">Contact Us</h2>
             <p>
               If you have any questions or concerns about our privacy practices,
               feel free to contact us:
