@@ -11,7 +11,7 @@ export const metadata = {
   description:
     'Read Adaired’s Privacy Policy to understand how we collect, use, and protect your personal information while providing our services.',
   alternates: {
-    canonical: 'canonical: https://www.adaired.com/privacy-policy',
+    canonical: 'https://www.adaired.com/privacy-policy',
   },
 };
 
