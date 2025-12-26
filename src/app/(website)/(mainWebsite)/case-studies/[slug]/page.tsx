@@ -63,12 +63,14 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URI!),
-    title:
-      data.metaTitle ??
-      'Adaired Case Studies: See How We Help Businesses Thrive',
-    description:
-      data.metaDescription ??
-      'Discover how Adaired transformed businesses with real success stories.',
+    // title:
+    //   data.metaTitle ??
+    //   'Adaired Case Studies: See How We Help Businesses Thrive',
+    // description:
+    //   data.metaDescription ??
+    //   'Discover how Adaired transformed businesses with real success stories.',
+    title:"Green Choice Carpet Cleaning SEO Case Study | Adaired",
+    description:"See how we helped Green Choice Carpet Cleaning improve their online visibility and search presence through targeted, eco-friendly SEO campaigns.",
     alternates: {
       canonical: `/case-studies/${params.slug}`,
     },
