@@ -53,7 +53,7 @@ const Blogs = () => {
                   <p>{blog.description}</p>
                   <div className="flex w-full justify-between pt-[1rem]">
                     <SaveAndCancel
-                      isBgWhite={true}
+                      isBgWhite={false}
                       name={'Read More'}
                       isIcon={true}
                       handleClick={() => router.push(`/blog/${blog.link}`)}
