@@ -132,7 +132,7 @@ const Services = () => {
               >
                 <Image
                   key={activeTab}
-                  src={seo}
+                  src={services[activeTab]?.img}
                   width={512}
                   height={383}
                   alt="service visual"

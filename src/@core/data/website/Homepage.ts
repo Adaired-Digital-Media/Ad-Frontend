@@ -12,6 +12,12 @@ import Experienced from '../../../../public/assets/icons/Experienced_1.svg';
 import Dedicated from '../../../../public/assets/icons/Dedicated_1.svg';
 import customer from '../../../../public/assets/icons/customer.svg';
 import goal from '../../../../public/assets/icons/goal.png';
+import social_media_marketing from '../../../../public/assets/images/home/smm.png';
+import Web_Design from '../../../../public/assets/images/home/design.png';
+import Digital_Creative from '../../../../public/assets/images/home/degital.png';
+import content from '../../../../public/assets/images/home/content.png';
+import seo from '../../../../public/assets/images/home/seo-tag-3d-icon 1.png';
+
 export const AboutSectionData = {
   image: 'Static Website Images/about_main_anwqk5',
   subTitle: 'ABOUT US',
@@ -306,7 +312,7 @@ export const ServiceSectionData = {
         'Penalty Revision and Recovery',
       ],
       mainSvg: 'Search Engine Optimization_eyQDn',
-      hoverSvg: '/assets/images/seo-hover.svg',
+      img: seo,
       accentColor: '#f89520',
       link: '/services/search-engine-optimization',
     },
@@ -324,7 +330,7 @@ export const ServiceSectionData = {
         'Continuous Website Support',
       ],
       mainSvg: 'Web Dev_JjQ6b',
-      hoverSvg: '/assets/images/web-hover.svg',
+      img: Web_Design,
       accentColor: '#038eb0',
     },
     {
@@ -340,7 +346,7 @@ export const ServiceSectionData = {
         'Performance Monitoring and Analytics',
       ],
       mainSvg: 'Social Media_tzOgg',
-      hoverSvg: '/assets/images/smm-hover.svg',
+      img: social_media_marketing,
       accentColor: '#7fbe26',
     },
     {
@@ -357,7 +363,7 @@ export const ServiceSectionData = {
         'Creative Consultation',
       ],
       mainSvg: 'Logo Design_PpqcI',
-      hoverSvg: '/assets/images/logo-hover.svg',
+      img: Web_Design,
       accentColor: '#5c34b1',
     },
     {
@@ -374,7 +380,7 @@ export const ServiceSectionData = {
         'Conversion Tracking & Optimization',
       ],
       mainSvg: 'Pay Per Click_pdGDn',
-      hoverSvg: '/assets/images/ppc-hover.svg',
+      img: Digital_Creative,
       accentColor: '#d71a1a',
     },
     {
@@ -391,7 +397,7 @@ export const ServiceSectionData = {
       ],
       link: '/services/compelling-content-marketing',
       mainSvg: 'Content Marketing_iPYl2',
-      hoverSvg: '/assets/images/content-marketing-hover.svg',
+      img: content,
       accentColor: '#24a486',
       lastPara: 'What You Can Expect',
     },
