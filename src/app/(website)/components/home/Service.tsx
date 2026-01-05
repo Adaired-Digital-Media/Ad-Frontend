@@ -10,8 +10,10 @@ import check from '../../../../../public/assets/icons/check_1.svg';
 import SaveAndCancel from '../../common/SaveAndCancel';
 import { MdArrowOutward } from 'react-icons/md';
 import useImageCenterAnimation from '@/@core/hooks/useImageCenterAnimation';
+import { useRouter } from 'next/navigation';
 
 const Services = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
 
   const { ref, className } = useImageCenterAnimation(
@@ -116,6 +118,10 @@ const Services = () => {
               <SaveAndCancel
                 isBgWhite={false}
                 isIcon={true}
+                handleClick={() =>
+                  services[activeTab]?.link &&
+                  router.push(services[activeTab].link)
+                }
                 name={'Know More'}
                 className="absolute bottom-16 animate-[contentReveal_0.7s_500ms_both]"
               />

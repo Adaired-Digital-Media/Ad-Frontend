@@ -43,7 +43,7 @@ const Testimonial = () => {
                 transform: `translateX(-${index * (100 / VISIBLE_CARDS)}%)`,
               }}
             >
-              {slides.map((testimonial: any, idx: number) => (
+              {testimonials.map((testimonial: any, idx: number) => (
                 <div className="relative shrink-0 basis-1/3 px-[1rem]">
                   <div className="h-full min-h-[270px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96]">
                     <p className="text-sm text-[#262626]">

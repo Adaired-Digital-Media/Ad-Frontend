@@ -73,7 +73,7 @@ const About = () => {
               alt="Mask Image"
               width={246}
               height={136}
-              className="absolute -bottom-1 left-5 -z-10"
+              className="absolute -bottom-4 left-5 -z-10"
             />
 
             {/* ABOUT GRAPH – BOTTOM RIGHT */}

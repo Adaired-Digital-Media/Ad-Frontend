@@ -292,12 +292,9 @@ const WebFooter = () => {
           <div className="font text-xxs">
             Copyright © {new Date().getFullYear()} - AdAired Digital Media
           </div>
+          <span className="px-1">|</span>
           <div className="font flex gap-5 py-2 text-xxs sm:gap-1 sm:bg-transparent">
-            <Link href="/terms-and-conditions">Terms & Conditions </Link>
-            <span className="hidden sm:block">/</span>
-            <div className="sm:hidden">
-              <Separator orientation="vertical" />
-            </div>
+            <Link href="/terms-and-conditions">Terms & Conditions </Link>/
             <Link href="/privacy-policy">Privacy Policy</Link>
           </div>
         </div>

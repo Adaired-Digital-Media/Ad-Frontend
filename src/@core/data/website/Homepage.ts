@@ -213,17 +213,17 @@ export const TestimonialSectionData = {
     },
     {
       image: 'Static Website Images/homepage_about2',
-      name: 'Lina M., Marketing Director',
+      name: 'Geetha Radhakrishnan',
       description:
-        'Adaired’s social media strategy completely transformed our engagement. Our follower growth and customer interactions have skyrocketed!',
+        'Adaired Digital Media made the whole process smooth and stress-free. What stood out to me was their clarity, patience, and willingness to listen. ',
       bgColor: '#FFF4F3',
       rating: 5,
     },
     {
       image: 'Static Website Images/homepage_about1',
-      name: 'Raj P., CEO',
+      name: 'Chandrasekar V',
       description:
-        'Thanks to Adaired’s SEO and content services, our website traffic doubled, and we’re attracting the right clients.',
+        'AdAired truly gets business growth! Their digital strategies boosted our leads and brand presence faster than expected. Super friendly team, great communication, and real results.',
       bgColor: '#D7EBFF',
       rating: 5,
     },
@@ -473,7 +473,7 @@ export const ContactSectionData = {
   image: 'Static Website Images/contact_us_image',
   subTitle: 'READY TO GROW?',
   title: 'Ready to Grow Your Brand and ',
-  span:"Stay Ahead in the Digital World?",
+  span: 'Stay Ahead in the Digital World?',
   description:
     'Stay ahead in the digital world with our latest tips and practical strategies. From marketing trends to SEO insights, our blog helps you grow smarter and faster.',
   contactDetails: [

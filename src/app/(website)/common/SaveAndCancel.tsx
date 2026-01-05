@@ -12,6 +12,7 @@ export interface ISaveAndCancel {
   button2Name?: string;
   isFullWidth?: boolean;
   handleClick?: () => void;
+  handleClick2?:()=>void;
 }
 const SaveAndCancel = ({
   name,
@@ -24,6 +25,7 @@ const SaveAndCancel = ({
   button2Name,
   isFullWidth,
   handleClick,
+  handleClick2
 }: ISaveAndCancel) => {
   const [isHover, setIsHover] = useState(false);
   return (
@@ -52,6 +54,7 @@ const SaveAndCancel = ({
       </button>
       {is2ndButton && (
         <button
+          onClick={handleClick2}
           className={`font-Outfi group flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[60px] py-[0.75rem] text-xs font-normal transition-all duration-300 ease-out active:scale-95 md:w-[220px] ${
             is2BgWhite
               ? 'border border-[#111111] bg-white text-[#111111] hover:bg-[#1A5A96] hover:text-white'

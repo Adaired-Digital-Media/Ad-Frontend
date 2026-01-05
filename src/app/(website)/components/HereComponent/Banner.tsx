@@ -16,10 +16,12 @@ import banner_img_4 from '../../../../../public/assets/images/home/banner_img_7.
 import banner_img_5 from '../../../../../public/assets/images/home/banner_img_8.png';
 import banner_img_6 from '../../../../../public/assets/images/home/banner_img_9.png';
 import hero_banner from '../../../../../public/assets/images/home/hero_banner-bg.png';
+import { useRouter } from 'next/navigation';
 type Step = 'img3-enter' | 'img3-exit' | 'img2-enter' | 'img2-exit';
 type ActiveImg = null | 'img1' | 'img2' | 'img3';
 type Phase = 'idle' | 'move' | 'hold' | 'return';
 const Banner = () => {
+  const router = useRouter();
   const users = [user, user_2, user_3, user_4, user_5];
   const reviews = [MdStarRate, MdStarRate, MdStarRate, MdStarRate, MdStarRate];
 
@@ -121,6 +123,10 @@ const Banner = () => {
             isIcon={true}
             is2BgWhite={true}
             className="pt-[2rem]"
+            handleClick={() => router.push('/contact')}
+            handleClick2={() =>
+              router.push('/services/search-engine-optimization')
+            }
           />
         </div>
         <div className="relative w-[50%]">
