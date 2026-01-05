@@ -97,7 +97,7 @@ export default function PopularPosts({ initialData }: PopularPostsProps) {
               />
             </div>
             <div>
-              <h3 className="relative py-2 font-nunito text-base">
+              <h3 className="relative py-2 font text-base">
                 <div className="absolute bottom-1 left-1/2 h-0.5 w-16 -translate-x-1/2 rounded-lg bg-[#A7A9AC] md:left-0 md:translate-x-0"></div>
                 {post.postTitle}
               </h3>

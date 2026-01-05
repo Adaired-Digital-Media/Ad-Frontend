@@ -42,7 +42,7 @@ export default function CareerPage() {
           <h2 className="font-dm text-2xl font-medium md:text-3xl">
             Start doing work that matters
           </h2>
-          <p className="font-nunito text-base font-medium md:text-lg">
+          <p className="font- text-base font-medium md:text-lg">
             Our philosophy is simple — hire a team of diverse, passionate people
             and foster a culture that empowers you to do your best work.
           </p>

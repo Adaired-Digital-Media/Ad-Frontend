@@ -366,13 +366,13 @@ export const ProductForm = ({
                 <Title
                   as="h5"
                   className={cn(
-                    `font-nunito text-lg font-semibold text-[#515151]`
+                    `font text-lg font-semibold text-[#515151]`
                   )}
                 >
                   Total Cost:{' '}
                   <span
                     className={cn(
-                      `font-nunito text-[22px] font-bold text-[#18AA15]`
+                      `font text-[22px] font-bold text-[#18AA15]`
                     )}
                   >
                     $ {totalPrice}

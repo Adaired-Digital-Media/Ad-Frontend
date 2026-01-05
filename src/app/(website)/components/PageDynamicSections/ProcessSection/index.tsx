@@ -56,7 +56,7 @@ const ProcessSection = ({
               } text-center transition duration-500`
             )}
           >
-            <h4 className="text-lg font-bold font-nunito">{stepData.step}</h4>
+            <h4 className="text-lg font-bold font">{stepData.step}</h4>
             <p className="text-base leading-5">{stepData.description}</p>
           </div>
           <div
@@ -66,7 +66,7 @@ const ProcessSection = ({
               } text-center absolute p-7 transition duration-500`
             )}
           >
-            <h4 className="text-lg font-bold font-nunito">{stepData.step}</h4>
+            <h4 className="text-lg font-bold font">{stepData.step}</h4>
             <p className="text-base leading-5">{stepData.description}</p>
           </div>
         </div>
@@ -106,7 +106,7 @@ const ProcessSection = ({
             }}
           ></div>
         </div>
-        <h2 className="text-2xl lg:text-[38px] font-nunito leading-snug">
+        <h2 className="text-2xl lg:text-[38px] font leading-snug">
           {data.title}
         </h2>
         <div

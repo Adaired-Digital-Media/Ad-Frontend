@@ -3,10 +3,11 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input, Textarea } from 'rizzui';
 import { useForm } from 'react-hook-form';
-import Button from '@web-components/Button';
+import Button from '../../common/Button';
 import { routes } from '@/config/routes';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import { usePathname, useRouter } from 'next/navigation';
+import SaveAndCancel from '../../common/SaveAndCancel';
 
 const schema = z.object({
   gRecaptchaToken: z.string(),
@@ -68,7 +69,7 @@ function GetInTouchForm({ colorScheme }: { colorScheme: string }) {
 
   return (
     <div className="rounded-lg border p-5">
-      <h2 className="mb-4 inline-block text-[1.688rem] md:text-4xl">
+      <h3 className="mb-4 inline-block">
         Get In Touch
         <div
           className={`mt-2 h-0.5 w-3/4`}
@@ -76,7 +77,7 @@ function GetInTouchForm({ colorScheme }: { colorScheme: string }) {
             backgroundColor: colorScheme,
           }}
         />
-      </h2>
+      </h3>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
         <Input
@@ -101,15 +102,18 @@ function GetInTouchForm({ colorScheme }: { colorScheme: string }) {
           rows={4}
           size="xl"
           {...register('message')}
-          className="font-nunito text-lg"
+          className="font text-lg"
         />
 
-        <Button
-          title="Send Your Inquiry"
+        {/* <Button
+          name="Send Your Inquiry"
           className="w-full justify-center border-[#FB9100] bg-white pl-0 pr-0 text-black hover:pl-0 hover:pr-0"
-          textClassName="text-center"
-          svgClassName="bg-[#000000] "
-          type="submit"
+          onClick={() => onSubmit}
+        /> */}
+        <SaveAndCancel
+          name={'Send Your Inquiry'}
+          isIcon={true}
+          handleClick={() => onSubmit}
         />
       </form>
     </div>

@@ -128,7 +128,7 @@ const Blog = async ({ params }: BlogProps) => {
         const supportedTags = /^(h[1-6]|ol|ul|p|blockquote)$/;
 
         if (supportedTags.test(tagName)) {
-          let additionalClasses = 'font-nunito';
+          let additionalClasses = 'font-';
 
           switch (tagName) {
             case 'h1':
@@ -198,10 +198,10 @@ const Blog = async ({ params }: BlogProps) => {
               priority
             />
           </div>
-          <h1 className="py-4 font-nunito text-2xl font-bold md:text-3xl lg:text-4xl">
+          <h1 className="py-4 font- text-2xl font-bold md:text-3xl lg:text-4xl">
             {blog.postTitle}
           </h1>
-          <p className="pb-2 font-nunito text-gray-600">
+          <p className="pb-2 font- text-gray-600">
             {formatDate(blog.createdAt)}
           </p>
           <div className="prose max-w-none">{contentWithClass}</div>

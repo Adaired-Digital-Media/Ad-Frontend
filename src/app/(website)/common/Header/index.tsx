@@ -13,7 +13,7 @@ import { usePathname } from 'next/navigation';
 import { debounce } from 'lodash';
 import { useSession } from 'next-auth/react';
 import LandingPageMobileMenu from './Landing-mobile-menu';
-import logo from '../../../../../public/AdAired-Cap-Logo.png'
+import logo from '../../../../../public/AdAired-Cap-Logo.png';
 import Image from 'next/image';
 const Navbar = () => {
   const pathname = usePathname();
@@ -94,7 +94,7 @@ const Navbar = () => {
                           width={150}
                           priority
                         /> */}
-                        <Image src={logo} width={150} height={78} alt='logo'/>
+                        <Image src={logo} width={150} height={78} alt="logo" />
                       </div>
                     </Link>
                   </div>
@@ -130,7 +130,7 @@ const Navbar = () => {
               </div>
             </WrapperComponent>
             {/* Mobile Navigation */}
-            {!isLandingPage ? (
+            {/* {!isLandingPage ? (
               <MobileNav
                 isSidebarVisible={isSidebarVisible}
                 closeSidebar={closeSidebar}
@@ -140,7 +140,7 @@ const Navbar = () => {
                 isSidebarVisible={isSidebarVisible}
                 closeSidebar={closeSidebar}
               />
-            )}
+            )} */}
           </header>
         </div>
       </section>

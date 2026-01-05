@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import MaxWidthWrapper from '@web-components/MaxWidthWrapper';
 import Image from 'next/image';
-import Button from '@web-components/Button';
+import Button from '../../common/Button';
 import { cn } from '@core/utils/class-names';
 import { Select } from 'rizzui';
 
@@ -155,7 +155,7 @@ function CaseStudyCard({
           <p className="my-1 text-center text-xl lg:my-4 lg:text-left lg:text-3xl">
             About the project
           </p>
-          <p className="line-clamp-3 hyphens-auto text-justify text-base lg:hyphens-none lg:text-left lg:text-lg">
+          <p className="line-clamp-3 hyphens-auto text-justify text-base lg:hyphens-none lg:text-left">
             {aboutProjectDescription}
           </p>
         </div>
@@ -177,22 +177,16 @@ function CaseStudyCard({
         <div className="flex-grow"></div>
         <div className="flex items-center justify-center lg:items-start lg:justify-start">
           <Button
-            title="View Case Study"
+            name="View Case Study"
             className="mt-5 bg-white text-black"
-            svgClassName="bg-[#F89520]"
-            type="button"
-            navigateTo={`/case-studies/${slug}`}
+            href={`/case-studies/${slug}`}
           />
         </div>
       </div>
       <div className="flex w-full flex-col items-center lg:w-1/2">
         <div>
-          <h2 className="text-center text-[1.688rem] md:text-4xl">
-            {caseStudyName}
-          </h2>
-          <p className="line-clamp-1 text-center text-base lg:text-lg">
-            {caseStudyDescription}
-          </p>
+          <h2 className="text-center">{caseStudyName}</h2>
+          <p className="line-clamp-1 text-center">{caseStudyDescription}</p>
         </div>
         <div className="flex-grow"></div>
         <div>

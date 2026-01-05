@@ -8,6 +8,8 @@ import Process from '@web-components/Timeline/Process';
 import type { Metadata } from 'next';
 import CldImage from '@web-components/CloudinaryImageComponent';
 import { BaseURL } from '@/baseUrl';
+import Heading from '../../common/Heading';
+import Blogs from '../../components/home/Blogs';
 
 export const metadata: Metadata = {
   title: 'Unveiling Adaired: Our History, Team, and Vision | Learn About Us',
@@ -17,7 +19,6 @@ export const metadata: Metadata = {
     canonical: 'https://www.adaired.com/about',
   },
 };
-
 // export async function getBlogsData() {
 //   const res = await fetch(
 //     `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/blog/read?limit=3`,
@@ -57,7 +58,8 @@ const About = async () => {
       <WorkStation />
       <ProcessSection />
       <TestimonialSlider />
-      <BlogCards blogs={blogs} />
+      <Blogs/>
+      {/* <BlogCards blogs={blogs} /> */}
     </div>
   );
 };
@@ -81,23 +83,20 @@ const IntroSection = () => {
             </div>
           </div>
           <div className="flex-grow-0 space-y-2 p-2 text-center md:text-left">
-            <h5 className="relative inline font-nunito text-lg text-[#515151] sm:text-xl md:pl-20">
-              <div className="absolute -left-1/4 top-1/2 h-px w-10 -translate-y-1/2 transform bg-[#A7A9AC] sm:-left-1/3 sm:w-12 md:left-0 md:w-16"></div>
-              <div className="absolute -right-1/4 top-1/2 h-px w-10 -translate-y-1/2 transform bg-[#A7A9AC] sm:-right-1/3 sm:w-12 md:hidden md:w-16"></div>
-              Adaired Digital Media
-            </h5>
-            <h2 className="text-[1.688rem] md:text-4xl">
-              A Marketing Firm Driven To Accelerate Your Business Growth
-            </h2>
-            <p className="text-justify text-base sm:text-lg md:text-left">
-              Founded in 2015, Adaired is a versatile digital marketing firm
+            <Heading
+              subTitle={'Adaired Digital Media'}
+              title={
+                'A Marketing Firm Driven To Accelerate Your Business Growth'
+              }
+              span={''}
+              description={`Founded in 2015, Adaired is a versatile digital marketing firm
               that empowers businesses to thrive online through its time-tested
               and effective digital marketing services. We are more than just
               another industry survivor; we are creators, inventors, and
               catalysts for your company&apos;s growth. We stand out by
               consistently delivering innovative solutions, pushing limits, and
-              redefining the idea of success.
-            </p>
+              redefining the idea of success.`}
+            />
             <div className="grid grid-cols-1 flex-col gap-5 sm:grid-cols-2 sm:flex-row">
               <div className="flex flex-col items-center border p-4 md:items-start md:border-none md:p-0">
                 <CldImage
@@ -107,11 +106,11 @@ const IntroSection = () => {
                   width={60}
                   className="mb-2 rounded-lg border p-2"
                 />
-                <h3 className="relative py-2 font-nunito text-xl font-semibold">
+                <h3 className="relative py-2">
                   <div className="absolute bottom-1 left-1/2 h-0.5 w-16 -translate-x-1/2 rounded-lg bg-[#A7A9AC] md:left-0 md:translate-x-0"></div>
                   Innovative Mindset
                 </h3>
-                <p className="text-base sm:text-lg">
+                <p className="">
                   Known for our innovative mindset, Adaired&apos;s qualified
                   digital marketers use creativity to craft tailored strategies
                   that meet your unique needs and goals.
@@ -125,23 +124,23 @@ const IntroSection = () => {
                   width={60}
                   className="mb-2 rounded-lg border p-2"
                 />
-                <h3 className="relative py-2 font-nunito text-xl font-semibold">
+                <h3 className="relative py-2">
                   <div className="absolute bottom-1 left-1/2 h-0.5 w-16 -translate-x-1/2 rounded-lg bg-[#A7A9AC] md:left-0 md:translate-x-0"></div>
                   Data-Driven Strategies
                 </h3>
-                <p className="text-base sm:text-lg">
+                <p className="">
                   Adaired utilizes in-depth analysis of consumer behavior and
                   market research to develop data-backed strategies for ongoing
                   company success.
                 </p>
               </div>
             </div>
-            <p className="font-baby text-lg font-semibold sm:text-2xl">
+            <h4 className="font-baby font-semibold">
               &quot;The internet is becoming the town square for the global
               village of tomorrow.&quot; -
               <i className="text-[#92288D]">Bill Gates</i>
-            </p>
-            <p className="hidden text-base sm:text-lg xl:block">
+            </h4>
+            <p className="hidden xl:block">
               At Adaired, we know very well how to turn visitors into leads,
               leads into customers, and customers into business promoters. Our
               comprehensive services aid businesses to grow online, increase
@@ -150,13 +149,13 @@ const IntroSection = () => {
           </div>
         </MaxWidthWrapper>
         <MaxWidthWrapper className="space-y-2 py-2">
-          <p className="text-base sm:text-lg xl:hidden">
+          <p className="xl:hidden">
             At Adaired, we know very well how to turn visitors into leads, leads
             into customers, and customers into business promoters. Our
             comprehensive services aid businesses to grow online, increase
             exposure, and ultimately become the leader in the industry.
           </p>
-          <p className="text-base sm:text-lg">
+          <p className="">
             We believe that a visually appealing website with decent traffic or
             a handful of social media followers is not an indicator of a
             successful digital marketing campaign. True success lies in making a
@@ -174,13 +173,13 @@ export const ProcessSection = () => {
     <section className="pb-20">
       <MaxWidthWrapper className="text-center">
         <div className="flex flex-col items-center">
-          <div className="relative inline px-4 font-nunito text-lg text-[#515151]">
+          <div className="relative inline px-4 text-lg text-[#515151]">
             <div className="absolute left-full top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC]"></div>
             <div className="absolute right-full top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC]"></div>
             How We Work
           </div>
-          <h2 className="py-1 text-[1.688rem] md:text-4xl">Our Process</h2>
-          <p className="max-w-[900px] pb-10 text-base sm:text-lg">
+          <h2 className="">Our Process</h2>
+          <p className="max-w-[900px] pb-10">
             No need to settle for okay when we can serve you the best! Our
             strategies are meticulously crafted to spark creativity, boost
             engagement, and achieve the impossible.
@@ -254,9 +253,7 @@ const WorkStation = () => {
           />
         </div>
         <div className="z-1 relative mx-auto -mt-9 w-4/5 border bg-white px-8 py-5 text-center lg:-mt-14 lg:px-12 lg:py-8">
-          <h2 className="text-lg md:text-xl lg:text-2xl xl:text-4xl">
-            Our Workstation
-          </h2>
+          <h3 className="">Our Workstation</h3>
           <div className="absolute -bottom-3 -left-3 h-8 w-8 border-b-4 border-l-4 border-[#BC1D8D] lg:-bottom-5 lg:-left-5 lg:h-12 lg:w-12"></div>
           <div className="absolute -bottom-3 -right-3 h-8 w-8 border-b-4 border-r-4 border-[#BC1D8D] lg:-bottom-5 lg:-right-5 lg:h-12 lg:w-12"></div>
         </div>
@@ -273,9 +270,7 @@ const WorkStation = () => {
           />
         </div>
         <div className="z-1 relative mx-auto -mt-9 w-4/5 border bg-white px-8 py-5 text-center lg:-mt-14 lg:px-12 lg:py-8">
-          <h2 className="text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-4xl">
-            40+Team Members
-          </h2>
+          <h3 className="">40+Team Members</h3>
           <div className="absolute -bottom-3 -left-3 h-8 w-8 border-b-4 border-l-4 border-[#BC1D8D] lg:-bottom-5 lg:-left-5 lg:h-12 lg:w-12"></div>
           <div className="absolute -bottom-3 -right-3 h-8 w-8 border-b-4 border-r-4 border-[#BC1D8D] lg:-bottom-5 lg:-right-5 lg:h-12 lg:w-12"></div>
         </div>

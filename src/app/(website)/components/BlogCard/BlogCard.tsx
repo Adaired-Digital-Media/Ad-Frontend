@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from '@core/ui/shadcn-ui/card';
 import { Separator } from '@core/ui/shadcn-ui/separator';
-import Button from '@web-components/Button';
+import Button from '../../common/Button';
 import Image from 'next/image';
 import { formatDate } from '@core/utils/format-date';
 import Link from 'next/link';
@@ -40,22 +40,20 @@ const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
           </Link>
         </div>
 
-        <CardTitle className="line-clamp-2 font-nunito text-2xl">
+        <CardTitle className="line-clamp-2 font text-2xl">
           <Link href={`/blog/${data.slug}`} className="">
             {data.postTitle}
           </Link>
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-4 pt-0 text-left font-nunito text-lg">
+      <CardContent className="p-4 pt-0 text-left font text-lg">
         <div className="line-clamp-3">{getExcerpt(data.postDescription)}</div>
       </CardContent>
       <div className="p-4">
         <Button
-          title="Read Blog"
+          name="Read Blog"
           className="border-none bg-white text-black"
-          svgClassName="bg-[#F89520] "
-          type="button"
-          navigateTo={`/blog/${data.slug}`}
+          href={`/blog/${data.slug}`}
         />
       </div>
       <Separator className="mx-auto w-[90%]" />

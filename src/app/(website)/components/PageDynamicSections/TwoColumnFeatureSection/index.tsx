@@ -20,11 +20,11 @@ const TwoColumnFeatureSection: React.FC<TwoColumnFeatureSectionProps> = ({
   return (
     <div className="space-y-3">
       <h2
-        className={`text-2xl md:text-[38px] leading-snug font-nunito font-semibold `}
+        className={`text-2xl md:text-[38px] leading-snug font font-semibold `}
       >
         {body.title}
       </h2>
-      <div className="text-justify hyphens-auto text-base sm:hyphens-none sm:text-left sm:text-lg space-y-3 font-nunito">
+      <div className="text-justify hyphens-auto text-base sm:hyphens-none sm:text-left sm:text-lg space-y-3 font">
         {parse(body.description_1)}
       </div>
       <div
@@ -115,7 +115,7 @@ const FeatureCard = ({
       </div>
       <div>
         <div className="pb-1">
-          <h3 className="text-xl font-bold font-nunito">{title}</h3>
+          <h3 className="text-xl font-bold font">{title}</h3>
           <div
             className="h-0.5 w-16 "
             style={{
@@ -123,7 +123,7 @@ const FeatureCard = ({
             }}
           ></div>
         </div>
-        <p className="text-gray-600 font-nunito text-base">{description}</p>
+        <p className="text-gray-600 font text-base">{description}</p>
       </div>
     </div>
   );

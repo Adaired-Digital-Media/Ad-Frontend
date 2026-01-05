@@ -5,6 +5,8 @@ import { Icons } from '@web-components/Icons';
 import Link from 'next/link';
 import ContactPageForm from '@web-components/forms/ContactPageForm';
 import type { Metadata } from 'next';
+import ContactForm from '../../components/forms/ContactForm';
+import Heading from '../../common/Heading';
 
 export const metadata: Metadata = {
   title: 'Contact Adaired – Speak with Our Team Today!',
@@ -22,7 +24,7 @@ const Contact = () => {
       <section className="py-12 lg:py-24">
         <MaxWidthWrapper className="flex flex-col gap-20 lg:flex-row">
           <div className="flex-1 lg:w-1/2">
-            <ContactPageForm />
+            <ContactForm />
           </div>
           <div className="flex-1 lg:w-1/2">
             <ContactDetails />
@@ -48,7 +50,7 @@ export default Contact;
 const ContactDetails = () => {
   return (
     <div>
-      <div className="p-2 text-center md:text-left">
+      {/* <div className="p-2 text-center md:text-left">
         <h5 className="relative inline font-nunito text-lg text-[#515151] sm:text-xl md:pl-20">
           <div className="absolute -left-1/2 top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] md:left-0"></div>
           <div className="absolute -right-1/2 top-1/2 h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] font-nunito font-normal md:hidden"></div>
@@ -65,7 +67,15 @@ const ContactDetails = () => {
           your project and provide a personalized plan tailored to your business
           objectives.
         </p>
-      </div>
+      </div> */}
+      <Heading
+        subTitle={'Ready To Elevate?'}
+        title={'Get In Touch'}
+        span={''}
+        description={
+          "Welcome to Adaired, your one-stop destination for comprehensive digital marketing solutions. Every ambitious entrepreneur needs a digital marketing partner like us. To get started, please fill out the form on this page. We'll promptly connect with you to discuss your project and provide a personalized plan tailored to your business objectives."
+        }
+      />
       <div className="grid grid-cols-12 gap-5 py-6">
         <div className="col-span-12 flex flex-col items-center gap-3 border p-5 text-center md:flex-row md:items-start md:gap-5 md:text-left">
           <Icons.Map className="h-12 w-12 flex-none rounded border p-2 text-[#1b5b97]" />

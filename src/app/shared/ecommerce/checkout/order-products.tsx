@@ -82,7 +82,7 @@ export default function OrderProducts({
                 <div className="flex items-center">
                   <Title
                     as="h3"
-                    className="mb-1 font-nunito text-[22px] font-bold text-[#279B25]"
+                    className="mb-1 font text-[22px] font-bold text-[#279B25]"
                   >
                     {toCurrency(item?.totalPrice as number)}
                   </Title>

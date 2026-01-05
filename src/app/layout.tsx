@@ -1,6 +1,6 @@
 import { Toaster } from 'react-hot-toast';
 import { cn } from '@core/utils/class-names';
-import { inter, lexendDeca, nunito, dm, baby, poppins } from '@/app/fonts';
+import { inter, lexendDeca, nunito, dm, baby } from '@/app/fonts';
 import Script from 'next/script';
 import { siteConfig } from '@/config/site.config';
 import NextProgress from '@core/components/next-progress';
@@ -8,13 +8,35 @@ import { ReCaptchaProvider } from 'next-recaptcha-v3';
 import GlobalDrawer from '@/app/shared/drawer-views/container';
 import GlobalModal from '@/app/shared/modal-views/container';
 
+import { Poppins, Outfit, Montserrat } from 'next/font/google';
+
+export const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
+
+export const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
+export const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
+
 // styles
 import '@/app/globals.css';
 
 export const metadata = {
   title: siteConfig.title,
   description: siteConfig.description,
-    metadataBase: new URL('https://adaired.com'),
+  metadataBase: new URL('https://adaired.com'),
 };
 
 // Google Analytics configuration
@@ -140,11 +162,10 @@ export default async function RootLayout({
           dm.variable,
           baby.variable,
           poppins.variable,
-          `font-nunito antialiased`
+          `font- antialiased`
         )}
         id="root"
       >
-
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -155,7 +176,7 @@ export default async function RootLayout({
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        
+
         <ReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}>
           <NextProgress />
           {children}

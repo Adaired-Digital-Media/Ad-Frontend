@@ -23,7 +23,7 @@ export const StandOutSectionDetails: IStandOutSection = {
   isSvg: false,
   title: 'Empowering Your Brand With Tailored Strategies And Proven Expertise',
   description:
-    "<p>At Adaired Digital Media, we understand that quality content is the backbone of effective digital marketing. We don’t believe in a one-size-fits-all approach. By leveraging tools like <span className='text-[#F39019] font-nunito font-bold'> SurferSEO </span>, we optimize our content to ensure it meets the latest search engine standards and drives organic traffic.</p><p>With a portfolio of successful campaigns across various industries, we’ve helped many businesses and yielded tangible results. Here is what sets us apart:</p>",
+    "<p>At Adaired Digital Media, we understand that quality content is the backbone of effective digital marketing. We don’t believe in a one-size-fits-all approach. By leveraging tools like <span className='text-[#F39019] font-bold'> SurferSEO </span>, we optimize our content to ensure it meets the latest search engine standards and drives organic traffic.</p><p>With a portfolio of successful campaigns across various industries, we’ve helped many businesses and yielded tangible results. Here is what sets us apart:</p>",
   listItems: [
     'Industry-Specific Expertise',
     '100% Human-Crafted Content, CopyScape Passed',

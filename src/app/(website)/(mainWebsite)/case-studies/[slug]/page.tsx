@@ -7,44 +7,53 @@ import Image from 'next/image';
 import React from 'react';
 import parse from 'html-react-parser';
 import type { Metadata } from 'next';
-import { BaseURL } from '@/baseUrl';
-import NotFound from '@/app/not-found';
-
+//update
+// export async function generateStaticParams() {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/all`
+//   ).then((res) => res.json());
+//   const CaseStudies = res.result;
+//   return CaseStudies.map((CaseStudy: any) => ({
+//     slug: CaseStudy.slug.toString(),
+//   }));
+// }
 export async function generateStaticParams() {
   try {
-    const res = await fetch(`${BaseURL}/case-study/read`, {
-      cache: 'no-store',
-    });
+    const API_URL = process.env.OLD_API_URI;
 
-    // if (!res.ok) {
-    //   console.error('Failed to fetch case studies:', res.status);
-    //   return [];
-    // }
+    if (!API_URL) {
+      console.warn("OLD_API_URI not defined at build time");
+      return [];
+    }
+
+    const res = await fetch(
+      `${API_URL}/api/v1/case-studies/all`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) {
+      console.error("Failed to fetch case studies:", res.status);
+      return [];
+    }
 
     const data = await res.json();
-    const caseStudies = data?.data ?? [];
+    const caseStudies = data?.result ?? [];
 
     return caseStudies.map((cs: any) => ({
       slug: String(cs.slug),
     }));
   } catch (error) {
-    console.error('generateStaticParams(case-studies) failed:', error);
+    console.error("generateStaticParams(case-studies) failed:", error);
     return [];
   }
 }
 
-async function getCaseStudyData(slug: string) {
-  const res = await fetch(`${BaseURL}/case-study/read?slug=${slug}`, {
-    cache: 'no-store',
-  });
-
-  if (!res.ok) {
-    if (res.status === 404) return null; // ✅ important
-    throw new Error(`API failed: ${res.status}`);
-  }
-
+async function getCaseStudyData({ slug }: { slug: string }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/${slug}`
+  );
   const data = await res.json();
-  return data.data;
+  return data.result;
 }
 
 export async function generateMetadata({
@@ -52,54 +61,43 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const data = await getCaseStudyData(params.slug);
-
-  if (!data) {
-    return {
-      title: 'Case Study Not Found',
-      robots: { index: false, follow: false },
-    };
-  }
-
+  const data = await getCaseStudyData({
+    slug: params.slug,
+  });
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URI!),
-    // title:
-    //   data.metaTitle ??
-    //   'Adaired Case Studies: See How We Help Businesses Thrive',
-    // description:
-    //   data.metaDescription ??
-    //   'Discover how Adaired transformed businesses with real success stories.',
-    title:"Green Choice Carpet Cleaning SEO Case Study | Adaired",
-    description:"See how we helped Green Choice Carpet Cleaning improve their online visibility and search presence through targeted, eco-friendly SEO campaigns.",
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
+    title: data.metaTitle
+      ? data.metaTitle
+      : `Adaired Case Studies: See How We Help Businesses Thrive`,
+    description: data.metaDescription
+      ? data.metaDescription
+      : `Discover how Adaired transformed businesses like yours with simple, engaging case studies highlighting real success. Know how we can support your goals now!`,
     alternates: {
       canonical: `/case-studies/${params.slug}`,
     },
     robots: {
-      index: true,
-      follow: true,
+      index: false,
+      follow: false,
     },
   };
 }
 
-async function fetchCaseStudyCategory(slug: string) {
-  const res = await fetch(`${BaseURL}/case-study/category/${slug}`);
-
-  if (!res.ok) throw new Error('Category fetch failed');
-
+async function fetchCaseStudyCategory({ slug }: { slug: string }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies-category/getCaseStudiesCategory/${slug}`,
+    {
+      method: 'GET',
+    }
+  );
   const data = await res.json();
-  return data.data;
+  return data.result;
 }
 
 async function page({ params }: { params: { slug: string } }) {
-  const caseStudyData = await getCaseStudyData(params.slug);
-
-  if (!caseStudyData) {
-    NotFound(); // ✅ Next.js 404 page
-  }
-
-  // const caseStudyCategory = await fetchCaseStudyCategory(
-  //   caseStudyData.category
-  // );
+  const caseStudyData = await getCaseStudyData(params);
+  const caseStudyCategory = await fetchCaseStudyCategory({
+    slug: caseStudyData.category,
+  });
 
   return (
     <>
@@ -118,12 +116,12 @@ async function page({ params }: { params: { slug: string } }) {
         solutionsImage={caseStudyData.solutionsImage}
         challengesAndSolutions={caseStudyData.challengesAndSolutions}
       />
-      {/* <TechnologiesUsedsection
+      <TechnologiesUsedsection
         technologiesUsedTitle={caseStudyData.technologiesUsedTitle}
         technologiesUsedDescription={caseStudyData.technologiesUsedDescription}
         technologiesUsed={caseStudyData.technologiesUsed}
         categoryData={caseStudyCategory.technologies}
-      /> */}
+      />
       <Goalssection
         goalsTitle={caseStudyData.goalsTitle}
         goalsDescription={caseStudyData.goalsDescription}
@@ -164,7 +162,7 @@ const Introsection = ({
     <section className="py-6 lg:py-12">
       <MaxWidthWrapper>
         <div className="flex flex-col items-center justify-center text-center">
-          <h5 className="relative inline px-4 font-nunito text-base text-[#515151] sm:text-lg">
+          <h5 className="relative inline px-4 font- text-base text-[#515151] sm:text-lg">
             <div className="absolute left-full top-1/2 hidden h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] sm:block"></div>
             <div className="absolute right-full top-1/2 hidden h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] sm:block"></div>
             {subHeading}
@@ -536,7 +534,7 @@ const Resultsection = ({
                 className="shrink-0 rounded-lg border p-2 text-5xl"
               />
               <div>
-                <h3 className="font-nunito text-xl font-bold">
+                <h3 className="font- text-xl font-bold">
                   {item.title}
                   <div
                     className="h-0.5 w-10"

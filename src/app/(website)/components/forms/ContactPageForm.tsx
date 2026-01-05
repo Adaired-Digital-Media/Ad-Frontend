@@ -8,6 +8,7 @@ import { PhoneNumber } from '@core/ui/rizzui-ui/phone-input';
 import { routes } from '@/config/routes';
 import { useReCaptcha } from 'next-recaptcha-v3';
 import { usePathname, useRouter, redirect } from 'next/navigation';
+import SaveAndCancel from '../../common/SaveAndCancel';
 
 const schema = z.object({
   gRecaptchaToken: z.string(),
@@ -113,7 +114,7 @@ const ContactPageForm = () => {
           label="Message"
           size="xl"
           {...register('message')}
-          className="!mb-5 font-nunito text-lg"
+          className="font !mb-5 text-lg"
         />
         {/* <FormField
           control={form.control}
@@ -197,13 +198,13 @@ const ContactPageForm = () => {
             </FormItem>
           )}
         /> */}
-        <Button
+        {/* <Button
           title="Send Your Inquiry"
-          // className="mt-20 flex w-full items-center justify-center bg-white pl-0 pr-0 text-black hover:pl-0 hover:pr-0"
           className="w-full items-center justify-center border border-gray-200 bg-white pl-0 pr-0 hover:pl-0 hover:pr-0"
           svgClassName="bg-[#F89520]  "
           type="submit"
-        />
+        /> */}
+        <SaveAndCancel name={'Send Your Inquiry'} isIcon={true} isFullWidth={true} />
       </form>
     </div>
   );

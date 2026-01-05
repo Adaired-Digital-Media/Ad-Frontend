@@ -67,12 +67,12 @@
 //           >
 //             <h2
 //               className={cn(
-//                 `font-nunito text-2xl font-semibold leading-snug lg:text-[38px]`
+//                 `font text-2xl font-semibold leading-snug lg:text-[38px]`
 //               )}
 //             >
 //               {data.title}
 //             </h2>
-//             <div className="font-nunito text-lg">{parse(data.description)}</div>
+//             <div className="font text-lg">{parse(data.description)}</div>
 //           </div>
 
 //           <div className={cn(`div relative flex items-start px-4`)}>
@@ -105,7 +105,7 @@
 //                       />
 //                       <h2
 //                         className={cn(
-//                           `font-nunito text-lg font-semibold md:text-2xl`
+//                           `font text-lg font-semibold md:text-2xl`
 //                         )}
 //                       >
 //                         {item.title}
@@ -224,12 +224,12 @@
 //           >
 //             <h2
 //               className={cn(
-//                 `font-nunito text-2xl font-semibold leading-snug lg:text-[38px]`
+//                 `font text-2xl font-semibold leading-snug lg:text-[38px]`
 //               )}
 //             >
 //               {data.title}
 //             </h2>
-//             <div className="font-nunito text-lg">{parse(data.description)}</div>
+//             <div className="font text-lg">{parse(data.description)}</div>
 //           </div>
 
 //           <div className={cn(`div relative flex items-start px-4`)}>
@@ -262,7 +262,7 @@
 //                       />
 //                       <h2
 //                         className={cn(
-//                           `font-nunito text-lg font-semibold md:text-2xl`
+//                           `font text-lg font-semibold md:text-2xl`
 //                         )}
 //                       >
 //                         {item.title}
@@ -373,12 +373,12 @@ const StickyScroll = ({ colorScheme, data }: StickyScrollProps) => {
           >
             <h2
               className={cn(
-                `font-nunito text-2xl font-semibold leading-snug lg:text-[38px]`
+                `font text-2xl font-semibold leading-snug lg:text-[38px]`
               )}
             >
               {data.title}
             </h2>
-            <div className="font-nunito text-lg">{parse(data.description)}</div>
+            <div className="font text-lg">{parse(data.description)}</div>
           </div>
 
           <div className={cn(`relative flex items-start px-4`)}>
@@ -409,7 +409,7 @@ const StickyScroll = ({ colorScheme, data }: StickyScrollProps) => {
                       />
                       <h2
                         className={cn(
-                          `font-nunito text-lg font-semibold md:text-2xl`
+                          `font text-lg font-semibold md:text-2xl`
                         )}
                       >
                         {item.title}

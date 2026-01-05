@@ -162,13 +162,13 @@ const HomepageForm = () => {
           label="Message"
           size="xl"
           {...register('message')}
-          className="font-nunito text-lg"
+          className="font text-lg"
         />
 
         <Checkbox
           {...register('terms')}
           label={
-            <p className="font-nunito">
+            <p className="font">
               I accept the{' '}
               <Link
                 href="/terms-and-conditions"

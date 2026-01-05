@@ -26,7 +26,7 @@ const ImageWithIconbox = ({ colorScheme, data }: ImageWithIconboxProps) => {
       >
         <div className="w-full lg:w-1/2 space-y-3">
           <h2
-            className={`text-2xl lg:text-[38px] leading-snug font-nunito font-semibold`}
+            className={`text-2xl lg:text-[38px] leading-snug font font-semibold`}
           >
             {data.title}
           </h2>

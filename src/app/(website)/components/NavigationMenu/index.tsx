@@ -24,7 +24,7 @@ const NavigationMenu: React.FC<InnerNavigationProps> = ({
 }) => {
   return (
     <div className={cn(`bg-[#F8F8F8] px-5 pb-5 pt-10 rounded-lg`)}>
-      <h3 className={cn(`text-[26px] font-bold font-nunito leading-snug`)} style={{
+      <h3 className={cn(`text-[26px] font-bold font leading-snug`)} style={{
         color: colorScheme
       }}>{serviceName}</h3>
       <ul>
@@ -33,7 +33,7 @@ const NavigationMenu: React.FC<InnerNavigationProps> = ({
             <Link href={childService.childServiceSlug || ""} key={childService._id}>
               <li
                 className={cn(
-                  `flex text-base md:text-[18px] font-semibold font-nunito bg-white p-3 mt-2 hover:text-white group overflow-hidden transition duration-500 menu__item `
+                  `flex text-base md:text-[18px] font-semibold font bg-white p-3 mt-2 hover:text-white group overflow-hidden transition duration-500 menu__item `
                 )}
               >
                 <style jsx>{`

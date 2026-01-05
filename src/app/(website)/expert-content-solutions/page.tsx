@@ -102,7 +102,7 @@ const HeroSection = () => {
             >
               {HeroSectionDetails.title}
             </h1>
-            <p className={cn(`pt-[15px] font-nunito text-base`)}>
+            <p className={cn(`pt-[15px] font text-base`)}>
               {HeroSectionDetails.description}
             </p>
             <div
@@ -198,7 +198,7 @@ const StandOutSection = () => {
           </h2>
           <div
             className={cn(
-              `space-y-[13px] font-nunito text-base text-[#424242]`
+              `space-y-[13px] font text-base text-[#424242]`
             )}
           >
             {parse(StandOutSectionDetails.description)}
@@ -211,7 +211,7 @@ const StandOutSection = () => {
                 title={text}
                 isSvg={true}
                 containerClassName={`p-0`}
-                titleClassName={`font-nunito font-semibold text-base `}
+                titleClassName={`font font-semibold text-base `}
               />
             ))}
           </div>
@@ -231,7 +231,7 @@ const ApproachSection = () => {
         >
           {ApproachSectionDetails.title}
         </h2>
-        <p className={cn(`pt-[10px] font-nunito text-base text-[#424242]`)}>
+        <p className={cn(`pt-[10px] font text-base text-[#424242]`)}>
           {ApproachSectionDetails.description}
         </p>
       </>
@@ -248,7 +248,7 @@ const ApproachSection = () => {
               description={iconBox.description}
               containerClassName={`shadow-3xl p-[25px] flex gap-[15px] items-start justify-between rounded-[15px]`}
               titleClassName={`font-poppins text-[#121212] text-xl font-semibold leading-7 tracking-tight`}
-              descriptionClassName={`text-base leading-[27px] text-[#424242] font-nunito`}
+              descriptionClassName={`text-base leading-[27px] text-[#424242] font`}
               iconContainerClassName={`flex-none h-[60px] w-[60px]`}
               iconClassName={`h-[60px] w-[60px]`}
             />
@@ -297,7 +297,7 @@ const SurferSEOSection = () => {
                 description={iconBox.description}
                 containerClassName="flex gap-2.5 items-start"
                 titleClassName="font-poppins leading-7 tracking-tight text-xl font-semibold"
-                descriptionClassName="leading-[27px] text-[#424242] pt-2 text-base font-nunito"
+                descriptionClassName="leading-[27px] text-[#424242] pt-2 text-base font"
                 iconClassName="h-[22px] w-[22px] rotate-[270deg] mt-1"
               />
             ))}
@@ -356,7 +356,7 @@ const ContactUsSection = () => {
               />
               <p
                 className={cn(
-                  `m-auto max-w-[430px] pb-[20px] font-nunito text-base text-[#424242]`
+                  `m-auto max-w-[430px] pb-[20px] font text-base text-[#424242]`
                 )}
               >
                 Ready to Elevate Your Content? Let’s amplify your brand and

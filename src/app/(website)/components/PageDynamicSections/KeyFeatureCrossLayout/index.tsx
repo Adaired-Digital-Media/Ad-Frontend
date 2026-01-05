@@ -15,7 +15,7 @@ const KeyFeatureCrossLayout = ({
 
   return (
     <div className="space-y-3">
-      <h2 className={`text-2xl md:text-[38px] leading-snug font-nunito font-semibold `}>{body.title}</h2>
+      <h2 className={`text-2xl md:text-[38px] leading-snug font font-semibold `}>{body.title}</h2>
       <div className="text-justify hyphens-auto text-base sm:hyphens-none sm:text-left sm:text-lg space-y-3">
         {parse(body.description)}
       </div>

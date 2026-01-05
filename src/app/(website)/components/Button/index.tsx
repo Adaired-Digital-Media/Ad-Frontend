@@ -27,13 +27,13 @@ const Button: React.FC<ButtonProps> = (props) => {
   const buttonContent = (
     <>
       {props.title && (
-        <p className={`font-nunito text-lg ${props.textClassName}`}>
+        <p className={`font text-lg ${props.textClassName}`}>
           {props.title}
         </p>
       )}
 
       <span
-        className={`absolute left-[calc(100%-45px)] rounded-full p-1 font-nunito transition-all duration-500 ease-in-out group-hover/btn:left-[7px] ${props.svgClassName}`}
+        className={`absolute left-[calc(100%-45px)] rounded-full p-1 font transition-all duration-500 ease-in-out group-hover/btn:left-[7px] ${props.svgClassName}`}
       >
         <SelectedIcon
           className={`text-3xl text-white ${props.svgInnerClassName}`}

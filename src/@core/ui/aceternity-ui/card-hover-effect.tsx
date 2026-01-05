@@ -77,10 +77,10 @@ export const HoverEffect = ({
                   width={120}
                 />
               </div>
-              <CardTitle className="sm:font-2xl font-nunito text-lg">
+              <CardTitle className="sm:font-2xl  text-lg">
                 {item.title}
               </CardTitle>
-              <CardDescription className="mt-2 font-nunito text-base text-zinc-800">
+              <CardDescription className="mt-2  text-base text-zinc-800">
                 {item.description}
               </CardDescription>
               <div
@@ -105,7 +105,7 @@ export const HoverEffect = ({
                       className="text-white"
                     />
                   </div>
-                  <h3 className="py-1 font-nunito text-xl text-white xl:py-2">
+                  <h3 className="py-1 text-xl text-white xl:py-2">
                     {item.title}
                   </h3>
                   <ul className="list-disc pl-5 text-white marker:text-white">

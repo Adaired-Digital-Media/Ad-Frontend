@@ -4,7 +4,6 @@ import { FC, useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { calculateReadingTime } from '@core/utils/calculateReadingTime';
 import { formatDate } from '@core/utils/format-date';
-import Button from '@web-components/Button';
 import {
   Card,
   CardContent,
@@ -15,6 +14,7 @@ import {
 import { Separator } from '@core/ui/shadcn-ui/separator';
 import Link from 'next/link';
 import Pagination from '@core/ui/rizzui-ui/pagination';
+import Button from '../../common/Button';
 
 // Type definitions
 interface Blog {
@@ -23,7 +23,7 @@ interface Blog {
   postTitle: string;
   postDescription: string;
   featuredImage: string;
-  excerpt:string;
+  excerpt: string;
   createdAt: string;
 }
 
@@ -71,18 +71,16 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                   <span>{formatDate(new Date(blog.createdAt))}</span>
                   <span>{`${calculateReadingTime(blog.postDescription)} min read`}</span>
                 </div>
-                <h2 className="mt-2 font-nunito text-2xl font-semibold">
+                <h4 className="mt-2">
                   <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
-                </h2>
-                <p className="mt-2 line-clamp-2 font-nunito text-gray-600">
-                {blog.excerpt}
+                </h4>
+                <p className="mt-2 line-clamp-2 font text-gray-600">
+                  {blog.excerpt}
                 </p>
                 <Button
-                  title="Read Blog"
+                  name="Read Blog"
                   className="mt-4 border-none bg-white text-black"
-                  svgClassName="bg-[#F89520]"
-                  type="button"
-                  navigateTo={`/blog/${blog.slug}`}
+                  href={`/blog/${blog.slug}`}
                 />
               </div>
             </div>
@@ -100,22 +98,20 @@ const BlogWPagination: FC<IProps> = ({ data }) => {
                     className="rounded-t-lg object-cover"
                   />
                 </Link>
-                <CardTitle className="mt-4 font-nunito text-xl">
+                <CardTitle className="mt-4 font text-xl">
                   <Link href={`/blog/${blog.slug}`}>{blog.postTitle}</Link>
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-4 pt-0">
-                <p className="line-clamp-3 font-nunito text-gray-600">
-                 {blog.excerpt}
+                <p className="line-clamp-3 font text-gray-600">
+                  {blog.excerpt}
                 </p>
               </CardContent>
               <CardFooter className="flex justify-between p-4 pt-0">
                 <Button
-                  title="Read More"
+                  name="Read More"
                   className="border-none bg-white text-black"
-                  svgClassName="bg-[#F89520] right-2.5 group-hover/btn:right-28"
-                  type="button"
-                  navigateTo={`/blog/${blog.slug}`}
+                  href={`/blog/${blog.slug}`}
                 />
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <span>{formatDate(new Date(blog.createdAt))}</span>

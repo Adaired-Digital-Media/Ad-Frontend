@@ -26,14 +26,14 @@ export const FAQSection = () => {
           <Accordion type="single" collapsible className="w-full">
             {FAQSectionDetails.map((item, index) => (
               <AccordionItem value={item.title}>
-                <AccordionTrigger className="flex w-full cursor-pointer items-center justify-between py-5 font-nunito text-xl font-semibold no-underline hover:no-underline">
+                <AccordionTrigger className="flex w-full cursor-pointer items-center justify-between py-5 font text-xl font-semibold no-underline hover:no-underline">
                   <div className={cn(`flex items-center`)}>
                     <p className="text-left">{item.title}</p>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent
                   className={cn(
-                    `font-nunito text-base font-normal text-[#424242]`
+                    `font text-base font-normal text-[#424242]`
                   )}
                 >
                   {item.content}

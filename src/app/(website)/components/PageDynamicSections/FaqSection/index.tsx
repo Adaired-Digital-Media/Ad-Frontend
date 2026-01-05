@@ -23,7 +23,7 @@ type FaqSectionProps = {
 const FaqSection: React.FC<FaqSectionProps> = ({ faqs }) => {
   return (
     <div className="space-y-3">
-      <h2 className="font-nunito text-2xl font-semibold leading-snug text-gray-900 md:text-[38px]">
+      <h2 className="font text-2xl font-semibold leading-snug text-gray-900 md:text-[38px]">
         Frequently Asked Questions
       </h2>
       {faqs.map((faq) => {
@@ -34,18 +34,20 @@ const FaqSection: React.FC<FaqSectionProps> = ({ faqs }) => {
           >
             <Accordion.Header>
               {({ open }) => (
-                <div className="flex w-full cursor-pointer items-center justify-between py-5 text-xl font-semibold font-nunito">
+                <h5 className="flex w-full cursor-pointer items-center justify-between py-5">
                   {faq.question}
                   <BsChevronDown
                     className={cn(
-                      'h-5 w-5 -rotate-90 transform transition-transform duration-300',
+                      'h-3 w-3 -rotate-90 transform transition-transform duration-300',
                       open && '-rotate-0'
                     )}
                   />
-                </div>
+                </h5>
               )}
             </Accordion.Header>
-              <Accordion.Body className="mb-7 font-nunito text-base">{parse(faq.answer)}</Accordion.Body>
+            <Accordion.Body className="mb-7 font text-base">
+              {parse(faq.answer)}
+            </Accordion.Body>
           </Accordion>
         );
       })}

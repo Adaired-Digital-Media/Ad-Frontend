@@ -114,7 +114,7 @@ const MobileSVGComponent: React.FC<KeyFeatures> = ({
                   />
                 </svg>
               </div>
-              <h3 className="font-bold text-lg mb-4 font-nunito">
+              <h3 className="font-bold text-lg mb-4 font">
                 {item.feature}
               </h3>
               <p className="font-normal text-base text-slate-500 mb-4">
@@ -212,7 +212,7 @@ const SVGContainer: React.FC<KeyFeatures> = ({
                 <div className="p-6 xl:p-10 flex flex-col items-center justify-center absolute top-1/4 left-0">
                   <div className="space-y-2 ">
                     <h4
-                      className={`text-lg leading-tight xl:leading-snug xl:text-xl font-nunito font-semibold text-black relative after:absolute after:content-[''] after:left-1/2 after:-bottom-1 after:h-0.5 after:w-1/4 after:-translate-x-1/2 after:bg-[#d9d9d9] `}
+                      className={`text-lg leading-tight xl:leading-snug xl:text-xl font font-semibold text-black relative after:absolute after:content-[''] after:left-1/2 after:-bottom-1 after:h-0.5 after:w-1/4 after:-translate-x-1/2 after:bg-[#d9d9d9] `}
                     >
                       {item.feature}
                     </h4>

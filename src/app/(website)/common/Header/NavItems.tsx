@@ -80,7 +80,7 @@ const NavItems = () => {
         <div className={cn('flex items-center')}>
           <Link
             href="/contact"
-            className="relative font-nunito text-lg font-semibold after:absolute after:bottom-[-5px] after:left-0 after:h-[3px] after:w-full after:rounded-2xl after:bg-[#FB9100] after:transition-all hover:after:w-full"
+            className="relative font text-lg font-semibold after:absolute after:bottom-[-5px] after:left-0 after:h-[3px] after:w-full after:rounded-2xl after:bg-[#FB9100] after:transition-all hover:after:w-full"
           >
             Book demo
           </Link>
@@ -167,9 +167,9 @@ const Item = ({
               <Separator orientation="vertical" className="h-auto w-0.5" />
               <div className="w-3/12 flex-none xl:flex">
                 <div className="p-4">
-                  <p className="mb-4 font-nunito text-lg font-semibold text-gray-900">
+                  <h3 className="mb-4 font text-lg font-semibold text-gray-900">
                     What's New
-                  </p>
+                  </h3>
                   {blog && (
                     <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-purple-200/20 to-transparent shadow-lg">
                       <Link
@@ -192,9 +192,9 @@ const Item = ({
                                 'Search Engine Optimization'}
                             </span>
                           </div>
-                          <p className="mb-4 font-nunito text-lg font-medium text-gray-900">
+                          <h4 className="mb-4 font text-lg font-medium text-gray-900">
                             {blog.postTitle}
-                          </p>
+                          </h4>
                           <div className="flex justify-between text-xs text-gray-600">
                             <span>
                               By Adaired Team |{' '}
@@ -218,7 +218,7 @@ const Item = ({
                   <div className="mt-4">
                     <Link
                       href="/blog"
-                      className="inline-block rounded-lg bg-[#FB9100] px-4 py-2 font-nunito text-sm font-semibold text-white transition-all duration-200 hover:scale-105 hover:bg-[#E07B00]"
+                      className="inline-block rounded-lg bg-[#FB9100] px-4 py-2 font text-sm font-semibold text-white transition-all duration-200 hover:scale-105 hover:bg-[#E07B00]"
                       onClick={handleSubmenuClick}
                     >
                       See More
@@ -245,7 +245,7 @@ const Item = ({
                 >
                   <span
                     className={cn(
-                      'flex items-center font-nunito text-base group-hover/children:text-[#FB9100]'
+                      'flex items-center font text-base group-hover/children:text-[#FB9100]'
                     )}
                   >
                     {children.name}
@@ -267,7 +267,7 @@ const Item = ({
       <div className={cn('group flex items-center')}>
         <Link
           className={cn(
-            'relative flex h-20 items-center gap-1 px-2 font-nunito text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 after:bg-[#aaa] after:transition-all after:duration-300 hover:after:w-full',
+            'relative flex h-20 items-center gap-1 px-2 font text-lg font-semibold after:absolute after:bottom-0 after:left-0 after:h-[3px] after:w-0 after:bg-[#aaa] after:transition-all after:duration-300 hover:after:w-full',
             isLandingPage ? 'font-poppins text-[17px] font-medium' : ''
           )}
           href={navitems.href || '#'}

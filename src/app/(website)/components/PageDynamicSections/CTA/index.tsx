@@ -28,7 +28,7 @@ const CTA = ({ colorScheme, title }: CTAProps) => {
       <div className="z-10 flex items-center justify-center flex-col space-y-7 p-5 text-center">
         <h2
           className={cn(
-            `leading-snug font-nunito font-extrabold text-3xl md:text-4xl xl:text-5xl text-white capitalize`
+            `leading-snug font font-extrabold text-3xl md:text-4xl xl:text-5xl text-white capitalize`
           )}
         >
           {title}
@@ -68,9 +68,9 @@ const CTA = ({ colorScheme, title }: CTAProps) => {
             />
           </svg>
           <div>
-            <span className="block text-sm font-nunito">For More Information</span>
+            <span className="block text-sm font">For More Information</span>
             <span
-              className="block text-lg lg:text-xl xl:text-[26px] font-bold font-nunito"
+              className="block text-lg lg:text-xl xl:text-[26px] font-bold font"
               style={{
                 color: colorScheme,
               }}
