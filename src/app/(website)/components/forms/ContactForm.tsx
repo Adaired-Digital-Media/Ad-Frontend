@@ -131,8 +131,18 @@ import MessageField from '../UI/MessageField';
 import SaveAndCancel from '../../common/SaveAndCancel';
 import chat from '../../../../../public/assets/icons/chat.png';
 import { useReCaptcha } from 'next-recaptcha-v3';
+const options = [];
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile numbers
 
 const ContactForm = () => {
+  const [errors, setErrors] = useState<{
+    email?: string;
+    phone?: string;
+  }>({});
+
   const router = useRouter();
   const { executeRecaptcha } = useReCaptcha();
 
@@ -153,8 +163,60 @@ const ContactForm = () => {
     setInputValue((prev) => ({ ...prev, [name]: value }));
   };
 
+  // const handleClick = async () => {
+  //   if (!executeRecaptcha) return;
+
+  //   try {
+  //     const token = await executeRecaptcha('contact_page_form');
+
+  //     const payload = {
+  //       ...inputValue,
+  //       gRecaptchaToken: token,
+  //     };
+
+  //     const response = await fetch('/api/zoho/leadRegister', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(payload),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error('Submission failed');
+  //     }
+
+  //     // reset form
+  //     setInputValue({
+  //       name: '',
+  //       email: '',
+  //       phone: '',
+  //       service: '',
+  //       message: '',
+  //     });
+
+  //     router.push('/thankyou');
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert('Failed to submit form. Please try again.');
+  //   }
+  // };
+
   const handleClick = async () => {
     if (!executeRecaptcha) return;
+
+    const newErrors: typeof errors = {};
+
+    if (!emailRegex.test(inputValue.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!phoneRegex.test(inputValue.phone)) {
+      newErrors.phone = 'Please enter a valid 10-digit mobile number';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     try {
       const token = await executeRecaptcha('contact_page_form');
@@ -170,11 +232,8 @@ const ContactForm = () => {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error('Submission failed');
-      }
+      if (!response.ok) throw new Error('Submission failed');
 
-      // reset form
       setInputValue({
         name: '',
         email: '',
@@ -183,6 +242,7 @@ const ContactForm = () => {
         message: '',
       });
 
+      setErrors({});
       router.push('/thankyou');
     } catch (error) {
       console.error(error);
@@ -222,6 +282,7 @@ const ContactForm = () => {
           />
           <InputField
             name="phone"
+            maxLength={10}
             value={inputValue.phone}
             handleChange={handleChange}
             placeholder="Phone No"
@@ -235,8 +296,27 @@ const ContactForm = () => {
           handleChange={handleChange}
           placeholder="Service"
           options={[
-            { label: 'Service 1', value: 'service1' },
-            { label: 'Service 2', value: 'service2' },
+            {
+              label: 'Web Design & Development',
+              value: 'Web Design & Development',
+            },
+            { label: 'Graphic Design', value: 'Graphic Design' },
+            {
+              label: 'Paid Media & Advertising',
+              value: 'Paid Media & Advertising',
+            },
+            {
+              label: 'Search Engine Optimization',
+              value: 'Search Engine Optimization',
+            },
+            {
+              label: 'Strategic Social Media Management',
+              value: 'Strategic Social Media Management',
+            },
+            {
+              label: 'Content Marketing',
+              value: 'Content Marketing',
+            },
           ]}
         />
 

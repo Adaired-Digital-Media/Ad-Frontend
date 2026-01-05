@@ -389,6 +389,7 @@ export const ServiceSectionData = {
         'SEO-Friendly Content Strategy',
         'Analytics for Content Performance.',
       ],
+      link: '/services/compelling-content-marketing',
       mainSvg: 'Content Marketing_iPYl2',
       hoverSvg: '/assets/images/content-marketing-hover.svg',
       accentColor: '#24a486',

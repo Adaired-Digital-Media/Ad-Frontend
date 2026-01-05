@@ -25,6 +25,7 @@ const WebFooter = () => {
     const { name, value } = e.target;
     setInputVal({ ...inputVal, [name]: value });
   };
+  const handleSubcribe = () => {};
   return (
     <>
       <footer className="relative py-12 text-white">
@@ -224,6 +225,7 @@ const WebFooter = () => {
                   alt="Send"
                   width={35}
                   height={35}
+                  onClick={handleSubcribe}
                   className="absolute right-2 top-1.5 cursor-pointer rounded-full bg-[#FB9100] p-1"
                 />
               </div>
