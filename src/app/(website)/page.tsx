@@ -26,7 +26,7 @@ export default function HomePage() {
       <Services />
       <Expect />
       <WhyChoose />
-      <CaseStudy />
+      {/* <CaseStudy /> */}
       <Testimonial />
       <Contact />
       <Blogs />

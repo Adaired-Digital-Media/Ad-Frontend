@@ -82,7 +82,7 @@ export const ExpectSectionData = {
   records: [
     {
       number: 7,
-      suffix: ' years',
+      suffix: '+ years',
       name: 'Industry Expertise',
       description:
         'Proven experience delivering thoughtfully crafted digital strategies designed to drive measurable results',
@@ -104,7 +104,7 @@ export const ExpectSectionData = {
     {
       number: 320,
       suffix: '+',
-      name: 'Rands Empowered Globally',
+      name: 'Bands Empowered Globally',
       description:
         'Helping brands across the globe grow visibility, credibility, trust, and sustainable success.',
     },
