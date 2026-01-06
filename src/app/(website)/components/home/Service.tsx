@@ -1,150 +1,167 @@
-import { ServiceSectionData } from '@/@core/data/website/Homepage';
-import Image from 'next/image';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MaxWidthWrapper from '../MaxWidthWrapper';
 import Heading from '../../common/Heading';
-import useHoverZoom from '@/@core/hooks/useHoverZoom';
-import serviceBg from '../../../../../public/assets/images/home/what_we_do.png';
-import seo from '../../../../../public/assets/images/home/seo-tag-3d-icon 1.png';
-import check from '../../../../../public/assets/icons/check_1.svg';
+import { ServiceSectionData } from '@/@core/data/website/Homepage';
+import Image from 'next/image';
 import SaveAndCancel from '../../common/SaveAndCancel';
-import { MdArrowOutward } from 'react-icons/md';
-import useImageCenterAnimation from '@/@core/hooks/useImageCenterAnimation';
+import check from '../../../../../public/assets/icons/blue_check.png';
 import { useRouter } from 'next/navigation';
 
-const Services = () => {
+const Service = () => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState(0);
-
-  const { ref, className } = useImageCenterAnimation(
-    {
-      direction: 'left',
-      delay: 650,
-    },
-    activeTab
-  );
+  const [activeTab, setActiveTab] = useState<number>(0);
   const { subtitle, title, span, description, services } = ServiceSectionData;
-  const zoom = useHoverZoom({
-    scaleIn: 1.1,
-    scaleOut: 0.9,
-  });
+
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = sectionRefs.current.findIndex(
+              (el) => el === entry.target
+            );
+
+            if (index !== -1) {
+              setActiveTab(index);
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '-40% 0px -40% 0px', // 👈 center detection
+        threshold: 0,
+      }
+    );
+
+    sectionRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative min-h-screen py-6 lg:py-[6rem]">
-      {/* Backgrounds */}
-      <Image
-        src={serviceBg}
-        fill
-        alt="background"
-        className="object-cover"
-        priority
-      />
+    <div className="bg-[#F1F1F1] py-[8rem]">
+      <MaxWidthWrapper>
+        <Heading
+          subTitle={subtitle}
+          title={title}
+          span={span}
+          isBgWhite
+          description={description}
+          isInCenter
+        />
 
-      <div className="relative z-20">
-        <MaxWidthWrapper>
-          <div className="">
-            <Heading
-              subTitle={subtitle}
-              title={title}
-              span={span}
-              description={description}
-              isInCenter={true}
-            />
-          </div>
+        <div className="grid grid-cols-4 gap-[1rem] pt-[3rem]">
+          {/* LEFT TABS (STICKY) */}
+          <div className="relative">
+            <div className="sticky top-[15rem]">
+              {services?.map((service, idx) => {
+                const isFirst = idx === 0;
+                const isLast = idx === services.length - 1;
 
-          {/* MAIN LAYOUT */}
-          <div className="z-20 mt-[2.5rem] block h-[45rem] rounded-3xl lg:flex lg:bg-[#F5F5F5]">
-            {/* LEFT SIDE - TABS */}
-            <div className="z-20 w-full lg:w-[32%] lg:px-[4rem] lg:py-[2.5rem]">
-              {services.map((service, idx) => {
-                const isActive = activeTab === idx;
                 return (
                   <div
                     key={idx}
-                    onMouseEnter={() => setActiveTab(idx)} // hover
-                    onClick={() => setActiveTab(idx)} // click
-                    className={`my-2 flex w-full cursor-pointer justify-between gap-2 rounded-full border-[4px] transition-all duration-300 ease-in-out lg:my-6 ${
-                      isActive
-                        ? 'scale-[1.02] border-[#FB9100] bg-[#FCA32A] py-[0.5rem] pl-[41px] pr-[11px] font-semibold text-white lg:w-[535px]'
-                        : 'border-[#EFEFEF] bg-white px-[41px] py-[18px] text-black hover:scale-[1.02] hover:bg-[#1B5A96] hover:text-white lg:w-[440px]'
-                    } `}
+                    onClick={() => {
+                      setActiveTab(idx);
+                      sectionRefs.current[idx]?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                      });
+                    }}
                   >
                     <h5
-                      className={`${isActive ? 'text-white' : 'text-[#323232]'} my-auto`}
+                      className={`cursor-pointer border px-4 py-6 hover:rounded-xl hover:border-[#FCA32A] hover:bg-[#FFFFFF] hover:text-[#000000] ${activeTab === idx ? 'rounded-xl border-[#FB9100] bg-white' : 'bg-[#F5F5F5]'} ${isFirst && 'rounded-t-xl'} ${isLast && 'rounded-b-xl'} `}
                     >
                       {service.title}
                     </h5>
-                    {isActive && (
-                      <MdArrowOutward
-                        size={48}
-                        className={`animate-zoomPulse rounded-full p-3 text-[#FCA32A] ${isActive ? 'bg-[#FFFFFF] text-[#FCA32A]' : 'text-black'}`}
-                      />
-                    )}
                   </div>
                 );
               })}
             </div>
-
-            {/* RIGHT SIDE - ACTIVE CONTENT */}
-            <div
-              key={activeTab}
-              className="animate- relative col-span-2 ml-[2rem] rounded-3xl border-[1px] border-[#FB910066] bg-[#FFFFFF] p-[1rem] lg:pl-[8rem] lg:pr-[4.5rem] lg:pt-[4rem]"
-            >
-              <h4 className="mb-4 animate-[contentReveal_0.6s_120ms_both] font-[700]">
-                {services[activeTab].title}
-              </h4>
-
-              <p className="mb-6 animate-[contentReveal_0.6s_200ms_both]">
-                {services[activeTab].description}
-              </p>
-
-              <div className="ml- animate-[contentReveal_0.6s_300ms_both] space-y-2">
-                {services[activeTab].list?.map((item, i) => (
-                  <div key={i} className="flex gap-4 py-1.5 text-black">
-                    <Image
-                      src={check}
-                      width={30}
-                      height={30}
-                      alt="check"
-                      className="my-auto"
-                    />
-                    <p className="font-medium">{item}</p>
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-6 animate-[contentReveal_0.6s_420ms_both]">
-                {services[activeTab]?.lastPara}
-              </p>
-              <SaveAndCancel
-                isBgWhite={false}
-                isIcon={true}
-                handleClick={() =>
-                  services[activeTab]?.link &&
-                  router.push(services[activeTab].link)
-                }
-                name={'Know More'}
-                className="absolute bottom-16 animate-[contentReveal_0.7s_500ms_both]"
-              />
-
-              <div
-                ref={ref}
-                className={`absolute bottom-0 right-[2.5rem] hidden lg:block ${className}`}
-              >
-                <Image
-                  key={activeTab}
-                  src={services[activeTab]?.img}
-                  width={512}
-                  height={383}
-                  alt="service visual"
-                  className=""
-                />
-              </div>
-            </div>
           </div>
-        </MaxWidthWrapper>
-      </div>
-    </section>
+
+          {/* RIGHT CONTENT */}
+          <div className="col-span-3 space-y-[2rem]">
+            {services?.map((service, idx) => (
+              <div
+                key={idx}
+                ref={(el) => {
+                  sectionRefs.current[idx] = el;
+                }}
+                className="flex justify-between rounded-xl bg-white p-8"
+              >
+                {/* LEFT CONTENT */}
+                <div className="w-[40%]">
+                  {/* IMAGE WRAPPER */}
+                  <div
+                    className={`${activeTab === idx && 'transition-transform duration-500 group-hover:scale-110'} relative h-[320px] w-full overflow-hidden rounded-xl`}
+                  >
+                    <Image
+                      src={service.img}
+                      fill
+                      alt={service.title}
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+
+                  <h4 className="my-4 animate-[contentReveal_0.6s_120ms_both] font-bold">
+                    {service.title}
+                  </h4>
+
+                  <p className="mb-6 animate-[contentReveal_0.6s_200ms_both]">
+                    {service.description.length > 130
+                      ? service.description.slice(0, 130) + `...`
+                      : service.description}
+                  </p>
+
+                  <SaveAndCancel
+                    handleClick={() => router.push(service.link)}
+                    name="Learn More"
+                    isIcon
+                  />
+                </div>
+
+                {/* RIGHT LIST */}
+                <div className="w-[58%]">
+                  <div className="grid animate-[contentReveal_0.6s_300ms_both] grid-cols-2">
+                    {service?.list?.map((item, i, arr) => {
+                      const isLast = i === arr.length - 1;
+                      const isSecondLast = i === arr.length - 2;
+
+                      return (
+                        <div
+                          key={i}
+                          className={`p-5 ${!(isLast || isSecondLast) && 'border-b border-black/10'} `}
+                        >
+                          <Image
+                            src={check}
+                            width={35}
+                            height={35}
+                            alt="check"
+                            unoptimized
+                            className="shrink-0"
+                          />
+                          <h5 className="w-[70%] pt-4 text-[1.15rem] font-medium">
+                            {item}
+                          </h5>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </MaxWidthWrapper>
+    </div>
   );
 };
 
-export default Services;
+export default Service;

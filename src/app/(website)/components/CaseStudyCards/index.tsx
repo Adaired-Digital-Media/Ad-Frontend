@@ -190,13 +190,13 @@ function CaseStudyCard({
         </div>
         <div className="flex-grow"></div>
         <div>
-          {/* <Image
+          <Image
             src={`${process.env.NEXT_PUBLIC_IMG_URL}${cardImage}`}
             alt="Case Study Card Image"
             height={400}
             width={600}
             className="rounded-lg object-cover"
-          /> */}
+          />
         </div>
       </div>
     </div>

@@ -7,53 +7,56 @@ import Image from 'next/image';
 import React from 'react';
 import parse from 'html-react-parser';
 import type { Metadata } from 'next';
-//update
+import { BaseURL } from '@/baseUrl';
+import { notFound } from 'next/navigation';
+
 // export async function generateStaticParams() {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/all`
-//   ).then((res) => res.json());
-//   const CaseStudies = res.result;
-//   return CaseStudies.map((CaseStudy: any) => ({
-//     slug: CaseStudy.slug.toString(),
-//   }));
+//   try {
+//     if (!BaseURL) {
+//       console.warn('OLD_API_URI not defined at build time');
+//       return [];
+//     }
+
+//     const res = await fetch(`${BaseURL}/case-study/read`, {
+//       cache: 'no-store',
+//     });
+
+//     if (!res.ok) {
+//       console.error('Failed to fetch case studies:', res.status);
+//       return [];
+//     }
+
+//     const data = await res.json();
+//     const caseStudies = data?.result ?? [];
+
+//     return caseStudies.map((cs: any) => ({
+//       slug: String(cs.slug),
+//     }));
+//   } catch (error) {
+//     console.error('generateStaticParams(case-studies) failed:', error);
+//     return [];
+//   }
 // }
-export async function generateStaticParams() {
-  try {
-    const API_URL = process.env.OLD_API_URI;
-
-    if (!API_URL) {
-      console.warn("OLD_API_URI not defined at build time");
-      return [];
-    }
-
-    const res = await fetch(
-      `${API_URL}/api/v1/case-studies/all`,
-      { cache: "no-store" }
-    );
-
-    if (!res.ok) {
-      console.error("Failed to fetch case studies:", res.status);
-      return [];
-    }
-
-    const data = await res.json();
-    const caseStudies = data?.result ?? [];
-
-    return caseStudies.map((cs: any) => ({
-      slug: String(cs.slug),
-    }));
-  } catch (error) {
-    console.error("generateStaticParams(case-studies) failed:", error);
-    return [];
-  }
-}
 
 async function getCaseStudyData({ slug }: { slug: string }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies/${slug}`
-  );
+  const res = await fetch(`${BaseURL}/case-study/read?slug=${slug}`, {
+    cache: 'no-store',
+  });
+  console.log(res, 'res>FIUHSJKFLF');
+  // 👇 IMPORTANT: do NOT throw inside metadata
+  if (!res.ok) {
+    console.warn(`Case study not found for slug: ${slug}`);
+    return null;
+  }
+
+  const contentType = res.headers.get('content-type') ?? '';
+  if (!contentType.includes('application/json')) {
+    console.warn(`Non-JSON response for slug: ${slug}`);
+    return null;
+  }
+
   const data = await res.json();
-  return data.result;
+  return data?.data ?? null;
 }
 
 export async function generateMetadata({
@@ -61,40 +64,53 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const data = await getCaseStudyData({
-    slug: params.slug,
-  });
+  const data = await getCaseStudyData({ slug: params.slug });
+
+  // 👇 FALLBACK METADATA (CRITICAL)
+  if (!data) {
+    return {
+      title: 'Case Study | Adaired',
+      description: 'Explore our case studies and success stories.',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_SITE_URI}`),
-    title: data.metaTitle
-      ? data.metaTitle
-      : `Adaired Case Studies: See How We Help Businesses Thrive`,
-    description: data.metaDescription
-      ? data.metaDescription
-      : `Discover how Adaired transformed businesses like yours with simple, engaging case studies highlighting real success. Know how we can support your goals now!`,
+    metadataBase: new URL(BaseURL),
+    title:
+      data.metaTitle ??
+      'Adaired Case Studies: See How We Help Businesses Thrive',
+    description:
+      data.metaDescription ??
+      'Discover how Adaired transformed businesses with real success stories.',
     alternates: {
-      canonical: `/case-studies/${params.slug}`,
+      canonical: `/case-study/${params.slug}`,
     },
     robots: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
     },
   };
 }
-
+//tes
 async function fetchCaseStudyCategory({ slug }: { slug: string }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_OLD_API_URI}/api/v1/case-studies-category/getCaseStudiesCategory/${slug}`,
-    {
-      method: 'GET',
-    }
-  );
+  const res = await fetch(`${BaseURL}/case-study/category/read?slug=/${slug}`, {
+    method: 'GET',
+  });
   const data = await res.json();
   return data.result;
 }
 
 async function page({ params }: { params: { slug: string } }) {
   const caseStudyData = await getCaseStudyData(params);
+
+  if (!caseStudyData) {
+    return notFound(); // ✅ Next.js built-in 404
+  }
+
   const caseStudyCategory = await fetchCaseStudyCategory({
     slug: caseStudyData.category,
   });
@@ -116,12 +132,12 @@ async function page({ params }: { params: { slug: string } }) {
         solutionsImage={caseStudyData.solutionsImage}
         challengesAndSolutions={caseStudyData.challengesAndSolutions}
       />
-      <TechnologiesUsedsection
+      {/* <TechnologiesUsedsection
         technologiesUsedTitle={caseStudyData.technologiesUsedTitle}
         technologiesUsedDescription={caseStudyData.technologiesUsedDescription}
         technologiesUsed={caseStudyData.technologiesUsed}
         categoryData={caseStudyCategory.technologies}
-      />
+      /> */}
       <Goalssection
         goalsTitle={caseStudyData.goalsTitle}
         goalsDescription={caseStudyData.goalsDescription}
@@ -162,15 +178,13 @@ const Introsection = ({
     <section className="py-6 lg:py-12">
       <MaxWidthWrapper>
         <div className="flex flex-col items-center justify-center text-center">
-          <h5 className="relative inline px-4 font- text-base text-[#515151] sm:text-lg">
+          <h5 className="font- relative inline px-4 text-base text-[#515151] sm:text-lg">
             <div className="absolute left-full top-1/2 hidden h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] sm:block"></div>
             <div className="absolute right-full top-1/2 hidden h-px w-16 -translate-y-1/2 transform bg-[#A7A9AC] sm:block"></div>
             {subHeading}
           </h5>
           <h2 className="py-2 text-[1.688rem] md:text-4xl">{caseStudyName}</h2>
-          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
-            {caseStudyDescription}
-          </p>
+          <p className="">{caseStudyDescription}</p>
         </div>
       </MaxWidthWrapper>
       <div className="relative">
@@ -225,24 +239,17 @@ const Aboutsection = ({
           <h2 className="py-2 text-[1.688rem] md:text-4xl">
             About the project
           </h2>
-          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
-            {aboutProjectDescription}
-          </p>
+          <p className="">{aboutProjectDescription}</p>
         </div>
       </MaxWidthWrapper>
       <section className={cn('flex flex-col-reverse lg:flex-row')}>
         <div className="flex w-full justify-end lg:w-1/2">
           <div className="space-y-4 px-4 py-4 lg:max-w-[720px] lg:p-10 lg:pl-6">
             <h2 className="text-[1.688rem] md:text-4xl">The Challenges</h2>
-            <p className="hyphens-auto text-justify text-base sm:text-left sm:text-lg">
-              {challengesDescription}
-            </p>
+            <p className="">{challengesDescription}</p>
             <ul className="space-y-4">
               {challengesAndSolutions.map((item: any) => (
-                <li
-                  key={item.title}
-                  className="flex gap-1 border px-1 py-2 text-base sm:text-lg"
-                >
+                <li key={item.title} className="flex gap-1 border px-1 py-2">
                   <Icons.CharmSquareTick className="mt-1 shrink-0" />
                   {item.title}
                 </li>
@@ -275,9 +282,7 @@ const Aboutsection = ({
         <div className="w-full lg:w-1/2">
           <div className="space-y-4 px-4 py-4 lg:max-w-[720px] lg:p-10 lg:pr-6">
             <h2 className="text-[1.688rem] md:text-4xl">The Solutions</h2>
-            <p className="hyphens-auto text-justify text-base sm:text-left sm:text-lg">
-              {challengesDescription}
-            </p>
+            <p className="">{challengesDescription}</p>
             <ul className="space-y-4">
               {challengesAndSolutions.map((item: any, index: number) => (
                 <li key={item.content}>
@@ -317,9 +322,7 @@ const TechnologiesUsedsection = ({
           <h2 className="py-2 text-[1.688rem] md:text-4xl">
             {technologiesUsedTitle}
           </h2>
-          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
-            {technologiesUsedDescription}
-          </p>
+          <p className="">{technologiesUsedDescription}</p>
         </div>
         <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
           {technologiesUsed.map((item) => {
@@ -405,13 +408,11 @@ const Goalssection = ({
       <MaxWidthWrapper className="relative z-10">
         <div className="flex flex-col items-center justify-center pb-6 text-center lg:bg-none">
           <h2 className="py-2 text-[1.688rem] md:text-4xl">{goalsTitle}</h2>
-          <p className="hyphens-auto py-2 text-justify text-base sm:text-center sm:text-lg">
-            {goalsDescription}
-          </p>
+          <p className="">{goalsDescription}</p>
         </div>
         <div className="flex flex-col gap-10 pb-10 lg:flex-row lg:gap-20 lg:bg-none xl:gap-32">
           <div className="space-y-3 rounded-2xl bg-white p-6 shadow-2xl sm:p-10">
-            <h2 className="text-[1.688rem] md:text-4xl">Objectives</h2>
+            <h2 className="">Objectives</h2>
             <ul>
               {objectives.map((item: any, index: number) => (
                 <li
@@ -423,14 +424,14 @@ const Goalssection = ({
                       <div className="h-0 w-0 shrink-0 border-b-4 border-l-8 border-t-4 border-b-transparent border-l-[#BC1D8D] border-t-transparent" />
                       <h3>{index + 1}</h3>
                     </div>
-                    <p className="text-base sm:text-lg">{item.title}</p>
+                    <p className="">{item.title}</p>
                   </div>
                 </li>
               ))}
             </ul>
           </div>
           <div className="space-y-3 rounded-2xl bg-white p-6 shadow-2xl sm:p-10">
-            <h2 className="text-[1.688rem] md:text-4xl">Stratergy</h2>
+            <h2 className="">Stratergy</h2>
             <ul>
               {stratergy.map((item: any, index: number) => (
                 <li
@@ -442,7 +443,7 @@ const Goalssection = ({
                       <div className="h-0 w-0 shrink-0 border-b-4 border-l-8 border-t-4 border-b-transparent border-l-[#BC1D8D] border-t-transparent" />
                       <h3>{index + 1}</h3>
                     </div>
-                    <p className="text-base sm:text-lg">{item.title}</p>
+                    <p className="">{item.title}</p>
                   </div>
                 </li>
               ))}
@@ -475,14 +476,14 @@ const Goalssection = ({
                 }}
               />
               <h2
-                className="text-center text-xl sm:text-2xl md:text-4xl"
+                className="text-center"
                 style={{
                   color: colorScheme,
                 }}
               >
                 {item.title}
               </h2>
-              <p className="text-center text-base md:text-lg">{item.content}</p>
+              <p className="text-center">{item.content}</p>
             </div>
           ))}
         </div>
@@ -534,7 +535,7 @@ const Resultsection = ({
                 className="shrink-0 rounded-lg border p-2 text-5xl"
               />
               <div>
-                <h3 className="font- text-xl font-bold">
+                <h3 className="font- font-bold">
                   {item.title}
                   <div
                     className="h-0.5 w-10"
@@ -544,19 +545,19 @@ const Resultsection = ({
                   />
                 </h3>
                 <p
-                  className="text-base sm:text-lg"
+                  className=""
                   style={{
                     color: colorScheme,
                   }}
                 >
                   {item.percentage}
                 </p>
-                <p className="text-base sm:text-lg">{item.description}</p>
+                <p className="">{item.description}</p>
               </div>
             </div>
           ))}
         </div>
-        <p className="hyphens-auto text-justify text-base sm:hyphens-none sm:text-left sm:text-lg">
+        <p className="hyphens-auto text-justify sm:text-left">
           {resultFinalDescription}
         </p>
       </MaxWidthWrapper>

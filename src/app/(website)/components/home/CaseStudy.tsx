@@ -8,8 +8,13 @@ import Image from 'next/image';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import Button from '../../common/Button';
 import SaveAndCancel from '../../common/SaveAndCancel';
+import { BaseURL } from '@/baseUrl';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 const CaseStudy = () => {
+  const router = useRouter();
   const { image, subTitle, title, span, description } = CaseStudySectionData;
+  const [caseStudies, setCaseStudies] = useState<any[]>([]);
 
   const studies = [
     {
@@ -17,7 +22,7 @@ const CaseStudy = () => {
       labels: ['Agency Analytics', 'Canva'],
       title: 'Green Choice Carpet Cleaning',
       description:
-        "Our team includes skilled digital experts who understand what works in today's competitive environment. From strategy to execution, we have years of hands-on expertise to help your brand grow faster and smarter.",
+        'Green Choice Carpet Cleaning is a professional carpet cleaning service based in the United States. The company prides itself on providing eco-friendly and effective carpet cleaning solutions. With a commitment to customer satisfaction, Green Choice Carpet',
       bgColor: '#FFF4F3',
       link: '/case-studies/green-choice-carpet-cleaning',
     },
@@ -40,7 +45,29 @@ const CaseStudy = () => {
       link: '/case-studies/bayside-heating-and-cooling',
     },
   ];
+  const getCaseStudy = async () => {
+    try {
+      const res = await fetch(`${BaseURL}/case-study/read`);
+      console.log(res, 'res>>>>DZODZ');
 
+      if (!res.ok) {
+        throw new Error(`Failed to fetch: ${res.status}`);
+      }
+
+      const json = await res.json();
+
+      // 👇 YOUR API RETURNS data[]
+      setCaseStudies(json.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(caseStudies, 'caseStudies>>>>DZODZ');
+
+  useEffect(() => {
+    getCaseStudy();
+  }, []);
   return (
     <section className="">
       <MaxWidthWrapper className="py-[2rem] lg:py-[6rem]">
@@ -53,49 +80,44 @@ const CaseStudy = () => {
             description={description}
           />
         </div>
-        <div className="grid grid-cols-1 gap-7 pt-[3.5rem]  md:grid-cols-2 lg:grid-cols-3">
-          {studies?.map((study, idx) => {
+        <div className="grid grid-cols-1 gap-7 pt-[3.5rem] md:grid-cols-2 lg:grid-cols-3">
+          {studies?.slice(0, 1)?.map((study, idx) => {
             return (
               <div
                 key={idx}
-                className={`rounded-3xl p-[1.5rem]`}
+                className={`rounded-3xl bg-[#FFF4F3] p-[1.5rem]`}
                 style={{ backgroundColor: study.bgColor }}
               >
                 <Image
-                  src={study?.image}
+                  src={study_1}
                   width={400}
                   height={258}
                   alt=""
                   className="transition-transform duration-500 ease-in-out hover:scale-110"
                 />
                 <div className="flex gap-2 py-[1rem]">
-                  {study?.labels?.map((label) => {
+                  {study?.labels?.map((label: any) => {
                     return (
                       <span className="rounded-full border-[0.5px] border-[#000000] px-[1rem] py-[0.25rem] text-[12px] uppercase text-[#000000]">
-                        {label}
+                        {label ?? "Agency Analytics', 'Canva"}
                       </span>
                     );
                   })}
                 </div>
                 <div className="">
-                  <h4 className="font-semibold">{study.title}</h4>
+                  <h4 className="font-semibold">{study?.title}</h4>
                   <p className="pt-[0.5rem]">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.{' '}
+                    {study.description.length > 140
+                      ? study.description.slice(0, 140) + `...`
+                      : study.description}
                   </p>
                   <SaveAndCancel
                     name={'View Details'}
                     isBgWhite={true}
                     isIcon={true}
                     className="mt-[2rem]"
+                    handleClick={() => router.push(`${study?.link}`)}
                   />
-                  {/* <div className="flex items-center justify-end">
-                    <IoIosArrowRoundForward
-                      size={40}
-                      className="rounded-full bg-white p-1"
-                      style={{ transform: 'rotate(310deg)' }}
-                    />
-                  </div> */}
                 </div>
               </div>
             );

@@ -1,11 +1,6 @@
 import blog_1 from '../../../../public/assets/images/blogs/blog_1.webp';
 import blog_2 from '../../../../public/assets/images/blogs/blog_2.webp';
 import blog_3 from '../../../../public/assets/images/blogs/blog_3.webp';
-
-import TransparentProcesses from '../../../../public/assets/icons/Transparent Processes.svg';
-import ExperiencedDigital from '../../../../public/assets/icons/Experienced  Digital Specialists.svg';
-import DedicatedProject from '../../../../public/assets/icons/Dedicated Project Manager.svg';
-import CustomerFirst from '../../../../public/assets/icons/Customer-First Approach.svg';
 import visible from '../../../../public/assets/icons/visions.png';
 import Transparent from '../../../../public/assets/icons/built_1.svg';
 import Experienced from '../../../../public/assets/icons/Experienced_1.svg';
@@ -16,7 +11,7 @@ import social_media_marketing from '../../../../public/assets/images/home/smm.pn
 import Web_Design from '../../../../public/assets/images/home/design.png';
 import Digital_Creative from '../../../../public/assets/images/home/degital.png';
 import content from '../../../../public/assets/images/home/content.png';
-import seo from '../../../../public/assets/images/home/seo-tag-3d-icon 1.png';
+import seo from '../../../../public/assets/images/home/seo.png';
 
 export const AboutSectionData = {
   image: 'Static Website Images/about_main_anwqk5',
@@ -82,7 +77,7 @@ export const ExpectSectionData = {
   records: [
     {
       number: 7,
-      suffix: ' years',
+      suffix: '+ years',
       name: 'Industry Expertise',
       description:
         'Proven experience delivering thoughtfully crafted digital strategies designed to drive measurable results',
@@ -104,7 +99,7 @@ export const ExpectSectionData = {
     {
       number: 320,
       suffix: '+',
-      name: 'Rands Empowered Globally',
+      name: 'Bands Empowered Globally',
       description:
         'Helping brands across the globe grow visibility, credibility, trust, and sustainable success.',
     },
@@ -300,7 +295,7 @@ export const ServiceSectionData = {
     "Adaired Digital Media believes that every solution should elevate your brand, connect with your target audience, and generate measurable growth. Here's how we accomplish it:",
   services: [
     {
-      title: 'Search Engine Optimization (SEO)',
+      title: 'Search Engine Optimization',
       description:
         'We assist you in getting your website discovered by the right people. Our SEO services combine strategy and practical changes to boost your visibility and traffic, the foundation of any strong lead generation digital marketing agency approach.',
       list: [
@@ -521,6 +516,7 @@ export const BlogSectionData = {
   blogs: [
     {
       image: blog_1,
+      label: '02 Jan, 2026',
       title:
         'The Science Behind a Good Logo for Business and High-Impact Website Design',
       description:
@@ -531,6 +527,7 @@ export const BlogSectionData = {
     },
     {
       image: blog_2,
+      label: '30 Dec, 2025',
       title:
         'What to Expect from a Digital Marketing Agency USA: A Complete Guide for Businesses',
       description:
@@ -541,6 +538,7 @@ export const BlogSectionData = {
     },
     {
       image: blog_3,
+      label: '26 Dec, 2025',
       title: 'The Complete Web Design Process For Successful Business',
       description:
         'Looking for website design services in the USA ? Bringing a website to life is more than just technical work. It’s a creative',

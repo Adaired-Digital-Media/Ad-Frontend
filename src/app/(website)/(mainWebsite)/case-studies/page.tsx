@@ -6,6 +6,7 @@ import CaseStudyCards from '@web-components/CaseStudyCards';
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { BaseURL } from '@/baseUrl';
+import Blogs from '../../components/home/Blogs';
 
 export const metadata: Metadata = {
   title: 'Adaired Case Studies: See How We Help Businesses Thrive',
@@ -46,7 +47,8 @@ const CaseStudies = async () => {
       </Suspense>
       <ProcessSection />
       <TestimonialSlider />
-      <BlogCards blogs={blogs} />
+      {/* <BlogCards blogs={blogs} /> */}
+      <Blogs />
     </>
   );
 };
