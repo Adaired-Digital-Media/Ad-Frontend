@@ -76,7 +76,7 @@ export const ExpectSectionData = {
   btnHref: '/about',
   records: [
     {
-      number: 7,
+      number: 8,
       suffix: '+ years',
       name: 'Industry Expertise',
       description:
@@ -99,7 +99,7 @@ export const ExpectSectionData = {
     {
       number: 320,
       suffix: '+',
-      name: 'Bands Empowered Globally',
+      name: 'Brands Empowered Globally',
       description:
         'Helping brands across the globe grow visibility, credibility, trust, and sustainable success.',
     },
