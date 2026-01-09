@@ -4,11 +4,15 @@ import Heading from '../../common/Heading';
 import { MdOutlineStar } from 'react-icons/md';
 import Image from 'next/image';
 import google from '../../../../../public/assets/icons/goole.png';
+import useIsMobile from '@/@core/hooks/useIsMobile';
 
 const Testimonial = () => {
+  const isMobile = useIsMobile();
   const { subTitle, title, description, testimonials } = TestimonialSectionData;
   const [isHover, setIsHover] = useState<number | null>(1);
-  const VISIBLE_CARDS = 3;
+  // const VISIBLE_CARDS = 3;
+  const VISIBLE_CARDS = isMobile ? 1 : 3;
+
   const total = testimonials.length;
 
   // clone first cards
@@ -18,7 +22,7 @@ const Testimonial = () => {
   const [enableTransition, setEnableTransition] = useState(true);
 
   return (
-    <section className="relative bg-gradient-to-b from-[#05121E] to-[#1A5A96] bg-cover bg-no-repeat py-6 lg:py-[6rem]">
+    <section className="relative bg-gradient-to-b from-[#05121E] to-[#1A5A96] bg-cover bg-no-repeat py-[3rem] lg:py-[6rem]">
       <div className="relative z-20">
         <div className="flex w-[100%] justify-center">
           <Heading
@@ -43,8 +47,12 @@ const Testimonial = () => {
                 transform: `translateX(-${index * (100 / VISIBLE_CARDS)}%)`,
               }}
             >
-              {testimonials.map((testimonial: any, idx: number) => (
-                <div className="relative shrink-0 basis-1/3 px-[1rem]">
+              {slides.map((testimonial: any, idx: number) => (
+                <div
+                  className={`relative shrink-0 px-[1rem] ${
+                    isMobile ? 'basis-full' : 'basis-1/3'
+                  }`}
+                >
                   <div className="h-full min-h-[270px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96]">
                     <p className="text-sm text-[#262626]">
                       {testimonial.description}

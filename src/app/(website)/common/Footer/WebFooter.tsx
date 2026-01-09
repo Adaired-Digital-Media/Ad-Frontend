@@ -12,6 +12,7 @@ import arrow_white from '../../../../../public/assets/icons/arrow_white.png';
 import CldImage from '../../components/CloudinaryImageComponent';
 import InputField from '../../components/UI/InputField';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 // import dynamic from "next/dynamic";
 
 // const NewsLetter = dynamic(() => import("@/forms/NewsLetter"), {
@@ -20,6 +21,7 @@ import { useState } from 'react';
 // #1B5A96
 
 const WebFooter = () => {
+  const router = useRouter();
   const [inputVal, setInputVal] = useState({ email: '' });
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -31,11 +33,12 @@ const WebFooter = () => {
       <footer className="relative py-12 text-white">
         {/* Background Image */}
         <Image
+          onClick={() => router.push('/')}
           src={footer_bg}
           alt="Footer background"
           fill
           priority
-          className="-z-10 object-cover"
+          className="-z-10 cursor-pointer object-cover"
         />
         <MaxWidthWrapper className="px-4">
           <div

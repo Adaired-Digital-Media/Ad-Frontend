@@ -92,11 +92,11 @@ export const routes: {
   },
 
   websiteNav: [
-    {
-      label: 'Home',
-      value: 'home',
-      href: '/',
-    },
+    // {
+    //   label: 'Home',
+    //   value: 'home',
+    //   href: '/',
+    // },
     {
       label: 'About Us',
       value: 'about',

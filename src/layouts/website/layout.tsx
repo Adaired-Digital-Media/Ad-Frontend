@@ -12,7 +12,7 @@ export default function WebsiteLayout({
   return (
     <div className="relative flex min-h-dvh flex-col">
       {/* <Navbar /> */}
-      <div className="fixed z-40 mt-[1.25rem] w-[100%]">
+      <div className="fixed z-40 mt-[1rem] w-[100%]">
         <Header />
       </div>
       <main id="main" className="flex-1">

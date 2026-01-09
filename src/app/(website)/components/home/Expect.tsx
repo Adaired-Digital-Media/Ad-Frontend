@@ -17,8 +17,8 @@ const Expect = () => {
     delay: 350,
   });
   return (
-    <section className="bg-[#F5F5F580]">
-      <MaxWidthWrapper className="py-[2rem] lg:py-[8rem]">
+    <section className="1bg-[#F5F5F580]">
+      <MaxWidthWrapper className="py-[3rem] lg:py-[6rem]">
         <div className="">
           <Heading
             isDecVarticle={true}
@@ -26,16 +26,19 @@ const Expect = () => {
             title={title}
             span=""
             description={description}
-            isPara2={true}
-            description2={` At Adaired Digital Media, we don’t just create strategies; we
-              deliver measurable impact. Our approach transforms ideas into
-              action and action into results that are important to your
-              business.`}
+            // isPara2={true}
+            // description2={` At Adaired Digital Media, we don’t just create strategies; we
+            //   deliver measurable impact. Our approach transforms ideas into
+            //   action and action into results that are important to your
+            //   business.`}
           />
         </div>
         <div className="relative grid grid-cols-1 gap-[2rem] pt-7 lg:grid-cols-2">
           {/* Content Section */}
-          <div ref={ref} className={`relative h-[660px] w-full ${className}`}>
+          <div
+            ref={ref}
+            className={`relative h-[20rem] w-full lg:h-[660px] ${className}`}
+          >
             <Image
               src={expectImg}
               alt="About Image"
@@ -45,7 +48,7 @@ const Expect = () => {
           </div>
           <div className="flex-1 p-2 text-center lg:text-left">
             {/* Points Section */}
-            <div className="grid grid-cols-1 gap-3  md:grid-cols-2 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2">
               {records?.map((record, idx: any) => {
                 const isHovered = hover === idx;
 
@@ -54,9 +57,9 @@ const Expect = () => {
                     key={idx}
                     onMouseEnter={() => setHover(idx)}
                     onMouseLeave={() => setHover(null)}
-                    className={`rounded-3xl px-[2rem] py-[1.5rem] transition-all duration-300 ${
+                    className={`rounded-3xl px-[2rem] py-[1.5rem] border-[1px] border-[#00000026]/10 transition-all duration-300 ${
                       isHovered
-                        ? 'bg-gradient-to-br from-[#FB9100] to-[#000000]'
+                        ? 'bg-gradient-to-br border-[0px] border-[#FFFFFF] from-[#FB9100] to-[#000000]'
                         : 'bg-white'
                     } `}
                   >

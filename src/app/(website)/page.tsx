@@ -4,7 +4,6 @@ import MaxWidthWrapper from '@/app/(website)/components/MaxWidthWrapper';
 
 import { InfiniteMovingCards } from '../../@core/ui/aceternity-ui/infinite-moving-cards';
 import { AwardsSectionData } from '../../@core/data/website/Homepage';
-import HereComponent from './components/HereComponent';
 import About from './components/home/About';
 import Certificate from './components/home/Certificate';
 import Services from './components/home/Service';
@@ -16,16 +15,21 @@ import Contact from './components/home/Contact';
 import Blogs from './components/home/Blogs';
 import Banner from './components/HereComponent/Banner';
 import FAQ from './components/home/FAQ';
+import Solutions from './components/home/Solutions';
+import Clients from './components/home/Clients';
 
 export default function HomePage() {
   return (
     <>
-      {/* <HereComponent /> */}
       <Banner />
-      <About />
+      <Certificate />
+      <Solutions />
       <Services />
       <Expect />
+      <Clients />
       <WhyChoose />
+      <CaseStudy />
+      <About />
       <Testimonial />
       <Contact />
       <Blogs />

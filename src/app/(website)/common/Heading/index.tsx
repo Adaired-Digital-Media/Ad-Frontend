@@ -8,14 +8,14 @@ export interface IHeading {
   title: String;
   span: String;
   isH1?: boolean;
-  description: String;
+  description?: String;
   isInCenter?: boolean;
   isVarticle?: boolean;
   isBgWhite?: boolean;
   className?: string;
   isDecVarticle?: boolean;
   description2?: string;
-  isPara2?:boolean;
+  isPara2?: boolean;
 }
 const Heading = ({
   subTitle,
@@ -29,7 +29,7 @@ const Heading = ({
   isH1,
   isDecVarticle,
   description2,
-  isPara2
+  isPara2,
 }: IHeading) => {
   return (
     <div className={className}>
@@ -48,7 +48,7 @@ const Heading = ({
                   className="mb-auto"
                 />
                 <span
-                  className={`my-auto font-montserrat text-[12px] font-normal uppercase ${isBgWhite ? 'text-[#000000]' : 'text-[#FFFFFF]'}`}
+                  className={`my-auto font-montserrat text-[10px] font-normal uppercase lg:text-[14px] ${isBgWhite ? 'text-[#000000]' : 'text-[#FFFFFF]'}`}
                 >
                   {subTitle}
                 </span>
@@ -58,14 +58,14 @@ const Heading = ({
             <div className="mt-[1px] md:mt-[15px]">
               {isH1 ? (
                 <h1
-                  className={`${isBgWhite ? 'text-[#111111]' : 'text-[#FFFFFF]'} text-center`}
+                  className={`capitalize ${isBgWhite ? 'text-[#111111]' : 'text-[#FFFFFF]'} text-center`}
                 >
                   {title} <br></br>
                   {span}
                 </h1>
               ) : (
                 <h2
-                  className={`${isBgWhite ? 'text-[#111111]' : 'text-[#FFFFFF]'} text-center`}
+                  className={`capitalize ${isBgWhite ? 'text-[#111111]' : 'text-[#FFFFFF]'} text-center`}
                 >
                   {title} <br></br>
                   {span}
@@ -73,7 +73,7 @@ const Heading = ({
               )}
             </div>
           </div>
-          <div className="px-[20%]">
+          <div className="px-0 lg:px-[20%]">
             <p
               className={`${isBgWhite ? 'text-[#000000]' : 'text-[#FFFFFF]'} py-4 text-center`}
             >
@@ -82,7 +82,9 @@ const Heading = ({
           </div>
         </div>
       ) : (
-        <div className={`${isDecVarticle && 'grid grid-cols-2 gap-[10rem]'}`}>
+        <div
+          className={`${isDecVarticle && 'grid grid-cols-1 lg:grid-cols-2 lg:gap-[10rem]'}`}
+        >
           <div className="md:flex` block w-fit gap-3">
             <div className="flex w-fit gap-3 rounded-full border-[0.71px] border-[#000000]/20 px-[1rem] py-[0.25rem]">
               <Image
@@ -92,19 +94,19 @@ const Heading = ({
                 alt=""
                 className="mb-auto"
               />
-              <span className="my-auto font-montserrat text-[12px] font-normal uppercase text-[#000000]">
+              <span className="my-auto font-montserrat text-[10px] font-normal uppercase text-[#000000] lg:text-[14px]">
                 {subTitle}
               </span>
               {/* <div className="mb-auto mt-3 h-0.5 w-24 bg-[#D7EBFF]"></div> */}
             </div>
-            <div className="mt-[1px] md:mt-[8px]">
+            <div className="mt-[0.8rem] md:mt-[8px] lg:mt-[0.5rem]">
               {isH1 ? (
-                <h1>
+                <h1 className='capitalize'>
                   {title} <br></br>
                   {span}
                 </h1>
               ) : (
-                <h2 className="">
+                <h2 className="capitalize">
                   {title} <br></br>
                   {span}
                 </h2>

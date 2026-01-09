@@ -118,7 +118,7 @@ const HereComponent = () => {
           </div>
         </div>
       </MaxWidthWrapper>
-      <Certificate className="md:px-[5%] md:pb-[4.5rem]" />
+      {/* <Certificate className="md:px-[5%] md:pb-[4.5rem]" /> */}
 
       {<GetQuoteModal isOpen={open} onClose={() => setOpen(false)} />}
     </div>

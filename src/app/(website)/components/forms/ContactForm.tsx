@@ -251,17 +251,23 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="h-full w-full flex-1 space-y-8 rounded-2xl p-4 text-center shadow-[0_0_20px_rgba(66,71,76,0.08)] lg:p-14 lg:text-left">
+    <div className="h-full w-full flex-1 space-y-8 rounded-2xl p-[1.5rem] text-center shadow-[0_0_20px_rgba(66,71,76,0.08)] lg:p-14 lg:text-left">
       <div className="flex justify-between">
         <div>
-          <p className="text-left text-[35px] font-semibold text-[#111111]">
-            Let’s Talk
-          </p>
+          <h3 className="text-left font-poppins text-[22px] font-semibold text-[#111111]">
+            Let’s Start Your Success Journey
+          </h3>
           <p className="pt-3 text-left text-[14px] text-[#666666]">
-            Reach out and let’s start the conversation:
+            Fill out the form, and let’s turn your business goals into reality.
           </p>
         </div>
-        <Image src={chat} width={111} height={73} alt="chat" />
+        <Image
+          src={chat}
+          width={111}
+          height={73}
+          alt="chat"
+          className="mb-auto"
+        />
       </div>
 
       <div>

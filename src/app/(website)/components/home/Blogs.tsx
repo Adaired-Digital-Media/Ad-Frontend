@@ -91,7 +91,7 @@ const Blogs = () => {
   const { subTitle, title, description, blogs } = BlogSectionData;
 
   return (
-    <section className="relative bg-[#F5F5F599] py-6 lg:pb-[10rem] lg:pt-[6rem]">
+    <section className="relative bg-[#F5F5F599] pb-[6rem] pt-[3rem] lg:pb-[10rem] lg:pt-[6rem]">
       <MaxWidthWrapper>
         <div className="flex justify-center">
           <Heading
@@ -105,11 +105,11 @@ const Blogs = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-7 pt-[3rem] md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-7 md:grid-cols-1 lg:grid-cols-3 lg:pt-[3rem]">
           {blogs?.map((blog, idx) => (
             <div
               key={idx}
-              className="group relative rounded-3xl bg-white shadow-[0_0_20px_rgba(0,0,0,0.14)]"
+              className="group relative my-[2.5rem] rounded-3xl bg-white shadow-[0_0_20px_rgba(0,0,0,0.14)] lg:my-0"
             >
               {/* IMAGE */}
               <div className="relative h-[190px] w-full overflow-hidden rounded-2xl lg:h-[350px]">
@@ -137,10 +137,10 @@ const Blogs = () => {
               </div>
 
               {/* CONTENT */}
-              <div className="absolute -bottom-20 mx-8 space-y-4 rounded-xl bg-white p-8">
+              <div className="absolute bottom-[-5rem] space-y-4 rounded-xl bg-white p-4 lg:bottom-[-4.5rem] lg:mx-8 lg:p-8">
                 <h5
                   onClick={() => router.push(`/blog/${blog.link}`)}
-                  className="cursor-pointer text-[1.125rem] text-[#111] transition-colors duration-300 group-hover:text-[#F28F17]"
+                  className="cursor-pointer text-[#111] transition-colors duration-300 group-hover:text-[#F28F17] lg:text-[1.125rem]"
                 >
                   {blog.title.length > 70
                     ? blog.title.slice(0, 70) + '...'

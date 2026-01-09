@@ -32,10 +32,19 @@ const Header = () => {
   return (
     <div className="">
       <MaxWidthWrapper>
-        <div className="rounded-tl-3xle rounded-tr-3xle 3bg-white flex w-[100%] items-center rounded-full border-b-[1px] border-[#0000001A] bg-[#FFFFFF]">
-          <div className="relative flex w-full justify-between p-[1%]">
-            <div className="pl-3">
-              <Image src={logo} width={132} height={50} alt="brand logo" />
+        <div className="flex w-[100%] items-center rounded-full border-b-[1px] border-[#0000001A] bg-[#FFFFFF]">
+          <div className="relative flex w-full justify-between p-[1rem] lg:p-[1%]">
+            <div
+              onClick={() => router.push('/')}
+              className="cursor-pointer pl-3"
+            >
+              <Image
+                src={logo}
+                width={132}
+                height={50}
+                alt="brand logo"
+                className="h-[2.125rem] w-[6.25rem] lg:h-[3.125rem] lg:w-[8.25rem]"
+              />
             </div>
             <div className="hidden justify-between gap-2 rounded-full bg-[#FFF7EC] p-2 lg:flex">
               {websiteNav.map((menu, idx) => {
@@ -193,7 +202,7 @@ const Header = () => {
             </div>
             <IoReorderThreeOutline
               onClick={() => setShow(!show)}
-              size={50}
+              size={35}
               className="animate-pulse block lg:hidden"
             />
           </div>

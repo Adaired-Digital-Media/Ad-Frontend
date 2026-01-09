@@ -14,7 +14,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="overflow-visible py-6 lg:py-[6rem]">
+    <div className="overflow-visible py-[3rem] lg:py-[6rem]">
       <MaxWidthWrapper className="space-y-[3rem] overflow-visible">
         <div className="flex w-[100%] justify-center">
           <Heading
@@ -35,7 +35,7 @@ const FAQ = () => {
             return (
               <div
                 key={idx}
-                className="grid grid-cols-5 rounded-2xl border-[2px] border-[#000000]/20 p-[2rem]"
+                className="grid grid-cols-5 rounded-2xl border-[2px] border-[#000000]/20 p-[1rem] lg:p-[2rem]"
               >
                 {/* Content */}
                 <div className="col-span-4 space-y-4">

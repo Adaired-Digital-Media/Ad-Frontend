@@ -10,10 +10,10 @@ import ChooseIcon2 from '../../../../../public/assets/icons/Group 1000004066.png
 import curve from '../../../../../public/assets/icons/curve_Imag.png';
 
 const WhyChoose = () => {
-  const { subTitle, title,span, description, points } = WhyChooseSectionData;
+  const { subTitle, title, span, description, points } = WhyChooseSectionData;
   const [isHover, setIsHover] = useState<number | null>(1);
   return (
-    <section className="relative md:py-[8rem]">
+    <section className="relative py-[3rem] md:py-[6rem]">
       {/* <Image src={chooseUsBg} fill alt="d" className="object-cover" priority /> */}
       <div className="relative z-20">
         <MaxWidthWrapper>
@@ -25,7 +25,7 @@ const WhyChoose = () => {
             isInCenter={true}
             isBgWhite={true}
           />
-          <div className="mt-[6rem] grid grid-cols-1 gap-[2rem] lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-[2rem] py-[1rem] md:grid-cols-2 lg:mt-[6rem] lg:grid-cols-4">
             {points?.map((item, idx: any) => {
               const lastCard = idx === points.length - 1;
               const isSecond = idx === 1;
@@ -43,7 +43,7 @@ const WhyChoose = () => {
                   className="relative"
                 >
                   <div
-                    className={`mt-[-2.5rem] h-[24rem] cursor-pointer rounded-3xl border-[1px] border-[#FB910040] bg-[#FFF8F0] p-[2rem] transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl`}
+                    className={`h-[23rem] cursor-pointer rounded-3xl border-[1px] border-[#FB910040] bg-[#FFF8F0] p-[1.5rem] transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl lg:mt-[-2.5rem] lg:h-[23rem] lg:p-[2rem]`}
                   >
                     <Image
                       src={item.icon}
@@ -63,7 +63,9 @@ const WhyChoose = () => {
                       {item?.span}
                     </p>
                     <p className={`pt-[1.5rem] text-left text-[#323232B2]`}>
-                      {item?.description}
+                      {item?.description.length > 120
+                        ? item?.description.slice(0, 120) + '...'
+                        : item?.description}
                     </p>
                   </div>
                 </div>

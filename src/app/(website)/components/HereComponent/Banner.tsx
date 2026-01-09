@@ -12,18 +12,56 @@ import SaveAndCancel from '../../common/SaveAndCancel';
 import banner_img_1 from '../../../../../public/assets/images/home/banner_img_1.png';
 import banner_img_2 from '../../../../../public/assets/images/home/banner_img_2.png';
 import banner_img_3 from '../../../../../public/assets/images/home/banner_img_3.png';
-import banner_img_4 from '../../../../../public/assets/images/home/banner_img_7.png';
-import banner_img_5 from '../../../../../public/assets/images/home/banner_img_8.png';
-import banner_img_6 from '../../../../../public/assets/images/home/banner_img_9.png';
 import hero_banner from '../../../../../public/assets/images/home/hero_banner-bg.png';
 import { useRouter } from 'next/navigation';
-type Step = 'img3-enter' | 'img3-exit' | 'img2-enter' | 'img2-exit';
-type ActiveImg = null | 'img1' | 'img2' | 'img3';
-type Phase = 'idle' | 'move' | 'hold' | 'return';
+import { FaUser } from 'react-icons/fa';
+import { FiArrowUpRight } from 'react-icons/fi';
+import { PiDotsThree } from 'react-icons/pi';
+import google from '../../../../../public/assets/images/partner/google.svg';
+import upwork from '../../../../../public/assets/images/partner/upwork.svg';
+
 const Banner = () => {
   const router = useRouter();
   const users = [user, user_2, user_3, user_4, user_5];
-  const reviews = [MdStarRate, MdStarRate, MdStarRate, MdStarRate, MdStarRate];
+  const griphData = [
+    {
+      icon: <FaUser size={10} />,
+      id: 0,
+      lebal: 'Monthly Users',
+      number: '23.6K',
+      griphNumber: `10`,
+      griph: <FiArrowUpRight size={10} />,
+      color: '#FF5A65',
+    },
+    {
+      id: 1,
+      icon: <FaUser size={10} />,
+      lebal: 'Monthly Users',
+      number: '23.6K',
+      griphNumber: `102`,
+      griph: <FiArrowUpRight size={10} />,
+      color: '#14CA74',
+    },
+    ,
+    {
+      id: 2,
+      icon: <FaUser size={10} />,
+      lebal: 'New Users',
+      number: '10.6K',
+      griphNumber: `102`,
+      griph: <FiArrowUpRight size={10} />,
+      color: '#14CA74',
+    },
+    {
+      id: 3,
+      icon: <FaUser size={10} />,
+      lebal: 'Subscribes',
+      number: '21.6K',
+      griphNumber: `102`,
+      griph: <FiArrowUpRight size={10} />,
+      color: '#14CA74',
+    },
+  ];
 
   const [active, setActive] = useState<null | 'img3' | 'img2' | 'img1'>(null);
 
@@ -67,18 +105,18 @@ const Banner = () => {
         priority
         className="pointer-events-none object-cover"
       />
-      <MaxWidthWrapper className="relative z-10 flex justify-between pb-[10rem] pt-[10rem]">
-        <div className="w-[42%] space-y-4">
+      <MaxWidthWrapper className="relative z-10 block justify-between px-[0.8rem] pb-[6rem] pt-[3rem] lg:flex lg:pt-[5rem]">
+        <div className="w-[100%] space-y-5 lg:w-[42%]">
           <Heading
             isH1={true}
-            subTitle={'WELCOME TO Adaired Digital Media'}
-            title={'The Driving Force Behind the Brands That Lead'}
+            subTitle={`Gain Visibility That Converts`}
+            title={`Result-Driven Digital Marketing Agency for Scalable Growth`}
             span={''}
             description={
-              "In a world where thousands of brands compete for a moment's attention, being seen isn’t enough. You want to be remembered, right?"
+              'From Google searches to AI chats, we make sure your brand is visible to your customers wherever they look.'
             }
           />
-          <div className="relative flex h-[55px]">
+          <div className="relative flex h-[55px] justify-between">
             {users?.map((img, index) => {
               const lastuser = users.length - 1 === index;
               return (
@@ -87,14 +125,13 @@ const Banner = () => {
                   className="absolute"
                   style={{
                     left: `${index * 32}px`,
-                    // zIndex: users.length - index,
                     zIndex: index + 1,
                   }}
                 >
                   <Image
                     src={img}
-                    width={55}
-                    height={55}
+                    width={50}
+                    height={50}
                     alt="user"
                     className={`${lastuser && 'animate-zoomPulse'} rounded-full border-[1px] border-white`}
                   />
@@ -102,19 +139,41 @@ const Banner = () => {
               );
             })}
 
-            <span className="absolute right-[48%] top-4 flex">
+            <span className="mt-1 flex pl-[12rem]">
+              <MdStarRate
+                size={20}
+                className="my-auto hidden text-[#FB9100] lg:block"
+              />
+              <MdStarRate
+                size={20}
+                className="my-auto hidden text-[#FB9100] lg:block"
+              />
               <MdStarRate size={20} className="my-auto text-[#FB9100]" />
               <MdStarRate size={20} className="my-auto text-[#FB9100]" />
               <MdStarRate size={20} className="my-auto text-[#FB9100]" />
-              <MdStarRate size={20} className="my-auto text-[#FB9100]" />
-              <MdStarRate size={20} className="my-auto text-[#FB9100]" />
-              <span className="ml-2">4.5/5</span>
+              <span className="lg:mt:2 ml-2 mt-4">4.8/5 by 100+ Clients</span>
             </span>
           </div>
-          <p>
-            And that’s where Adaired Digital Media comes in. Offering a
-            full-service, 360° digital strategy for your business, helping you
-            rise above the noise and claim your space in the digital world.
+          <div className="flex gap-3">
+            <Image
+              src={google}
+              width={207.58316040039062}
+              height={32}
+              alt="DS"
+            />
+            <span className="my-auto text-lg text-[#000000]/20">|</span>
+            <Image
+              src={upwork}
+              width={130.2916717529297}
+              height={39.50380325317383}
+              alt="DS"
+            />
+          </div>
+          <p className="hidden lg:block">
+            Scale your business, generate leads by 15% or more within your first
+            6 months with real-time data and expert insights. Our strategy
+            ensures that your brand reaches the right people, produces
+            measurable results, and effectively expands across digital channels.
           </p>
           <SaveAndCancel
             name={'Get a Quote'}
@@ -122,38 +181,93 @@ const Banner = () => {
             is2ndButton={true}
             isIcon={true}
             is2BgWhite={true}
-            className="pt-[2rem]"
+            className="lg:pt-[1rem]"
             handleClick={() => router.push('/contact')}
             handleClick2={() =>
               router.push('/services/search-engine-optimization')
             }
           />
         </div>
-        <div className="relative w-[50%]">
+        <div className="relative mt-[5rem] w-[100%] lg:mt-0 lg:w-[50%]">
           <div className="space-y-4">
-            <div className="flex justify-center">
-              <Image
-                src={banner_img_1}
-                width={631}
-                height={510}
-                alt=""
-                className={`transition-opacity transition-transform duration-700 ease-in-out ${
-                  active === 'img1'
-                    ? 'z-40 opacity-100'
-                    : active
-                      ? 'opacity-40'
-                      : 'opacity-100'
-                } `}
-              />
+            <div className="absolute bottom-[10%] mt-auto flex w-[100%] justify-center">
+              <div className="relative flex justify-end">
+                <Image
+                  src={banner_img_1}
+                  width={599}
+                  height={483}
+                  alt=""
+                  className={`h-[14rem] w-[12rem] transition-opacity transition-transform duration-700 ease-in-out md:h-[28rem] md:w-[32rem] lg:h-[483px] lg:w-[599px] ${
+                    active === 'img1'
+                      ? 'z-40 opacity-100'
+                      : active
+                        ? 'opacity-40'
+                        : 'opacity-100'
+                  } `}
+                />
+                <div className="absolute right-0 top-[103%] grid w-[100%] grid-cols-4 gap-2">
+                  {griphData?.map((item, idx) => {
+                    return (
+                      <div
+                        className={`h-[3.125rem] ${idx == 1 && 'animate-step1'} ${idx == 2 && 'animate-step2'} ${idx == 3 && 'animate-step3'} ${idx == 4 && 'animate-step4'} rounded-[0.25rem] border-[1px] border-[#000000]/20 bg-[#FFFFFF]/80 px-[0.5rem] pb-2`}
+                      >
+                        <div className="flex justify-between">
+                          <div className="my-auto flex gap-1">
+                            <span className="my-auto">{item?.icon}</span>
+                            <p className="mb-auto text-[8px]">{item?.lebal}</p>
+                          </div>
+                          <PiDotsThree size={12} />
+                        </div>
+                        <div className="-mt-1 flex h-fit w-[100%] gap-2">
+                          <p className="my-auto text-[12px] font-bold">
+                            {item?.number}
+                          </p>
+                          <div
+                            className={`my-auto flex h-[16px] w-fit gap-1 rounded-[0.25rem] border-[0.49px] bg-[#000000]/10 px-[0.5rem] opacity-40 ${item?.griphNumber == '10' ? 'border-[#FF5A65];20 text-[#FF5A65]' : 'border-[#14CA74]/20 text-[#14CA74]'}`}
+                          >
+                            <p
+                              className={`mt-[-0.25rem] text-[8px] font-semibold ${item?.griphNumber == '10' ? 'text-[#FF5A65]' : 'text-[#14CA74]'}`}
+                            >
+                              {item?.griphNumber}
+                            </p>
+                            <span className="my-auto">{item?.griph}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {/* <Image
+                    src={banner_img_4}
+                    width={150}
+                    height={46}
+                    alt=""
+                    className="animate-step1 bg-white"
+                  />
+                  <Image
+                    src={banner_img_5}
+                    width={150}
+                    height={46}
+                    alt=""
+                    className="animate-step2 bg-white"
+                  />
+                  <Image
+                    src={banner_img_6}
+                    width={150}
+                    height={46}
+                    alt=""
+                    className="animate-step3 bg-white"
+                  /> */}
+                </div>
+              </div>
             </div>
             <Image
               src={banner_img_3}
-              width={318}
-              height={198}
+              width={302}
+              height={186}
               alt=""
-              className={`absolute right-[33.5rem] top-[62.5%] transition-opacity transition-transform duration-700 ease-in-out ${
+              className={`absolute bottom-[0rem] left-[0rem] h-[6rem] w-[8rem] transition-opacity transition-transform duration-700 ease-in-out md:left-[0rem] md:h-[10rem] md:w-[14rem] lg:h-[186px] lg:w-[302px] ${
                 active === 'img3'
-                  ? 'z-30 translate-x-[90%] translate-y-[-110%] scale-105 opacity-100 backdrop-blur-md'
+                  ? 'z-30 translate-x-[80%] translate-y-[-110%] scale-105 opacity-100 backdrop-blur-md'
                   : active
                     ? 'z-10 translate-x-0 translate-y-0 scale-100 opacity-40'
                     : 'z-10 translate-x-0 translate-y-0 scale-100 opacity-100'
@@ -161,41 +275,17 @@ const Banner = () => {
             />
             <Image
               src={banner_img_2}
-              width={409}
-              height={254}
+              width={388}
+              height={244}
               alt=""
-              className={`absolute bottom-[68%] left-[24rem] transition-opacity transition-transform duration-700 ease-in-out ${
+              className={`absolute right-0 top-[0rem] h-[6.875rem] w-[10.563rem] transition-opacity transition-transform duration-700 ease-in-out md:h-[13rem] md:w-[20rem] lg:h-[244px] lg:w-[388px] ${
                 active === 'img2'
-                  ? 'z-30 translate-x-[-50%] translate-y-[80%] scale-105 bg-white/80 opacity-100 backdrop-blur-md'
+                  ? 'z-30 translate-x-[-50%] translate-y-[100%] scale-105 bg-white/80 opacity-100 backdrop-blur-md'
                   : active
                     ? 'z-10 translate-x-0 translate-y-0 scale-100 opacity-40'
                     : 'z-10 translate-x-0 translate-y-0 scale-100 opacity-100'
               }`}
             />
-
-            <div className="flex justify-end gap-1 pr-[10%]">
-              <Image
-                src={banner_img_4}
-                width={150}
-                height={46}
-                alt=""
-                className="animate-step1 bg-white"
-              />
-              <Image
-                src={banner_img_5}
-                width={150}
-                height={46}
-                alt=""
-                className="animate-step2 bg-white"
-              />
-              <Image
-                src={banner_img_6}
-                width={150}
-                height={46}
-                alt=""
-                className="animate-step3 bg-white"
-              />
-            </div>
           </div>
         </div>
       </MaxWidthWrapper>

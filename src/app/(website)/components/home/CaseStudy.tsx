@@ -48,7 +48,6 @@ const CaseStudy = () => {
   const getCaseStudy = async () => {
     try {
       const res = await fetch(`${BaseURL}/case-study/read`);
-      console.log(res, 'res>>>>DZODZ');
 
       if (!res.ok) {
         throw new Error(`Failed to fetch: ${res.status}`);
@@ -63,14 +62,13 @@ const CaseStudy = () => {
     }
   };
 
-  console.log(caseStudies, 'caseStudies>>>>DZODZ');
 
   useEffect(() => {
     getCaseStudy();
   }, []);
   return (
     <section className="">
-      <MaxWidthWrapper className="py-[2rem] lg:py-[6rem]">
+      <MaxWidthWrapper className="py-[3rem] lg:py-[6rem]">
         <div className="">
           <Heading
             subTitle={subTitle}
