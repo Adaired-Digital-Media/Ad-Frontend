@@ -31,11 +31,11 @@ const Certificate = () => {
 
       <MaxWidthWrapper>
         <Heading
-          subTitle={'Expert Marketing Solutions'}
-          title={'360° Digital Marketing Services for Modern'}
-          span={'Business Needs'}
+          subTitle={'AI Growth Catalyst'}
+          title={'Propelling Businesses into the Spotlight'}
+          span={'through Intelligent AI'}
           description={
-            'Our success-driven digital marketing services integrate AI-enhanced SEO, advanced analytics, and conversion-focused strategies to strengthen brand'
+            'Ensuring businesses gain visibility in AI responses, increasing brand mentions, trustworthiness, and discoverability across modern large language models.'
           }
           isInCenter={true}
           isBgWhite={true}
