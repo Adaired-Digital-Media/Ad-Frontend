@@ -8,10 +8,10 @@ import type { Metadata } from 'next';
 import { parseStyleString } from '@core/utils/parseStyleString';
 import { formatDate } from '@core/utils/format-date';
 import Head from 'next/head';
-import { BaseURL } from '@/baseUrl';
+import { Base2URL } from '@/baseUrl';
 
 async function getBlogs({ params }: { params: { slug: string } }) {
-  const res = await fetch(`${BaseURL}/blog/read?slug=${params.slug}`);
+  const res = await fetch(`${Base2URL}/blog/read?slug=${params.slug}`);
   const data = await res.json();
   return data;
 }
@@ -90,7 +90,7 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   try {
-    const res = await fetch(`${BaseURL}/blog/read`, {
+    const res = await fetch(`${Base2URL}/blog/read`, {
       cache: 'no-store',
     });
 
