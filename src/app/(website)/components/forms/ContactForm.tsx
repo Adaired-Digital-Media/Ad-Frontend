@@ -201,22 +201,23 @@ const ContactForm = () => {
   // };
 
   const handleClick = async () => {
-    if (!executeRecaptcha) return;
-
+    // if (!executeRecaptcha) return;
     const newErrors: typeof errors = {};
+    console.log('Executing handleClick');
 
-    if (!emailRegex.test(inputValue.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
+    // if (!emailRegex.test(inputValue.email)) {
+    //   newErrors.email = 'Please enter a valid email address';
+    // }
 
-    if (!phoneRegex.test(inputValue.phone)) {
-      newErrors.phone = 'Please enter a valid 10-digit mobile number';
-    }
+    // if (!phoneRegex.test(inputValue.phone)) {
+    //   newErrors.phone = 'Please enter a valid 10-digit mobile number';
+    // }
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    // if (Object.keys(newErrors).length > 0) {
+    //   setErrors(newErrors);
+    //   return;
+    // }
+    console.log('Executing handleClick3432');
 
     try {
       const token = await executeRecaptcha('contact_page_form');
