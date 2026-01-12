@@ -88,7 +88,7 @@ import { PiEyeBold } from 'react-icons/pi';
 
 const Blogs = () => {
   const router = useRouter();
-  const { subTitle, title, description, blogs } = BlogSectionData;
+  const { subTitle, title, description, blogs, span } = BlogSectionData;
 
   return (
     <section className="relative bg-[#F5F5F599] pb-[6rem] pt-[3rem] lg:pb-[10rem] lg:pt-[6rem]">
@@ -97,7 +97,7 @@ const Blogs = () => {
           <Heading
             subTitle={subTitle}
             title={title}
-            span=""
+            span={span}
             description={description}
             isInCenter
             isBgWhite

@@ -97,7 +97,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className="animate-pulse relative h-[100vh] w-full pt-[10vh]">
+    <div className="animate-pulse relative h-[100vh] w-full pt-[10vh] md:h-[130vh] lg:h-[100vh]">
       <Image
         src={hero_banner}
         fill
@@ -105,7 +105,7 @@ const Banner = () => {
         priority
         className="pointer-events-none object-cover"
       />
-      <MaxWidthWrapper className="relative z-10 block justify-between px-[0.8rem] pb-[6rem] pt-[3rem] lg:flex lg:pt-[5rem]">
+      <MaxWidthWrapper className="relative z-10 block justify-between px-[0.8rem] pt-[3rem] lg:flex lg:pb-[6rem] lg:pt-[5rem]">
         <div className="w-[100%] space-y-5 lg:w-[42%]">
           <Heading
             isH1={true}
@@ -157,23 +157,25 @@ const Banner = () => {
           <div className="flex gap-3">
             <Image
               src={google}
-              width={207.58316040039062}
+              width={208}
               height={32}
               alt="DS"
+              className="h-[2rem] w-[8rem] md:h-[2rem] md:w-[10rem] lg:h-[2rem] lg:w-[13rem]"
             />
             <span className="my-auto text-lg text-[#000000]/20">|</span>
             <Image
               src={upwork}
-              width={130.2916717529297}
-              height={39.50380325317383}
+              width={130}
+              height={39}
               alt="DS"
+              className="h-[2rem] w-[7rem] md:h-[2rem] md:w-[7rem] lg:h-[2.438rem] lg:w-[8.125rem]"
             />
           </div>
           <p className="hidden lg:block">
-            Scale your business, generate leads by 15% or more within your first
-            6 months with real-time data and expert insights. Our strategy
-            ensures that your brand reaches the right people, produces
-            measurable results, and effectively expands across digital channels.
+            Generate leads by 15% or more within your first 6 months with
+            real-time data and expert insights. Our strategy ensures that your
+            brand reaches the right people, produces measurable results, and
+            effectively expands across digital channels.
           </p>
           <SaveAndCancel
             name={'Get a Quote'}
@@ -188,7 +190,7 @@ const Banner = () => {
             }
           />
         </div>
-        <div className="relative mt-[5rem] w-[100%] lg:mt-0 lg:w-[50%]">
+        <div className="relative mt-[5rem] w-[100%] pt-[20vh] md:pt-[50vh] lg:mt-0 lg:w-[50%] lg:pt-0">
           <div className="space-y-4">
             <div className="absolute bottom-[10%] mt-auto flex w-[100%] justify-center">
               <div className="relative flex justify-end">
@@ -197,7 +199,7 @@ const Banner = () => {
                   width={599}
                   height={483}
                   alt=""
-                  className={`h-[14rem] w-[12rem] transition-opacity transition-transform duration-700 ease-in-out md:h-[28rem] md:w-[32rem] lg:h-[483px] lg:w-[599px] ${
+                  className={`h-[10rem] w-[15rem] transition-opacity transition-transform duration-700 ease-in-out md:h-[20rem] md:w-[32rem] lg:h-[30.188rem] lg:w-[37.438rem] ${
                     active === 'img1'
                       ? 'z-40 opacity-100'
                       : active
@@ -205,7 +207,7 @@ const Banner = () => {
                         : 'opacity-100'
                   } `}
                 />
-                <div className="absolute right-0 top-[103%] grid w-[100%] grid-cols-4 gap-2">
+                <div className="absolute right-0 top-[103%] hidden w-[100%] grid-cols-4 gap-2 md:grid">
                   {griphData?.map((item, idx) => {
                     return (
                       <div
@@ -265,9 +267,9 @@ const Banner = () => {
               width={302}
               height={186}
               alt=""
-              className={`absolute bottom-[0rem] left-[0rem] h-[6rem] w-[8rem] transition-opacity transition-transform duration-700 ease-in-out md:left-[0rem] md:h-[10rem] md:w-[14rem] lg:h-[186px] lg:w-[302px] ${
+              className={`absolute bottom-0 left-[0rem] h-[6rem] w-[8rem] transition-opacity transition-transform duration-700 ease-in-out md:bottom-[-1.5rem] md:left-[0rem] md:h-[10rem] md:w-[14rem] lg:bottom-[0rem] lg:h-[186px] lg:w-[302px] ${
                 active === 'img3'
-                  ? 'z-30 translate-x-[80%] translate-y-[-110%] scale-105 opacity-100 backdrop-blur-md'
+                  ? 'md: z-30 translate-x-[100%] translate-y-[-50%] scale-105 opacity-100 backdrop-blur-md md:translate-x-[105%] md:translate-y-[-80%] lg:translate-x-[80%] lg:translate-y-[-110%]'
                   : active
                     ? 'z-10 translate-x-0 translate-y-0 scale-100 opacity-40'
                     : 'z-10 translate-x-0 translate-y-0 scale-100 opacity-100'
@@ -278,9 +280,9 @@ const Banner = () => {
               width={388}
               height={244}
               alt=""
-              className={`absolute right-0 top-[0rem] h-[6.875rem] w-[10.563rem] transition-opacity transition-transform duration-700 ease-in-out md:h-[13rem] md:w-[20rem] lg:h-[244px] lg:w-[388px] ${
+              className={`absolute right-0 top-[-4rem] h-[6.875rem] w-[10.563rem] transition-opacity transition-transform duration-700 ease-in-out md:top-[-2rem] md:h-[13rem] md:w-[20rem] lg:top-[0rem] lg:h-[244px] lg:w-[388px] ${
                 active === 'img2'
-                  ? 'z-30 translate-x-[-50%] translate-y-[100%] scale-105 bg-white/80 opacity-100 backdrop-blur-md'
+                  ? 'z-30 translate-x-[-50%] translate-y-[50%] scale-105 bg-white/80 opacity-100 backdrop-blur-md md:translate-x-[-60%] md:translate-y-[75%] lg:translate-x-[-50%] lg:translate-y-[100%]'
                   : active
                     ? 'z-10 translate-x-0 translate-y-0 scale-100 opacity-40'
                     : 'z-10 translate-x-0 translate-y-0 scale-100 opacity-100'

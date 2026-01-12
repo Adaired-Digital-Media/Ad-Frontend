@@ -25,7 +25,7 @@ const WhyChoose = () => {
             isInCenter={true}
             isBgWhite={true}
           />
-          <div className="grid grid-cols-1 gap-[2rem] py-[1rem] md:grid-cols-2 lg:mt-[6rem] lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-[1.5rem] py-[1rem] md:grid-cols-2 lg:mt-[6rem] lg:grid-cols-4">
             {points?.map((item, idx: any) => {
               const lastCard = idx === points.length - 1;
               const isSecond = idx === 1;
@@ -43,7 +43,7 @@ const WhyChoose = () => {
                   className="relative"
                 >
                   <div
-                    className={`h-[23rem] cursor-pointer rounded-3xl border-[1px] border-[#FB910040] bg-[#FFF8F0] p-[1.5rem] transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl lg:mt-[-2.5rem] lg:h-[23rem] lg:p-[2rem]`}
+                    className={`h-[23rem] cursor-pointer rounded-3xl border-[1px] border-[#FB910040] bg-[#FFF8F0] p-[1.5rem] transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl lg:mt-[-2.5rem] lg:h-[25rem] lg:p-[1.5rem]`}
                   >
                     <Image
                       src={item.icon}
@@ -63,9 +63,10 @@ const WhyChoose = () => {
                       {item?.span}
                     </p>
                     <p className={`pt-[1.5rem] text-left text-[#323232B2]`}>
-                      {item?.description.length > 120
-                        ? item?.description.slice(0, 120) + '...'
-                        : item?.description}
+                      {/* {item?.description.length > 140
+                        ? item?.description.slice(0, 140) + '...'
+                        : item?.description} */}
+                        {item?.description}
                     </p>
                   </div>
                 </div>

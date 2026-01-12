@@ -4,18 +4,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import MaxWidthWrapper from '../MaxWidthWrapper';
 import Heading from '../../common/Heading';
 import { ServiceSectionData } from '@/@core/data/website/Homepage';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import SaveAndCancel from '../../common/SaveAndCancel';
 import check from '../../../../../public/assets/icons/newStar.png';
 import { useRouter } from 'next/navigation';
 import { useScrollTabs } from '@/@core/hooks/useScrollTabs';
 import { MdArrowOutward } from 'react-icons/md';
-
+export interface ServiceItem {
+  icon: StaticImageData;
+  label: string;
+  title: string;
+  description: string;
+  link: string;
+  image?: StaticImageData; // ✅ OPTIONAL (important)
+}
 const Service = () => {
   const router = useRouter();
   const { subtitle, title, span, description, services } = ServiceSectionData;
   const [hoveredTab, setHoveredTab] = useState<number | null>(null);
-
+  const [activeCard, setActiveCard] = useState<string | null>(null);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const servicesWrapperRef = useRef<HTMLDivElement | null>(null);
   const { activeTab, setActiveTab, isMobile, showMobileTab, mobileTabs } =
@@ -95,6 +102,7 @@ const Service = () => {
                       key={tab.realIndex}
                       onClick={() => {
                         setActiveTab(tab.realIndex);
+                        setActiveCard(null);
                         sectionRefs.current[tab.realIndex]?.scrollIntoView({
                           behavior: 'smooth',
                           block: 'start',
@@ -115,38 +123,6 @@ const Service = () => {
           )}
 
           {/* ---------------- LEFT TABS (DESKTOP) ---------------- */}
-          {/* <div className="relative hidden lg:block">
-            <div className="sticky top-[15rem]">
-              {services?.map((service, idx) => {
-                const isFirst = idx === 0;
-                const isLast = idx === services.length - 1;
-
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      setActiveTab(idx);
-                      sectionRefs.current[idx]?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                      });
-                    }}
-                  >
-                    <h5
-                      className={`cursor-pointer border px-4 py-6 transition hover:rounded-xl hover:border-[#FCA32A] hover:bg-white ${
-                        activeTab === idx
-                          ? 'rounded-xl border-[#FB9100] bg-white'
-                          : 'bg-[#F5F5F5]'
-                      } ${isFirst && 'rounded-t-xl'} ${isLast && 'rounded-b-xl'} `}
-                    >
-                      {service.title}
-                    </h5>
-                  </div>
-                );
-              })}
-            </div>
-          </div> */}
-
           <div className="relative hidden w-[30%] lg:block">
             <div className="sticky top-[15rem] h-[35rem] rounded-xl bg-white p-[2rem]">
               {services?.map((service, idx) => {
@@ -158,6 +134,7 @@ const Service = () => {
                     key={idx}
                     onClick={() => {
                       setActiveTab(idx);
+                      setActiveCard(null);
                       sectionRefs.current[idx]?.scrollIntoView({
                         behavior: 'smooth',
                         block: 'center',
@@ -207,77 +184,85 @@ const Service = () => {
           </div>
 
           {/* ---------------- RIGHT CONTENT ---------------- */}
-          <div className="w-[70%] space-y-[2rem]">
-            {services?.map((service, idx) => (
-              <div
-                key={idx}
-                ref={(el) => {
-                  sectionRefs.current[idx] = el;
-                }}
-                className="block gap-[2rem] rounded-xl border-[1px] border-[#00000033]/20 bg-white p-8"
-              >
-                <div className="flex gap-2">
-                  {/* LEFT CONTENT */}
-                  <div className="w-full lg:w-[55%]">
-                    <div className="relative overflow-hidden rounded-xl">
-                      <div className="relative h-[180px] w-full overflow-hidden rounded-2xl md:h-[240px] lg:h-[20.25rem]">
-                        <Image
-                          src={service.img}
-                          fill
-                          alt={service.title}
-                          className="object-cover"
-                          priority
-                        />
+          <div className="w-[100%] space-y-[2rem] lg:w-[70%]">
+            {services?.map((service, idx) => {
+              const ActiveCardDetails = service?.list?.filter(
+                (item) => item.label === activeCard
+              );
+              const isActive = activeTab === idx;
+              console.log(isActive, ' ');
+              const { title, description, image } =
+                (ActiveCardDetails?.[0] as ServiceItem) ?? {};
+              return (
+                <div
+                  key={idx}
+                  ref={(el) => {
+                    sectionRefs.current[idx] = el;
+                  }}
+                  className="block gap-[2rem] rounded-xl border-[1px] border-[#00000033]/20 bg-white p-8"
+                >
+                  <div className="gap-2 lg:flex">
+                    {/* LEFT CONTENT */}
+                    <div className="w-[100%] lg:w-[55%]">
+                      <div className="relative overflow-hidden rounded-xl">
+                        <div className="animate-slideUpFade relative h-[180px] w-full overflow-hidden rounded-2xl md:h-[240px] lg:h-[20.25rem]">
+                          <Image
+                            src={image ?? service.img}
+                            fill
+                            alt={service.title}
+                            className="object-cover"
+                            priority
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* RIGHT LIST */}
+                    <div className="w-[100%] lg:w-[45%]">
+                      <div className="grid grid-cols-1 gap-2 py-[1rem] md:grid-cols-2 lg:py-0">
+                        {service?.list?.slice(0, 4)?.map((item, i, arr) => {
+                          return (
+                            <div
+                              key={i}
+                              onClick={() => setActiveCard(item.label)}
+                              className={`${activeCard !== item.label ? 'bg-[#F5F5F5]' : 'bg-[#FEE9CC]'} flex !cursor-pointer gap-3 rounded-[15px] border-[0.71px] p-5 hover:border-[0.71px] hover:border-[#F28F17]/60 md:block`}
+                            >
+                              <Image
+                                src={item?.icon}
+                                width={40}
+                                height={40}
+                                alt="check"
+                                unoptimized
+                                className="ani my-auto"
+                              />
+                              <p className="my-auto font-poppins font-semibold text-[#000000] lg:pt-[1.7rem]">
+                                {item?.label}
+                              </p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
+                  <div>
+                    <h2 className="animate-slideUpFade my-2 text-center font-bold [animation-delay:120ms] lg:my-4 lg:text-left">
+                      {title ?? service.title}
+                    </h2>
 
-                  {/* RIGHT LIST */}
-                  <div className="w-full lg:w-[45%]">
-                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                      {service?.list?.slice(0, 4)?.map((item, i, arr) => {
-                        return (
-                          <div
-                            key={i}
-                            className={`flex gap-3 rounded-[15px] bg-[#FFF6EB] p-5 md:block`}
-                          >
-                            <Image
-                              src={item?.icon}
-                              width={40}
-                              height={40}
-                              alt="check"
-                              unoptimized
-                              className="my-auto"
-                            />
-                            <p className="my-auto font-poppins font-semibold text-[#000000] lg:pt-[1.7rem]">
-                              {item?.label}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
+                    <p className="animate-slideUpFade mb-6 text-center [animation-delay:120ms] lg:text-left">
+                      {description ?? service.description}
+                    </p>
+
+                    <SaveAndCancel
+                      handleClick={() => router.push(service.link)}
+                      name="Learn More"
+                      isIcon
+                      
+                    />
                   </div>
                 </div>
-                <div>
-                  <h2 className="my-2 text-center font-bold lg:my-4 lg:text-left">
-                    {service.title}
-                  </h2>
-
-                  <p className="mb-6 text-center lg:text-left">
-                    {/* {service.description.length > 130
-                      ? service.description.slice(0, 130) + '...'
-                      : service.description} */}
-                    {service.description}
-                  </p>
-
-                  <SaveAndCancel
-                    // handleClick={() => router.push(service.link)}
-                    name="Learn More"
-                    isIcon
-                  />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </MaxWidthWrapper>

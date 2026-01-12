@@ -57,9 +57,9 @@ const Expect = () => {
                     key={idx}
                     onMouseEnter={() => setHover(idx)}
                     onMouseLeave={() => setHover(null)}
-                    className={`rounded-3xl px-[2rem] py-[1.5rem] border-[1px] border-[#00000026]/10 transition-all duration-300 ${
+                    className={`rounded-3xl border-[1px] border-[#00000026]/10 px-[2rem] py-[1.5rem] transition-all duration-300 ${
                       isHovered
-                        ? 'bg-gradient-to-br border-[0px] border-[#FFFFFF] from-[#FB9100] to-[#000000]'
+                        ? 'border-[0px] border-[#FFFFFF] bg-gradient-to-br from-[#FB9100] to-[#000000]'
                         : 'bg-white'
                     } `}
                   >
@@ -71,7 +71,7 @@ const Expect = () => {
                     </div>
 
                     <h5
-                      className={`pb-[1rem] pt-[3.25rem] text-left transition-colors duration-300 ${isHovered && 'text-white'} `}
+                      className={`pb-[1rem] pt-[2.25rem] text-left transition-colors duration-300 ${isHovered && 'text-white'} `}
                     >
                       {record.name}
                     </h5>
