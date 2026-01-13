@@ -237,8 +237,8 @@ export const WhyChooseSectionData = {
     },
     {
       icon: Transparent,
-      title: 'Transparent  Real-Time',
-      span: 'Processes',
+      title: 'Transparent',
+      span: 'Real-Time Processes',
       description:
         'Our ROI-first approach ensures every strategy, campaign, and investment delivers measurable value, sustainable growth, and profitable results.',
     },

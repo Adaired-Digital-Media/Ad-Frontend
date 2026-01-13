@@ -124,7 +124,7 @@ const Service = () => {
 
           {/* ---------------- LEFT TABS (DESKTOP) ---------------- */}
           <div className="relative hidden w-[30%] lg:block">
-            <div className="sticky top-[15rem] h-[35rem] rounded-xl bg-white p-[2rem]">
+            <div className="sticky top-[15rem] h-[33rem] rounded-xl bg-white p-[1rem] xl:h-[35rem] xl:p-[2rem]">
               {services?.map((service, idx) => {
                 const isFirst = idx === 0;
                 const isLast = idx === services.length - 1;
@@ -203,9 +203,9 @@ const Service = () => {
                 >
                   <div className="gap-2 lg:flex">
                     {/* LEFT CONTENT */}
-                    <div className="w-[100%] lg:w-[55%]">
+                    <div className="w-[100%] lg:w-[50%] xl:w-[55%]">
                       <div className="relative overflow-hidden rounded-xl">
-                        <div className="animate-slideUpFade relative h-[180px] w-full overflow-hidden rounded-2xl md:h-[240px] lg:h-[20.25rem]">
+                        <div className="animate-slideUpFade relative h-[180px] w-full overflow-hidden rounded-2xl md:h-[240px] lg:h-[16rem] xl:h-[20.25rem]">
                           <Image
                             src={image ?? service.img}
                             fill
@@ -218,14 +218,14 @@ const Service = () => {
                     </div>
 
                     {/* RIGHT LIST */}
-                    <div className="w-[100%] lg:w-[45%]">
+                    <div className="w-[100%] lg:w-[50%] xl:w-[45%]">
                       <div className="grid grid-cols-1 gap-2 py-[1rem] md:grid-cols-2 lg:py-0">
                         {service?.list?.slice(0, 4)?.map((item, i, arr) => {
                           return (
                             <div
                               key={i}
                               onClick={() => setActiveCard(item.label)}
-                              className={`${activeCard !== item.label ? 'bg-[#F5F5F5]' : 'bg-[#FEE9CC]'} flex !cursor-pointer gap-3 rounded-[15px] border-[0.71px] p-5 hover:border-[0.71px] hover:border-[#F28F17]/60 md:block`}
+                              className={`${activeCard !== item.label ? 'bg-[#F5F5F5]' : 'bg-[#FEE9CC]'} flex !cursor-pointer gap-3 rounded-[15px] border-[0.71px] p-[1rem] hover:border-[0.71px] hover:border-[#F28F17]/60 md:block lg:p-[0.8rem] xl:p-5`}
                             >
                               <Image
                                 src={item?.icon}
@@ -233,9 +233,9 @@ const Service = () => {
                                 height={40}
                                 alt="check"
                                 unoptimized
-                                className="ani my-auto"
+                                className="ani my-auto lg:h-[30px] lg:w-[30px] xl:h-[40px] xl:w-[40px]"
                               />
-                              <p className="my-auto font-poppins font-semibold text-[#000000] lg:pt-[1.7rem]">
+                              <p className="my-auto font-poppins font-semibold text-[#000000] md:pt-[1.7rem] lg:pt-[1rem] lg:text-xxs xl:pt-[1.7rem] xl:text-xs">
                                 {item?.label}
                               </p>
                             </div>
@@ -257,7 +257,6 @@ const Service = () => {
                       handleClick={() => router.push(service.link)}
                       name="Learn More"
                       isIcon
-                      
                     />
                   </div>
                 </div>

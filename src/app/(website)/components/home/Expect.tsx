@@ -26,18 +26,13 @@ const Expect = () => {
             title={title}
             span=""
             description={description}
-            // isPara2={true}
-            // description2={` At Adaired Digital Media, we don’t just create strategies; we
-            //   deliver measurable impact. Our approach transforms ideas into
-            //   action and action into results that are important to your
-            //   business.`}
           />
         </div>
-        <div className="relative grid grid-cols-1 gap-[2rem] pt-7 lg:grid-cols-2">
+        <div className="relative grid grid-cols-1 gap-[1rem] pt-7 lg:grid-cols-2 xl:gap-[2rem]">
           {/* Content Section */}
           <div
             ref={ref}
-            className={`relative h-[20rem] w-full lg:h-[660px] ${className}`}
+            className={`relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] ${className}`}
           >
             <Image
               src={expectImg}
@@ -57,21 +52,21 @@ const Expect = () => {
                     key={idx}
                     onMouseEnter={() => setHover(idx)}
                     onMouseLeave={() => setHover(null)}
-                    className={`rounded-3xl border-[1px] border-[#00000026]/10 px-[2rem] py-[1.5rem] transition-all duration-300 ${
+                    className={`rounded-3xl border-[1px] border-[#00000026]/10 p-[1.8rem] transition-all duration-300 lg:p-[1rem] xl:px-[2rem] xl:py-[1.5rem] ${
                       isHovered
                         ? 'border-[0px] border-[#FFFFFF] bg-gradient-to-br from-[#FB9100] to-[#000000]'
                         : 'bg-white'
                     } `}
                   >
                     <div
-                      className={`text-left text-xl font-semibold transition-colors duration-300 lg:text-[50px] ${isHovered ? 'text-white' : 'text-[#FB9100]'} `}
+                      className={`text-left text-xl font-semibold transition-colors duration-300 xl:text-[50px] ${isHovered ? 'text-white' : 'text-[#FB9100]'} `}
                     >
                       <CountUp end={record.number} />
                       {record.suffix}
                     </div>
 
                     <h5
-                      className={`pb-[1rem] pt-[2.25rem] text-left transition-colors duration-300 ${isHovered && 'text-white'} `}
+                      className={`pt-[0.5rem] text-left transition-colors duration-300 xl:pb-[1rem] xl:pt-[2.25rem] ${isHovered && 'text-white'} `}
                     >
                       {record.name}
                     </h5>

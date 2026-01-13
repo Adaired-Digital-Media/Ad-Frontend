@@ -91,7 +91,7 @@ const Clients = () => {
                 width={225}
                 height={90}
                 alt="client logo"
-                className="my-4 transform transition-transform duration-300 ease-out group-hover:scale-110"
+                className="my-0 transform transition-transform duration-300 ease-out group-hover:scale-110 md:my-4"
               />
             </div>
           ))}
