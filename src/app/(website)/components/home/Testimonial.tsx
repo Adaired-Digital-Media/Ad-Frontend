@@ -60,7 +60,16 @@ const Testimonial = () => {
                     isMobile ? 'basis-full' : 'basis-1/3'
                   }`}
                 >
-                  <div className="h-full min-h-[290px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] lg:p-[1.5rem] xl:p-[2rem]">
+                  <div
+                    onClick={() =>
+                      window.open(
+                        'https://www.upwork.com/agencies/1064740584575918080/',
+                        '_blank',
+                        'noopener,noreferrer'
+                      )
+                    }
+                    className="h-full min-h-[290px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] lg:p-[1.5rem] xl:p-[2rem]"
+                  >
                     <div className="flex justify-between pt-[2rem]">
                       <div className="absolute left-10 top-10 lg:left-4 lg:top-4 xl:left-10 xl:top-10">
                         <p className="text-sm font-medium text-[#108A00]">
