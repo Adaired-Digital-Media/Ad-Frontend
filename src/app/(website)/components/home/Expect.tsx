@@ -63,6 +63,7 @@ const Expect = () => {
                     >
                       <CountUp end={record.number} />
                       {record.suffix}
+                      <span className="text-[20px]">{record.suffix2}</span>
                     </div>
 
                     <h5

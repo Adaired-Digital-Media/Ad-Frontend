@@ -155,7 +155,7 @@ const Blogs = () => {
                     size={24}
                     className="rounded-full bg-[#1A5A96] p-1 text-white"
                   />
-                  <span>Read More</span>
+                  <span>View Blog Post</span>
                 </p>
               </div>
             </div>

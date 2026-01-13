@@ -30,20 +30,20 @@ const About = () => {
   return (
     <section className="">
       <MaxWidthWrapper className="pb-[8rem] pt-[3rem] lg:py-[4rem] xl:py-[6rem]">
-        <div className="flex flex-col-reverse gap-[3rem] lg:flex-row lg:justify-between lg:gap-[5.25rem]">
+        <div className="flex flex-col-reverse gap-[3rem] lg:flex-row lg:justify-between lg:gap-[3rem] xl:gap-[5.25rem]">
           {/* Image Section */}
           <div className="relative mx-auto flex-1">
             {/* CENTER IMAGE */}
             <div
               ref={imageRef}
-              className={`flex items-center justify-center p-3 ${imageClass}`}
+              className={`mt-0 flex items-center justify-center p-3 md:mt-0 lg:mt-[2rem] xl:mt-0 ${imageClass}`}
             >
               <Image
                 src={img}
                 alt="About Image"
                 width={581}
                 height={554}
-                className="h-[14rem] w-[14rem] rounded-lg md:h-[34.625rem] md:w-[36.313rem] lg:h-[34.625rem] lg:w-[36.313rem]"
+                className="h-[14rem] w-[14rem] rounded-lg md:h-[34.625rem] md:w-[36.313rem] lg:h-[20.625rem] lg:w-[20.313rem] xl:h-[34.625rem] xl:w-[36.313rem]"
               />
             </div>
             <div className="absolute left-[-1rem] top-[2rem] flex animate-zoomPulse gap-2 rounded-xl border-[1px] border-[#000000]/10 bg-[#FFFFFF] px-2 py-1 lg:left-0 lg:top-14 lg:px-4 lg:py-2">
@@ -64,7 +64,7 @@ const About = () => {
               alt="Mask Image"
               width={246}
               height={136}
-              className="absolute right-[-3rem] top-[-2rem] -z-10 lg:right-6 lg:top-[-2rem]"
+              className="absolute right-[-3rem] top-[-2rem] -z-10 lg:right-6 lg:top-0 xl:top-[-2rem]"
             />
 
             {/* MASK – BOTTOM LEFT */}
@@ -73,7 +73,7 @@ const About = () => {
               alt="Mask Image"
               width={246}
               height={136}
-              className="absolute bottom-[-1.8rem] left-[-3rem] -z-10 lg:bottom-[2.5rem] lg:left-5"
+              className="absolute bottom-[-1.8rem] left-[-3rem] -z-10 lg:bottom-[22.75rem] lg:left-5 xl:bottom-[5.5rem]"
             />
 
             {/* ABOUT GRAPH – BOTTOM RIGHT */}
@@ -84,7 +84,7 @@ const About = () => {
                 width={276}
                 height={215}
                 // ref={zoomRef}
-                className={`absolute bottom-[-2.25rem] right-[-2rem] h-[7rem] w-[8rem] md:bottom-[-3.25rem] md:right-[-3rem] md:h-[14.063rem] md:w-[17.25rem] lg:bottom-[-3rem] lg:right-0`}
+                className={`absolute bottom-[-2.25rem] right-[-2rem] h-[7rem] w-[8rem] md:bottom-[-3.25rem] md:right-[-3rem] md:h-[14.063rem] md:w-[17.25rem] lg:bottom-[-3rem] lg:right-0 lg:h-[180px] lg:w-[226px] xl:h-[215px] xl:w-[276px]`}
               />
             </div>
           </div>
@@ -125,7 +125,7 @@ const About = () => {
                     <h4 className="text-center text-xs font-bold lg:text-left">
                       {point.title}
                     </h4>
-                    <p className="mt-1 text-center font-montserrat text-xs lg:text-left">
+                    <p className="mt-1 text-center font-montserrat lg:text-left">
                       {point.description}
                     </p>
                   </div>

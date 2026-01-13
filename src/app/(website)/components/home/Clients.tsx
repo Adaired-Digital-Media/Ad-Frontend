@@ -71,7 +71,7 @@ const Clients = () => {
     <div className="bg-[#F9F9F9] py-[3rem] lg:py-[4rem] xl:py-[6rem]">
       <MaxWidthWrapper>
         <Heading
-          subTitle={'Our Client'}
+          subTitle={'Our ClientS'}
           title={'A Decade Of Turning Strategies into Results'}
           span={''}
           // description={

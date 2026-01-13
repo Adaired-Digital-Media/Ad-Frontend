@@ -156,7 +156,7 @@ const Banner = () => {
           </div>
           <div className="flex gap-3">
             <a
-              href="https://www.upwork.com/agencies/1064740584575918080/"
+              href="https://share.google/3KznrgKhabO459Arc"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -172,7 +172,7 @@ const Banner = () => {
             <span className="my-auto text-lg text-[#000000]/20">|</span>
 
             <a
-              href="https://share.google/3KznrgKhabO459Arc"
+              href="https://www.upwork.com/agencies/1064740584575918080/"
               target="_blank"
               rel="noopener noreferrer"
             >

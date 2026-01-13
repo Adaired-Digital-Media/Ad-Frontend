@@ -75,7 +75,7 @@ const Solutions = () => {
               }
               span=""
               description={
-                'You get 24/7 access to your campaign pulse. We combine advanced tracking tools with human insight to show you exactly how $1 of spend becomes $5 of revenue.'
+                'But with us, you get 24/7 access to your campaign pulse. We combine advanced tracking tools with human insight to show you exactly how $1 of spend becomes $5 of revenue.'
               }
             />
 

@@ -184,31 +184,35 @@ export const ExpectSectionData = {
   records: [
     {
       number: 8,
-      suffix: '+ years',
+      suffix: '+',
+      suffix2: 'years',
       name: 'Industry Expertise',
       description:
-        'Proven experience delivering thoughtfully crafted digital strategies designed to drive measurable results',
+        'Trusted expertise creating solutions that drive performance, engagement, and measurable outcomes.',
     },
     {
-      number: 500,
-      suffix: '+',
-      name: 'Projects Delivered',
+      number: 80,
+      suffix: '+ ',
+      suffix2: 'Partners',
+      name: 'Global Network',
       description:
-        'Successfully executed projects focused on performance, precision, consistency, and measurable outcomes',
+        'Collaborating with 80+ partners across 11 countries, driving global innovation together.',
     },
     {
-      number: 30,
-      suffix: 'M+',
-      name: 'Organic Impressions',
+      number: 5,
+      suffix: 'K+',
+      suffix2: 'Projects Completed',
+      name: 'Project Excellence',
       description:
-        'Consistent organic growth achieved through data-led SEO and content-driven digital strategies',
+        'Successfully completing 5,000+ projects worldwide, delivering impact, innovation, and excellence across borders.',
     },
     {
-      number: 320,
-      suffix: '+',
-      name: 'Brands Empowered Globally',
+      number: 1500,
+      suffix: '+ ',
+      suffix2: 'Happy Clients',
+      name: 'Trusted Relationships',
       description:
-        'Helping brands across the globe grow visibility, credibility, trust, and sustainable success.',
+        'Serving 1,500+ happy clients with exceptional solutions, trust, and lasting satisfaction worldwide',
     },
   ],
 };
@@ -293,11 +297,11 @@ export const TestimonialSectionData = {
   title: 'What Our Clients Say About Us',
   span: '',
   description:
-    'Hear directly from the brands we’ve worked with. Real feedback, real experiences, and real results, because nothing speaks louder than the words of satisfied clients.',
+    'Discover client experiences that inspire, highlighting measurable results, innovative solutions, and the lasting impact we create across industries.',
   testimonials: [
     {
       image: 'Static Website Images/homepage_about2',
-      name: 'Lina M., Marketing Director',
+      name: 'Lina M.,',
       description:
         'Adaired’s social media strategy completely transformed our engagement. Our follower growth and customer interactions have skyrocketed!',
       bgColor: '#FFF4F3',
@@ -305,7 +309,7 @@ export const TestimonialSectionData = {
     },
     {
       image: 'Static Website Images/homepage_about1',
-      name: 'Raj P., CEO',
+      name: 'Raj P.,',
       description:
         'Thanks to Adaired’s SEO and content services, our website traffic doubled, and we’re attracting the right clients.',
       bgColor: '#D7EBFF',
@@ -313,7 +317,7 @@ export const TestimonialSectionData = {
     },
     {
       image: 'Static Website Images/homepage_about2',
-      name: ' Sofia K., Founder',
+      name: ' Sofia K.,',
       description:
         'Their full-service digital campaign helped us launch a new product successfully, driving sales and brand recognition fast.',
       bgColor: '#E1F2E2',
@@ -487,7 +491,7 @@ export const ServiceSectionData = {
       accentColor: '#038eb0',
     },
     {
-      title: 'Paid Ads/Pay Per Click',
+      title: 'Pay Per Click',
       description:
         'Maximize ROI with precision PPC campaigns, combining AI-driven targeting, analytics, and optimization to efficiently generate qualified leads.',
       link: '/services/paid-media-and-advertising',
@@ -501,10 +505,10 @@ export const ServiceSectionData = {
           link: '/services/search-engine-optimization',
         },
         {
-          icon: Insta_Ads,
+          icon: TikTokAds,
           image: Ad_2,
-          label: 'Meta (Fb/Insta) Ads',
-          title: 'Meta (Fb/Insta) Ads',
+          label: 'Meta Ads (Fb/Insta)',
+          title: 'Meta Ads (Fb/Insta)',
           description: `Grow your brand with targeted Meta Ads on Facebook and Instagram. We design, manage, and optimize campaigns that reach the right audience, boost engagement, and drive conversions. Our data-driven strategies maximize ROI, increase visibility, and help your business connect with customers where they spend the most time online.`,
           link: '/services/search-engine-optimization',
         },
@@ -517,7 +521,7 @@ export const ServiceSectionData = {
           link: '/services/search-engine-optimization',
         },
         {
-          icon: TikTokAds,
+          icon: Insta_Ads,
           image: Ad_4,
           label: 'TikTok Ads',
           title: 'TikTok Ads',
@@ -737,8 +741,8 @@ export const AwardsSectionData = [
 export const ContactSectionData = {
   image: 'Static Website Images/contact_us_image',
   subTitle: 'Contact Us',
-  title: 'Kickstart your business growth with',
-  span: 'guidance and proven solutions today',
+  title: 'Power your business growth with',
+  span: 'trusted strategies that work',
   description:
     'Accelerate your business growth with expert guidance, practical solutions, and proven strategies that help you seize opportunities, overcome challenges, and achieve lasting success.',
   contactDetails: [
@@ -775,7 +779,7 @@ export const BlogSectionData = {
   title: 'Stay Ahead With The Latest',
   span: 'Market Insights',
   description:
-    'Discover fresh insights, tips, and stories on our blog. Stay updated with the latest trends, ideas, and inspiration. ',
+    'Discover the latest insights, tips, and stories on our blog. Stay updated with the latest trends, ideas, and inspiration. ',
   blogs: [
     {
       image: blog_1,

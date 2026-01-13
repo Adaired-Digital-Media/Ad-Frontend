@@ -255,7 +255,7 @@ const Service = () => {
 
                     <SaveAndCancel
                       handleClick={() => router.push(service.link)}
-                      name="Learn More"
+                      name="See Service Details"
                       isIcon
                     />
                   </div>

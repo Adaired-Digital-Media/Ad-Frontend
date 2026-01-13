@@ -53,17 +53,15 @@ const Testimonial = () => {
                     isMobile ? 'basis-full' : 'basis-1/3'
                   }`}
                 >
-                  <div className="h-full min-h-[270px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96]">
-                    <p className="text-sm text-[#262626]">
-                      {testimonial.description}
-                    </p>
+                  <div className="h-full min-h-[270px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] lg:p-[1.5rem] xl:p-[2.5rem]">
+                    <p className="text-[#262626]">{testimonial.description}</p>
 
                     <div className="flex justify-between pt-[2rem]">
-                      <div className="absolute bottom-10 left-10">
+                      <div className="absolute bottom-10 left-10 lg:bottom-4 lg:left-4 xl:bottom-10 xl:left-10">
                         <p className="text-sm font-medium">
                           {testimonial.name}
                         </p>
-                        <div className="flex gap-1">
+                        <div className="flex gap-1 lg:gap-0 xl:gap-1">
                           {Array.from({ length: 5 }).map((_, i) => (
                             <MdOutlineStar
                               key={i}
@@ -74,13 +72,14 @@ const Testimonial = () => {
                         </div>
                       </div>
 
-                      <div className="absolute bottom-10 right-10 h-[25px] w-[95px]">
+                      <div className="absolute bottom-10 right-10 h-[25px] w-[95px] lg:bottom-4 lg:right-0 xl:bottom-10 xl:right-10">
                         <Image
                           src={google}
                           width={95}
                           height={25}
                           alt="Google"
                           unoptimized
+                          className="xl-h-[25px] lg-h-[20px] lg:w-[65px] xl:w-[95px]"
                         />
                       </div>
                     </div>
