@@ -105,8 +105,8 @@ const Banner = () => {
         priority
         className="pointer-events-none object-cover"
       />
-      <MaxWidthWrapper className="relative z-10 block justify-between px-[0.8rem] pt-[3rem] lg:flex lg:pb-[6rem] lg:pt-[5rem]">
-        <div className="w-[100%] space-y-5 lg:w-[42%]">
+      <MaxWidthWrapper className="relative z-10 block justify-between pt-[3rem] lg:flex lg:pb-[6rem] lg:pt-[5rem]">
+        <div className="w-[100%] space-y-5 lg:w-[45%] xl:w-[42%]">
           <Heading
             isH1={true}
             subTitle={`Gain Visibility That Converts`}
@@ -139,7 +139,7 @@ const Banner = () => {
               );
             })}
 
-            <span className="mt-1 flex pl-[12rem]">
+            <span className="mt-1 flex pl-[10rem] xl:pl-[12rem]">
               <MdStarRate
                 size={20}
                 className="my-auto hidden text-[#FB9100] lg:block"
@@ -151,7 +151,7 @@ const Banner = () => {
               <MdStarRate size={20} className="my-auto text-[#FB9100]" />
               <MdStarRate size={20} className="my-auto text-[#FB9100]" />
               <MdStarRate size={20} className="my-auto text-[#FB9100]" />
-              <span className="lg:mt:2 ml-2 mt-4">4.8/5 by 100+ Clients</span>
+              <span className="lg:mt:2 ml-2 mt-4">4.9/5 by 1K+ Clients</span>
             </span>
           </div>
           <div className="flex gap-3">
@@ -165,7 +165,7 @@ const Banner = () => {
                 width={208}
                 height={32}
                 alt="Upwork"
-                className="h-[2rem] w-[8rem] cursor-pointer md:w-[10rem] lg:w-[13rem]"
+                className="h-[2rem] w-[8rem] cursor-pointer lg:w-[10rem] xl:w-[13rem]"
               />
             </a>
 
@@ -181,7 +181,7 @@ const Banner = () => {
                 width={130}
                 height={39}
                 alt="Google Reviews"
-                className="h-[2rem] w-[7rem] cursor-pointer lg:h-[2.438rem] lg:w-[8.125rem]"
+                className="h-[2rem] w-[7rem] cursor-pointer xl:h-[2.438rem] xl:w-[8.125rem]"
               />
             </a>
           </div>
@@ -214,7 +214,7 @@ const Banner = () => {
                   width={599}
                   height={483}
                   alt=""
-                  className={`h-[10rem] w-[15rem] transition-opacity transition-transform duration-700 ease-in-out md:h-[20rem] md:w-[32rem] lg:h-[30.188rem] lg:w-[37.438rem] ${
+                  className={`h-[10rem] w-[15rem] transition-opacity transition-transform duration-700 ease-in-out md:h-[20rem] md:w-[32rem] lg:h-[18rem] lg:w-[24rem] xl:h-[30.188rem] xl:w-[37.438rem] ${
                     active === 'img1'
                       ? 'z-40 opacity-100'
                       : active
@@ -231,19 +231,21 @@ const Banner = () => {
                         <div className="flex justify-between">
                           <div className="my-auto flex gap-1">
                             <span className="my-auto">{item?.icon}</span>
-                            <p className="mb-auto text-[8px]">{item?.lebal}</p>
+                            <p className="mb-auto text-[6px] xl:text-[8px]">
+                              {item?.lebal}
+                            </p>
                           </div>
                           <PiDotsThree size={12} />
                         </div>
                         <div className="-mt-1 flex h-fit w-[100%] gap-2">
-                          <p className="my-auto text-[12px] font-bold">
+                          <p className="my-auto text-[10px] font-bold xl:text-[12px]">
                             {item?.number}
                           </p>
                           <div
                             className={`my-auto flex h-[16px] w-fit gap-1 rounded-[0.25rem] border-[0.49px] bg-[#000000]/10 px-[0.5rem] opacity-40 ${item?.griphNumber == '10' ? 'border-[#FF5A65];20 text-[#FF5A65]' : 'border-[#14CA74]/20 text-[#14CA74]'}`}
                           >
                             <p
-                              className={`mt-[-0.25rem] text-[8px] font-semibold ${item?.griphNumber == '10' ? 'text-[#FF5A65]' : 'text-[#14CA74]'}`}
+                              className={`mt-[-0.25rem] text-[6px] font-semibold xl:text-[8px] ${item?.griphNumber == '10' ? 'text-[#FF5A65]' : 'text-[#14CA74]'}`}
                             >
                               {item?.griphNumber}
                             </p>
@@ -253,27 +255,6 @@ const Banner = () => {
                       </div>
                     );
                   })}
-                  {/* <Image
-                    src={banner_img_4}
-                    width={150}
-                    height={46}
-                    alt=""
-                    className="animate-step1 bg-white"
-                  />
-                  <Image
-                    src={banner_img_5}
-                    width={150}
-                    height={46}
-                    alt=""
-                    className="animate-step2 bg-white"
-                  />
-                  <Image
-                    src={banner_img_6}
-                    width={150}
-                    height={46}
-                    alt=""
-                    className="animate-step3 bg-white"
-                  /> */}
                 </div>
               </div>
             </div>
@@ -282,9 +263,9 @@ const Banner = () => {
               width={302}
               height={186}
               alt=""
-              className={`absolute bottom-0 left-[0rem] h-[6rem] w-[8rem] transition-opacity transition-transform duration-700 ease-in-out md:bottom-[-1.5rem] md:left-[0rem] md:h-[10rem] md:w-[14rem] lg:bottom-[0rem] lg:h-[186px] lg:w-[302px] ${
+              className={`absolute bottom-0 left-[0rem] h-[6rem] w-[8rem] transition-opacity transition-transform duration-700 ease-in-out md:bottom-[-1.5rem] md:left-[0rem] md:h-[10rem] md:w-[14rem] lg:bottom-0 xl:bottom-[0rem] xl:h-[11.625rem] xl:w-[18.875rem] ${
                 active === 'img3'
-                  ? 'md: z-30 translate-x-[100%] translate-y-[-50%] scale-105 opacity-100 backdrop-blur-md md:translate-x-[105%] md:translate-y-[-80%] lg:translate-x-[80%] lg:translate-y-[-110%]'
+                  ? 'md: z-30 translate-x-[100%] translate-y-[-50%] scale-105 opacity-100 backdrop-blur-md md:translate-x-[105%] md:translate-y-[-80%] lg:translate-x-[50%] lg:translate-y-[-80%] xl:translate-x-[80%] xl:translate-y-[-110%]'
                   : active
                     ? 'z-10 translate-x-0 translate-y-0 scale-100 opacity-40'
                     : 'z-10 translate-x-0 translate-y-0 scale-100 opacity-100'
@@ -295,9 +276,9 @@ const Banner = () => {
               width={388}
               height={244}
               alt=""
-              className={`absolute right-0 top-[-4rem] h-[6.875rem] w-[10.563rem] transition-opacity transition-transform duration-700 ease-in-out md:top-[-2rem] md:h-[13rem] md:w-[20rem] lg:top-[0rem] lg:h-[244px] lg:w-[388px] ${
+              className={`absolute right-0 top-[-4rem] h-[6.875rem] w-[10.563rem] transition-opacity transition-transform duration-700 ease-in-out md:top-[-2rem] md:h-[13rem] md:w-[20rem] lg:top-[30%] lg:h-[10.25rem] lg:w-[15.25rem] xl:top-[0rem] xl:h-[15.25rem] xl:w-[24.25rem] ${
                 active === 'img2'
-                  ? 'z-30 translate-x-[-50%] translate-y-[50%] scale-105 bg-white/80 opacity-100 backdrop-blur-md md:translate-x-[-60%] md:translate-y-[75%] lg:translate-x-[-50%] lg:translate-y-[100%]'
+                  ? 'z-30 translate-x-[-50%] translate-y-[50%] scale-105 bg-white/80 opacity-100 backdrop-blur-md md:translate-x-[-60%] md:translate-y-[75%] lg:translate-x-[-45%] lg:translate-y-[80%] xl:translate-x-[-50%] xl:translate-y-[100%]'
                   : active
                     ? 'z-10 translate-x-0 translate-y-0 scale-100 opacity-40'
                     : 'z-10 translate-x-0 translate-y-0 scale-100 opacity-100'

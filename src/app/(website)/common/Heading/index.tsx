@@ -48,7 +48,7 @@ const Heading = ({
                   className="mb-auto"
                 />
                 <span
-                  className={`my-auto font-montserrat text-[10px] font-normal uppercase lg:text-[14px] ${isBgWhite ? 'text-[#000000]' : 'text-[#FFFFFF]'}`}
+                  className={`my-auto font-montserrat text-[10px] font-normal uppercase xl:text-[14px] ${isBgWhite ? 'text-[#000000]' : 'text-[#FFFFFF]'}`}
                 >
                   {subTitle}
                 </span>
@@ -94,14 +94,14 @@ const Heading = ({
                 alt=""
                 className="mb-auto"
               />
-              <span className="my-auto font-montserrat text-[10px] font-normal uppercase text-[#000000] lg:text-[14px]">
+              <span className="my-auto font-montserrat text-[10px] font-normal uppercase text-[#000000] xl:text-[14px]">
                 {subTitle}
               </span>
               {/* <div className="mb-auto mt-3 h-0.5 w-24 bg-[#D7EBFF]"></div> */}
             </div>
             <div className="mt-[0.8rem] md:mt-[8px] lg:mt-[0.5rem]">
               {isH1 ? (
-                <h1 className='capitalize'>
+                <h1 className="capitalize">
                   {title} <br></br>
                   {span}
                 </h1>
