@@ -35,7 +35,7 @@ import White_SEO_1 from '../../../../public/assets/images/service/White_SEO_1.pn
 import White_SEO_2 from '../../../../public/assets/images/service/White_SEO_2.png';
 import White_SEO_3 from '../../../../public/assets/images/service/White_SEO_3.png';
 import White_SEO_4 from '../../../../public/assets/images/service/White_SEO_4.png';
-
+import White_Label_Services from '../../../../public/assets/images/service/White_Label_Services.png';
 import App_1 from '../../../../public/assets/images/service/App_1.png';
 import App_2 from '../../../../public/assets/images/service/App_4.png';
 import App_3 from '../../../../public/assets/images/service/App_2.png';
@@ -301,41 +301,46 @@ export const TestimonialSectionData = {
   testimonials: [
     {
       image: 'Static Website Images/homepage_about2',
-      name: 'Lina M.,',
+      name: '🚀 Media Buyer Wanted for',
+      span: 'Explosive Dropshipping Launch',
       description:
-        'Adaired’s social media strategy completely transformed our engagement. Our follower growth and customer interactions have skyrocketed!',
+        '"Great to work with. Clear, timely, detailed communication style. Receptive to feedback and recommendations. I would highly recommend working with Seema and team."',
       bgColor: '#FFF4F3',
       rating: 5,
     },
     {
       image: 'Static Website Images/homepage_about1',
-      name: 'Raj P.,',
+      name: 'Shopify coding,',
+      span: '',
       description:
-        'Thanks to Adaired’s SEO and content services, our website traffic doubled, and we’re attracting the right clients.',
+        '"I work with Dheeraj whenever I have something to fix on my website. He is very fast, does his job very well, and delivers quickly. I’m confident that whenever I have something to adjust on my website, I will come back to him. He is so professional and expert"',
       bgColor: '#D7EBFF',
       rating: 5,
     },
     {
       image: 'Static Website Images/homepage_about2',
-      name: ' Sofia K.,',
+      name: 'SEO Specialist for Keyword Research,',
+      span: 'Analytics & Console Setup',
       description:
-        'Their full-service digital campaign helped us launch a new product successfully, driving sales and brand recognition fast.',
+        '"Working with Seema has been an exceptionally professional experience. Her dedication and expertise make collaboration seamless, and I eagerly anticipate future opportunities to work alongside her. Thank you for the outstanding partnership!"',
       bgColor: '#E1F2E2',
       rating: 5,
     },
     {
       image: 'Static Website Images/homepage_about2',
-      name: 'Geetha Radhakrishnan',
+      name: 'Shopify Expert for shipping integration',
+      span: '',
       description:
-        'Adaired Digital Media made the whole process smooth and stress-free. What stood out to me was their clarity, patience, and willingness to listen. ',
+        'Integrated a shipping courier on my shopify account. Very professional, responds very quickly and task done in 1 days for a pretty complex tasks. I recommend 100% dheeraj."',
       bgColor: '#FFF4F3',
       rating: 5,
     },
     {
       image: 'Static Website Images/homepage_about1',
-      name: 'Chandrasekar V',
+      name: 'Setup Social Media Account',
+      span: '',
       description:
-        'AdAired truly gets business growth! Their digital strategies boosted our leads and brand presence faster than expected. Super friendly team, great communication, and real results.',
+        '"Thank you seema for your exceptional work and fast delivery. Your dedication and efficiency have truly exceeded my expectations. Your attention to detail and ability to meet deadlines have been invaluable."',
       bgColor: '#D7EBFF',
       rating: 5,
     },
@@ -616,7 +621,7 @@ export const ServiceSectionData = {
         },
       ],
       mainSvg: 'Logo Design_PpqcI',
-      img: Web_Design,
+      img: White_Label_Services,
       accentColor: '#5c34b1',
     },
     {
