@@ -252,7 +252,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="h-full w-full flex-1 space-y-8 rounded-2xl p-[1.5rem] text-center shadow-[0_0_20px_rgba(66,71,76,0.08)] lg:p-14 lg:text-left">
+    <div className="mt-[1rem] h-full w-full flex-1 space-y-8 rounded-2xl p-[1.5rem] text-center shadow-[0_0_20px_rgba(66,71,76,0.08)] md:mt-0 lg:p-[2rem] lg:text-left xl:p-14">
       <div className="flex justify-between">
         <div>
           <h3 className="text-left font-poppins text-[22px] font-semibold text-[#111111]">

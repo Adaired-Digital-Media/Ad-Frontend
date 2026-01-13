@@ -91,7 +91,7 @@ const Blogs = () => {
   const { subTitle, title, description, blogs, span } = BlogSectionData;
 
   return (
-    <section className="relative bg-[#F5F5F599] pb-[6rem] pt-[3rem] lg:pb-[10rem] lg:py-[4rem] xl:py-[6rem]">
+    <section className="relative bg-[#F5F5F599] pb-[6rem] pt-[3rem] lg:py-[4rem] lg:pb-[10rem] xl:py-[6rem]">
       <MaxWidthWrapper>
         <div className="flex justify-center">
           <Heading
@@ -105,14 +105,14 @@ const Blogs = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-7 md:grid-cols-1 lg:grid-cols-3 lg:pt-[3rem]">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-1 lg:grid-cols-3 lg:pt-[3rem] xl:gap-7">
           {blogs?.map((blog, idx) => (
             <div
               key={idx}
               className="group relative my-[2.5rem] rounded-3xl bg-white shadow-[0_0_20px_rgba(0,0,0,0.14)] lg:my-0"
             >
               {/* IMAGE */}
-              <div className="relative h-[190px] w-full overflow-hidden rounded-2xl lg:h-[350px]">
+              <div className="relative h-[190px] w-full overflow-hidden rounded-2xl lg:h-[250px] xl:h-[350px]">
                 <Image
                   src={blog.image}
                   fill
@@ -124,7 +124,7 @@ const Blogs = () => {
                 <div className="absolute inset-0 bg-[#1A5A96]/10 transition-opacity duration-300 group-hover:bg-[#1A5A96]/60" />
 
                 {/* DATE */}
-                <p className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-xs">
+                <p className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-xxs xl:text-xs">
                   {blog.label}
                 </p>
 
@@ -137,13 +137,13 @@ const Blogs = () => {
               </div>
 
               {/* CONTENT */}
-              <div className="absolute bottom-[-5rem] space-y-4 rounded-xl bg-white p-4 lg:bottom-[-4.5rem] lg:mx-8 lg:p-8">
+              <div className="absolute bottom-[-5rem] space-y-4 rounded-xl bg-white p-4 lg:mx-4 xl:bottom-[-4.5rem] xl:mx-8 xl:p-8">
                 <h5
                   onClick={() => router.push(`/blog/${blog.link}`)}
-                  className="cursor-pointer text-[#111] transition-colors duration-300 group-hover:text-[#F28F17] lg:text-[1.125rem]"
+                  className="cursor-pointer text-[#111] transition-colors duration-300 group-hover:text-[#F28F17] xl:text-[1.125rem]"
                 >
-                  {blog.title.length > 70
-                    ? blog.title.slice(0, 70) + '...'
+                  {blog.title.length > 60
+                    ? blog.title.slice(0, 60) + '...'
                     : blog.title}
                 </h5>
 
