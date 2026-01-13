@@ -52,7 +52,7 @@ const Expect = () => {
                     key={idx}
                     onMouseEnter={() => setHover(idx)}
                     onMouseLeave={() => setHover(null)}
-                    className={`rounded-3xl border-[1px] border-[#00000026]/10 p-[1.8rem] transition-all duration-300 lg:p-[1rem] xl:px-[2rem] xl:py-[1.5rem] ${
+                    className={`rounded-3xl border-[1px] border-[#00000026]/10 p-[1.8rem] transition-all duration-300 lg:p-[1rem] xl:px-[1.75rem] xl:py-[1.5rem] ${
                       isHovered
                         ? 'border-[0px] border-[#FFFFFF] bg-gradient-to-br from-[#FB9100] to-[#000000]'
                         : 'bg-white'

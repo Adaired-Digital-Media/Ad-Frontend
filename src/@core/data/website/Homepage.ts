@@ -184,7 +184,7 @@ export const ExpectSectionData = {
   records: [
     {
       number: 8,
-      suffix: '+',
+      suffix: '+ ',
       suffix2: 'years',
       name: 'Industry Expertise',
       description:
@@ -200,7 +200,7 @@ export const ExpectSectionData = {
     },
     {
       number: 5,
-      suffix: 'K+',
+      suffix: 'K+ ',
       suffix2: 'Projects Completed',
       name: 'Project Excellence',
       description:
@@ -445,13 +445,13 @@ export const ServiceSectionData = {
       mainSvg: 'Search Engine Optimization_eyQDn',
       img: seo2,
       accentColor: '#f89520',
-      link: '#',
+      link: '/services/search-engine-optimization',
     },
     {
       title: 'Google Business Profile ',
       description:
         'We optimize your Google Business Profile with local SEO, review management, and continuous updates to boost visibility, engagement, and growth.',
-      link: '#',
+      link: '/services/local-seo',
       list: [
         {
           icon: GBPManagement,
@@ -580,7 +580,7 @@ export const ServiceSectionData = {
       title: 'White Label Services ',
       description:
         'Expand your offerings effortlessly with our White Label Services. We offer fully branded solutions, expert support, and seamless integration for business growth.',
-      link: '#',
+      link: '/services/search-engine-optimization',
       list: [
         {
           icon: WhiteLabelSEO,
@@ -621,8 +621,7 @@ export const ServiceSectionData = {
     },
     {
       title: 'Mobile App Development',
-      link: '#',
-
+      link: '/services/web-design-and-development-services',
       description:
         'We help you create high-performing mobile apps. Our team manages design, development, and deployment, delivering apps that engage users and grow your business.',
       list: [

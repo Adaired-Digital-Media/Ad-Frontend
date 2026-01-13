@@ -191,7 +191,7 @@ const Service = () => {
               );
               const isActive = activeTab === idx;
               console.log(isActive, ' ');
-              const { title, description, image } =
+              const { title, description, image, link } =
                 (ActiveCardDetails?.[0] as ServiceItem) ?? {};
               return (
                 <div
@@ -254,7 +254,7 @@ const Service = () => {
                     </p>
 
                     <SaveAndCancel
-                      handleClick={() => router.push(service.link)}
+                      handleClick={() => router.push(link ?? service.link)}
                       name="See Service Details"
                       isIcon
                     />
