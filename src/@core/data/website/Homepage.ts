@@ -61,7 +61,9 @@ import LinkBuilding from '../../../../public/assets/icons/service/LinkBuilding.p
 import shoppyfy from '../../../../public/assets/icons/service/shoppyfy.png';
 import TikTokAds from '../../../../public/assets/icons/service/TikTokAds.png';
 import LinkedInAds from '../../../../public/assets/icons/service/LinkedInAds.png';
-
+import digital_marketing from '../../../../public/assets/images/service/digital_marketing.png';
+import google_business from '../../../../public/assets/images/service/google_business.png';
+import App_development from '../../../../public/assets/images/service/App_development.png';
 import WhiteLabelFacebookAds from '../../../../public/assets/icons/service/WhiteLabelFacebookAds.png';
 import WhiteLabelSEO from '../../../../public/assets/icons/service/WhiteLabelSEO.png';
 import WhiteLabelSocialMedia from '../../../../public/assets/icons/service/WhiteLabelSocialMedia.png';
@@ -448,7 +450,7 @@ export const ServiceSectionData = {
         },
       ],
       mainSvg: 'Search Engine Optimization_eyQDn',
-      img: seo2,
+      img: digital_marketing,
       accentColor: '#f89520',
       link: '/services/search-engine-optimization',
     },
@@ -492,7 +494,7 @@ export const ServiceSectionData = {
         },
       ],
       mainSvg: 'Web Dev_JjQ6b',
-      img: Web_Design,
+      img: google_business,
       accentColor: '#038eb0',
     },
     {
@@ -664,7 +666,7 @@ export const ServiceSectionData = {
         },
       ],
       mainSvg: 'Logo Design_PpqcI',
-      img: Web_Design,
+      img: App_development,
       accentColor: '#5c34b1',
     },
   ],

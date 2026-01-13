@@ -42,7 +42,7 @@ const SaveAndCancel = ({
             : isHover
               ? 'bg-[#D17900] text-white'
               : 'bg-[#FB9100] text-white'
-        } ${isFullWidth ? 'md:w-full' : 'md:w-[160px] xl:w-[220px]'} `}
+        } ${isFullWidth ? 'md:w-full' : 'md:w-[180px] xl:w-[220px]'} `}
       >
         {name}
         {isIcon && (
@@ -55,7 +55,7 @@ const SaveAndCancel = ({
       {is2ndButton && (
         <button
           onClick={handleClick2}
-          className={`font-Outfi group flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[60px] py-[0.75rem] text-xxs font-normal transition-all duration-300 ease-out active:scale-95 xl:text-xs ${isFullWidth ? 'md:w-full' : 'md:w-[160px] xl:w-[220px]'} ${
+          className={`font-Outfi group flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[60px] py-[0.75rem] text-xxs font-normal transition-all duration-300 ease-out active:scale-95 xl:text-xs ${isFullWidth ? 'md:w-full' : 'md:w-[180px] xl:w-[220px]'} ${
             is2BgWhite
               ? 'border border-[#111111] bg-white text-[#111111] hover:bg-[#1A5A96] hover:text-white'
               : 'bg-[#FB9100] text-white hover:bg-[#1A5A96]'
