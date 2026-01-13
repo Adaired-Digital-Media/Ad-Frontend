@@ -141,7 +141,7 @@ const Testimonial = () => {
 
   const [index, setIndex] = useState(0);
   const [enableTransition, setEnableTransition] = useState(true);
-   const { subTitle, title, description, testimonials } = TestimonialSectionData;
+  const { subTitle, title, description, testimonials } = TestimonialSectionData;
 
   return (
     <section className="relative bg-gradient-to-b from-[#05121E] to-[#1A5A96] py-[3rem] lg:py-[4rem] xl:py-[6rem]">
@@ -153,7 +153,9 @@ const Testimonial = () => {
             title={title}
             description={description}
             isInCenter
-            className="w-[90%] lg:w-[65%]" span={""}          />
+            className="w-[90%] lg:w-[65%]"
+            span={''}
+          />
         </div>
 
         {/* Slider */}
