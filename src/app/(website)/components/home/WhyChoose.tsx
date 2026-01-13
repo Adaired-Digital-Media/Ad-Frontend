@@ -13,7 +13,7 @@ const WhyChoose = () => {
   const { subTitle, title, span, description, points } = WhyChooseSectionData;
   const [isHover, setIsHover] = useState<number | null>(1);
   return (
-    <section className="relative py-[3rem] md:py-[6rem]">
+    <section className="relative py-[3rem] lg:py-[4rem] xl:py-[6rem]">
       {/* <Image src={chooseUsBg} fill alt="d" className="object-cover" priority /> */}
       <div className="relative z-20">
         <MaxWidthWrapper>

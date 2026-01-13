@@ -68,7 +68,7 @@ const Clients = () => {
     client_30,
   ];
   return (
-    <div className="bg-[#F9F9F9] py-[3rem] lg:py-[6rem]">
+    <div className="bg-[#F9F9F9] py-[3rem] lg:py-[4rem] xl:py-[6rem]">
       <MaxWidthWrapper>
         <Heading
           subTitle={'Our Client'}

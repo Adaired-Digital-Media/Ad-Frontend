@@ -14,7 +14,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="overflow-visible py-[3rem] lg:py-[6rem]">
+    <div className="overflow-visible py-[3rem] lg:py-[4rem] xl:py-[6rem]">
       <MaxWidthWrapper className="space-y-[3rem] overflow-visible">
         <div className="flex w-[100%] justify-center">
           <Heading

@@ -22,7 +22,7 @@ const Testimonial = () => {
   const [enableTransition, setEnableTransition] = useState(true);
 
   return (
-    <section className="relative bg-gradient-to-b from-[#05121E] to-[#1A5A96] bg-cover bg-no-repeat py-[3rem] lg:py-[6rem]">
+    <section className="relative bg-gradient-to-b from-[#05121E] to-[#1A5A96] bg-cover bg-no-repeat py-[3rem] lg:py-[4rem] xl:py-[6rem]">
       <div className="relative z-20">
         <div className="flex w-[100%] justify-center">
           <Heading

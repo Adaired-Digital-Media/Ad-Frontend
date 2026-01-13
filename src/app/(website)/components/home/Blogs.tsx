@@ -91,7 +91,7 @@ const Blogs = () => {
   const { subTitle, title, description, blogs, span } = BlogSectionData;
 
   return (
-    <section className="relative bg-[#F5F5F599] pb-[6rem] pt-[3rem] lg:pb-[10rem] lg:pt-[6rem]">
+    <section className="relative bg-[#F5F5F599] pb-[6rem] pt-[3rem] lg:pb-[10rem] lg:py-[4rem] xl:py-[6rem]">
       <MaxWidthWrapper>
         <div className="flex justify-center">
           <Heading

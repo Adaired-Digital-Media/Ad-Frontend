@@ -24,7 +24,7 @@ const Certificate = () => {
   return (
     <section
       className={
-        'bg-[#F9F9F9] py-[3rem] lg:py-[6rem]'
+        'bg-[#F9F9F9] py-[3rem] lg:py-[4rem] xl:py-[6rem]'
       }
     >
       {/* viewport */}

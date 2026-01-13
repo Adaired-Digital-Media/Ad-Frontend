@@ -18,7 +18,7 @@ const Expect = () => {
   });
   return (
     <section className="1bg-[#F5F5F580]">
-      <MaxWidthWrapper className="py-[3rem] lg:py-[6rem]">
+      <MaxWidthWrapper className="py-[3rem] lg:py-[4rem] xl:py-[6rem]">
         <div className="">
           <Heading
             isDecVarticle={true}

@@ -23,7 +23,7 @@ const Contact = () => {
 
   return (
     <section className="">
-      <MaxWidthWrapper className="space-y-7 py-[3rem] lg:py-[6rem]">
+      <MaxWidthWrapper className="space-y-7 py-[3rem] lg:py-[4rem] xl:py-[6rem]">
         <div className="lg:px-[%]">
           <Heading
             subTitle={subTitle}
