@@ -155,22 +155,37 @@ const Banner = () => {
             </span>
           </div>
           <div className="flex gap-3">
-            <Image
-              src={google}
-              width={208}
-              height={32}
-              alt="DS"
-              className="h-[2rem] w-[8rem] md:h-[2rem] md:w-[10rem] lg:h-[2rem] lg:w-[13rem]"
-            />
+            <a
+              href="https://www.upwork.com/agencies/1064740584575918080/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src={google}
+                width={208}
+                height={32}
+                alt="Upwork"
+                className="h-[2rem] w-[8rem] cursor-pointer md:w-[10rem] lg:w-[13rem]"
+              />
+            </a>
+
             <span className="my-auto text-lg text-[#000000]/20">|</span>
-            <Image
-              src={upwork}
-              width={130}
-              height={39}
-              alt="DS"
-              className="h-[2rem] w-[7rem] md:h-[2rem] md:w-[7rem] lg:h-[2.438rem] lg:w-[8.125rem]"
-            />
+
+            <a
+              href="https://share.google/3KznrgKhabO459Arc"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src={upwork}
+                width={130}
+                height={39}
+                alt="Google Reviews"
+                className="h-[2rem] w-[7rem] cursor-pointer lg:h-[2.438rem] lg:w-[8.125rem]"
+              />
+            </a>
           </div>
+
           <p className="hidden lg:block">
             Generate leads by 15% or more within your first 6 months with
             real-time data and expert insights. Our strategy ensures that your

@@ -38,8 +38,8 @@ import White_SEO_4 from '../../../../public/assets/images/service/White_SEO_4.pn
 
 import App_1 from '../../../../public/assets/images/service/App_1.png';
 import App_2 from '../../../../public/assets/images/service/App_4.png';
-import App_3 from '../../../../public/assets/images/service/App_3.png';
-import App_4 from '../../../../public/assets/images/service/App_2.png';
+import App_3 from '../../../../public/assets/images/service/App_2.png';
+import App_4 from '../../../../public/assets/images/service/App_3.png';
 //services icons
 import amazon from '../../../../public/assets/icons/service/amazon.png';
 import app_1 from '../../../../public/assets/icons/service/app_1.png';
