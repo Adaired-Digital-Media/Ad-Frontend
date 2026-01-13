@@ -56,7 +56,7 @@ const Testimonial = () => {
             >
               {slides.map((testimonial: any, idx: number) => (
                 <div
-                  className={`relative shrink-0 px-[1rem] ${
+                  className={`relative shrink-0 px-[rem] lg:px-[0.5rem] xl:px-[1rem] ${
                     isMobile ? 'basis-full' : 'basis-1/3'
                   }`}
                 >
@@ -71,11 +71,11 @@ const Testimonial = () => {
                     className="h-full min-h-[290px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] lg:p-[1.5rem] xl:p-[2rem]"
                   >
                     <div className="flex justify-between pt-[2rem]">
-                      <div className="absolute left-10 top-10 lg:left-4 lg:top-4 xl:left-10 xl:top-10">
-                        <p className="text-sm font-medium text-[#108A00]">
+                      <div className="absolute left-10 top-10 lg:left-4 lg:top-10 xl:left-10 xl:top-10">
+                        <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm">
                           {testimonial.name}
                         </p>
-                        <p className="text-sm font-medium text-[#108A00]">
+                        <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm">
                           {testimonial.span}
                         </p>
                         <div className="my-1 flex gap-1 lg:gap-0 xl:gap-1">
@@ -88,17 +88,16 @@ const Testimonial = () => {
                               />
                             ))}
                           </span>
-                          <p className="my-auto text-xxs text-[#000000]">
+                          {/* <p className="my-auto text-xxs text-[#000000]">
                             <span> 5 </span>
-                            <span className="blur-[2.5px]">
+                            <span className="blur-[3px]">
                               {' '}
                               Sep 22, 2025 - Dec 19, 2025
                             </span>
-                          </p>
+                          </p> */}
                         </div>
                       </div>
-
-                      <div className="absolute right-10 top-10 h-[25px] w-[95px] lg:right-0 lg:top-4 xl:right-10 xl:top-10">
+                      <div className="absolute right-10 top-5 h-[25px] w-[95px] lg:right-0 lg:top-4 xl:right-10 xl:top-10">
                         <Image
                           src={google}
                           width={95}
@@ -112,9 +111,9 @@ const Testimonial = () => {
                     <p className="pt-[4rem] text-xxs text-[#262626]">
                       {testimonial.description}
                     </p>
-                    <span className="pt-3 blur-[2.5px]">
+                    {/* <span className="pt-3 blur-[2.5px]">
                       $300.00 Fixed Price
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               ))}

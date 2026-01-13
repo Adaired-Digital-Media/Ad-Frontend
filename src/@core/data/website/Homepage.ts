@@ -320,7 +320,7 @@ export const TestimonialSectionData = {
     {
       image: 'Static Website Images/homepage_about2',
       name: 'SEO Specialist for Keyword Research,',
-      span: 'Analytics & Console Setup',
+      span: '',
       description:
         '"Working with Seema has been an exceptionally professional experience. Her dedication and expertise make collaboration seamless, and I eagerly anticipate future opportunities to work alongside her. Thank you for the outstanding partnership!"',
       bgColor: '#E1F2E2',
