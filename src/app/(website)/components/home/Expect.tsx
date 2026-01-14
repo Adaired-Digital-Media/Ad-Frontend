@@ -32,7 +32,7 @@ const Expect = () => {
           {/* Content Section */}
           <div
             ref={ref}
-            className={`1680:h-[610px] relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] 3xl:h-[640px] ${className}`}
+            className={`1680:h-[610px] 1600:h-[580px] relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] 3xl:h-[640px] ${className}`}
           >
             <Image
               src={expectImg}
@@ -46,7 +46,6 @@ const Expect = () => {
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2">
               {records?.map((record, idx: any) => {
                 const isHovered = hover === idx;
-
                 return (
                   <div
                     key={idx}
