@@ -52,13 +52,13 @@ const WhyChoose = () => {
                       alt="img"
                       className="rounded-xl border-[1px] border-[#FB910040] bg-[#FEDAAA66] p-3.5 text-[#000000] lg:h-[55px] lg:w-[55px] xl:h-[70px] xl:w-[70px]"
                     />
-                    <h5
-                      className={`pt-[1.5rem] text-left font-montserrat text-[25px] font-semibold leading-[35px] text-[#111111] lg:text-[1.115rem] xl:pt-[2rem] xl:text-[25px]`}
+                    <p
+                      className={`1360:text-[1.125rem] pt-[1.5rem] text-left font-montserrat text-[25px] font-semibold leading-[35px] text-[#111111] lg:text-[1.115rem] xl:pt-[2rem] xl:text-[25px]`}
                     >
                       {item?.title}
-                    </h5>
+                    </p>
                     <p
-                      className={`text-left font-montserrat text-[25px] font-semibold text-[#111111] md:leading-[28px] lg:text-[1.115rem] lg:leading-[25px] xl:text-[25px] xl:leading-[35px]`}
+                      className={`1360:text-[1.125rem] 1360:leading-3 text-left font-montserrat text-[25px] font-semibold text-[#111111] md:leading-[28px] lg:text-[1.115rem] lg:leading-[25px] xl:text-[25px] xl:leading-[35px]`}
                     >
                       {item?.span}
                     </p>
