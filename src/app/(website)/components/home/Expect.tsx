@@ -32,7 +32,7 @@ const Expect = () => {
           {/* Content Section */}
           <div
             ref={ref}
-            className={`relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] ${className}`}
+            className={`1680:h-[580px] relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] 3xl:h-[640px] ${className}`}
           >
             <Image
               src={expectImg}
@@ -59,18 +59,18 @@ const Expect = () => {
                     } `}
                   >
                     <div
-                      className={`text-left text-xl font-semibold transition-colors duration-300 xl:text-[50px] ${isHovered ? 'text-white' : 'text-[#FB9100]'} `}
+                      className={`text-left text-xl font-semibold transition-colors duration-300 3xl:text-[50px] ${isHovered ? 'text-white' : 'text-[#FB9100]'} `}
                     >
                       <CountUp end={record.number} />
                       {record.suffix}
-                      <span className="text-[20px]">{record.suffix2}</span>
+                      <span className="3xl:text-[20px]">{record.suffix2}</span>
                     </div>
 
-                    <h5
-                      className={`pt-[0.5rem] text-left transition-colors duration-300 xl:pb-[1rem] xl:pt-[2.25rem] ${isHovered && 'text-white'} `}
+                    <p
+                      className={`pt-[0.5rem] text-left font-bold transition-colors duration-300 xl:pb-[1rem] xl:pt-[2.25rem] ${isHovered && 'text-white'} `}
                     >
                       {record.name}
-                    </h5>
+                    </p>
 
                     <p
                       className={`text-left transition-colors duration-300 ${isHovered && 'text-white'} `}
