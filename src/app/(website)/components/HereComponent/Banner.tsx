@@ -95,6 +95,13 @@ const Banner = () => {
 
     return () => clearInterval(interval);
   }, []);
+  const scrollToServices = () => {
+    const section = document.getElementById('services');
+    section?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
 
   return (
     <div className="animate-pulse relative h-[100vh] w-full pt-[10vh] md:h-[130vh] lg:h-[100vh]">
@@ -200,9 +207,7 @@ const Banner = () => {
             is2BgWhite={true}
             className="lg:pt-[1rem]"
             handleClick={() => router.push('/contact')}
-            handleClick2={() =>
-              router.push('/services/search-engine-optimization')
-            }
+            handleClick2={scrollToServices}
           />
         </div>
         <div className="relative mt-[5rem] w-[100%] pt-[20vh] md:pt-[50vh] lg:mt-0 lg:w-[50%] lg:pt-0">

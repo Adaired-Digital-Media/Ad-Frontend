@@ -35,7 +35,8 @@ const FAQ = () => {
             return (
               <div
                 key={idx}
-                className="grid grid-cols-5 rounded-2xl border-[2px] border-[#000000]/20 p-[1rem] lg:p-[2rem]"
+                onClick={() => toggleFAQ(idx)}
+                className="grid cursor-pointer grid-cols-5 rounded-2xl border-[2px] border-[#000000]/20 p-[1rem] lg:p-[2rem]"
               >
                 {/* Content */}
                 <div className="col-span-4 space-y-4">
@@ -44,10 +45,7 @@ const FAQ = () => {
                 </div>
 
                 {/* Toggle Button */}
-                <div
-                  onClick={() => toggleFAQ(idx)}
-                  className="flex cursor-pointer justify-end"
-                >
+                <div className="flex cursor-pointer justify-end">
                   <span
                     className={`mb-auto w-fit rounded-full p-1 transition-all duration-300 ${
                       isOpen

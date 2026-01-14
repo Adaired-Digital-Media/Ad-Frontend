@@ -78,6 +78,7 @@ const Service = () => {
     <div
       ref={servicesWrapperRef}
       className="bg-[#F5F5F599] py-[3rem] lg:py-[4rem] xl:py-[6rem]"
+       id="services"
     >
       <MaxWidthWrapper>
         <Heading

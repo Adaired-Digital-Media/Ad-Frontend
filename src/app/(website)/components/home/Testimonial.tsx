@@ -68,9 +68,9 @@ const Testimonial = () => {
                         'noopener,noreferrer'
                       )
                     }
-                    className="h-full min-h-[290px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] lg:p-[1.5rem] xl:p-[2rem]"
+                    className="h-full cursor-pointer min-h-[250px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] lg:p-[1.5rem] xl:p-[2rem]"
                   >
-                    <div className="flex justify-between pt-[2rem]">
+                    <div className="flex justify-between pt-[1rem]">
                       <div className="absolute left-10 top-10 lg:left-4 lg:top-10 xl:left-10 xl:top-10">
                         <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm">
                           {testimonial.name}

@@ -302,17 +302,8 @@ export const TestimonialSectionData = {
     'Discover client experiences that inspire, highlighting measurable results, innovative solutions, and the lasting impact we create across industries.',
   testimonials: [
     {
-      image: 'Static Website Images/homepage_about2',
-      name: '🚀 Media Buyer Wanted for',
-      span: 'Explosive Dropshipping Launch',
-      description:
-        '"Great to work with. Clear, timely, detailed communication style. Receptive to feedback and recommendations. I would highly recommend working with Seema and team."',
-      bgColor: '#FFF4F3',
-      rating: 5,
-    },
-    {
       image: 'Static Website Images/homepage_about1',
-      name: 'Shopify coding,',
+      name: 'Shopify coding',
       span: '',
       description:
         '"I work with Dheeraj whenever I have something to fix on my website. He is very fast, does his job very well, and delivers quickly. I’m confident that whenever I have something to adjust on my website, I will come back to him. He is so professional and expert"',
@@ -321,7 +312,7 @@ export const TestimonialSectionData = {
     },
     {
       image: 'Static Website Images/homepage_about2',
-      name: 'SEO Specialist for Keyword Research,',
+      name: 'SEO Specialist for Keyword Research',
       span: '',
       description:
         '"Working with Seema has been an exceptionally professional experience. Her dedication and expertise make collaboration seamless, and I eagerly anticipate future opportunities to work alongside her. Thank you for the outstanding partnership!"',
@@ -344,6 +335,15 @@ export const TestimonialSectionData = {
       description:
         '"Thank you seema for your exceptional work and fast delivery. Your dedication and efficiency have truly exceeded my expectations. Your attention to detail and ability to meet deadlines have been invaluable."',
       bgColor: '#D7EBFF',
+      rating: 5,
+    },
+    {
+      image: 'Static Website Images/homepage_about2',
+      name: 'Full SEO Strategy & Execution',
+      span: '',
+      description:
+        '"The project was canceled due to internal changes on our side. During the collaboration, the freelancer delivered the agreed SEO work as promised and communicated clearly throughout the process. Professional approach and reliable execution within the defined scope."',
+      bgColor: '#FFF4F3',
       rating: 5,
     },
   ],
