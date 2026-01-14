@@ -32,7 +32,7 @@ const Expect = () => {
           {/* Content Section */}
           <div
             ref={ref}
-            className={`1680:h-[610px] 1600:h-[580px] relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] 3xl:h-[640px] ${className}`}
+            className={`1680:h-[610px] 1600:h-[580px] 1400:h-[550px] relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] 3xl:h-[640px] ${className}`}
           >
             <Image
               src={expectImg}
@@ -51,7 +51,7 @@ const Expect = () => {
                     key={idx}
                     onMouseEnter={() => setHover(idx)}
                     onMouseLeave={() => setHover(null)}
-                    className={`rounded-3xl border-[1px] border-[#00000026]/10 p-[1.8rem] transition-all duration-300 lg:p-[1rem] xl:px-[1.75rem] xl:py-[1.5rem] ${
+                    className={`1400:p-[1rem] rounded-3xl border-[1px] border-[#00000026]/10 p-[1.8rem] transition-all duration-300 lg:p-[1rem] xl:px-[1.75rem] xl:py-[1.5rem] ${
                       isHovered
                         ? 'border-[0px] border-[#FFFFFF] bg-gradient-to-br from-[#FB9100] to-[#000000]'
                         : 'bg-white'
@@ -62,7 +62,9 @@ const Expect = () => {
                     >
                       <CountUp end={record.number} />
                       {record.suffix}
-                      <span className="3xl:text-[20px]">{record.suffix2}</span>
+                      <span className="1400:text-[15px] 3xl:text-[20px]">
+                        {record.suffix2}
+                      </span>
                     </div>
 
                     <p

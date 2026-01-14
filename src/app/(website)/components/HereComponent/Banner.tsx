@@ -104,7 +104,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="animate-pulse 1366:h-[135vh] 1680:h-[100vh] 1600:h-[118vh] 1400:h-[100vh] relative h-[100vh] w-full pt-[10vh] md:h-[130vh] lg:h-[100vh]">
+    <div className="animate-pulse 1366:h-[135vh] 1680:h-[100vh] 1600:h-[118vh] 1400:h-[115vh] relative h-[100vh] w-full pt-[10vh] md:h-[130vh] lg:h-[100vh]">
       <Image
         src={hero_banner}
         fill
