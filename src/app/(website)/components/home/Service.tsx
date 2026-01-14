@@ -78,7 +78,7 @@ const Service = () => {
     <div
       ref={servicesWrapperRef}
       className="bg-[#F5F5F599] py-[3rem] lg:py-[4rem] xl:py-[6rem]"
-       id="services"
+      id="services"
     >
       <MaxWidthWrapper>
         <Heading
@@ -226,7 +226,7 @@ const Service = () => {
                             <div
                               key={i}
                               onClick={() => setActiveCard(item.label)}
-                              className={`${activeCard !== item.label ? 'bg-[#F5F5F5]' : 'bg-[#FEE9CC]'} flex !cursor-pointer gap-3 rounded-[15px] border-[0.71px] p-[1rem] hover:border-[0.71px] hover:border-[#F28F17]/60 md:block lg:p-[0.8rem] xl:p-5`}
+                              className={`relative lg:h-[7.8rem] xl:h-[9.8rem] ${activeCard !== item.label ? 'bg-[#F5F5F5]' : 'bg-[#FEE9CC]'} flex !cursor-pointer gap-3 rounded-[15px] border-[0.71px] p-[1rem] hover:border-[0.71px] hover:border-[#F28F17]/60 md:block lg:p-[0.8rem] xl:p-5`}
                             >
                               <Image
                                 src={item?.icon}
@@ -236,7 +236,7 @@ const Service = () => {
                                 unoptimized
                                 className="ani my-auto lg:h-[30px] lg:w-[30px] xl:h-[40px] xl:w-[40px]"
                               />
-                              <p className="my-auto font-poppins font-semibold text-[#000000] md:pt-[1.7rem] lg:pt-[1rem] lg:text-xxs xl:pt-[1.7rem] xl:text-xs">
+                              <p className="absolute bottom-5 left-0 my-auto w-[90%] font-poppins font-semibold text-[#000000] md:left-[4rem] md:pt-[1.7rem] lg:left-4 lg:pt-[1rem] lg:text-[11px] lg:font-medium lg:leading-[15px] xl:pt-[1.7rem] xl:text-xs xl:font-semibold xl:leading-[25px]">
                                 {item?.label}
                               </p>
                             </div>
