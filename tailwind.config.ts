@@ -45,6 +45,7 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
       '1360': '1360px',
       '1366': '1360px',
       '1400': '1400px',
+      '1470': '1470px',
       '1600': '1600px',
       '1680': '1680px',
       '2xl': '1536px',

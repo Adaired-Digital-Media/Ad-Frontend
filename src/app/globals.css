@@ -54,7 +54,7 @@
   }
 
   p {
-    @apply 1366:text-[14px] 1680:text-[18px] 1400:text-[14px] 1600:text-[16px] font-montserrat text-[14px] font-normal leading-[26px] text-[#000000] xl:text-[18px] 3xl:text-[18px];
+    @apply 1366:text-[14px] 1680:text-[18px] 1400:text-[14px] 1470:text-[18px] 1600:text-[16px] font-montserrat text-[14px] font-normal leading-[26px] text-[#000000] xl:text-[18px] 3xl:text-[18px];
   }
   span {
     @apply text-xxs xl:text-xs;
