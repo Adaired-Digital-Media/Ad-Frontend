@@ -239,6 +239,32 @@ export const Icons = {
       </g>
     </svg>
   ),
+    Google: (props: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      viewBox="0 0 48 48"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="M24 9.5c3.54 0 6.01 1.53 7.39 2.81l5.46-5.46C33.59 3.61 29.24 1.5 24 1.5 14.73 1.5 6.99 6.97 3.69 14.92l6.36 4.94C11.55 14.03 17.31 9.5 24 9.5z"
+      />
+      <path
+        fill="currentColor"
+        d="M46.5 24.5c0-1.64-.15-3.21-.43-4.73H24v9h12.7c-.55 2.89-2.18 5.34-4.62 6.99l7.08 5.49C43.35 37.36 46.5 31.52 46.5 24.5z"
+      />
+      <path
+        fill="currentColor"
+        d="M10.05 28.86c-.5-1.49-.79-3.08-.79-4.86s.29-3.37.79-4.86l-6.36-4.94C2.43 16.7 1.5 20.2 1.5 24s.93 7.3 2.19 10.8l6.36-4.94z"
+      />
+      <path
+        fill="currentColor"
+        d="M24 46.5c6.24 0 11.48-2.07 15.31-5.61l-7.08-5.49c-1.96 1.32-4.47 2.1-8.23 2.1-6.69 0-12.45-4.53-13.95-10.36l-6.36 4.94C6.99 40.03 14.73 46.5 24 46.5z"
+      />
+    </svg>
+  ),
   Map: (props: SVGProps<SVGSVGElement>) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

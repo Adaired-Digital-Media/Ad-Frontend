@@ -5,15 +5,20 @@ export interface InputFieldProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
-  maxLength?:number
+  maxLength?: number;
+  label?: string;
 }
+export const star = {
+  value: '*',
+};
 const InputField = ({
   name,
   value,
   handleChange,
   placeholder,
   className,
-  maxLength
+  maxLength,
+  label,
 }: InputFieldProps) => {
   return (
     <input
@@ -22,8 +27,8 @@ const InputField = ({
       value={value}
       onChange={handleChange}
       maxLength={maxLength}
-      className={`${className} w-full rounded-[0.5rem] border-none bg-[#F8F8F8] px-4 py-3 text-xxs xl:text-xs font-normal text-black outline-none placeholder:text-[#A3A3A3] focus:border-[#000000]`}
-      placeholder={placeholder}
+      className={`${className} w-full rounded-[0.5rem] border-none bg-[#F8F8F8] px-4 py-3 text-xxs xl:text-xs font-normal text-[#000000] outline-none placeholder:text-[#323232B2] focus:border-[#000000]`}
+      placeholder={`${placeholder} ${star.value}`}
     />
   );
 };

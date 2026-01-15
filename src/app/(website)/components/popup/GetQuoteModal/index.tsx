@@ -2,7 +2,13 @@
 
 import { IoClose } from 'react-icons/io5';
 import InputField from '../../UI/InputField';
+import get_a_Quote from '../../../../../../public/assets/images/get_a_Quote.png';
+import Image from 'next/image';
+import MessageField from '../../UI/MessageField/MessageField';
+import SaveAndCancel from '@/app/(website)/common/SaveAndCancel';
+import { Icons } from '@web-components/Icons';
 
+import Link from 'next/link';
 interface GetQuoteModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,7 +26,7 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
       />
 
       {/* Modal */}
-      <div className="relative z-50 w-[95%] max-w-[600px] rounded-2xl bg-white p-6 shadow-xl">
+      <div className="relative z-50 w-[60%] rounded-2xl bg-[#FFFFFF] p-6 shadow-xl">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -29,121 +35,148 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
           <IoClose size={22} />
         </button>
 
-        {/* Header */}
-        <h2 className="text-xl font-semibold">
-          Get a Perfect Quote <span>👋</span>
-        </h2>
-        <p className="mt-1 text-sm text-gray-500">
-          Tell us about your project and hear back from our team in 1–2 business
-          days.
-        </p>
-
-        {/* Form */}
-        <form className="mt-6 space-y-4">
-          {/* About You */}
-          <div>
-            <p className="mb-2 text-sm font-semibold text-blue-600">
-              Tell Us About You
-            </p>
-
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <InputField
-                name={''}
-                value={''}
-                handleChange={function (
-                  e: React.ChangeEvent<HTMLInputElement>
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
-              <InputField
-                name={''}
-                value={''}
-                handleChange={function (
-                  e: React.ChangeEvent<HTMLInputElement>
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
-              <InputField
-                name={''}
-                value={''}
-                handleChange={function (
-                  e: React.ChangeEvent<HTMLInputElement>
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
-              <InputField
-                name={''}
-                value={''}
-                handleChange={function (
-                  e: React.ChangeEvent<HTMLInputElement>
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
-              />
-            </div>
-          </div>
-
-          {/* About Project */}
-          <div>
-            <p className="mb-2 text-sm font-semibold text-blue-600">
-              Tell Us About Your Project
-            </p>
-
-            <textarea
-              placeholder="What's your project all about?*"
-              rows={3}
-              className="input resize-none"
+        {/* Modal Content */}
+        <div className="flex justify-between gap-3">
+          <div className="relative w-[40%]">
+            <Image
+              src={get_a_Quote}
+              alt="get_a_Quote"
+              className="object-contain"
             />
-
-            <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
-              <select className="input">
-                <option>Select your Services*</option>
-                <option>SEO</option>
-                <option>PPC</option>
-                <option>Web Development</option>
-              </select>
-
-              <select className="input">
-                <option>Select your budget range*</option>
-                <option>$1k – $5k</option>
-                <option>$5k – $10k</option>
-                <option>$10k+</option>
-              </select>
-
-              <select className="input md:col-span-2">
-                <option>When do you want to start?*</option>
-                <option>Immediately</option>
-                <option>Within 1 month</option>
-                <option>Later</option>
-              </select>
+            <div className="absolute bottom-6 left-6 w-[80%]">
+              <p className="text-[28px] font-medium leading-[35px] text-[#FFFFFF]">
+                Achieve Higher Conversions by Solving Issues Early
+              </p>
+              <div className="mt-4 flex gap-2">
+                <Link
+                  href={process.env.NEXT_PUBLIC_TWITTER_URL || '/'}
+                  className="group/x hover:bg-theme-orange rounded-full bg-white p-2"
+                >
+                  <Icons.Twitter className="text-[#1B5A96] group-hover/x:text-[#FB9100]" />
+                  <span className="sr-only">
+                    Visit Adaired Digital &apos; s Facebook page
+                  </span>
+                </Link>
+                <Link
+                  href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || '/'}
+                  className="group/insta hover:bg-theme-orange rounded-full bg-white p-2"
+                >
+                  <Icons.Instagram className="text-[#1B5A96] group-hover/insta:text-[#FB9100]" />
+                  <span className="sr-only">
+                    Visit Adaired Digital &apos; s Facebook page
+                  </span>
+                </Link>
+                <Link
+                  href={process.env.NEXT_PUBLIC_FACEBOOK_URL || '/'}
+                  className="group/fb hover:bg-theme-orange rounded-full bg-white p-2"
+                >
+                  <Icons.Facebook className="text-[#1B5A96] group-hover/fb:text-[#FB9100]" />
+                  <span className="sr-only">
+                    Visit Adaired Digital &apos; s Facebook page
+                  </span>
+                </Link>
+                <Link
+                  href={process.env.NEXT_PUBLIC_LINKEDIN_URL || '/'}
+                  className="group/in hover:bg-theme-orange rounded-full bg-white p-2"
+                >
+                  <Icons.LinkedIn className="text-[#1B5A96] group-hover/in:text-[#FB9100]" />
+                  <span className="sr-only">
+                    Visit Adaired Digital &apos; s Facebook page
+                  </span>
+                </Link>
+                <Link
+                  href={process.env.NEXT_PUBLIC_GOOGLE_URL || '/'}
+                  className="group/in hover:bg-theme-orange rounded-full bg-white p-2"
+                >
+                  <Icons.Google className="text-[#1B5A96] group-hover/in:text-[#FB9100]" />
+                  <span className="sr-only">
+                    Visit Adaired Digital &apos; s Facebook page
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
-
-          {/* Upload */}
-          <div className="rounded-xl border border-dashed bg-blue-50 p-4 text-center text-sm text-gray-600">
-            Attach one file you feel would be useful
-            <br />
-            <span className="text-xs text-gray-400">
-              (doc, pdf, png, jpg – max 10mb)
-            </span>
+          <div className="w-[60%] p-[2rem]">
+            <h3>See How Your Website Performs</h3>
+            <p className="text-[15px] font-medium text-[#323232]">
+              Find performance gaps limiting your website’s visibility and
+              effectiveness.
+            </p>
+            <div className="py-[2rem]">
+              <div className="grid grid-cols-2 gap-4">
+                <InputField
+                  placeholder="First name"
+                  name={''}
+                  value={''}
+                  handleChange={function (
+                    e: React.ChangeEvent<HTMLInputElement>
+                  ): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+                <InputField
+                  placeholder="Last name"
+                  name={''}
+                  value={''}
+                  handleChange={function (
+                    e: React.ChangeEvent<HTMLInputElement>
+                  ): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+                <InputField
+                  placeholder="Email"
+                  name={''}
+                  value={''}
+                  handleChange={function (
+                    e: React.ChangeEvent<HTMLInputElement>
+                  ): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+                <InputField
+                  placeholder="Phone no"
+                  name={''}
+                  value={''}
+                  handleChange={function (
+                    e: React.ChangeEvent<HTMLInputElement>
+                  ): void {
+                    throw new Error('Function not implemented.');
+                  }}
+                />
+              </div>
+              <InputField
+                placeholder="Website URL"
+                name={''}
+                value={''}
+                handleChange={function (
+                  e: React.ChangeEvent<HTMLInputElement>
+                ): void {
+                  throw new Error('Function not implemented.');
+                }}
+                className="my-[0.8rem]"
+              />
+              <MessageField
+                name={''}
+                value={''}
+                rows={6}
+                handleChange={function (
+                  e: React.ChangeEvent<HTMLTextAreaElement>
+                ): void {
+                  throw new Error('Function not implemented.');
+                }}
+                placeholder="Write message"
+              />
+            </div>
+            <SaveAndCancel
+              name={'Analyze Now'}
+              isFullWidth={true}
+              isIcon={true}
+              className="text-[16px]"
+              handleClick={() => {}}
+            />
           </div>
-
-          {/* Footer */}
-          <p className="text-xs text-gray-400">
-            Lorem ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </p>
-
-          <button
-            type="submit"
-            className="w-full rounded-full bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
-          >
-            Let’s Go 🚀
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );

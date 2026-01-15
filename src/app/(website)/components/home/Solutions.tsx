@@ -1,5 +1,5 @@
 import { SolutionsSectionData } from '@/@core/data/website/Homepage';
-import React from 'react';
+import React, { useState } from 'react';
 import MaxWidthWrapper from '../MaxWidthWrapper';
 import Heading from '../../common/Heading';
 import Image from 'next/image';
@@ -13,8 +13,10 @@ import {
   useZoomOnView,
 } from '@/@core/hooks/useScrollAnimations';
 import SaveAndCancel from '../../common/SaveAndCancel';
+import GetQuoteModal from '../popup/GetQuoteModal';
 
 const Solutions = () => {
+  const [open, setOpen] = useState(false);
   const { subTitle, title, points, description, cursive } =
     SolutionsSectionData;
   const { ref: imageRef, className: imageClass } = useImageReveal({
@@ -112,11 +114,14 @@ const Solutions = () => {
               name={'Get Your Free Website Audit'}
               isIcon={true}
               isFullWidth={true}
+              handleClick={() => setOpen(!open)}
               className="mt-[2rem] w-[20rem]"
             />
           </div>
         </div>
       </MaxWidthWrapper>
+
+      <GetQuoteModal isOpen={open} onClose={() => setOpen(false)} />
     </section>
   );
 };

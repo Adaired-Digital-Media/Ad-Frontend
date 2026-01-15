@@ -6,6 +6,7 @@ export interface MessageFieldProps {
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   placeholder?: string;
   className?: string;
+  rows?: number;
 }
 
 const MessageField = ({
@@ -14,6 +15,7 @@ const MessageField = ({
   handleChange,
   placeholder,
   className,
+  rows,
 }: MessageFieldProps) => {
   return (
     <textarea
@@ -21,8 +23,8 @@ const MessageField = ({
       value={value}
       onChange={handleChange}
       placeholder={placeholder}
-      className={`${className} w-full rounded-[0.5rem] text-xxs xl:text-xs border-none bg-[#F8F8F8] px-4 py-3 font-normal text-black outline-none placeholder:text-[#A3A3A3] focus:border-[#000000]`}
-      rows={5}
+      className={`${className} w-full rounded-[0.5rem] border-none bg-[#F8F8F8] px-4 py-3 text-xxs font-normal text-[#000000] outline-none placeholder:text-[#323232B2] focus:border-[#000000] lg:text-xs`}
+      rows={rows ?? 5}
     />
   );
 };

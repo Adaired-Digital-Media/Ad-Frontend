@@ -39,7 +39,7 @@
   }
 
   h3 {
-    @apply text-lg font-medium leading-10 text-[#101C3A] md:text-xl;
+    @apply font-poppins text-lg font-semibold leading-10 text-[#000000] md:text-[22px] md:leading-[32px];
   }
 
   h4 {

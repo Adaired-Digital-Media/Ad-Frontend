@@ -127,7 +127,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import InputField from '../UI/InputField';
 import SelectField from '../UI/SelectField';
-import MessageField from '../UI/MessageField';
+import MessageField from '../UI/MessageField/MessageField';
 import SaveAndCancel from '../../common/SaveAndCancel';
 import chat from '../../../../../public/assets/icons/chat.png';
 import { useReCaptcha } from 'next-recaptcha-v3';
@@ -270,17 +270,16 @@ const ContactForm = () => {
           className="mb-auto"
         />
       </div>
-
       <div>
         <InputField
-          className="my-2"
+          className="my-4"
           name="name"
           value={inputValue.name}
           handleChange={handleChange}
           placeholder="Name"
         />
 
-        <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <InputField
             name="email"
             value={inputValue.email}
@@ -297,7 +296,7 @@ const ContactForm = () => {
         </div>
 
         <SelectField
-          className="my-2"
+          className="my-4"
           name="service"
           value={inputValue.service}
           handleChange={handleChange}

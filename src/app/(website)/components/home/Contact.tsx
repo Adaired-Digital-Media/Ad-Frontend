@@ -4,7 +4,7 @@ import MaxWidthWrapper from '../MaxWidthWrapper';
 import Heading from '../../common/Heading';
 import Image from 'next/image';
 import InputField from '../UI/InputField';
-import MessageField from '../UI/MessageField';
+import MessageField from '../UI/MessageField/MessageField';
 import Button from '../../common/Button';
 import useImageAnimation from '@/@core/hooks/useImageAnimation';
 import reachout from '../../../../../public/assets/images/home/contact_us.png';
