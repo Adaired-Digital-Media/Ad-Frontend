@@ -32,7 +32,7 @@ const Expect = () => {
           {/* Content Section */}
           <div
             ref={ref}
-            className={`relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] 1360:h-[550px] 1400:h-[550px] 1470:h-[600px] 1600:h-[550px] 1680:h-[550px] 3xl:h-[600px] ${className}`}
+            className={`relative h-[20rem] w-full lg:h-[34rem] xl:h-[660px] 1360:h-[550px] 1400:h-[550px] 1470:h-[600px] 1600:h-[575px] 1680:h-[550px] 3xl:h-[600px] ${className}`}
           >
             <Image
               src={expectImg}

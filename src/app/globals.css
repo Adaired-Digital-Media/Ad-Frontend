@@ -30,8 +30,9 @@
   }
 
   h1 {
-    @apply 1366:text-[2.7rem] 1366:leading-[3.75rem] 1680:leading-[3.75rem] 1400:text-[2.75rem] 1400:leading-[3.75rem] 1600:text-[3rem] 1600:leading-[4rem] 1680:text-[3rem] font-poppins text-[1.8rem] font-bold leading-10 text-[#000000] md:text-[2.5rem] md:leading-[3rem] lg:text-[2.125rem] lg:leading-[2.8rem] xl:text-[3.75rem] xl:leading-[4.65rem] 3xl:text-[3.75rem] 3xl:leading-[4.65rem];
+    @apply font-poppins text-[1.8rem] font-bold leading-10 text-[#000000] md:text-[2.5rem] md:leading-[3rem] lg:text-[2.125rem] lg:leading-[2.8rem] xl:text-[3.75rem] xl:leading-[4.65rem] 1366:text-[2.7rem] 1366:leading-[3.75rem] 1400:text-[2.75rem] 1400:leading-[3.75rem] 1600:text-[3rem] 1600:leading-[4rem] 1680:text-[3rem] 1680:leading-[3.75rem] 3xl:text-[3.75rem] 3xl:leading-[4.65rem];
   }
+
   h2 {
     /* @apply text-3xl dark:text-gray-800 2xl:text-[26px] 4xl:text-3xl; */
     @apply pt-[0.25rem] font-poppins text-[1.6rem] font-semibold leading-[2rem] text-[#000000] md:text-[2.25rem] md:leading-[2.75rem] lg:text-[1.8rem] lg:leading-[2.5rem] xl:text-[2.188rem] xl:leading-[3.125rem];
@@ -54,8 +55,9 @@
   }
 
   p {
-    @apply 1366:text-[14px] 1680:text-[18px] 1400:text-[14px] 1470:text-[18px] 1600:text-[16px] font-montserrat text-[14px] font-normal leading-[26px] text-[#000000] xl:text-[18px] 3xl:text-[18px];
+    @apply font-montserrat text-[14px] font-normal leading-[26px] text-[#000000] xl:text-[18px] 1366:text-[14px] 1400:text-[14px] 1470:text-[18px] 1600:text-[18px] 1680:text-[18px] 3xl:text-[18px];
   }
+
   span {
     @apply text-xxs xl:text-xs;
   }
