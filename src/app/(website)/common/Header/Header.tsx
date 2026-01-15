@@ -58,7 +58,7 @@ const Header = () => {
                     {/* MAIN MENU */}
                     <Link
                       href={menu.href}
-                      className={`font-Outfit 1366:text-[14px] 1400:text-[14px] 1470:text-[14px] 1600:text-[18px] 1680:text-[18px] flex items-center rounded-full px-5 py-2 text-xxs transition xl:text-xs 3xl:text-[18px] ${pathname === menu.href && 'bg-[#FB9100] text-[#FFFFFF]'} ${isHover ? 'bg-[#FB9100] text-[#FFFFFF]' : 'text-[#000000]'}`}
+                      className={`font-Outfit 1366:text-[14px] 1400:text-[18px] 1470:text-[14px] 1600:text-[18px] 1680:text-[18px] flex items-center rounded-full px-5 py-2 text-xxs transition xl:text-xs 3xl:text-[18px] ${pathname === menu.href && 'bg-[#FB9100] text-[#FFFFFF]'} ${isHover ? 'bg-[#FB9100] text-[#FFFFFF]' : 'text-[#000000]'}`}
                     >
                       {menu.label}
                       {menu.subItems && <MdKeyboardArrowDown size={18} />}

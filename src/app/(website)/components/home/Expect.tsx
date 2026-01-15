@@ -74,7 +74,7 @@ const Expect = () => {
                     </p>
 
                     <p
-                      className={`text-left transition-colors duration-300 ${isHovered && 'text-white'} `}
+                      className={`text-left 1400:text-[14px] 1600:text-[18px] transition-colors duration-300 ${isHovered && 'text-white'} `}
                     >
                       {record.description}
                     </p>
