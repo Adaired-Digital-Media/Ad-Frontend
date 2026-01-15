@@ -122,9 +122,9 @@ const About = () => {
 
                   {/* CONTENT */}
                   <div>
-                    <h4 className="text-center text-xs font-bold lg:text-left">
+                    <h3 className="text-center text-xs font-bold lg:text-left">
                       {point.title}
-                    </h4>
+                    </h3>
                     <p className="mt-1 text-center font-montserrat lg:text-left">
                       {point.description}
                     </p>

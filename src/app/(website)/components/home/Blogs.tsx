@@ -138,14 +138,14 @@ const Blogs = () => {
 
               {/* CONTENT */}
               <div className="absolute bottom-[-5rem] space-y-4 rounded-xl bg-white p-4 lg:mx-4 xl:bottom-[-4.5rem] xl:mx-8 xl:p-8">
-                <h5
+                <h3
                   onClick={() => router.push(`/blog/${blog.link}`)}
                   className="cursor-pointer text-[#111] transition-colors duration-300 group-hover:text-[#F28F17] xl:text-[1.125rem]"
                 >
                   {blog.title.length > 60
                     ? blog.title.slice(0, 60) + '...'
                     : blog.title}
-                </h5>
+                </h3>
 
                 <p
                   onClick={() => router.push(`/blog/${blog.link}`)}

@@ -156,8 +156,8 @@ const Service = () => {
                       } `}
                     >
                       <div className="flex w-full items-center justify-between gap-3">
-                        <p
-                          className={`my-auto font-medium ${
+                        <h3
+                          className={`my-auto font-medium text-[18px] ${
                             activeTab === idx
                               ? 'text-[#ffffff]'
                               : 'text-[#000000]'
@@ -168,7 +168,7 @@ const Service = () => {
                           }`}
                         >
                           {service.title}
-                        </p>
+                        </h3>
 
                         {(activeTab === idx || hoveredTab === idx) && (
                           <MdArrowOutward

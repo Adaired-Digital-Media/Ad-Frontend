@@ -40,7 +40,7 @@ const FAQ = () => {
               >
                 {/* Content */}
                 <div className="col-span-4 space-y-4">
-                  <h5>{faq.title}</h5>
+                  <h3>{faq.title}</h3>
                   {isOpen && <p>{faq.description}</p>}
                 </div>
 
