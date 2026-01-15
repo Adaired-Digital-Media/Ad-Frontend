@@ -303,6 +303,15 @@ export const TestimonialSectionData = {
   testimonials: [
     {
       image: 'Static Website Images/homepage_about1',
+      name: 'Media Buyer Wanted for Explosive Drop shipping Launch',
+      span: '',
+      description:
+        '"Great to work with. Clear, timely, detailed communication style. Receptive to feedback and recommendations. I would highly recommend working with Seema and team."',
+      bgColor: '#D7EBFF',
+      rating: 5,
+    },
+    {
+      image: 'Static Website Images/homepage_about1',
       name: 'Shopify coding',
       span: '',
       description:
@@ -310,15 +319,15 @@ export const TestimonialSectionData = {
       bgColor: '#D7EBFF',
       rating: 5,
     },
-    {
-      image: 'Static Website Images/homepage_about2',
-      name: 'SEO Specialist for Keyword Research',
-      span: '',
-      description:
-        '"Working with Seema has been an exceptionally professional experience. Her dedication and expertise make collaboration seamless, and I eagerly anticipate future opportunities to work alongside her. Thank you for the outstanding partnership!"',
-      bgColor: '#E1F2E2',
-      rating: 5,
-    },
+    // {
+    //   image: 'Static Website Images/homepage_about2',
+    //   name: 'SEO Specialist for Keyword Research, Analytics & Console Setup',
+    //   span: '',
+    //   description:
+    //     '"Working with Seema has been an exceptionally professional experience. Her dedication and expertise make collaboration seamless, and I eagerly anticipate future opportunities to work alongside her. Thank you for the outstanding partnership!"',
+    //   bgColor: '#E1F2E2',
+    //   rating: 5,
+    // },
     {
       image: 'Static Website Images/homepage_about2',
       name: 'Shopify Expert for shipping integration',
@@ -339,10 +348,10 @@ export const TestimonialSectionData = {
     },
     {
       image: 'Static Website Images/homepage_about2',
-      name: 'Full SEO Strategy & Execution',
+      name: 'Seeking Google Ads Specialist for Search Campaigns',
       span: '',
       description:
-        '"The project was canceled due to internal changes on our side. During the collaboration, the freelancer delivered the agreed SEO work as promised and communicated clearly throughout the process. Professional approach and reliable execution within the defined scope."',
+        'I had a great experience working with Seema. She delivered high-quality work on time and communicated effectively throughout the project. Her professionalism and attention to detail were impressive. I highly recommend Seema and would gladly work with her again in the future."',
       bgColor: '#FFF4F3',
       rating: 5,
     },
@@ -411,6 +420,49 @@ export const ServiceSectionData = {
   span: 'Business Needs',
   description: `Our success-driven digital marketing services integrate AI-enhanced SEO, advanced analytics, and conversion-focused strategies to strengthen brand presence, improve search performance, and accelerate measurable business growth.`,
   services: [
+    {
+      title: 'White Label Services ',
+      description:
+        'Expand your offerings effortlessly with our White Label Services. We offer fully branded solutions, expert support, and seamless integration for business growth.',
+      link: '/services/search-engine-optimization',
+      list: [
+        {
+          icon: WhiteLabelSEO,
+          image: White_SEO_1,
+          label: 'White Label SEO',
+          title: 'White Label SEO',
+          description: `We help you boost your agency’s offerings with White Label SEO from Adaired. We deliver expert SEO services under your brand, so you can expand without extra overhead. From keyword research to link building and reporting, we handle all the technical work while you keep full client ownership. Together, we help you scale your business, enhance results, and maintain your brand reputation effortlessly.`,
+          link: '/services/search-engine-optimization',
+        },
+        {
+          icon: WhiteLabelSocialMedia,
+          image: White_SEO_2,
+          label: 'White Label Social Media',
+          title: 'White Label Social Media',
+          description: `At Adaired, we help you expand your agency’s services with White Label Social Media services. We create, manage, and optimize social media campaigns under your brand, so you can deliver results without extra overhead. From content creation to scheduling and analytics, we handle the work while you retain full client ownership.`,
+          link: '/services/search-engine-optimization',
+        },
+        {
+          icon: WhiteLabelFacebookAds,
+          image: White_SEO_3,
+          label: 'White Label Facebook Ads',
+          title: 'White Label Facebook Ads',
+          description: `We help your agency scale with White Label Facebook Ads. We handle ad strategy, creation, targeting, and reporting under your brand, so you deliver results without extra overhead. You keep full client ownership while we drive performance, boost ROI, and protect your brand reputation.`,
+          link: '/services/search-engine-optimization',
+        },
+        {
+          icon: LinkBuilding,
+          image: White_SEO_4,
+          label: 'White Label Link Building',
+          title: 'White Label Link Building',
+          description: `We help your agency grow with White Label Link Building from Adaired. We handle outreach, content placement, and quality backlink acquisition under your brand, so you deliver results without extra overhead. You keep full client ownership while we boost domain authority, improve rankings, and protect your brand reputation.`,
+          link: '/services/search-engine-optimization',
+        },
+      ],
+      mainSvg: 'Logo Design_PpqcI',
+      img: White_Label_Services,
+      accentColor: '#5c34b1',
+    },
     {
       title: 'Digital Marketing',
       description:
@@ -581,49 +633,6 @@ export const ServiceSectionData = {
       ],
       mainSvg: 'Logo Design_PpqcI',
       img: Web_Design,
-      accentColor: '#5c34b1',
-    },
-    {
-      title: 'White Label Services ',
-      description:
-        'Expand your offerings effortlessly with our White Label Services. We offer fully branded solutions, expert support, and seamless integration for business growth.',
-      link: '/services/search-engine-optimization',
-      list: [
-        {
-          icon: WhiteLabelSEO,
-          image: White_SEO_1,
-          label: 'White Label SEO',
-          title: 'White Label SEO',
-          description: `We help you boost your agency’s offerings with White Label SEO from Adaired. We deliver expert SEO services under your brand, so you can expand without extra overhead. From keyword research to link building and reporting, we handle all the technical work while you keep full client ownership. Together, we help you scale your business, enhance results, and maintain your brand reputation effortlessly.`,
-          link: '/services/search-engine-optimization',
-        },
-        {
-          icon: WhiteLabelSocialMedia,
-          image: White_SEO_2,
-          label: 'White Label Social Media',
-          title: 'White Label Social Media',
-          description: `At Adaired, we help you expand your agency’s services with White Label Social Media services. We create, manage, and optimize social media campaigns under your brand, so you can deliver results without extra overhead. From content creation to scheduling and analytics, we handle the work while you retain full client ownership.`,
-          link: '/services/search-engine-optimization',
-        },
-        {
-          icon: WhiteLabelFacebookAds,
-          image: White_SEO_3,
-          label: 'White Label Facebook Ads',
-          title: 'White Label Facebook Ads',
-          description: `We help your agency scale with White Label Facebook Ads. We handle ad strategy, creation, targeting, and reporting under your brand, so you deliver results without extra overhead. You keep full client ownership while we drive performance, boost ROI, and protect your brand reputation.`,
-          link: '/services/search-engine-optimization',
-        },
-        {
-          icon: LinkBuilding,
-          image: White_SEO_4,
-          label: 'White Label Link Building',
-          title: 'White Label Link Building',
-          description: `We help your agency grow with White Label Link Building from Adaired. We handle outreach, content placement, and quality backlink acquisition under your brand, so you deliver results without extra overhead. You keep full client ownership while we boost domain authority, improve rankings, and protect your brand reputation.`,
-          link: '/services/search-engine-optimization',
-        },
-      ],
-      mainSvg: 'Logo Design_PpqcI',
-      img: White_Label_Services,
       accentColor: '#5c34b1',
     },
     {

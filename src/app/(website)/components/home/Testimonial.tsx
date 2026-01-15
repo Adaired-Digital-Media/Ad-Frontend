@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Heading from '../../common/Heading';
 import { MdOutlineStar } from 'react-icons/md';
 import Image from 'next/image';
-import google from '../../../../../public/assets/upwork.png';
+import google from '../../../../../public/assets/upwork_logo.png';
 import useIsMobile from '@/@core/hooks/useIsMobile';
 
 import img_1 from '../../../../../public/assets/testimonial/testimonial_1.png';
@@ -68,52 +68,42 @@ const Testimonial = () => {
                         'noopener,noreferrer'
                       )
                     }
-                    className="h-full cursor-pointer min-h-[250px] transform-gpu rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] lg:p-[1.5rem] xl:p-[2rem]"
+                    className="1440:h-[22rem] h-[23.5rem] transform-gpu cursor-pointer rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] md:h-[17rem] lg:h-[25rem] lg:p-[1.5rem] xl:p-[2rem] 1400:h-[20rem] 3xl:h-[18rem]"
                   >
-                    <div className="flex justify-between pt-[1rem]">
-                      <div className="absolute left-10 top-10 lg:left-4 lg:top-10 xl:left-10 xl:top-10">
-                        <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm">
-                          {testimonial.span}
-                        </p>
-                        <div className="my-1 flex gap-1 lg:gap-0 xl:gap-1">
-                          <span className="my-auto flex">
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <MdOutlineStar
-                                key={i}
-                                size={16}
-                                className="text-[#FB9100]"
-                              />
-                            ))}
-                          </span>
-                          {/* <p className="my-auto text-xxs text-[#000000]">
-                            <span> 5 </span>
-                            <span className="blur-[3px]">
-                              {' '}
-                              Sep 22, 2025 - Dec 19, 2025
+                    <div className="">
+                      <div className="flex justify-between pt-[1rem]">
+                        <div className="">
+                          <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm">
+                            {testimonial.name}
+                          </p>
+                          <div className="my-1 flex gap-1 lg:gap-0 xl:gap-1">
+                            <span className="my-auto flex">
+                              {Array.from({ length: 5 }).map((_, i) => (
+                                <MdOutlineStar
+                                  key={i}
+                                  size={16}
+                                  className="text-[#FB9100]"
+                                />
+                              ))}
                             </span>
-                          </p> */}
+                          </div>
+                        </div>
+                        <div className="relative h-[30px] w-[120px] flex-shrink-0">
+                          <Image
+                            src={google}
+                            alt="Google"
+                            fill
+                            unoptimized
+                            className="object-contain"
+                          />
                         </div>
                       </div>
-                      <div className="absolute right-10 top-5 h-[25px] w-[95px] lg:right-0 lg:top-4 xl:right-10 xl:top-10">
-                        <Image
-                          src={google}
-                          width={95}
-                          height={25}
-                          alt="Google"
-                          unoptimized
-                          className="xl-h-[25px] lg-h-[20px] lg:w-[65px] xl:w-[95px]"
-                        />
-                      </div>
                     </div>
-                    <p className="pt-[4rem] text-xxs text-[#262626]">
-                      {testimonial.description}
+                    <p className="pt-[1rem] text-xxs text-[#262626]">
+                      {testimonial.description?.length > 220
+                        ? testimonial.description.slice(0, 220) + '...'
+                        : testimonial.description}
                     </p>
-                    {/* <span className="pt-3 blur-[2.5px]">
-                      $300.00 Fixed Price
-                    </span> */}
                   </div>
                 </div>
               ))}
