@@ -42,7 +42,7 @@ const Contact = () => {
             <Image
               src={reachout}
               alt="About Image"
-              className="rounded-3xl border-[#e3e3e3] object-cover p-1"
+              className="rounded-3xl border-[#e3e3e3] h-[720] p-1"
             />
           </div>
           <ContactForm />

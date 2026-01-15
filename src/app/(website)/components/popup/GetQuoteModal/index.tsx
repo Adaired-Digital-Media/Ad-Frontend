@@ -9,14 +9,110 @@ import SaveAndCancel from '@/app/(website)/common/SaveAndCancel';
 import { Icons } from '@web-components/Icons';
 
 import Link from 'next/link';
+import { useReCaptcha } from 'next-recaptcha-v3';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { first } from 'lodash';
+import validators from '@/@core/utils/validators';
 interface GetQuoteModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
+  const router = useRouter();
   if (!isOpen) return null;
+  const { executeRecaptcha } = useReCaptcha();
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    website: '',
+  });
+  const [inputValue, setInputValue] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    website: '',
+    message: '',
+  });
 
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+
+    // Allow only numbers in phone field
+    if (name === 'phone' && !/^\d*$/.test(value)) return;
+
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: validators[name as keyof typeof validators](value),
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      firstName: validators.firstName(inputValue.firstName),
+      lastName: validators.lastName(inputValue.lastName),
+      email: validators.email(inputValue.email),
+      phone: validators.phone(inputValue.phone),
+      website: validators.website(inputValue.website),
+    };
+
+    setErrors(newErrors);
+
+    // check if any error exists
+    return Object.values(newErrors).every((error) => error === '');
+  };
+
+  const handleClick = async () => {
+    if (!validateForm()) return;
+
+    try {
+      const token = await executeRecaptcha('contact_page_form');
+
+      const payload = {
+        name: inputValue.firstName + ' ' + inputValue.lastName,
+        email: inputValue.email,
+        phone: inputValue.phone,
+        website: inputValue.website,
+        message: inputValue.message,
+        gRecaptchaToken: token,
+      };
+
+      const response = await fetch('/api/zoho/leadRegister', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error('Submission failed');
+
+      setInputValue({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        website: '',
+        message: '',
+      });
+
+      router.push('/thankyou');
+    } catch (error) {
+      console.error(error);
+      alert('Failed to submit form. Please try again.');
+    }
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Overlay */}
@@ -26,7 +122,7 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
       />
 
       {/* Modal */}
-      <div className="relative z-50 w-[60%] rounded-2xl bg-[#FFFFFF] p-6 shadow-xl">
+      <div className="relative z-50 rounded-2xl bg-[#FFFFFF] p-6 shadow-xl md:w-[w-95%] lg:w-[95%] 1600:w-[70%] 3xl:w-[60%]">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -43,7 +139,7 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
               alt="get_a_Quote"
               className="object-contain"
             />
-            <div className="absolute bottom-6 left-6 w-[80%]">
+            <div className="absolute bottom-6 left-6 w-[80%] md:bottom-[16rem] lg:bottom-[9rem] 1400:bottom-[3rem]">
               <p className="text-[28px] font-medium leading-[35px] text-[#FFFFFF]">
                 Achieve Higher Conversions by Solving Issues Early
               </p>
@@ -106,65 +202,48 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
               <div className="grid grid-cols-2 gap-4">
                 <InputField
                   placeholder="First name"
-                  name={''}
-                  value={''}
-                  handleChange={function (
-                    e: React.ChangeEvent<HTMLInputElement>
-                  ): void {
-                    throw new Error('Function not implemented.');
-                  }}
+                  name={'firstName'}
+                  value={inputValue.firstName}
+                  handleChange={handleChange}
+                  error={errors.firstName}
                 />
                 <InputField
                   placeholder="Last name"
-                  name={''}
-                  value={''}
-                  handleChange={function (
-                    e: React.ChangeEvent<HTMLInputElement>
-                  ): void {
-                    throw new Error('Function not implemented.');
-                  }}
+                  name={'lastName'}
+                  value={inputValue.lastName}
+                  handleChange={handleChange}
+                  error={errors.lastName}
                 />
                 <InputField
                   placeholder="Email"
-                  name={''}
-                  value={''}
-                  handleChange={function (
-                    e: React.ChangeEvent<HTMLInputElement>
-                  ): void {
-                    throw new Error('Function not implemented.');
-                  }}
+                  name={'email'}
+                  value={inputValue.email}
+                  handleChange={handleChange}
+                  error={errors.email}
                 />
                 <InputField
                   placeholder="Phone no"
-                  name={''}
-                  value={''}
-                  handleChange={function (
-                    e: React.ChangeEvent<HTMLInputElement>
-                  ): void {
-                    throw new Error('Function not implemented.');
-                  }}
+                  name={'phone'}
+                  value={inputValue.phone}
+                  handleChange={handleChange}
+                  error={errors.phone}
+                  maxLength={10}
                 />
               </div>
               <InputField
                 placeholder="Website URL"
-                name={''}
-                value={''}
-                handleChange={function (
-                  e: React.ChangeEvent<HTMLInputElement>
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
-                className="my-[0.8rem]"
+                name={'website'}
+                value={inputValue.website}
+                handleChange={handleChange}
+                className="my-4"
+                error={errors.website}
               />
+
               <MessageField
-                name={''}
-                value={''}
+                name={'message'}
+                value={inputValue.message}
                 rows={6}
-                handleChange={function (
-                  e: React.ChangeEvent<HTMLTextAreaElement>
-                ): void {
-                  throw new Error('Function not implemented.');
-                }}
+                handleChange={handleChange}
                 placeholder="Write message"
               />
             </div>
@@ -173,7 +252,7 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
               isFullWidth={true}
               isIcon={true}
               className="text-[16px]"
-              handleClick={() => {}}
+              handleClick={handleClick}
             />
           </div>
         </div>
