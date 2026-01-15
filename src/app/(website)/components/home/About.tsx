@@ -43,7 +43,7 @@ const About = () => {
                 alt="About Image"
                 width={581}
                 height={554}
-                className="h-[14rem] w-[14rem] rounded-lg md:h-[34.625rem] md:w-[36.313rem] lg:h-[20.625rem] lg:w-[20.313rem] xl:h-[34.625rem] xl:w-[36.313rem] 1360:mt-[2rem] 1360:h-[20rem] 1360:w-[22rem] 1400:mt-[2rem] 1400:h-[23rem] 1400:w-[23rem] 1600:mt-[2rem] 1600:h-[30rem] 1600:w-[28rem] 1680:mt-[2rem] 1680:h-[32rem] 1680:w-[30rem] 3xl:h-[34.625rem] 3xl:w-[36.313rem]"
+                className="h-[14rem] w-[14rem] rounded-lg md:h-[34.625rem] md:w-[36.313rem] lg:h-[20.625rem] lg:w-[20.313rem] xl:h-[34.625rem] xl:w-[36.313rem] 1360:mt-[2rem] 1360:h-[20rem] 1360:w-[22rem] 1400:mt-[2rem] 1400:h-[23rem] 1400:w-[23rem] 1470:w-[25rem] 1710:w-[32rem] 1600:mt-[2rem] 1600:h-[30rem] 1600:w-[28rem] 1680:mt-[2rem] 1680:h-[32rem] 1680:w-[30rem] 3xl:h-[34.625rem] 3xl:w-[36.313rem]"
               />
             </div>
             <div className="absolute left-[-1rem] top-[2rem] flex animate-zoomPulse gap-2 rounded-xl border-[1px] border-[#000000]/10 bg-[#FFFFFF] px-2 py-1 lg:left-0 lg:top-14 lg:px-4 lg:py-2">

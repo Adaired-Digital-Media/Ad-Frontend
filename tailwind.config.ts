@@ -51,6 +51,9 @@ const config: Omit<Config, 'prefix' | 'presets' | 'content'> = {
       '2xl': '1536px',
       '3xl': '1920px',
       '4xl': '2560px',
+      //safari fix
+      '1710': '1710px',
+      '1470 ': '1470px',
     },
     container: {
       center: true,

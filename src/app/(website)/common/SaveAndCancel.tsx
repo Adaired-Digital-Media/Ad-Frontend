@@ -34,7 +34,7 @@ const SaveAndCancel = ({
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         onClick={handleClick}
-        className={`font-Outfi flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[60px] py-[0.75rem] text-xxs font-normal transition-all duration-300 ease-out active:scale-95 xl:text-xs 1366:text-[14px] 1400:text-[18px] 1470:text-[14px] 1600:text-[18px] 1680:text-[18px] ${
+        className={`font-Outfi flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[60px] py-[0.75rem] text-xxs font-normal transition-all duration-300 ease-out active:scale-95 xl:text-xs 1366:text-[14px] 1400:text-[18px] 1470:text-[18px] 1600:text-[18px] 1680:text-[18px] ${
           isBgWhite
             ? isHover
               ? 'border border-[#FB9100] bg-[#FB9100] text-white'
@@ -55,7 +55,7 @@ const SaveAndCancel = ({
       {is2ndButton && (
         <button
           onClick={handleClick2}
-          className={`font-Outfi 1400:text-[18px] 1440:text-[18px] group flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[60px] py-[0.75rem] text-xxs font-normal transition-all duration-300 ease-out active:scale-95 xl:text-xs 1366:text-[14px] 1470:text-[14px] 1600:text-[18px] 1680:text-[18px] ${isFullWidth ? 'md:w-full' : 'md:w-[180px] xl:w-[220px]'} ${
+          className={`font-Outfi 1400:text-[18px] 1440:text-[18px] group flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[60px] py-[0.75rem] text-xxs font-normal transition-all duration-300 ease-out active:scale-95 xl:text-xs 1366:text-[14px] 1470:text-[18px] 1600:text-[18px] 1680:text-[18px] ${isFullWidth ? 'md:w-full' : 'md:w-[180px] xl:w-[220px]'} ${
             is2BgWhite
               ? 'border border-[#111111] bg-white text-[#111111] hover:bg-[#1A5A96] hover:text-white'
               : 'bg-[#FB9100] text-white hover:bg-[#1A5A96]'
