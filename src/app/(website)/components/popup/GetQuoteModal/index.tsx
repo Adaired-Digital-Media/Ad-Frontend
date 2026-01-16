@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { first } from 'lodash';
 import validators from '@/@core/utils/validators';
+import PhoneInputField from '../../UI/InputField/PhoneInputField';
 interface GetQuoteModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,8 +25,6 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
   if (!isOpen) return null;
   const { executeRecaptcha } = useReCaptcha();
   const [errors, setErrors] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     phone: '',
     website: '',
@@ -46,7 +45,6 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
   ) => {
     const { name, value } = e.target;
 
-    // Allow only numbers in phone field
     if (name === 'phone' && !/^\d*$/.test(value)) return;
 
     setInputValue((prev) => ({
@@ -62,8 +60,6 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
 
   const validateForm = () => {
     const newErrors = {
-      firstName: validators.firstName(inputValue.firstName),
-      lastName: validators.lastName(inputValue.lastName),
       email: validators.email(inputValue.email),
       phone: validators.phone(inputValue.phone),
       website: validators.website(inputValue.website),
@@ -205,14 +201,12 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
                   name={'firstName'}
                   value={inputValue.firstName}
                   handleChange={handleChange}
-                  error={errors.firstName}
                 />
                 <InputField
                   placeholder="Last name"
                   name={'lastName'}
                   value={inputValue.lastName}
                   handleChange={handleChange}
-                  error={errors.lastName}
                 />
                 <InputField
                   placeholder="Email"
@@ -220,14 +214,16 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
                   value={inputValue.email}
                   handleChange={handleChange}
                   error={errors.email}
+                  required={true}
                 />
-                <InputField
+                <PhoneInputField
                   placeholder="Phone no"
                   name={'phone'}
                   value={inputValue.phone}
                   handleChange={handleChange}
                   error={errors.phone}
-                  maxLength={10}
+                  maxLength={15}
+                  required={true}
                 />
               </div>
               <InputField
@@ -237,6 +233,7 @@ const GetQuoteModal = ({ isOpen, onClose }: GetQuoteModalProps) => {
                 handleChange={handleChange}
                 className="my-4"
                 error={errors.website}
+                required={true}
               />
 
               <MessageField

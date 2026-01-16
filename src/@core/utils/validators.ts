@@ -1,4 +1,12 @@
 const validators = {
+  name: (value: string) =>
+    /^[A-Za-z\s]{2,}$/.test(value)
+      ? ''
+      : 'Name must contain only letters (min 2)',
+  service: (value: string) =>
+    /^[A-Za-z\s]{2,}$/.test(value)
+      ? ''
+      : 'Service must contain only letters (min 2)',
   firstName: (value: string) =>
     /^[A-Za-z]{2,}$/.test(value)
       ? ''
