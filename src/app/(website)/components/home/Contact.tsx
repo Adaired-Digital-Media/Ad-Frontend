@@ -7,7 +7,7 @@ import InputField from '../UI/InputField';
 import MessageField from '../UI/MessageField/MessageField';
 import Button from '../../common/Button';
 import useImageAnimation from '@/@core/hooks/useImageAnimation';
-import reachout from '../../../../../public/assets/images/home/contact_us.png';
+import reachout from '../../../../../public/assets/700_650.png';
 import chat from '../../../../../public/assets/icons/chat.png';
 import SelectField from '../UI/SelectField';
 import ContactForm from '../forms/ContactForm';
@@ -42,7 +42,7 @@ const Contact = () => {
             <Image
               src={reachout}
               alt="About Image"
-              className="rounded-3xl border-[#e3e3e3] h-[720] p-1"
+              className="h-[720] w-[100%] rounded-3xl border-[#e3e3e3] p-1"
             />
           </div>
           <ContactForm />
