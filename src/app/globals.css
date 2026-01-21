@@ -35,7 +35,7 @@
 
   h2 {
     /* @apply text-3xl dark:text-gray-800 2xl:text-[26px] 4xl:text-3xl; */
-    @apply pt-[0.25rem] font-poppins text-[1.6rem] font-semibold leading-[2rem] text-[#000000] md:text-[2.25rem] md:leading-[2.75rem] lg:text-[1.8rem] lg:leading-[2.5rem] xl:text-[2.188rem] xl:leading-[3.125rem];
+    @apply pt-[0.25rem] font-poppins text-[1.6rem] font-semibold leading-[2rem] text-[#000000] md:text-[2.25rem] md:leading-[2.75rem] lg:text-[1.8rem] lg:leading-[2.5rem] xl:text-[2.188rem] xl:leading-[3.125rem] 1360:text-[2rem] 1360:leading-[2.6rem] 2xl:leading-[1.6] 3xl:text-[2.188rem];
   }
 
   h3 {

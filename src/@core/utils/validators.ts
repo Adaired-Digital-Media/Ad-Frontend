@@ -23,7 +23,7 @@ const validators = {
       : 'Enter a valid email address',
 
   phone: (value: string) =>
-    /^\d{10,15}$/.test(value) ? '' : 'Phone number must be 10 digits',
+    /^\d{10,15}$/.test(value) ? '' : 'Enter a valid phone number',
   website: (value: string) =>
     value.trim() === '' ||
     /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/.*)?$/.test(value.trim())

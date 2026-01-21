@@ -100,10 +100,10 @@ export interface ServiceSectionDataType {
 
 export const SolutionsSectionData = {
   image: 'Static Website Images/about_main_anwqk5',
-  subTitle: 'Solutions',
-  title: 'Every Brand Has A Story, And We’re Here To Tell It Better!',
+  subTitle: 'Total Transparency. Zero "Black Box" Marketing',
+  title: 'Most clients have no idea what their agency actually does all day. You get a PDF once a month and a bill.',
   description:
-    'As a powerhouse digital agency, we craft bold ideas backed by data and fueled by creativity that attract attention, command authority, and convert consistently. If you want a partner that pushes limits and powers real growth, you’re in the right place.',
+    'But with us, you get 24/7 access to your campaign pulse. We combine advanced tracking tools with human insight to show you exactly how $1 of spend becomes $5 of revenue.',
   points: [
     {
       icon: goal,

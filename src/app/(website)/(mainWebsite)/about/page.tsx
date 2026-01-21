@@ -58,7 +58,7 @@ const About = async () => {
       <WorkStation />
       <ProcessSection />
       <TestimonialSlider />
-      <Blogs/>
+      <Blogs />
       {/* <BlogCards blogs={blogs} /> */}
     </div>
   );
@@ -167,7 +167,7 @@ const IntroSection = () => {
     </>
   );
 };
-
+//trdfd
 export const ProcessSection = () => {
   return (
     <section className="pb-20">

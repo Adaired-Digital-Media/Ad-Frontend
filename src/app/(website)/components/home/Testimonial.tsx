@@ -13,8 +13,10 @@ import img_3 from '../../../../../public/assets/testimonial/testimonial_3.png';
 import img_4 from '../../../../../public/assets/testimonial/testimonial_4.png';
 import img_5 from '../../../../../public/assets/testimonial/testimonial_5.png';
 import img_6 from '../../../../../public/assets/testimonial/testimonial_6.png';
+import useBreakpointReviewCharLimit from '@/@core/hooks/useBreakpointReviewCharLimit';
 const Testimonial = () => {
   const isMobile = useIsMobile();
+  const charLimit = useBreakpointReviewCharLimit();
   const { subTitle, title, description, testimonials } = TestimonialSectionData;
   const [isHover, setIsHover] = useState<number | null>(1);
   // const VISIBLE_CARDS = 3;
@@ -68,12 +70,12 @@ const Testimonial = () => {
                         'noopener,noreferrer'
                       )
                     }
-                    className="1440:h-[22rem] h-[23.5rem] transform-gpu cursor-pointer rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] md:h-[17rem] lg:h-[25rem] lg:p-[1.5rem] xl:p-[2rem] 1400:h-[20rem] 3xl:h-[18rem]"
+                    className="h-[23.5rem] transform-gpu cursor-pointer rounded-2xl border-[5px] border-transparent bg-white p-[2.5rem] transition-all duration-300 ease-out will-change-transform hover:scale-[1.03] hover:border-[#1B5A96] md:h-[17rem] lg:h-[25rem] lg:p-[1.5rem] xl:p-[2rem] 1360:h-[18rem] 1400:h-[18rem] 1440:h-[22rem] 1600:h-[20rem] 1710:h-[19rem] 3xl:h-[19rem]"
                   >
                     <div className="">
                       <div className="flex justify-between pt-[1rem]">
                         <div className="">
-                          <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm">
+                          <p className="text-sm font-medium text-[#108A00] lg:text-xs xl:text-sm 1360:text-xxs 1400:text-sm">
                             {testimonial.name}
                           </p>
                           <div className="my-1 flex gap-1 lg:gap-0 xl:gap-1">
@@ -99,9 +101,9 @@ const Testimonial = () => {
                         </div>
                       </div>
                     </div>
-                    <p className="pt-[1rem] text-xxs text-[#262626]">
-                      {testimonial.description?.length > 220
-                        ? testimonial.description.slice(0, 220) + '...'
+                    <p className="pt-[1rem] text-[#262626]">
+                      {testimonial.description?.length > charLimit
+                        ? testimonial.description.slice(0, charLimit) + '...'
                         : testimonial.description}
                     </p>
                   </div>
@@ -110,7 +112,7 @@ const Testimonial = () => {
             </div>
             {/* Pagination */}
             {total > VISIBLE_CARDS && (
-              <div className="mt-[4rem] flex justify-center gap-2">
+              <div className="mt-[1rem] flex justify-center gap-2 md:mt-[2rem] lg:mt-[2.5rem]">
                 {Array.from({ length: total }).map((_, i) => {
                   const activeIndex = index % total;
                   return (

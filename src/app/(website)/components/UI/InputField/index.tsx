@@ -35,7 +35,7 @@ const InputField = ({
         placeholder={`${placeholder} ${required ? '*' : ''}`}
       />
       {error && (
-        <span className="absolute bottom-[-15] left-4 w-[100%] text-[12px] text-red-500">
+        <span className="absolute top-[3rem] left-4 w-[100%] text-[12px] text-red-500">
           {error}
         </span>
       )}
@@ -45,4 +45,3 @@ const InputField = ({
 
 export default InputField;
 
-//fr

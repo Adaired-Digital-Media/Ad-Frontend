@@ -34,15 +34,13 @@ const Contact = () => {
             isBgWhite={true}
           />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-[1rem] xl:gap-[4.5rem]">
-          <div
-            className={`relative h-full overflow-hidden ${className}`}
-            ref={ref}
-          >
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-[2rem] 1600:gap-[3rem] 3xl:gap-[4.5rem]">
+          <div className={`relative overflow-hidden ${className}`} ref={ref}>
             <Image
               src={reachout}
+              fill
               alt="About Image"
-              className="h-[720] w-[100%] rounded-3xl border-[#e3e3e3] p-1"
+              className="rounded-3xl border-[#e3e3e3] object-cover p-1"
             />
           </div>
           <ContactForm />

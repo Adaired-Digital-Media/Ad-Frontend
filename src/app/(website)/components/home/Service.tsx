@@ -145,19 +145,19 @@ const Service = () => {
                     <div
                       onMouseEnter={() => setHoveredTab(idx)}
                       onMouseLeave={() => setHoveredTab(null)}
-                      className={`my-[1rem] flex h-[4rem] w-full cursor-pointer items-center rounded-full border px-[1.5rem] transition-all duration-300 ease-out hover:translate-y-[-2px] ${
+                      className={`my-[1rem] flex h-[4rem] w-full cursor-pointer items-center rounded-full border px-[1.5rem] transition-all duration-300 ease-out hover:translate-y-[-2px] 1360:h-[3.125rem] 1400:h-[4rem] ${
                         activeTab === idx
-                          ? 'bg-[#FCA32A] text-white'
+                          ? 'bg-[#FB9100] text-white'
                           : 'bg-[#F5F5F5]'
                       } ${
                         hoveredTab === idx
-                          ? 'border-[#FCA32A] text-[#000000]'
+                          ? 'border-[#FB9100] text-[#000000]'
                           : 'bg-[#F5F5F5]'
                       } `}
                     >
-                      <div className="flex w-full items-center justify-between gap-3">
+                      <div className="flex w-full items-center justify-between gap-3 1360:gap-1">
                         <h3
-                          className={`my-auto font-medium text-[18px] ${
+                          className={`my-auto text-[18px] font-medium 1360:text-[18px] 1600:text-[18px] 3xl:text-[18px] ${
                             activeTab === idx
                               ? 'text-[#ffffff]'
                               : 'text-[#000000]'
@@ -173,7 +173,7 @@ const Service = () => {
                         {(activeTab === idx || hoveredTab === idx) && (
                           <MdArrowOutward
                             size={35}
-                            className="shrink-0 rounded-full bg-white p-2 text-[#FCA32A] transition-transform duration-700 ease-out"
+                            className="shrink-0 rounded-full bg-white p-2 text-[#FB9100] transition-transform duration-700 ease-out"
                           />
                         )}
                       </div>
@@ -236,7 +236,7 @@ const Service = () => {
                                 unoptimized
                                 className="ani my-auto lg:h-[30px] lg:w-[30px] xl:h-[40px] xl:w-[40px]"
                               />
-                              <p className="absolute bottom-5 left-0 my-auto w-[90%] font-poppins font-semibold text-[#000000] md:left-[4rem] md:pt-[1.7rem] lg:left-4 lg:pt-[1rem] lg:text-[11px] lg:font-medium lg:leading-[15px] xl:pt-[1.7rem] xl:text-xs xl:font-semibold xl:leading-[25px]">
+                              <p className="absolute bottom-5 left-0 mx-2 my-auto font-poppins font-semibold text-[#000000] md:left-[4rem] md:pt-[1.7rem] lg:left-4 lg:pt-[1rem] lg:text-[11px] lg:font-medium lg:leading-[15px] xl:pt-[1.7rem] xl:text-xs xl:font-semibold xl:leading-[25px] 1360:text-[13px] 1360:leading-[1.25rem] 1400:text-[16px] 1400:leading-[1.5rem]">
                                 {item?.label}
                               </p>
                             </div>
@@ -258,6 +258,7 @@ const Service = () => {
                       handleClick={() => router.push(link ?? service.link)}
                       name="See Service Details"
                       isIcon
+                      buttonWidth={'w-[17rem] 1360:w-[14rem] 1400:w-[17rem]'}
                     />
                   </div>
                 </div>

@@ -104,7 +104,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="animate-pulse 1710:h-[85vh] relative h-[100vh] w-full pt-[10vh] md:h-[130vh] lg:h-[100vh] 1366:h-[135vh] 1400:h-[115vh] 1470:h-[100vh] 1600:h-[118vh] 1680:h-[100vh] 3xl:h-[100vh]">
+    <div className="animate-pulse relative h-[100vh] w-full pt-[10vh] md:h-[130vh] lg:h-[100vh] 1366:h-[135vh] 1400:h-[115vh] 1470:h-[100vh] 1600:h-[118vh] 1680:h-[100vh] 1710:h-[85vh] 3xl:h-[100vh]">
       <Image
         src={hero_banner}
         fill
@@ -205,6 +205,9 @@ const Banner = () => {
             is2ndButton={true}
             isIcon={true}
             is2BgWhite={true}
+            buttonWidth={
+              'w-[14rem] 1360:w-[12rem] 1400:w-[13rem] 1600:w-[14rem] 3xl:w-[15rem]'
+            }
             className="lg:pt-[1rem]"
             handleClick={() => router.push('/contact')}
             handleClick2={scrollToServices}

@@ -85,9 +85,11 @@ import Heading from '../../common/Heading';
 import { useRouter } from 'next/navigation';
 import { IoArrowForwardSharp } from 'react-icons/io5';
 import { PiEyeBold } from 'react-icons/pi';
+import useBreakpointCharLimit from '@/@core/hooks/useBreakpointCharLimit';
 
 const Blogs = () => {
   const router = useRouter();
+  const charLimit = useBreakpointCharLimit();
   const { subTitle, title, description, blogs, span } = BlogSectionData;
 
   return (
@@ -142,8 +144,8 @@ const Blogs = () => {
                   onClick={() => router.push(`/blog/${blog.link}`)}
                   className="cursor-pointer text-[#111] transition-colors duration-300 group-hover:text-[#F28F17] xl:text-[1.125rem]"
                 >
-                  {blog.title.length > 60
-                    ? blog.title.slice(0, 60) + '...'
+                  {blog.title.length > charLimit
+                    ? blog.title.slice(0, charLimit) + '...'
                     : blog.title}
                 </h3>
 

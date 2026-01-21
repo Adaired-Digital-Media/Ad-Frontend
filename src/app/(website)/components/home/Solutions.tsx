@@ -71,51 +71,17 @@ const Solutions = () => {
           <div className="my-auto flex-1 text-left lg:text-left">
             {/* Points Section */}
             <Heading
-              subTitle={`Total Transparency. Zero "Black Box" Marketing`}
-              title={
-                'Most clients have no idea what their agency actually does all day. You get a PDF once a month and a bill.'
-              }
+              subTitle={subTitle}
+              title={title}
               span=""
-              description={
-                'But with us, you get 24/7 access to your campaign pulse. We combine advanced tracking tools with human insight to show you exactly how $1 of spend becomes $5 of revenue.'
-              }
+              description={description}
             />
-
-            <div className="hidden gap-5 space-y-8 py-6 sm:flex-row">
-              {points.map((point, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center gap-4 lg:flex-row lg:items-start"
-                >
-                  {/* ICON */}
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-[#FEE9CC99]">
-                    <Image
-                      src={point.icon}
-                      alt={point.title}
-                      width={35}
-                      height={35}
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* CONTENT */}
-                  <div>
-                    <h4 className="text-center text-xs font-bold lg:text-left">
-                      {point.title}
-                    </h4>
-                    <p className="mt-1 text-center font-montserrat text-xs lg:text-left">
-                      {point.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
             <SaveAndCancel
               name={'Get Your Free Website Audit'}
               isIcon={true}
-              isFullWidth={true}
+              buttonWidth={'w-[22rem] 1360:w-[18rem] 1400:w-[22rem]'}
               handleClick={() => setOpen(!open)}
-              className="mt-[2rem] w-[20rem]"
+              className="rem] mt-[2rem]"
             />
           </div>
         </div>

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Button from '../../common/Button';
 import img from '../../../../../public/assets/images/home/aboutus.png';
 import img_700 from '../../../../../public/assets/710_480.png';
-import img_730 from '../../../../../public/assets/aboutus_730_680.png';
+import img_730 from '../../../../../public/assets/aboutus_730_680_.png';
 import about_graph from '../../../../../public/assets/images/home/about_graph.png';
 import Mask from '../../../../../public/assets/images/home/Mask group.png';
 import check from '../../../../../public/assets/icons/blue_check.png';
@@ -38,21 +38,17 @@ const About = () => {
             {/* CENTER IMAGE */}
             <div
               ref={imageRef}
-              className={`1440:mt-[2rem] mt-0 flex items-center justify-center p-3 md:mt-0 lg:mt-[2rem] xl:mt-0 1400:mt-[2rem] 1600:mt-[0rem] ${'imageClass'}`}
+              className={`mt-0 flex items-center justify-center p-3 md:mt-0 lg:mt-[2rem] xl:mt-0 1400:mt-[2rem] 1440:mt-[2rem] 1600:mt-[2rem] 1710:mt-0 ${'imageClass'}`}
             >
               <Image
                 src={img}
                 alt="About Image"
-                // width={581}
-                // height={554}
-                // className="block h-[14rem] w-[14rem] rounded-lg md:h-[34.625rem] md:w-[36.313rem] lg:h-[20.625rem] lg:w-[20.313rem] xl:h-[34.625rem] xl:w-[36.313rem] 1360:mt-[2rem] 1360:h-[20rem] 1360:w-[22rem] 1400:mt-[2rem] 1400:hidden 1400:h-[23rem] 1400:w-[23rem] 1470:hidden 1470:w-[25rem] 1600:mt-[2rem] 1600:block 1600:h-[30rem] 1600:w-[28rem] 1680:mt-[2rem] 1680:h-[32rem] 1680:w-[30rem] 1710:w-[32rem] 3xl:h-[34.625rem] 3xl:w-[36.313rem]"
-
-                className="block h-[14rem] w-[14rem] rounded-lg md:h-[34.625rem] md:w-[36.313rem] lg:h-[20.625rem] lg:w-[20.313rem] xl:h-[34.625rem] xl:w-[36.313rem] 1360:mt-[2rem] 1360:h-[20rem] 1360:w-[22rem] 1400:mt-[2rem] 1400:hidden 1400:h-[23rem] 1400:w-[23rem] 1470:hidden 1470:w-[25rem] 1600:mt-[2rem] 1600:block 1600:h-[37rem] 1600:w-[30rem] 1680:mt-[2rem] 1680:h-[37rem] 1680:w-[31.5rem] 1710:w-[32rem] 3xl:h-[37rem] 3xl:w-[36.313rem]"
+                className="block h-[14rem] w-[14rem] rounded-lg md:h-[34.625rem] md:w-[36.313rem] lg:h-[20.625rem] lg:w-[20.313rem] xl:h-[34.625rem] xl:w-[36.313rem] 1360:mt-[2rem] 1360:h-[20rem] 1360:w-[22rem] 1400:mt-[2rem] 1400:hidden 1400:h-[23rem] 1400:w-[23rem] 1470:hidden 1470:w-[25rem] 1600:mt-[2rem] 1600:hidden 1600:h-[37rem] 1600:w-[30rem] 1680:mt-[2rem] 1680:hidden 1680:h-[37rem] 1680:w-[31.5rem] 1710:block 1710:w-[32rem] 3xl:h-[38rem] 3xl:w-[36.313rem]"
               />
               <Image
                 src={img_700}
                 alt="About Image"
-                className="1440:h-[660px] 1440:w-[500px] hidden rounded-xl 1400:block 1400:h-[710px] 1400:w-[480px] 1470:block 1470:h-[595px] 1470:w-[445px] 1600:hidden"
+                className="hidden rounded-xl 1400:block 1400:h-[710px] 1400:w-[480px] 1440:h-[640px] 1440:w-[500px] 1470:h-[575px] 1470:w-[445px] 1600:block 1600:h-[600px] 1600:w-[490px] 1710:hidden"
               />
             </div>
             <div className="absolute left-[-1rem] top-[2rem] flex animate-zoomPulse gap-2 rounded-xl border-[1px] border-[#000000]/10 bg-[#FFFFFF] px-2 py-1 lg:left-0 lg:top-14 lg:px-4 lg:py-2">
