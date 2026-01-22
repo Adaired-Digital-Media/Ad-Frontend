@@ -21,11 +21,12 @@ import { FAQSection } from '@web-components/eComFaqSection';
 import { EcomPageForm } from '../components/forms/EcomForm';
 import CldImage from '@web-components/CloudinaryImageComponent';
 import { ProductSection } from '@web-components/ContentProducts';
+import { Base2URL, BaseURL } from '@/baseUrl';
 
 async function getProducts() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API_URI}/product/read-product?status=active`,
+      `${Base2URL}/product/read-product?status=active`,
       { cache: 'no-store' }
     );
 
